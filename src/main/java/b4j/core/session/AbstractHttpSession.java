@@ -25,7 +25,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
-import rsbaselib.configuration.Configurable;
+import b4j.core.Configurable;
 import b4j.util.BugzillaUtils;
 
 /**
@@ -43,24 +43,10 @@ public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 	private AuthorizationCallback proxyAuthorizationCallback;
 	
 	/**
-	 * Constructor.
+	 * 
 	 */
 	public AbstractHttpSession() {
 		cookies = new HashSet<HttpCookie>();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**

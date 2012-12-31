@@ -42,7 +42,6 @@ public class BugzillaUtils {
 
 	private static Logger log = LoggerFactory.getLogger(BugzillaUtils.class);
 	
-	/** The Java version we are running in */
 	private static String javaVersion = null;
 	
 	/**
@@ -112,11 +111,6 @@ public class BugzillaUtils {
 		return s;
 	}
 	
-	/**
-	 * Recursively debugs objects and adds this in the string buffer.
-	 * @param s string buffer to enhance
-	 * @param o object to debug
-	 */
 	public static void debugObject(StringBuffer s, Object o) {
 		if (o == null) {
 			s.append("NULL");

@@ -109,7 +109,7 @@ public interface LongDescription {
 	
 	/**
 	 * Creates and adds an attachment to this bug record.
-	 * @param id the attachment id referenced
+	 * @param the attachment id referenced
 	 */
 	public void addAttachment(long id);
 

@@ -19,7 +19,7 @@ package b4j.report;
 
 import java.util.Iterator;
 
-import rsbaselib.configuration.Configurable;
+import b4j.core.Configurable;
 
 /**
  * Provides additional entries for various releases.  

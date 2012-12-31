@@ -24,14 +24,15 @@ import java.util.Set;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration.SubnodeConfiguration;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcSun15HttpTransportFactory;
 import org.apache.xmlrpc.client.XmlRpcTransportFactory;
 
-import rsbaselib.configuration.Configurable;
 import b4j.core.Attachment;
+import b4j.core.Configurable;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.LongDescription;
@@ -41,7 +42,7 @@ import b4j.util.BugzillaUtils;
 
 /**
  * Provides access to JIRA issues.
- * @author ralph
+ * @author U434983
  *
  */
 public class XmlRpcJiraSession extends AbstractAuthorizedSession {
@@ -126,7 +127,7 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 				int idx = 0;
 				while (true) {
 					try {
-						Configuration teamCfg = ((HierarchicalConfiguration)config).configurationAt("Team("+idx+")");
+						Configuration teamCfg = ((SubnodeConfiguration)config).configurationAt("Team("+idx+")");
 						String name = teamCfg.getString("[@name]");
 						String members[] = teamCfg.getStringArray("Member");
 						if (members != null) {

@@ -23,7 +23,7 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rsbaselib.configuration.Configurable;
+import b4j.core.Configurable;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.Session;
@@ -52,20 +52,6 @@ public abstract class AbstractAuthorizedSession implements Session {
 	 */
 	public AbstractAuthorizedSession() {
 		log = LoggerFactory.getLogger(getClass());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**

@@ -29,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration.SubnodeConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -112,7 +113,7 @@ public class ChangeLogReport extends AbstractFileReport {
 				Class<?> clazz = Class.forName(className);
 				Class<ReleaseProvider> clazz2 = (Class<ReleaseProvider>)clazz;
 				releaseProvider = clazz2.newInstance();
-				Configuration rConfig = ((HierarchicalConfiguration)config).configurationAt("ReleaseProvider(0)");
+				SubnodeConfiguration rConfig = ((HierarchicalConfiguration)config).configurationAt("ReleaseProvider(0)");
 				releaseProvider.configure(rConfig);
 			}
 		} catch (ClassNotFoundException e) {
@@ -138,7 +139,7 @@ public class ChangeLogReport extends AbstractFileReport {
 				Class<?> clazz = Class.forName(className);
 				Class<ChangeLogEntryProvider> clazz2 = (Class<ChangeLogEntryProvider>)clazz;
 				ChangeLogEntryProvider r = clazz2.newInstance();
-				Configuration cConfig = ((HierarchicalConfiguration)config).configurationAt("ChangeLogEntryProvider("+idx+")");
+				SubnodeConfiguration cConfig = ((SubnodeConfiguration)config).configurationAt("ChangeLogEntryProvider("+idx+")");
 				r.configure(cConfig);
 				entryProviders.add(r);
 			} catch (ClassNotFoundException e) {

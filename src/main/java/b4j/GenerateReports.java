@@ -59,23 +59,23 @@ import b4j.util.BugzillaUtils;
 public class GenerateReports implements Runnable {
 
 	private static Logger log = LoggerFactory.getLogger(GenerateReports.class);
-
+	
 	/** The meta information */
 	private MetaInformation metaInformation;
-
+	
 	/** 
 	 * Indicator if Bugzilla session should be closed when reports were 
 	 * created.
 	 */
 	private boolean closeSessionWhenDone;
-
+	
 	/**
 	 * Default Constructor.
 	 */
 	public GenerateReports() {
 		setCloseSessionWhenDone(false);
 	}
-
+	
 	/**
 	 * Returns the meta information object for this generator.
 	 * @return the metaInformation
@@ -92,7 +92,7 @@ public class GenerateReports implements Runnable {
 		this.metaInformation = metaInformation;
 	}
 
-
+	
 	/**
 	 * Returns whether the generator will close the Bugzilla session
 	 * after all reports were generated.
@@ -153,9 +153,9 @@ public class GenerateReports implements Runnable {
 	}
 
 	/**
-	 * Creates the command line options.
-	 * @return CL options object
-	 */
+	  * Creates the command line options.
+	  * @return CL options object
+	  */
 	protected static Options getCommandLineOptions() {
 		Options rc = new Options();
 		Option option = null;
@@ -186,17 +186,15 @@ public class GenerateReports implements Runnable {
 			// Make the search
 			Iterator<Issue> bugs = session.searchBugs(getMetaInformation().getBugzillaSearchData(), null);
 			if (bugs != null) {
-
+				
 				// Prepare all reports
-				boolean hasReport = false;
 				Iterator<BugzillaReportGenerator> reports = getMetaInformation().getReports();
 				while (reports.hasNext()) {
 					BugzillaReportGenerator report = reports.next();
-
+					
 					// Check compatibility of reports
 					if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
 						report.prepareReport();
-						hasReport = true;
 					} else {
 						log.error("Report incompatible with found Bugzilla version:");
 						log.error("   Bugzilla Version:     "+session.getBugzillaVersion());
@@ -207,18 +205,16 @@ public class GenerateReports implements Runnable {
 				}
 
 				// Iterate on all bugs
-				if (hasReport) {
-					while (bugs.hasNext()) {
-						Issue bug = bugs.next();
-						log.debug("issue found: "+bug.toString());
-
-						// call all reports to register the bug
-						reports = getMetaInformation().getReports();
-						while (reports.hasNext()) {
-							BugzillaReportGenerator report = reports.next();
-							if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
-								report.registerBug(bug);
-							}
+				while (bugs.hasNext()) {
+					Issue bug = bugs.next();
+					log.debug("issue found: "+bug.toString());
+					
+					// call all reports to register the bug
+					reports = getMetaInformation().getReports();
+					while (reports.hasNext()) {
+						BugzillaReportGenerator report = reports.next();
+						if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
+							report.registerBug(bug);
 						}
 					}
 				}

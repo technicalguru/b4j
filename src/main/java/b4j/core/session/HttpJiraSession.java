@@ -97,16 +97,16 @@ public class HttpJiraSession extends AbstractHttpSession {
 		super.close();
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.core.Session#getMaximumBugzillaVersion()
 	 */
 	@Override
 	public String getMaximumBugzillaVersion() {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.core.Session#getMinimumBugzillaVersion()
 	 */
 	@Override
 	public String getMinimumBugzillaVersion() {
@@ -215,8 +215,8 @@ public class HttpJiraSession extends AbstractHttpSession {
 		return null; // TODO
 	}
 	
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.core.Session#searchBugs(b4j.core.SearchData, b4j.core.SearchResultCountCallback)
 	 */
 	@Override
 	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
@@ -341,15 +341,15 @@ public class HttpJiraSession extends AbstractHttpSession {
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @see java.util.Iterator#hasNext()
 		 */
 		@Override
 		public boolean hasNext() {
 			return handler.hasNext();
 		}
 
-		/**
-		 * {@inheritDoc}
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#next()
 		 */
 		@Override
 		public Issue next() {
@@ -417,11 +417,11 @@ Content-Disposition: form-data; name="fixVersions"
 -----------------------------105733156123245
 Content-Disposition: form-data; name="assignee"
 
-ralph
+u434983
 -----------------------------105733156123245
 Content-Disposition: form-data; name="reporter"
 
-ralph
+u434983
 -----------------------------105733156123245
 Content-Disposition: form-data; name="environment"
 
