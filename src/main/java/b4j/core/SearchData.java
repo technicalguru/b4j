@@ -22,8 +22,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 
-import rsbaselib.configuration.Configurable;
-
 
 /**
  * Defines search parameters that a Session object can use

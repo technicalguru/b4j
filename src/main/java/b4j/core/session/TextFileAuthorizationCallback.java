@@ -24,7 +24,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.io.FileUtils;
 
-import rsbaselib.configuration.Configurable;
+import b4j.core.Configurable;
 
 /**
  * Implements authorization information retrieval from a plain text file.
@@ -37,20 +37,6 @@ public class TextFileAuthorizationCallback extends AbstractAuthorizationCallback
 	 * Default Constructor.
 	 */
 	public TextFileAuthorizationCallback() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**

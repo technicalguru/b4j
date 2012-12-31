@@ -38,7 +38,7 @@ import javax.swing.WindowConstants;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rsbaselib.configuration.Configurable;
+import b4j.core.Configurable;
 
 /**
  * Implements authorization information retrieval from pop-up dialog.
@@ -66,20 +66,6 @@ public class GuiAuthorizationCallback extends AbstractAuthorizationCallback impl
 	 * Default Constructor.
 	 */
 	public GuiAuthorizationCallback() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**

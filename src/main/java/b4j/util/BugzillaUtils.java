@@ -28,7 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import b4j.core.Attachment;
-import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.IssueLink;
 import b4j.core.LongDescription;
@@ -41,9 +40,6 @@ import b4j.core.LongDescription;
 public class BugzillaUtils {
 
 	private static Logger log = LoggerFactory.getLogger(BugzillaUtils.class);
-	
-	/** The Java version we are running in */
-	private static String javaVersion = null;
 	
 	/**
 	 * Returns true if version is in range of minVersion and maxVersion.
@@ -112,11 +108,6 @@ public class BugzillaUtils {
 		return s;
 	}
 	
-	/**
-	 * Recursively debugs objects and adds this in the string buffer.
-	 * @param s string buffer to enhance
-	 * @param o object to debug
-	 */
 	public static void debugObject(StringBuffer s, Object o) {
 		if (o == null) {
 			s.append("NULL");
@@ -244,21 +235,6 @@ public class BugzillaUtils {
 	}
 	
 	/**
-	 * Returns true when the runtime is Java 6.
-	 * @return true if Java 6, false otherwise.
-	 */
-	public static boolean isJava6() {
-		if (javaVersion == null) {
-			javaVersion = System.getProperty("java.specification.version");
-			if (javaVersion == null) {
-				log.error("Cannot determine Java version.");
-				javaVersion = "unknown";
-			}
-		}
-		return javaVersion.equals("1.6");
-	}
-	
-	/**
 	 * Debugs an issue in log file.
 	 * @param issue issue to be debugged
 	 */
@@ -329,27 +305,5 @@ public class BugzillaUtils {
 		for (IssueLink link : issue.getChildren()) {
 			log.debug("child="+link.getIssueId());
 		}
-	}
-	
-	/**
-	 * Parses the date by trying various formats.
-	 * @param s string to parse
-	 * @return date parsed
-	 * @throws ParseException when the date could not be parsed
-	 */
-	public static Date parseDate(String s) throws ParseException {
-		try {
-			return DefaultIssue.DATETIME_WITH_SEC_TZ.parse(s);
-		} catch (ParseException e) { }
-		try {
-			return DefaultIssue.DATETIME_WITH_SEC.parse(s);
-		} catch (ParseException e) { }
-		try {
-			return DefaultIssue.DATETIME_WITHOUT_SEC.parse(s);
-		} catch (ParseException e) { }
-		try {
-			return DefaultIssue.DATE.parse(s);
-		} catch (ParseException e) { }
-		throw new ParseException("Cannot parse date: "+s, 0);
 	}
 }

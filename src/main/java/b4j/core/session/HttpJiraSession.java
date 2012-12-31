@@ -5,7 +5,6 @@ package b4j.core.session;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
@@ -18,7 +17,6 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
-import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.SearchData;
@@ -97,16 +95,16 @@ public class HttpJiraSession extends AbstractHttpSession {
 		super.close();
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.core.Session#getMaximumBugzillaVersion()
 	 */
 	@Override
 	public String getMaximumBugzillaVersion() {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.core.Session#getMinimumBugzillaVersion()
 	 */
 	@Override
 	public String getMinimumBugzillaVersion() {
@@ -207,16 +205,8 @@ public class HttpJiraSession extends AbstractHttpSession {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public InputStream getAttachment(Attachment attachment) throws IOException {
-		return null; // TODO
-	}
-	
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.core.Session#searchBugs(b4j.core.SearchData, b4j.core.SearchResultCountCallback)
 	 */
 	@Override
 	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
@@ -341,15 +331,15 @@ public class HttpJiraSession extends AbstractHttpSession {
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @see java.util.Iterator#hasNext()
 		 */
 		@Override
 		public boolean hasNext() {
 			return handler.hasNext();
 		}
 
-		/**
-		 * {@inheritDoc}
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#next()
 		 */
 		@Override
 		public Issue next() {
@@ -417,11 +407,11 @@ Content-Disposition: form-data; name="fixVersions"
 -----------------------------105733156123245
 Content-Disposition: form-data; name="assignee"
 
-ralph
+u434983
 -----------------------------105733156123245
 Content-Disposition: form-data; name="reporter"
 
-ralph
+u434983
 -----------------------------105733156123245
 Content-Disposition: form-data; name="environment"
 

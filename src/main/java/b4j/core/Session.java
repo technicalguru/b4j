@@ -17,11 +17,7 @@
  */
 package b4j.core;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
-
-import rsbaselib.configuration.Configurable;
 
 
 
@@ -79,15 +75,6 @@ public interface Session extends Configurable {
 	 * @return issue
 	 */
 	public Issue getIssue(String id);
-	
-	/**
-	 * Returns an input stream that will contain the attachment's content.
-	 * A calle is responsible to close the stream again.
-	 * @param attachment attachment to retrieve.
-	 * @throws IOException when the IO stream cannot be created
-	 * @since 1.3
-	 */
-	public InputStream getAttachment(Attachment attachment) throws IOException;
 	
 	/**
 	 * Debug information into log.

@@ -18,7 +18,6 @@
 package b4j.core;
 
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * Interface for a long description entry within a bug record.
@@ -27,19 +26,6 @@ import java.util.Iterator;
  *
  */
 public interface LongDescription {
-
-	/**
-	 * Returns the description ID.
-	 * @return the description ID
-	 */
-	public String getId();
-
-
-	/**
-	 * Sets the description ID
-	 * @param id - the ID to set
-	 */
-	public void setId(String id);
 
 	/**
 	 * Returns the Bugzilla bug report this entry belongs to.
@@ -107,37 +93,4 @@ public interface LongDescription {
 	 */
 	public void setUpdateAuthor(String updateAuthor);
 	
-	/**
-	 * Creates and adds an attachment to this bug record.
-	 * @param id the attachment id referenced
-	 */
-	public void addAttachment(long id);
-
-
-	/**
-	 * Removes all attachments.
-	 */
-	public void clearAttachments();
-
-
-	/**
-	 * Returns all attachments.
-	 * @return iterator on all attachments.
-	 */
-	public Iterator<Attachment> getAttachmentIterator();
-
-
-	/**
-	 * Removes an attachment.
-	 * @param o - the attachment to remove
-	 * @return true if attachment was found and removed
-	 */
-	public boolean removeAttachment(Attachment o);
-
-	/**
-	 * Returns the number of attachments.
-	 * @return number of attachments
-	 */
-	public int getAttachmentCount();
-
 }

@@ -25,8 +25,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
-import rsbaselib.configuration.Configurable;
-import b4j.util.BugzillaUtils;
+import b4j.core.Configurable;
 
 /**
  * Implements an abstract HTTP session including usage with proxies.
@@ -43,24 +42,10 @@ public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 	private AuthorizationCallback proxyAuthorizationCallback;
 	
 	/**
-	 * Constructor.
+	 * 
 	 */
 	public AbstractHttpSession() {
 		cookies = new HashSet<HttpCookie>();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**
@@ -362,12 +347,7 @@ public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 		if (cookieHeaders != null) {
 			Iterator<String> cookieHeader = cookieHeaders.iterator();
 			while (cookieHeader.hasNext()) {
-				String header = cookieHeader.next();
-				// Fix #31 : Java 6 cannot understand HttpOnly attribute
-				if (BugzillaUtils.isJava6()) {
-					header = header.replaceAll("(?i);?\\s*httponly", "");
-				}
-				List<HttpCookie> cookies = HttpCookie.parse("Set-Cookie: "+header);
+				List<HttpCookie> cookies = HttpCookie.parse("Set-Cookie: "+cookieHeader.next());
 				Iterator<HttpCookie> i = cookies.iterator();
 				while (i.hasNext()) {
 					HttpCookie cookie = i.next();

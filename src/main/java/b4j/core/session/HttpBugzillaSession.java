@@ -41,11 +41,11 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DefaultHandler2;
 
 import b4j.core.Attachment;
+import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.LongDescription;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
-import b4j.util.BugzillaUtils;
 import b4j.util.UrlParameters;
 
 
@@ -66,8 +66,6 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	public static final int BUGZILLA_LOGOUT = 2;
 	/** Constant for requesting URL connection to show bug page */
 	public static final int BUGZILLA_SHOW_BUG = 3;
-	/** Constant for requesting URL connection to get attachment content */
-	public static final int BUGZILLA_GET_ATTACHMENT = 4;
 	
 	private static final String MINIMUM_BUGZILLA_VERSION = "2.20";
 	private static final String MAXIMUM_BUGZILLA_VERSION = null;
@@ -78,7 +76,6 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		"/buglist.cgi",
 		"/relogin.cgi",
 		"/show_bug.cgi",
-		"/attachment.cgi"
 	};
 	private static UrlParameters DEFAULT_SEARCH_PARAMETERS;
 	
@@ -206,7 +203,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * @see b4j.core.Session#getIssue(java.lang.String)
 	 */
 	@Override
 	public Issue getIssue(String id) {
@@ -217,15 +214,6 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public InputStream getAttachment(Attachment attachment) throws IOException {
-		HttpURLConnection con = getConnection(BUGZILLA_GET_ATTACHMENT, "id="+attachment.getId());
-		return con.getInputStream();
-	}
-	
 	/**
 	 * Performs a search for Bugzilla bugs.
 	 * This method returns an iterator over all bug records found. The returned
@@ -602,8 +590,6 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentContent = new StringBuffer();
 			} else if (name.equals("long_desc")) { // multiple
 				currentLongDescription = currentBug.addLongDescription();
-			} else if (name.equals("commentid")) {
-				currentContent = new StringBuffer();
 			} else if (name.equals("who")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("bug_when")) { // 2008-07-23 12:28:22
@@ -660,7 +646,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentContent = null;
 			} else if (name.equals("creation_ts")) { // 2008-07-23 12:28
 				try {
-					currentBug.setCreationTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
+					currentBug.setCreationTimestamp(DefaultIssue.DATETIME_WITHOUT_SEC.parse(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}
@@ -670,7 +656,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentContent = null;
 			} else if (name.equals("delta_ts")) { // 2008-07-23 12:28:22
 				try {
-					currentBug.setDeltaTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
+					currentBug.setDeltaTimestamp(DefaultIssue.DATETIME_WITH_SEC.parse(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}
@@ -731,14 +717,12 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentContent = null;
 			} else if (name.equals("long_desc")) { // multiple
 				currentLongDescription = null;
-			} else if (name.equals("commentid")) {
-				currentLongDescription.setId(currentContent.toString());
 			} else if (name.equals("who")) {
 				currentLongDescription.setWho(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_when")) { // 2008-07-23 12:28:22
 				try {
-					currentLongDescription.setWhen(BugzillaUtils.parseDate(currentContent.toString()));
+					currentLongDescription.setWhen(DefaultIssue.DATETIME_WITHOUT_SEC.parse(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}
@@ -752,11 +736,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			} else if (name.equals("attachment")) { // multiple
 				currentAttachment = null;
 			} else if (name.equals("attachid")) {
-				if (currentAttachment != null) {
-					currentAttachment.setId(Long.parseLong(currentContent.toString()));
-				} else if (currentLongDescription != null) {
-					currentLongDescription.addAttachment(Long.parseLong(currentContent.toString()));
-				}
+				currentAttachment.setId(Long.parseLong(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("date")) {
 				currentContent = null;
@@ -764,7 +744,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentAttachment.setDescription(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("filename")) {
-				currentAttachment.setFilename(currentContent.toString());
+				currentAttachment.setDescription(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("type")) {
 				currentAttachment.setType(currentContent.toString());
@@ -792,7 +772,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentContent = null;
 			} else if (name.equals("deadline")) {
 				try {
-					currentBug.setDeadline(BugzillaUtils.parseDate(currentContent.toString()));
+					currentBug.setDeadline(DefaultIssue.DATE.parse(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this date: "+currentContent.toString());
 				}

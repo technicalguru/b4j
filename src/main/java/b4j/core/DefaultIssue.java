@@ -22,11 +22,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Class that represents a Bugzilla bug record.
@@ -36,11 +34,6 @@ import java.util.Set;
  */
 public class DefaultIssue implements Issue {
 
-	/**
-	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
-	 * Format is yyyy-MM-dd HH:mm:ss
-	 */
-	public static final SimpleDateFormat DATETIME_WITH_SEC_TZ = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm:ss
@@ -816,17 +809,6 @@ public class DefaultIssue implements Issue {
 		return longDescriptions.size();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public LongDescription getLongDescription(String id) {
-		for (LongDescription desc : longDescriptions) {
-			if (desc.getId().equals(id)) return desc;
-		}
-		return null;
-	}
-
 
 	/**
 	 * @return the blocked
@@ -835,6 +817,7 @@ public class DefaultIssue implements Issue {
 	public long getBlocked() {
 		return blocked;
 	}
+
 
 	/**
 	 * @param blocked the blocked to set
@@ -896,19 +879,6 @@ public class DefaultIssue implements Issue {
 		return attachments.size();
 	}
 
-	/**
-	 * returns the attachment with the given id.
-	 * @param id id of attachment.
-	 * @return Attachment or null if it doesn't exist.
-	 */
-	@Override
-	public Attachment getAttachment(long id) {
-		for (Attachment a : attachments) {
-			if (a.getId() == id) return a;
-		}
-		return null;
-	}
-	
 	/**
 	 * Adds a custom field value.
 	 * This is a placeholder for customized fields in Bugzilla. A field
@@ -1296,43 +1266,22 @@ public class DefaultIssue implements Issue {
 	/**
 	 * A long description entry.
 	 * This object is used to store information about long description texts.
-	 * @author ralph
+	 * @author Ralph Schuster
 	 *
 	 */
 	public class DefaultLongDescription implements LongDescription {
 		
-		private String id;
 		private String who;
 		private Date when;
 		private String theText;
 		private Date lastUpdate;
 		private String updateAuthor;
-		private Set<Long> attachments;
 		
 		/**
 		 * Default Constructor.
 		 */
 		public DefaultLongDescription() {
-			id = "unknown";
 			when = new Date(0);
-			attachments = new HashSet<Long>();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public String getId() {
-			return id;
-		}
-
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setId(String id) {
-			this.id = id;
 		}
 
 		/**
@@ -1436,77 +1385,6 @@ public class DefaultIssue implements Issue {
 		public void setUpdateAuthor(String updateAuthor) {
 			this.updateAuthor = updateAuthor;
 		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void addAttachment(long id) {
-			attachments.add(id);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void clearAttachments() {
-			attachments.clear();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Iterator<Attachment> getAttachmentIterator() {
-			return new Iterator<Attachment>() {
-				private Attachment nextAttachment = null;
-				private Iterator<Long> idIterator = attachments.iterator();
-				
-				@Override
-				public boolean hasNext() {
-					if (nextAttachment == null) retrieveNext();
-					return nextAttachment != null;
-				}
-
-				@Override
-				public Attachment next() {
-					if (nextAttachment == null) retrieveNext();
-					return nextAttachment;
-				}
-
-				protected void retrieveNext() {
-					while ((nextAttachment == null) && idIterator.hasNext()) {
-						nextAttachment = getAttachment(idIterator.next());
-					}
-				}
-				
-				@Override
-				public void remove() {
-					throw new UnsupportedOperationException("remove is not supported");
-				}
-				
-			};
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public boolean removeAttachment(Attachment o) {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public int getAttachmentCount() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-		
-		
 	}
 	
 	
@@ -1645,21 +1523,10 @@ public class DefaultIssue implements Issue {
 		private String linkTypeDescription;
 		private String issueId;
 		
-		/**
-		 * Constructor.
-		 */
 		public DefaultLink() {
 			
 		}
 
-		/**
-		 * Constructor.
-		 * @param linkType type of link
-		 * @param linkTypeName name of link type
-		 * @param inward incoming?
-		 * @param linkTypeDescription description of link
-		 * @param issueId issue linked
-		 */
 		public DefaultLink(int linkType, String linkTypeName, boolean inward,
 				String linkTypeDescription, String issueId) {
 			super();
@@ -1671,78 +1538,78 @@ public class DefaultIssue implements Issue {
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the linkType
 		 */
 		public int getLinkType() {
 			return linkType;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param linkType the linkType to set
 		 */
 		public void setLinkType(int linkType) {
 			this.linkType = linkType;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the linkTypeName
 		 */
 		public String getLinkTypeName() {
 			return linkTypeName;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param linkTypeName the linkTypeName to set
 		 */
 		public void setLinkTypeName(String linkTypeName) {
 			this.linkTypeName = linkTypeName;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the inward
 		 */
 		public boolean isInward() {
 			return inward;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param inward the inward to set
 		 */
 		public void setInward(boolean inward) {
 			this.inward = inward;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the linkTypeDescription
 		 */
 		public String getLinkTypeDescription() {
 			return linkTypeDescription;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param linkTypeDescription the linkTypeDescription to set
 		 */
 		public void setLinkTypeDescription(String linkTypeDescription) {
 			this.linkTypeDescription = linkTypeDescription;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the issueId
 		 */
 		public String getIssueId() {
 			return issueId;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param issueId the issueId to set
 		 */
 		public void setIssueId(String issueId) {
 			this.issueId = issueId;
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {

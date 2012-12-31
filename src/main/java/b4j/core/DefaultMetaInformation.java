@@ -27,11 +27,11 @@ import java.util.List;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.SubnodeConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rsbaselib.configuration.ConfigurationUtils;
 import b4j.report.BugzillaReportGenerator;
 
 
@@ -91,8 +91,19 @@ public class DefaultMetaInformation implements MetaInformation {
 	public void configure(XMLConfiguration config) throws ConfigurationException {
 		// Create and configure bugzilla session
 		String className = null;
-		Configuration sessionCfg = config.configurationAt("bugzilla-session(0)");
-		bugzillaSession = (Session)ConfigurationUtils.load(sessionCfg, true);
+		try {
+			Configuration sessionCfg = config.configurationAt("bugzilla-session(0)");
+			className = sessionCfg.getString("[@class]");
+			Class<?> c = Class.forName(className);
+			bugzillaSession = (Session)c.newInstance();
+			bugzillaSession.configure(sessionCfg);
+		} catch (ClassNotFoundException e) {
+			throw new ConfigurationException("Cannot find class: "+className, e);
+		} catch (InstantiationException e) {
+			throw new ConfigurationException("Cannot instantiate class: "+className, e);
+		} catch (IllegalAccessException e) {
+			throw new ConfigurationException("Cannot access constructor: "+className, e);
+		}
 
 		// Reports to generate
 		reports = new ArrayList<BugzillaReportGenerator>();
@@ -105,7 +116,7 @@ public class DefaultMetaInformation implements MetaInformation {
 				Class<?> clazz = Class.forName(className);
 				Class<BugzillaReportGenerator> clazz2 = (Class<BugzillaReportGenerator>)clazz;
 				BugzillaReportGenerator r = clazz2.newInstance();
-				Configuration cConfig = config.configurationAt("report("+idx+")");
+				SubnodeConfiguration cConfig = config.configurationAt("report("+idx+")");
 				r.init(cConfig);
 				r.setBugzillaSession(bugzillaSession);
 				reports.add(r);
@@ -122,9 +133,7 @@ public class DefaultMetaInformation implements MetaInformation {
 		// Create and configure search data
 		searchData = new DefaultSearchData();
 		Configuration searchCfg = config.configurationAt("search(0)");
-		searchData.beforeConfiguration();
 		searchData.configure(searchCfg);
-		searchData.afterConfiguration();
 	}
 
 	/**
