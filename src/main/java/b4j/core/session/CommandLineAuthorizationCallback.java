@@ -22,7 +22,7 @@ import java.io.Console;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rsbaselib.configuration.Configurable;
+import b4j.core.Configurable;
 
 /**
  * Implements authorization information retrieval from command line.
@@ -45,20 +45,6 @@ public class CommandLineAuthorizationCallback extends AbstractAuthorizationCallb
 	 * Default Constructor.
 	 */
 	public CommandLineAuthorizationCallback() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**

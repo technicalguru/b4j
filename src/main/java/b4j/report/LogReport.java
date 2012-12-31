@@ -23,16 +23,16 @@ public class LogReport extends AbstractReportGenerator {
 	public LogReport() {
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.report.BugzillaReportGenerator#closeReport()
 	 */
 	@Override
 	public void closeReport() {
 		log.info(count+" bugs found");
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.report.BugzillaReportGenerator#registerBug(b4j.core.Issue)
 	 */
 	@Override
 	public void registerBug(Issue bug) {
@@ -40,8 +40,8 @@ public class LogReport extends AbstractReportGenerator {
 		count++;
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see b4j.report.AbstractReportGenerator#prepareReport()
 	 */
 	@Override
 	public void prepareReport() {

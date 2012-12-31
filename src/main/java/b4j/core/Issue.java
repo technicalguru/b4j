@@ -587,14 +587,6 @@ public interface Issue {
 	public int getAttachmentCount();
 
 	/**
-	 * returns the attachment with the given id.
-	 * @param id id of attachment.
-	 * @return Attachment or null if it doesn't exist.
-	 * @since 1.3
-	 */
-	public Attachment getAttachment(long id);
-	
-	/**
 	 * Adds a custom field value.
 	 * This is a placeholder for customized fields in Bugzilla. A field
 	 * can have multiple values.

@@ -17,8 +17,6 @@
  */
 package b4j.core.session;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,7 +25,6 @@ import java.util.Iterator;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.SearchData;
@@ -169,15 +166,6 @@ public class MySQLBugzillaSession extends AbstractAuthorizedSession {
 		return null;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public InputStream getAttachment(Attachment attachment) throws IOException {
-		// table attach_data, column thedata via ID
-		return null;
-	}
-	
 	/**
 	 * Performs a search for Bugzilla bugs.
 	 * This method returns an iterator over all bug records found. The returned

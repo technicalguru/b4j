@@ -46,20 +46,6 @@ public class DefaultSearchData implements SearchData {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
-
-	/**
 	 * Configures the search data from configuration.
 	 * All elements of the configuration are taken as search parameters.
 	 * For XML documents this means: &lt;parameter-name&gt;parameter-value&lt;/parameter-name&gt;
@@ -78,7 +64,10 @@ public class DefaultSearchData implements SearchData {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * Adds a search parameter with specified values.
+	 * Existing values of this parameter will not be overridden.
+	 * @param parameter - name of parameter
+	 * @param values - array of additional values for parameter
 	 */
 	@Override
 	public void add(String parameter, String values[]) {
@@ -86,7 +75,10 @@ public class DefaultSearchData implements SearchData {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * Adds a search parameter with specified values.
+	 * Existing values of this parameter will not be overridden.
+	 * @param parameter - name of parameter
+	 * @param values - list of additional values for parameter
 	 */
 	@Override
 	public void add(String parameter, List<String> values) {
@@ -102,7 +94,9 @@ public class DefaultSearchData implements SearchData {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Adds a value for a specific search parameter.
+	 * @param parameter - name of parameter
+	 * @param value - value to add for parameter
 	 */
 	@Override
 	public void add(String parameter, String value) {
@@ -115,7 +109,8 @@ public class DefaultSearchData implements SearchData {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns the number of parameter names.
+	 * @return number of parameter names.
 	 */
 	@Override
 	public int getParameterCount() {
@@ -123,7 +118,8 @@ public class DefaultSearchData implements SearchData {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * Returns an iterator of all parameter names.
+	 * @return iterator on parameter names
 	 */
 	@Override
 	public Iterator<String> getParameterNames() {
@@ -131,7 +127,10 @@ public class DefaultSearchData implements SearchData {
 	}
 	
 	/**
-	 * {@inheritDoc}
+	 * Returns an iterator of all values for specified parameter key.
+	 * This methods returns null if no such parameter exists.
+	 * @param parameter - name of parameter.
+	 * @return iterator on values of parameter
 	 */
 	@Override
 	public Iterator<String> get(String parameter) {
@@ -139,7 +138,9 @@ public class DefaultSearchData implements SearchData {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Debug information into log.
+	 * This method supports debugging functionality.
+	 * @param log - log to dump into.
 	 */
 	@Override
 	public void dump(Logger log) {
@@ -154,7 +155,10 @@ public class DefaultSearchData implements SearchData {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns true when given parameter name exists.
+	 * @see b4j.core.SearchData#hasParameter(String)
+	 * @param name parameter name
+	 * @return true or false
 	 */
 	@Override
 	public boolean hasParameter(String name) {

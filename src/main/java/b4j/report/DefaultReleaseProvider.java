@@ -45,19 +45,6 @@ public class DefaultReleaseProvider implements ReleaseProvider {
 		releases = new ArrayList<Release>();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
 	
 	/**
 	 * Configures the provider.

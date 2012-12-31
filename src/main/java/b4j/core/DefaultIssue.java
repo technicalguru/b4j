@@ -40,11 +40,6 @@ public class DefaultIssue implements Issue {
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm:ss
 	 */
-	public static final SimpleDateFormat DATETIME_WITH_SEC_TZ = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-	/**
-	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
-	 * Format is yyyy-MM-dd HH:mm:ss
-	 */
 	public static final SimpleDateFormat DATETIME_WITH_SEC = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
@@ -901,7 +896,6 @@ public class DefaultIssue implements Issue {
 	 * @param id id of attachment.
 	 * @return Attachment or null if it doesn't exist.
 	 */
-	@Override
 	public Attachment getAttachment(long id) {
 		for (Attachment a : attachments) {
 			if (a.getId() == id) return a;
@@ -1645,21 +1639,10 @@ public class DefaultIssue implements Issue {
 		private String linkTypeDescription;
 		private String issueId;
 		
-		/**
-		 * Constructor.
-		 */
 		public DefaultLink() {
 			
 		}
 
-		/**
-		 * Constructor.
-		 * @param linkType type of link
-		 * @param linkTypeName name of link type
-		 * @param inward incoming?
-		 * @param linkTypeDescription description of link
-		 * @param issueId issue linked
-		 */
 		public DefaultLink(int linkType, String linkTypeName, boolean inward,
 				String linkTypeDescription, String issueId) {
 			super();
@@ -1671,78 +1654,78 @@ public class DefaultIssue implements Issue {
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the linkType
 		 */
 		public int getLinkType() {
 			return linkType;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param linkType the linkType to set
 		 */
 		public void setLinkType(int linkType) {
 			this.linkType = linkType;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the linkTypeName
 		 */
 		public String getLinkTypeName() {
 			return linkTypeName;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param linkTypeName the linkTypeName to set
 		 */
 		public void setLinkTypeName(String linkTypeName) {
 			this.linkTypeName = linkTypeName;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the inward
 		 */
 		public boolean isInward() {
 			return inward;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param inward the inward to set
 		 */
 		public void setInward(boolean inward) {
 			this.inward = inward;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the linkTypeDescription
 		 */
 		public String getLinkTypeDescription() {
 			return linkTypeDescription;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param linkTypeDescription the linkTypeDescription to set
 		 */
 		public void setLinkTypeDescription(String linkTypeDescription) {
 			this.linkTypeDescription = linkTypeDescription;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @return the issueId
 		 */
 		public String getIssueId() {
 			return issueId;
 		}
 
 		/**
-		 * {@inheritDoc}
+		 * @param issueId the issueId to set
 		 */
 		public void setIssueId(String issueId) {
 			this.issueId = issueId;
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {

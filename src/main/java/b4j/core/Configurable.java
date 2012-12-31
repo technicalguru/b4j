@@ -15,25 +15,24 @@
  *  License along with Bugzilla for Java.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package b4j.report;
+package b4j.core;
 
-import java.util.Iterator;
-
-import b4j.core.Configurable;
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
 
 /**
- * Provides information about software releases.
- * The interface is used within the {@link ChangeLogReport} to allow
- * flexible configuration of a Change Log.
+ * Defines a method that objects must implement when they want to be configurable.
  * @author Ralph Schuster
  *
  */
-public interface ReleaseProvider extends Configurable {
+public interface Configurable {
 
 	/**
-	 * Returns all available releases.
-	 * This method returns the releases that will appear in a Change Log.
-	 * @return iterator on all releases
+	 * Configures the object.
+	 * The method is called to initialize the object from a configuration.
+	 * @param config - configuration object
+	 * @throws ConfigurationException - when configuration fails
 	 */
-	public Iterator<Release> getReleases();
+	public void configure(Configuration config) throws ConfigurationException;
+
 }

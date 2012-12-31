@@ -20,7 +20,7 @@ package b4j.core.session;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rsbaselib.configuration.Configurable;
+import b4j.core.Configurable;
 
 /**
  * Implements authorization information retrieval from configuration object.
@@ -42,20 +42,6 @@ public class DefaultAuthorizationCallback extends SimpleAuthorizationCallback im
 	 */
 	public DefaultAuthorizationCallback(String name, String password) {
 		super(name, password);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**

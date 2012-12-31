@@ -7,8 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -105,7 +103,6 @@ public class HttpBugzillaSessionTest {
 				}
 				expectedCommentAttachments.remove(id);
 			}
-			testSpecials(session, issue);
 		}
 		assertTrue("Comments not found", expectedCommentAttachments.isEmpty());
 		
@@ -118,30 +115,6 @@ public class HttpBugzillaSessionTest {
 		assertNotNull("No expected properties found", props);
 		for (String key : props.keySet()) {
 			assertEquals(key+" does ot match:", PropertyUtils.getProperty(issue, key), props.get(key));
-		}		
-	}
-	
-	/**
-	 * Does special tests.
-	 * @param issue
-	 * @throws Exception
-	 */
-	private void testSpecials(HttpBugzillaSession session, Issue issue) throws Exception {
-		// Special bug with timestamps
-		if (issue.getId().equals("3")) {
-			assertEquals("Timestamp parsed invalid", issue.getDeltaTimestamp().getTime(), 1345485240000L);
-			assertEquals("Comment timestamp parsed invalid", issue.getLongDescription("4").getWhen().getTime(), 1244567618000L);
 		}
-		
-		// Check attachment retrieval
-		if (issue.getId().equals("30")) {
-			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment(3))));
-			String s = null;
-			s = r.readLine();
-			s = r.readLine();
-			r.close();
-			assertEquals("Attachment cannot be read", s, " * This file is part of CSV package.");
-		}
-		
 	}
 }

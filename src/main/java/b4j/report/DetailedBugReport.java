@@ -28,10 +28,10 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import templating.Templating;
 import b4j.core.Issue;
 import b4j.core.LongDescription;
 import b4j.util.BugzillaUtils;
+import b4j.util.Templating;
 
 /**
  * Reports some details about bug records into a file
