@@ -17,9 +17,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:svn:https://h2031995.stratoserver.net/svn/B4J/trunk</connection>
-		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/B4J/trunk</developerConnection>
-		<url>https://h2031995.stratoserver.net/svn/B4J/trunk</url>
+		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</connection>
+		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</developerConnection>
+		<url>https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</url>
 	</scm>
 
 	<issueManagement>
@@ -118,7 +118,7 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>0.0.2</version>
+			<version>0.0.3</version>
 		</dependency>
 	</dependencies>
 	<build>
