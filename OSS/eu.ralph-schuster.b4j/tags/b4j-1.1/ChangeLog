@@ -1,0 +1,14 @@
+Version 1.1:
+--------------
+
+	- CR #3: AbstractReportGenerator added
+	- Build system migrated to Maven
+	- Added unit test for HttpBugzillaSession
+	- Migrated to SLF4J for logging
+	- Dependencies upgraded
+	- Mylyn support removed
+	
+Version 1.0:
+------------
+
+	- Initial Version

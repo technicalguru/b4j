@@ -1,0 +1,28 @@
+Version 1.3:
+------------
+
+	- Bug #33: Attachment filename not set
+	- Bug #34: Timestamps are not parsed correctly 
+	- CR  #35: Add saving of attachments
+
+Version 1.2:
+--------------
+
+	- Bug #31: Bugzilla 4.2 uses attachments in long descriptions
+	- Bug #32: Java 6 doesn't know HttpOnly Cookie attribute
+	- Bug #18: Filter searches on HttpJiraSession does not return when no issue was found
+	
+Version 1.1:
+--------------
+
+	- CR #3: AbstractReportGenerator added
+	- Build system migrated to Maven
+	- Added unit test for HttpBugzillaSession
+	- Migrated to SLF4J for logging
+	- Dependencies upgraded
+	- Mylyn support removed
+	
+Version 1.0:
+------------
+
+	- Initial Version
