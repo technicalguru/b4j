@@ -67,7 +67,8 @@ public class DefaultChangeLogEntryProvider implements ChangeLogEntryProvider {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Reads the entries for each release from XML configuration
+	 * @see b4j.core.Configurable#configure(org.apache.commons.configuration.Configuration)
 	 */
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {
