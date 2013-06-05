@@ -40,6 +40,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DefaultHandler2;
 
+import rsbaselib.io.XmlReaderFilter;
 import b4j.core.Attachment;
 import b4j.core.Issue;
 import b4j.core.LongDescription;
@@ -527,7 +528,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				
 				// This class itself will take care of the elements
 				xmlReader.setContentHandler(this);
-				xmlReader.parse(new InputSource(new BufferedReader(new InputStreamReader(xmlStream))));
+				xmlReader.parse(new InputSource(new XmlReaderFilter(new InputStreamReader(xmlStream))));
 				if (getLog().isTraceEnabled()) getLog().trace("XML file completed");
 			} catch (IOException e) {
 				getLog().error("Error while retrieving Bugzilla XML response:", e);
