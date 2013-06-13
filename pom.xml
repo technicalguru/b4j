@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
@@ -9,10 +10,11 @@
 	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>b4j</artifactId>
 	<version>1.5.0-SNAPSHOT</version>
+	<packaging>bundle</packaging>
 	<url>http://techblog.ralph-schuster.eu/b4j-bugzilla-for-java/</url>
 	<name>Bugzilla for Java</name>
 	<description>A Java library for accessing Bugzilla instances</description>
-	
+
 	<scm>
 		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</connection>
 		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</developerConnection>
@@ -115,4 +117,24 @@
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.3.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Embed-Dependencies>*;scope=compile|runtime;inline=false</Embed-Dependencies>
+						<Export-Package>rs.data.*</Export-Package>
+						<Import-Package>*</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
