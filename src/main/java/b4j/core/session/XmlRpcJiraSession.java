@@ -30,7 +30,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcSun15HttpTransportFactory;
 import org.apache.xmlrpc.client.XmlRpcTransportFactory;
 
-import rsbaselib.configuration.Configurable;
+import rs.baselib.configuration.Configurable;
 import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;

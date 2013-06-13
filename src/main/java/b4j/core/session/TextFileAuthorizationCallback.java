@@ -24,7 +24,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.io.FileUtils;
 
-import rsbaselib.configuration.Configurable;
+import rs.baselib.configuration.Configurable;
 
 /**
  * Implements authorization information retrieval from a plain text file.

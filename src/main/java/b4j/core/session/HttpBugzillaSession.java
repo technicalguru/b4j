@@ -40,7 +40,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DefaultHandler2;
 
-import rsbaselib.io.XmlReaderFilter;
+import rs.baselib.io.XmlReaderFilter;
 import b4j.core.Attachment;
 import b4j.core.Issue;
 import b4j.core.LongDescription;
