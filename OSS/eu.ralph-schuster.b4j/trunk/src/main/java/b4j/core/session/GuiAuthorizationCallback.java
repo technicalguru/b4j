@@ -38,7 +38,7 @@ import javax.swing.WindowConstants;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rsbaselib.configuration.Configurable;
+import rs.baselib.configuration.Configurable;
 
 /**
  * Implements authorization information retrieval from pop-up dialog.

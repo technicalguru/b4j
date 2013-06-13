@@ -23,7 +23,7 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rsbaselib.configuration.Configurable;
+import rs.baselib.configuration.Configurable;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.Session;

@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-import rsbaselib.configuration.Configurable;
+import rs.baselib.configuration.Configurable;
 
 
 

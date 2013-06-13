@@ -20,7 +20,7 @@ package b4j.core.session;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rsbaselib.configuration.Configurable;
+import rs.baselib.configuration.Configurable;
 
 /**
  * Implements authorization information retrieval from configuration object.
