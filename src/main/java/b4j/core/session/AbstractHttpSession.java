@@ -25,7 +25,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 import b4j.util.BugzillaUtils;
 
 /**
@@ -122,8 +122,8 @@ public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 							Class<?> c = Class.forName(className);
 							callback = (AuthorizationCallback)c.newInstance();
 						}
-						if (callback instanceof Configurable) {
-							((Configurable)callback).configure(authCfg);
+						if (callback instanceof IConfigurable) {
+							((IConfigurable)callback).configure(authCfg);
 						}
 						setProxyAuthorizationCallback(callback);
 					}

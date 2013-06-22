@@ -19,14 +19,14 @@ package b4j.report;
 
 import java.util.Iterator;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 /**
  * Provides additional entries for various releases.  
  * @author Ralph Schuster
  *
  */
-public interface ChangeLogEntryProvider extends Configurable {
+public interface ChangeLogEntryProvider extends IConfigurable {
 
 	/**
 	 * Returns all additional entries that must be included for the release.

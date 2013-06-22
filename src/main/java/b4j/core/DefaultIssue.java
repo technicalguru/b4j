@@ -1493,7 +1493,6 @@ public class DefaultIssue implements Issue {
 		 */
 		@Override
 		public boolean removeAttachment(Attachment o) {
-			// TODO Auto-generated method stub
 			return false;
 		}
 
@@ -1502,11 +1501,8 @@ public class DefaultIssue implements Issue {
 		 */
 		@Override
 		public int getAttachmentCount() {
-			// TODO Auto-generated method stub
-			return 0;
+			return DefaultIssue.this.attachments.size();
 		}
-		
-		
 	}
 	
 	

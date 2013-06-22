@@ -30,7 +30,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcSun15HttpTransportFactory;
 import org.apache.xmlrpc.client.XmlRpcTransportFactory;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
@@ -113,8 +113,8 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 							Class<?> c = Class.forName(className);
 							callback = (AuthorizationCallback)c.newInstance();
 						}
-						if (callback instanceof Configurable) {
-							((Configurable)callback).configure(authCfg);
+						if (callback instanceof IConfigurable) {
+							((IConfigurable)callback).configure(authCfg);
 						}
 						setProxyAuthorizationCallback(callback);
 					}

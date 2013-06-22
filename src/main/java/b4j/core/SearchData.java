@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 
 /**
@@ -30,7 +30,7 @@ import rs.baselib.configuration.Configurable;
  * to query bugs.
  * @author Ralph Schuster
  */
-public interface SearchData extends Configurable {
+public interface SearchData extends IConfigurable {
 	
 	/**
 	 * Returns the number of parameter names.

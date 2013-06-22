@@ -38,7 +38,7 @@ import javax.swing.WindowConstants;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 /**
  * Implements authorization information retrieval from pop-up dialog.
@@ -46,7 +46,7 @@ import rs.baselib.configuration.Configurable;
  * @author Ralph Schuster
  *
  */
-public class GuiAuthorizationCallback extends AbstractAuthorizationCallback implements Configurable {
+public class GuiAuthorizationCallback extends AbstractAuthorizationCallback implements IConfigurable {
 
 	/** The default label for the login name ("Login:"). */
 	public static final String DEFAULT_LOGIN_LABEL = "Login:"; 
