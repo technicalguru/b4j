@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 
 
@@ -41,7 +41,7 @@ import rs.baselib.configuration.Configurable;
  * @author Ralph Schuster
  *
  */
-public interface Session extends Configurable {
+public interface Session extends IConfigurable {
 
 	/**
 	 * Returns true when session is connected to Bugzilla.

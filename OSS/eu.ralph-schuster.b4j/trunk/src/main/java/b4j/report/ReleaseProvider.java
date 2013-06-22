@@ -19,7 +19,7 @@ package b4j.report;
 
 import java.util.Iterator;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 /**
  * Provides information about software releases.
@@ -28,7 +28,7 @@ import rs.baselib.configuration.Configurable;
  * @author Ralph Schuster
  *
  */
-public interface ReleaseProvider extends Configurable {
+public interface ReleaseProvider extends IConfigurable {
 
 	/**
 	 * Returns all available releases.

@@ -22,7 +22,7 @@ import java.io.Console;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 /**
  * Implements authorization information retrieval from command line.
@@ -31,7 +31,7 @@ import rs.baselib.configuration.Configurable;
  * @author Ralph Schuster
  *
  */
-public class CommandLineAuthorizationCallback extends AbstractAuthorizationCallback implements Configurable {
+public class CommandLineAuthorizationCallback extends AbstractAuthorizationCallback implements IConfigurable {
 
 	/** The default prompt for the login name ("Login: "). */
 	public static final String DEFAULT_LOGIN_PROMPT = "Login: "; 

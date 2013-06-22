@@ -34,6 +34,7 @@ public class HttpJiraSession extends AbstractHttpSession {
 
 	protected static String JIRA_LOGIN = "/login.jsp";
 	protected static String JIRA_LOGOUT = "/logout";
+	protected static String JIRA_DASHBOARD = "/secure/Dashboard.jspa";
 	//type=20&pid=10012&status=1&status=3&status=10001&sorter/field=issuekey&sorter/order=DESC&tempMax=1000
 	protected static String JIRA_SEARCH = "/sr/jira.issueviews:searchrequest-xml/temp/SearchRequest.xml";
 	protected static String JIRA_MY_ISSUES = "resolution=-1&assigneeSelect=issue_current_user&sorter/field=created&sorter/order=ASC&sorter/field=priority&sorter/order=DESC&tempMax=1000";
@@ -60,7 +61,7 @@ public class HttpJiraSession extends AbstractHttpSession {
 	public void configure(Configuration config) throws ConfigurationException {
 		super.configure(config);
 		teams = new HashMap<String, String>();
-		
+
 		// Team definitions
 		int idx = 0;
 		while (true) {
@@ -125,7 +126,7 @@ public class HttpJiraSession extends AbstractHttpSession {
 		rc.put("Accept-Charset", "ISO-8859-1,utf-8;q=0.7,*;q=0.7");
 		return rc;
 	}
-	
+
 	/**
 	 * Opens the HTTP Session.
 	 * @see b4j.core.Session#open()
@@ -136,19 +137,27 @@ public class HttpJiraSession extends AbstractHttpSession {
 		setBugzillaVersion(null);
 
 		try {
-			// os_username = xxx
-			// os_password = xxx
-			// os_destination = /secure/
 			UrlParameters params = new UrlParameters();
-			params.setParameter("os_username", getLogin());
-			params.setParameter("os_password", getPassword());
-			params.setParameter("os_destination", "/secure/");
+			String firstPage = JIRA_DASHBOARD;
+			boolean authorized = false;
+			if ((getLogin() != null) && (getPassword() != null)) {
+				// os_username = xxx
+				// os_password = xxx
+				// os_destination = /secure/
+				authorized = true;
+				params.setParameter("os_username", getLogin());
+				params.setParameter("os_password", getPassword());
+				params.setParameter("os_destination", "/secure/");
+				firstPage = JIRA_LOGIN;
+			}
 			String paramString = params.getUrlEncodedString();
 
 			// make a POST request
 			Map<String,String> requestProperties = getDefaultRequestProperties();
-			requestProperties.put("Referer", getBaseUrl()+"/secure/Dashboard.jspa");
-			HttpURLConnection con = getConnection(JIRA_LOGIN, paramString, requestProperties, false);
+			if (authorized) {
+				requestProperties.put("Referer", getBaseUrl()+JIRA_DASHBOARD);
+			}
+			HttpURLConnection con = getConnection(firstPage, paramString, requestProperties, false);
 
 			// Read the response;
 			if ((con.getResponseCode() == 200) || (con.getResponseCode() == 302)) {
@@ -214,7 +223,7 @@ public class HttpJiraSession extends AbstractHttpSession {
 	public InputStream getAttachment(Attachment attachment) throws IOException {
 		return null; // TODO
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -311,7 +320,7 @@ public class HttpJiraSession extends AbstractHttpSession {
 		HttpURLConnection.setFollowRedirects(false);
 		return super.getConnection(getBaseUrl()+jiraPage, getParams, requestProperties, isGet);
 	}
-	
+
 	/**
 	 * Returns default search parameters.
 	 * DO NOT modify these defaults!
@@ -471,7 +480,7 @@ Content-Disposition: form-data; name="Create"
 Create
 -----------------------------105733156123245--
 
-*/
+ */
 
 /*********************************************************
    ANSWER (NOTE THE ID!) 
@@ -508,4 +517,4 @@ Content-Type: application/x-www-form-urlencoded
 Content-Length: 91
 linkDesc=is+dependency+of&linkKey=LIDONG-5449%2C+&comment=&commentLevel=&id=22177&Link=Link
 
-*/
+ */

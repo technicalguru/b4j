@@ -24,14 +24,14 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.io.FileUtils;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 /**
  * Implements authorization information retrieval from a plain text file.
  * @author Ralph Schuster
  *
  */
-public class TextFileAuthorizationCallback extends AbstractAuthorizationCallback implements Configurable {
+public class TextFileAuthorizationCallback extends AbstractAuthorizationCallback implements IConfigurable {
 
 	/**
 	 * Default Constructor.

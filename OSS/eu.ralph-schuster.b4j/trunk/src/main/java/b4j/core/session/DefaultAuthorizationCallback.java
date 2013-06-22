@@ -20,7 +20,7 @@ package b4j.core.session;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 
 /**
  * Implements authorization information retrieval from configuration object.
@@ -29,7 +29,7 @@ import rs.baselib.configuration.Configurable;
  * @author Ralph Schuster
  *
  */
-public class DefaultAuthorizationCallback extends SimpleAuthorizationCallback implements Configurable {
+public class DefaultAuthorizationCallback extends SimpleAuthorizationCallback implements IConfigurable {
 
 	/**
 	 * Default Constructor.

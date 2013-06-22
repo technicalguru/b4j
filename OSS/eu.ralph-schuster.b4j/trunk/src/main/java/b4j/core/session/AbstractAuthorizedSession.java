@@ -23,7 +23,7 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.configuration.Configurable;
+import rs.baselib.configuration.IConfigurable;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.Session;
@@ -109,8 +109,8 @@ public abstract class AbstractAuthorizedSession implements Session {
 					Class<?> c = Class.forName(className);
 					authorizationCallback = (AuthorizationCallback)c.newInstance();
 				}
-				if (authorizationCallback instanceof Configurable) {
-					((Configurable)authorizationCallback).configure(authCfg);
+				if (authorizationCallback instanceof IConfigurable) {
+					((IConfigurable)authorizationCallback).configure(authCfg);
 				}
 				setAuthorizationCallback(authorizationCallback);
 			}
