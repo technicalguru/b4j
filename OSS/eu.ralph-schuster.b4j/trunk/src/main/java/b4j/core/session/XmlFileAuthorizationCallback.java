@@ -25,6 +25,25 @@ import org.apache.commons.configuration.XMLConfiguration;
 
 /**
  * Implements authorization information retrieval from a XML file.
+ * <p>
+ * Configuration:
+ * </p>
+ * <pre>
+ * &lt;AuthorizationCallback class="b4j.core.session.XmlFileAuthorizationCallback"&gt;
+ * 
+ *    &lt;!-- The XML file name. --&gt;
+ *    &lt;File&gt;/path/to/file.xml&lt;/File&gt;
+ *    
+ * &lt;/AuthorizationCallback&gt;
+ * </pre>
+ * <p>The XML file itself shall look like this:</p>
+ * <pre>
+ * &lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+ * &lt;authorization&gt;
+ *        &lt;login&gt;your-login&lt;/login&gt;
+ *        &lt;password&gt;your-password&lt;/password&gt;
+ * &lt;/authorization&gt;
+ * </pre>
  * @author Ralph Schuster
  *
  */

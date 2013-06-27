@@ -228,6 +228,7 @@ public class GenerateReports implements Runnable {
 				while (reports.hasNext()) {
 					BugzillaReportGenerator report = reports.next();
 					if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
+						log.info("Generating "+report.getClass().getSimpleName()+"...");
 						report.closeReport();
 					}
 				}

@@ -25,6 +25,22 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 
 /**
  * Implements authorization information retrieval from a properties file.
+ * <p>
+ * Configuration:
+ * </p>
+ * <pre>
+ * &lt;AuthorizationCallback class="b4j.core.session.PropertiesFileAuthorizationCallback"&gt;
+ * 
+ *    &lt;!-- The properties file name. --&gt;
+ *    &lt;File&gt;/path/to/file.properties&lt;/File&gt;
+ *    
+ * &lt;/AuthorizationCallback&gt;
+ * </pre>
+ * <p>The properties file itself shall look like this:</p>
+ * <pre>
+ * login=your-login
+ * password=your-password
+ * </pre>
  * @author Ralph Schuster
  *
  */
