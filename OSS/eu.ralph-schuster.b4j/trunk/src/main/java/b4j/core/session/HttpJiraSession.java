@@ -27,6 +27,7 @@ import b4j.core.session.jira.JiraXmlHandler;
 import b4j.util.UrlParameters;
 
 /**
+ * Access a Jira instance with normal HTTP(S) protocol.
  * @author Ralph Schuster
  *
  */
