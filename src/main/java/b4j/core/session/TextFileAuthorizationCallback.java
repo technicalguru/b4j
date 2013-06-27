@@ -28,6 +28,21 @@ import rs.baselib.configuration.IConfigurable;
 
 /**
  * Implements authorization information retrieval from a plain text file.
+ * <p>
+ * Configuration:
+ * </p>
+ * <pre>
+ * &lt;AuthorizationCallback class="b4j.core.session.TextFileAuthorizationCallback"&gt;
+ * 
+ *    &lt;!-- The text file name. --&gt;
+ *    &lt;File&gt;/path/to/file.txt&lt;/File&gt;
+ *    
+ * &lt;/AuthorizationCallback&gt;
+ * </pre>
+ * <p>The text file itself shall look like this:</p>
+ * <pre>
+ * your-login:your-password
+ * </pre>
  * @author Ralph Schuster
  *
  */

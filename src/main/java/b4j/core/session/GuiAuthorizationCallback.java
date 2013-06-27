@@ -43,6 +43,29 @@ import rs.baselib.configuration.IConfigurable;
 /**
  * Implements authorization information retrieval from pop-up dialog.
  * This implementation prompts the user for name and password.
+ * <p>
+ * Configuration:
+ * </p>
+ * <pre>
+ * &lt;AuthorizationCallback class="b4j.core.session.GuiAuthorizationCallback"&gt;
+ * 
+ *    &lt;!-- The default user name (optional). --&gt;
+ *    &lt;login&gt;default-user-name&lt;/login&gt;
+ *    
+ *    &lt;!-- The label to be used for user name text field (optional). --&gt;
+ *    &lt;login-label&gt;a-login-label&lt;/login-label&gt;
+ *    
+ *    &lt;!-- The label to be used for password field (optional). --&gt;
+ *    &lt;password-label&gt;a-password-label&lt;/password-label&gt;
+ *    
+ *    &lt;!-- The text to be shown explaining what to do (optional). --&gt;
+ *    &lt;prompt&gt;a-short-sentence&lt;/prompt&gt;
+ *    
+ *    &lt;!-- The title of the dialog (optional). --&gt;
+ *    &lt;title&gt;a-title&lt;/title&gt;
+ *    
+ * &lt;/AuthorizationCallback&gt;
+ * </pre>
  * @author Ralph Schuster
  *
  */

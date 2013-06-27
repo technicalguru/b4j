@@ -28,6 +28,23 @@ import rs.baselib.configuration.IConfigurable;
  * Implements authorization information retrieval from command line.
  * This implementation prompts the user for name (if no default name
  * was given) and for the password.
+ * <p>
+ * Configuration:
+ * </p>
+ * <pre>
+ * &lt;AuthorizationCallback class="b4j.core.session.CommandLineAuthorizationCallback"&gt;
+ * 
+ *    &lt;!-- The default user name (optional). --&gt;
+ *    &lt;login&gt;default-user-name&lt;/login&gt;
+ *    
+ *    &lt;!-- The text to be used for user name prompt (optional). --&gt;
+ *    &lt;login-prompt&gt;login-prompt-text&lt;/login-prompt&gt;
+ *    
+ *    &lt;!-- The text to be used for password prompt (optional). --&gt;
+ *    &lt;password-prompt&gt;password-prompt-text&lt;/password-prompt&gt;
+ *    
+ * &lt;/AuthorizationCallback&gt;
+ * </pre>
  * @author Ralph Schuster
  *
  */

@@ -26,6 +26,15 @@ import rs.baselib.configuration.IConfigurable;
  * Implements authorization information retrieval from configuration object.
  * This implementation can be used to directly store authorization information
  * in a global config without loading extra information from other files.
+ * <p>
+ * Configuration:
+ * </p>
+ * <pre>
+ * &lt;AuthorizationCallback class="b4j.core.session.DefaultAuthorizationCallback"&gt;
+ *    &lt;login&gt;my-user-name&lt;/login&gt;
+ *    &lt;password&gt;my-password&lt;/password&gt;
+ * &lt;/AuthorizationCallback&gt;
+ * </pre>
  * @author Ralph Schuster
  *
  */
