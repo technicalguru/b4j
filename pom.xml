@@ -109,12 +109,14 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>templating</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.1</version>
 		</dependency>
 		<dependency>
-			<groupId>eu.ralph-schuster</groupId>
-			<artifactId>baselib</artifactId>
-			<version>1.0.0</version>
+			<!-- see https://ecosystem.atlassian.net/wiki/display/JRJC/Download -->
+			<!-- Repository at: https://m2proxy.atlassian.com/repository/public -->
+			<groupId>com.atlassian.jira</groupId>
+			<artifactId>jira-rest-java-client</artifactId>
+			<version>2.0.0-m2</version>
 		</dependency>
 	</dependencies>
 
