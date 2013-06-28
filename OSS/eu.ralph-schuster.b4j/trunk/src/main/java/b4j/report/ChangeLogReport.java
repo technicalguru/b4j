@@ -75,6 +75,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	&lt;Include&gt;
 	All SL Use cases - UC Descriptions reworked\, amended and created
 	All SL Use cases - VD11 default sorting stated more precisely
+	&lt;/Include&gt;
 &lt;/Version&gt;
 &lt;Version timestamp="2008-07-16 00:00"&gt;
 	&lt;Name&gt;Release 1.2&lt;/Name&gt;
@@ -116,7 +117,7 @@ public class ChangeLogReport extends AbstractFileReport {
 				releaseProvider.configure(rConfig);
 			}
 		} catch (ClassNotFoundException e) {
-			throw new ConfigurationException("Cannot find report "+className);
+			throw new ConfigurationException("Cannot find release provider "+className);
 		} catch (InstantiationException e) {
 			throw new ConfigurationException("Cannot instantiate "+className);
 		} catch (IllegalAccessException e) {

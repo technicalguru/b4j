@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +29,7 @@ import b4j.core.Issue;
 
 /**
  * Creates a tracking report for management purposes. The CSV file produced
- * tells about number of opened bugs for each calendar week per severity,
- * the amount of those bugs opened already closed, and the average time
- * in days that closing a bug needed.
+ * tells about number of opened bugs for each assignee.
  * <p>
  * The report allows configuration of severity groups as too many severities
  * might make a report unreadable.
@@ -86,17 +82,6 @@ public class AssigneeTrackingReport extends AbstractFileReport {
 		out.close();
 		
 		log.info("Report created");
-	}
-
-	/**
-	 * Configures the report.
-	 * @param config - the configuration object
-	 * @throws ConfigurationException - when a configuration problem occurs
-	 * @see b4j.report.AbstractFileReport#init(org.apache.commons.configuration.Configuration)
-	 */
-	@Override
-	public void init(Configuration config) throws ConfigurationException {
-		super.init(config);
 	}
 
 	/**
