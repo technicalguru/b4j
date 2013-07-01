@@ -31,7 +31,21 @@ import b4j.core.DefaultIssue;
 
 /**
  * Generates releases and additional entries out from XML configuration.
+ * <p>
+ * Configuration:
+ * </p>
+ * <pre>
+ *       &lt;ReleaseProvider class="b4j.report.DefaultReleaseProvider"&gt;
+ *          &lt;Release timestamp="2012-09-29 00:00"&gt;
+ *             &lt;Name&gt;Release 1.3&lt;/Name&gt;
+ *          &lt;/Release&gt;
+ *          &lt;Release timestamp="2012-12-25 00:00"&gt;
+ *             &lt;Name&gt;Release 1.4.0&lt;/Name&gt;
+ *          &lt;/Release&gt;
+ *       &lt;/ReleaseProvider&gt;
+ * </pre>
  * @author Ralph Schuster
+ * @see ChangeLogReport
  *
  */
 public class DefaultReleaseProvider implements ReleaseProvider {

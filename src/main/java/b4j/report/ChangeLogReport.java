@@ -43,8 +43,26 @@ import b4j.core.Issue;
  * <p>
  * This implementation does not evaluate the version information of a bug.
  * </p>
- * @author Ralph Schuster
+ * <p>Configuration:</p>
+ * <pre>
+ *    &lt;report class="b4j.report.ChangeLogReport"&gt;
+ *       &lt;outputFile&gt;test-ChangeLog1.txt&lt;/outputFile&gt;
+ *	
+ *       &lt;!-- ReleaseProvider Implementation --> 
+ *       &lt;ReleaseProvider class="..."&gt;
+ *          ...
+ *       &lt;/ReleaseProvider&gt;
  *
+ *       &lt;!-- Optional: Additional change log entries --> 
+ *       &lt;ChangeLogEntryProvider class="..."&gt;
+ *          ...
+ *       &lt;/ChangeLogEntryProvider>
+ *
+ *    &lt;/report&gt;
+ * </pre>
+ * @author Ralph Schuster
+ * @see ReleaseProvider
+ * @see ChangeLogEntryProvider
  */
 public class ChangeLogReport extends AbstractFileReport {
 
