@@ -34,8 +34,16 @@ import b4j.core.LongDescription;
 import b4j.util.BugzillaUtils;
 
 /**
- * Reports some details about bug records into a file
+ * Reports some details about bug records into a file.
+ * <p>Configuration:</p>
+ * <pre>
+ *    &lt;report class="b4j.report.DetailedBugReport"&gt;
+ *       &lt;outputFile&gt;test-DetailedBugReport.txt&lt;/outputFile&gt;
+ *       &lt;templateFile&gt;detailedBugReport.tmpl&lt;/templateFile&gt;
+ *    &lt;/report&gt;
+ * </pre>
  * @author Ralph Schuster
+ * @see Templating
  *
  */
 public class DetailedBugReport extends AbstractFileReport {

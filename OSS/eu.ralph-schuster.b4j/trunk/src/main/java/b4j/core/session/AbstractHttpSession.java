@@ -30,8 +30,34 @@ import b4j.util.BugzillaUtils;
 
 /**
  * Implements an abstract HTTP session including usage with proxies.
- * @author Ralph Schuster
+ * <p>Configuration:</p>
+ * <pre>
+ * &lt;bugzilla-session class="..."&gt;
+ * 
+ *    &lt;!-- The home URL of Bugzilla --&gt;
+ *    &lt;bugzilla-home&gt;http://your-bugzilla.your-domain.com/&lt;/bugzilla-home&gt;
+ *    
+ *    &lt;!-- Optional: AuthenticationCallback implementation --&gt;
+ *    &lt;AuthorizationCallback class="..."&gt;
+ *       ...
+ *    &lt;/AuthorizationCallback&gt;
+ *    
+ *    &lt;!-- Issue implementation class --&gt;
+ *    &lt;BugzillaBug class="b4j.core.DefaultIssue"/&gt;
+ *    
+ *    &lt;!-- Optional: Proxy definition --&gt;
+ *    &lt;proxy-host&gt;10.10.10.250:8080&lt;/proxy-host&gt;
+ *    
+ *    &lt;!-- Optional: Proxy AuthenticationCallback implementation --&gt;
+ *    &lt;ProxyAuthorizationCallback class="..."&gt;
+ *       ...
+ *    &lt;/ProxyAuthorizationCallback&gt;
  *
+ * &lt;/bugzilla-session&gt;
+ * </pre>
+ * @author Ralph Schuster
+ * @see AuthorizationCallback
+ * @see b4j.core.Issue
  */
 public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 

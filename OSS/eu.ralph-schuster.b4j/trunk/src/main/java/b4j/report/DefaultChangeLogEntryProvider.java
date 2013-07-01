@@ -27,7 +27,16 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
 /**
- * Adds entries from the XML configuration for each release listed
+ * Adds entries from the XML configuration for each release listed.
+ * <p>Configuration:</p>
+ * <pre>
+ *       &lt;ChangeLogEntryProvider class="b4j.report.DefaultChangeLogEntryProvider"&gt;
+ *          &lt;Release name="Release 1.4.0"&gt;
+ *             This is an additional entry defined in the report configuration for 1.0
+ *             And this is the 2nd entry defined in the report configuration
+ *          &lt;/Release&gt;
+ *       &lt;/ChangeLogEntryProvider>
+ * </pre>
  * @author Ralph Schuster
  *
  */

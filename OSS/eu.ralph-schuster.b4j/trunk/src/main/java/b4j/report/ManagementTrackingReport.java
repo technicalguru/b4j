@@ -45,6 +45,23 @@ import b4j.core.Issue;
  * The report allows configuration of severity groups as too many severities
  * might make a report unreadable.
  * </p>
+ * <p>Configuration:</p>
+ * <pre>
+ *    &lt;report class="b4j.report.ManagementTrackingReport"&gt;
+ *       &lt;outputFile&gt;test-ManagementTrackingReport.csv&lt;/outputFile&gt;
+ * 
+ *       &lt;!-- Sev groups are optional. All sevs not listed in a group will be tracked individually --&gt;
+ *       &lt;severityGroup name="URGENT"&gt;
+ *          &lt;severity&gt;blocker&lt;/severity&gt;
+ *          &lt;severity&gt;critical&lt;/severity&gt;
+ *          &lt;severity&gt;major&lt;/severity&gt;
+ *       &lt;/severityGroup&gt;
+ *       &lt;severityGroup name="MINORS"&gt;
+ *          &lt;severity&gt;minor&lt;/severity&gt;
+ *          &lt;severity&gt;trivial&lt;/severity&gt;
+ *       &lt;/severityGroup&gt;
+ *    &lt;/report&gt;
+ * </pre>
  * @author Ralph Schuster
  *
  */

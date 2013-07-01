@@ -51,9 +51,9 @@ import b4j.util.UrlParameters;
 
 
 /**
- * Implements Bugzilla access via HTTP. Use this session object
- * when you cannot access Bugzilla directly per JDBC.
- * This implementation does not implement access via proxy yet.
+ * Implements Bugzilla access via HTTP.
+ * There is no additional configuration required. See
+ * {@link AbstractHttpSession} for configuration description.
  * @author Ralph Schuster
  *
  */
