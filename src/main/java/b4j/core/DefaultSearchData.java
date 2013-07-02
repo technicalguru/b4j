@@ -46,20 +46,6 @@ public class DefaultSearchData implements SearchData {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
-
-	/**
 	 * Configures the search data from configuration.
 	 * All elements of the configuration are taken as search parameters.
 	 * For XML documents this means: &lt;parameter-name&gt;parameter-value&lt;/parameter-name&gt;

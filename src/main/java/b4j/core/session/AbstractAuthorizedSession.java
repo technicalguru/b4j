@@ -23,7 +23,7 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.configuration.IConfigurable;
+import rs.baselib.configuration.ConfigurationUtils;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.Session;
@@ -52,20 +52,6 @@ public abstract class AbstractAuthorizedSession implements Session {
 	 */
 	public AbstractAuthorizedSession() {
 		log = LoggerFactory.getLogger(getClass());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**
@@ -104,14 +90,10 @@ public abstract class AbstractAuthorizedSession implements Session {
 				if ((className.trim().length() == 0) 
 						|| className.toLowerCase().trim().equals("null")
 						|| className.toLowerCase().trim().equals("nil")) {
+					className = DefaultAuthorizationCallback.class.getName();
 					authorizationCallback = new DefaultAuthorizationCallback();
-				} else {
-					Class<?> c = Class.forName(className);
-					authorizationCallback = (AuthorizationCallback)c.newInstance();
 				}
-				if (authorizationCallback instanceof IConfigurable) {
-					((IConfigurable)authorizationCallback).configure(authCfg);
-				}
+				authorizationCallback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
 				setAuthorizationCallback(authorizationCallback);
 			}
 			
@@ -121,10 +103,6 @@ public abstract class AbstractAuthorizedSession implements Session {
 			setBugzillaBugClass(bugzillaBugClass);
 		} catch (ClassNotFoundException e) {
 			throw new ConfigurationException("Cannot find class: "+className, e);
-		} catch (InstantiationException e) {
-			throw new ConfigurationException("Cannot instantiate class: "+className, e);
-		} catch (IllegalAccessException e) {
-			throw new ConfigurationException("Cannot access constructor: "+className, e);
 		}
 	}
 

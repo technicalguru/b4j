@@ -17,9 +17,7 @@
  */
 package b4j.report;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-
+import rs.baselib.configuration.IConfigurable;
 import b4j.core.Issue;
 import b4j.core.Session;
 
@@ -49,14 +47,7 @@ import b4j.core.Session;
  * @author Ralph Schuster
  *
  */
-public interface BugzillaReportGenerator {
-
-	/**
-	 * Configures the report.
-	 * @param config - the configuration object
-	 * @throws ConfigurationException - when a configuration problem occurs
-	 */
-	public void init(Configuration config) throws ConfigurationException;
+public interface BugzillaReportGenerator extends IConfigurable {
 
 	/**
 	 * Sets the current Session object used.

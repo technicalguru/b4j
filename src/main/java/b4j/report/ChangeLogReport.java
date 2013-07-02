@@ -33,6 +33,8 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import rs.baselib.configuration.ConfigurationUtils;
+
 import b4j.core.Issue;
 
 /**
@@ -72,7 +74,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	private List<Release> releases;
 	private ReleaseProvider releaseProvider;
 	private List<ChangeLogEntryProvider> entryProviders;
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -82,7 +84,7 @@ public class ChangeLogReport extends AbstractFileReport {
 		releases = new ArrayList<Release>();
 	}
 
-	
+
 	/**
 	 * Reads the configuration for the ChangeLog.
 	 * The configuration must be XML based and has the following format:
@@ -116,37 +118,24 @@ public class ChangeLogReport extends AbstractFileReport {
 	 * @throws ConfigurationException - when a configuration problem occurs
 	 * @see b4j.report.AbstractFileReport#init(org.apache.commons.configuration.Configuration)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public void init(Configuration config) throws ConfigurationException {
-		super.init(config);
-		
+	public void configure(Configuration config) throws ConfigurationException {
+		super.configure(config);
+
 		// get the release provider
-		String className = null;
-		try {
-			className = config.getString("ReleaseProvider[@class]");
-			if (className == null) {
-				throw new ConfigurationException("No ReleaseProvider configured");
-			} else {
-				Class<?> clazz = Class.forName(className);
-				Class<ReleaseProvider> clazz2 = (Class<ReleaseProvider>)clazz;
-				releaseProvider = clazz2.newInstance();
-				Configuration rConfig = ((HierarchicalConfiguration)config).configurationAt("ReleaseProvider(0)");
-				releaseProvider.configure(rConfig);
-			}
-		} catch (ClassNotFoundException e) {
-			throw new ConfigurationException("Cannot find release provider "+className);
-		} catch (InstantiationException e) {
-			throw new ConfigurationException("Cannot instantiate "+className);
-		} catch (IllegalAccessException e) {
-			throw new ConfigurationException("Cannot access constructor of "+className);
+		String className = config.getString("ReleaseProvider[@class]");
+		if (className == null) {
+			throw new ConfigurationException("No ReleaseProvider configured");
+		} else {
+			Configuration rConfig = ((HierarchicalConfiguration)config).configurationAt("ReleaseProvider(0)");
+			releaseProvider = (ReleaseProvider)ConfigurationUtils.load(rConfig, true);
 		}
 
 		// Get all releases and sort them in time
 		Iterator<Release> rel = releaseProvider.getReleases();
 		while (rel.hasNext()) releases.add(rel.next());
 		Collections.sort(releases, new ReleaseComparator());
-		
+
 		// get the entry providers
 		List<Object> classNames = config.getList("ChangeLogEntryProvider[@class]");
 		Iterator<Object> i = classNames.iterator();
@@ -154,22 +143,14 @@ public class ChangeLogReport extends AbstractFileReport {
 		while (i.hasNext()) {
 			className = (String)i.next();
 			try {
-				Class<?> clazz = Class.forName(className);
-				Class<ChangeLogEntryProvider> clazz2 = (Class<ChangeLogEntryProvider>)clazz;
-				ChangeLogEntryProvider r = clazz2.newInstance();
-				Configuration cConfig = ((HierarchicalConfiguration)config).configurationAt("ChangeLogEntryProvider("+idx+")");
-				r.configure(cConfig);
+				ChangeLogEntryProvider r = (ChangeLogEntryProvider)ConfigurationUtils.load(((HierarchicalConfiguration)config).configurationAt("ChangeLogEntryProvider("+idx+")"), true);
 				entryProviders.add(r);
-			} catch (ClassNotFoundException e) {
-				log.error("Cannot find report "+className);
-			} catch (InstantiationException e) {
-				log.error("Cannot instantiate "+className);
-			} catch (IllegalAccessException e) {
-				log.error("Cannot access constructor of "+className);
+			} catch (Exception e) {
+				log.error("Cannot load ChangeLogEntryProvider "+className);
 			}
 			idx++;
 		}
-		
+
 	}
 
 
@@ -185,7 +166,7 @@ public class ChangeLogReport extends AbstractFileReport {
 		if (r == null) {
 			return;
 		}
-		
+
 		List<String> l = changeLogs.get(r);
 		if (l == null) {
 			l = new ArrayList<String>();
@@ -203,7 +184,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	protected String getBugText(Issue bug) {
 		return "Fixed Bug #"+bug.getId()+" - "+bug.getShortDescription();
 	}
-	
+
 	/**
 	 * Maps the bug's last change date to a release.
 	 * @param bug - the bug to consider
@@ -228,7 +209,7 @@ public class ChangeLogReport extends AbstractFileReport {
 		}
 		return null;
 	}
-	
+
 
 	/**
 	 * Closes a report.
@@ -238,13 +219,13 @@ public class ChangeLogReport extends AbstractFileReport {
 	@Override
 	public void closeReport() {
 		PrintWriter out = new PrintWriter(getOutputStream());
-		
+
 		Iterator<Release> ri = releases.iterator();
 		while (ri.hasNext()) {
 			Release r = ri.next();
 			List<String> log = changeLogs.get(r);
 			if (log == null) log = new ArrayList<String>();
-			
+
 			// Add additional entries from entry providers
 			Iterator<ChangeLogEntryProvider> ci = entryProviders.iterator();
 			while (ci.hasNext()) {
@@ -254,7 +235,7 @@ public class ChangeLogReport extends AbstractFileReport {
 					while (e.hasNext()) log.add(e.next());
 				}
 			}
-			
+
 			// Print the log
 			String name = getReleaseText(r);
 			out.println(name);
@@ -286,7 +267,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	protected String getReleaseText(Release r) {
 		return "Change Log "+r.getReleaseName();
 	}
-	
+
 	/**
 	 * Implements the sorting of releases.
 	 * Releases are sorted in backward order in history.
@@ -306,6 +287,6 @@ public class ChangeLogReport extends AbstractFileReport {
 			if (o1.getReleaseTime().getTime() > o2.getReleaseTime().getTime()) return -1;
 			return -o1.getReleaseName().compareTo(o2.getReleaseName());
 		}
-		
+
 	}
 }

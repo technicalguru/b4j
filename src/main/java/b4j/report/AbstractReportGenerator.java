@@ -30,7 +30,7 @@ public abstract class AbstractReportGenerator implements BugzillaReportGenerator
 	 * @throws ConfigurationException - when a configuration problem occurs
 	 */
 	@Override
-	public void init(Configuration config) throws ConfigurationException {
+	public void configure(Configuration config) throws ConfigurationException {
 	}
 
 	/**

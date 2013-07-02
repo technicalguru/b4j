@@ -92,20 +92,6 @@ public class GuiAuthorizationCallback extends AbstractAuthorizationCallback impl
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
-
-	/**
 	 * Configures the name callback.
 	 * Configuration can contain three elements:
 	 * <ul>

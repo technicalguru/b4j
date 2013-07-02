@@ -30,7 +30,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import org.apache.xmlrpc.client.XmlRpcSun15HttpTransportFactory;
 import org.apache.xmlrpc.client.XmlRpcTransportFactory;
 
-import rs.baselib.configuration.IConfigurable;
+import rs.baselib.configuration.ConfigurationUtils;
 import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
@@ -108,14 +108,9 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 						if ((className.trim().length() == 0) 
 								|| className.toLowerCase().trim().equals("null")
 								|| className.toLowerCase().trim().equals("nil")) {
-							callback = new DefaultAuthorizationCallback();
-						} else {
-							Class<?> c = Class.forName(className);
-							callback = (AuthorizationCallback)c.newInstance();
+							className = DefaultAuthorizationCallback.class.getName();
 						}
-						if (callback instanceof IConfigurable) {
-							((IConfigurable)callback).configure(authCfg);
-						}
+						callback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
 						setProxyAuthorizationCallback(callback);
 					}
 				} catch (IllegalArgumentException e) {
@@ -141,12 +136,6 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 			}
 		} catch (MalformedURLException e) {
 			throw new ConfigurationException("Malformed JIRA URL: ", e);
-		} catch (ClassNotFoundException e) {
-			throw new ConfigurationException("Cannot find class: "+className, e);
-		} catch (InstantiationException e) {
-			throw new ConfigurationException("Cannot instantiate class: "+className, e);
-		} catch (IllegalAccessException e) {
-			throw new ConfigurationException("Cannot access constructor: "+className, e);
 		}
 	}
 	

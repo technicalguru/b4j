@@ -64,7 +64,7 @@ public abstract class AbstractEmailReport extends AbstractReportGenerator {
 	 * @throws ConfigurationException - when a configuration problem occurs
 	 */
 	@Override
-	public void init(Configuration config) throws ConfigurationException {
+	public void configure(Configuration config) throws ConfigurationException {
 		fromName = config.getString("emailFromName");
 		fromAddress = config.getString("emailFromAddress");
 		emailHost = config.getString("emailHost");
