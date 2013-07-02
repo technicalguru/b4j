@@ -108,6 +108,11 @@
 		</dependency>
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
+			<artifactId>baselib</artifactId>
+			<version>1.1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>templating</artifactId>
 			<version>1.1.1</version>
 		</dependency>

@@ -75,8 +75,8 @@ public class DetailedBugReport extends AbstractFileReport {
 	 * @see b4j.report.AbstractFileReport#init(org.apache.commons.configuration.Configuration)
 	 */
 	@Override
-	public void init(Configuration config) throws ConfigurationException {
-		super.init(config);
+	public void configure(Configuration config) throws ConfigurationException {
+		super.configure(config);
 		String filename = config.getString("templateFile(0)");
 		try {
 			String template = Templating.getTemplate(filename);

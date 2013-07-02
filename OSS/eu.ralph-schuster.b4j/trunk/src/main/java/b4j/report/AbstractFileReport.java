@@ -47,7 +47,6 @@ public abstract class AbstractFileReport extends AbstractReportGenerator {
 	public AbstractFileReport() {
 	}
 
-	
 	/**
 	 * Configures the file report.
 	 * This implementation retrieves the value for "outputFile" or throws
@@ -56,12 +55,11 @@ public abstract class AbstractFileReport extends AbstractReportGenerator {
 	 * @throws ConfigurationException - when a configuration problem occurs
 	 */
 	@Override
-	public void init(Configuration config) throws ConfigurationException {
+	public void configure(Configuration config) throws ConfigurationException {
 		String s = config.getString("outputFile");
 		if (s != null) outputFile = new File(s);
 		else throw new ConfigurationException("No outputFile element found");
 	}
-
 
 	/**
 	 * Returns the configured output file.

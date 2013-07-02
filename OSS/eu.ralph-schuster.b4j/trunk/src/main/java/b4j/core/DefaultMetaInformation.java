@@ -87,7 +87,6 @@ public class DefaultMetaInformation implements MetaInformation {
 	 * @param config - XML configuration
 	 * @throws ConfigurationException - if a configuration error occurs
 	 */
-	@SuppressWarnings("unchecked")
 	public void configure(XMLConfiguration config) throws ConfigurationException {
 		// Create and configure bugzilla session
 		String className = null;
@@ -102,19 +101,12 @@ public class DefaultMetaInformation implements MetaInformation {
 		while (i.hasNext()) {
 			className = (String)i.next();
 			try {
-				Class<?> clazz = Class.forName(className);
-				Class<BugzillaReportGenerator> clazz2 = (Class<BugzillaReportGenerator>)clazz;
-				BugzillaReportGenerator r = clazz2.newInstance();
 				Configuration cConfig = config.configurationAt("report("+idx+")");
-				r.init(cConfig);
+				BugzillaReportGenerator r = (BugzillaReportGenerator)ConfigurationUtils.load(cConfig, true);
 				r.setBugzillaSession(bugzillaSession);
 				reports.add(r);
-			} catch (ClassNotFoundException e) {
-				log.error("Cannot find report "+className);
-			} catch (InstantiationException e) {
-				log.error("Cannot instantiate "+className);
-			} catch (IllegalAccessException e) {
-				log.error("Cannot access constructor of "+className);
+			} catch (Exception e) {
+				log.error("Cannot create report "+className, e);
 			}
 			idx++;
 		}
@@ -122,9 +114,7 @@ public class DefaultMetaInformation implements MetaInformation {
 		// Create and configure search data
 		searchData = new DefaultSearchData();
 		Configuration searchCfg = config.configurationAt("search(0)");
-		searchData.beforeConfiguration();
-		searchData.configure(searchCfg);
-		searchData.afterConfiguration();
+		ConfigurationUtils.configure(searchData, searchCfg);
 	}
 
 	/**

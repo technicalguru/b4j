@@ -54,20 +54,6 @@ public class DefaultAuthorizationCallback extends SimpleAuthorizationCallback im
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
-
-	/**
 	 * Configures the callback.
 	 * Configuration object must must contain two elements &lt;login&gt;
 	 * and &lt:password&gt;.

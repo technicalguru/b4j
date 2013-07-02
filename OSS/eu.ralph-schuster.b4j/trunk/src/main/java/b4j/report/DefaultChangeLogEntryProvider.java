@@ -65,20 +65,6 @@ public class DefaultChangeLogEntryProvider implements ChangeLogEntryProvider {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public void configure(Configuration config) throws ConfigurationException {
 		logEntries = new HashMap<String, List<String>>();
 		

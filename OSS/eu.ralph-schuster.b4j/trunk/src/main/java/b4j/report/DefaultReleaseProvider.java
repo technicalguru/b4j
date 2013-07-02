@@ -60,20 +60,6 @@ public class DefaultReleaseProvider implements ReleaseProvider {
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
-	
-	/**
 	 * Configures the provider.
 	 * The method will read all information from the XML configuration.
 	 * @param config - configuration object

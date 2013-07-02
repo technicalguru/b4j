@@ -209,8 +209,8 @@ public class ManagementTrackingReport extends AbstractFileReport {
 	 * @see b4j.report.AbstractFileReport#init(org.apache.commons.configuration.Configuration)
 	 */
 	@Override
-	public void init(Configuration config) throws ConfigurationException {
-		super.init(config);
+	public void configure(Configuration config) throws ConfigurationException {
+		super.configure(config);
 		severityGroups = new HashMap<String, String>();
 		allSeverities = new ArrayList<String>();
 		Iterator<?> groups = config.getList("severityGroup[@name]").iterator();

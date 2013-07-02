@@ -25,7 +25,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
-import rs.baselib.configuration.IConfigurable;
+import rs.baselib.configuration.ConfigurationUtils;
 import b4j.util.BugzillaUtils;
 
 /**
@@ -73,20 +73,6 @@ public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 	 */
 	public AbstractHttpSession() {
 		cookies = new HashSet<HttpCookie>();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
 	}
 
 	/**
@@ -143,14 +129,9 @@ public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 								|| (className.trim().length() == 0) 
 								|| className.toLowerCase().trim().equals("null")
 								|| className.toLowerCase().trim().equals("nil")) {
-							callback = new DefaultAuthorizationCallback();
-						} else {
-							Class<?> c = Class.forName(className);
-							callback = (AuthorizationCallback)c.newInstance();
+							className = DefaultAuthorizationCallback.class.getName();
 						}
-						if (callback instanceof IConfigurable) {
-							((IConfigurable)callback).configure(authCfg);
-						}
+						callback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
 						setProxyAuthorizationCallback(callback);
 					}
 				} catch (IllegalArgumentException e) {
@@ -160,12 +141,6 @@ public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
 			}
 		} catch (MalformedURLException e) {
 			throw new ConfigurationException("Malformed Bugzilla URL: ", e);
-		} catch (ClassNotFoundException e) {
-			throw new ConfigurationException("Cannot find class: "+className, e);
-		} catch (InstantiationException e) {
-			throw new ConfigurationException("Cannot instantiate class: "+className, e);
-		} catch (IllegalAccessException e) {
-			throw new ConfigurationException("Cannot access constructor: "+className, e);
 		}
 	}
 	

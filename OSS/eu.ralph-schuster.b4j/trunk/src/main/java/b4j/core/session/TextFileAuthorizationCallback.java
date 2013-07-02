@@ -55,20 +55,6 @@ public class TextFileAuthorizationCallback extends AbstractAuthorizationCallback
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void beforeConfiguration() {
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void afterConfiguration() {
-	}
-
-	/**
 	 * Configures the callback.
 	 * Configuration takes place from a plain text filewhose
 	 * path is contained within element &lt;File&gt;. 
