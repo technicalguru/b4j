@@ -117,6 +117,11 @@
 			<version>1.1.1</version>
 		</dependency>
 		<dependency>
+			<groupId>eu.ralph-schuster</groupId>
+			<artifactId>csv</artifactId>
+			<version>2.5.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<!-- see https://ecosystem.atlassian.net/wiki/display/JRJC/Download -->
 			<!-- Repository at: https://m2proxy.atlassian.com/repository/public -->
 			<groupId>com.atlassian.jira</groupId>
