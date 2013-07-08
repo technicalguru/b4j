@@ -74,7 +74,9 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 		super.configure(config);
 		String className = null;
 		try {
-			setBaseUrl(new URL(config.getString("jira-home")));
+			String home = config.getString("jira-home");
+			if (home == null) home = config.getString("bugzilla-home");
+			setBaseUrl(new URL(home));
 			
 			// proxy configuration
 			String s = config.getString("proxy-host");
