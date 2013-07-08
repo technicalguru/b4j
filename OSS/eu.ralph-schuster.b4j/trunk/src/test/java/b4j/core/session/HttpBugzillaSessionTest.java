@@ -135,7 +135,7 @@ public class HttpBugzillaSessionTest {
 		
 		// Check attachment retrieval
 		if (issue.getId().equals("30")) {
-			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment(3))));
+			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3"))));
 			String s = null;
 			s = r.readLine();
 			s = r.readLine();

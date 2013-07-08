@@ -17,6 +17,7 @@
  */
 package b4j.core;
 
+import java.net.URI;
 import java.util.Date;
 
 /**
@@ -37,13 +38,13 @@ public interface Attachment {
 	 * Returns the ID of this attachment.
 	 * @return the ID
 	 */
-	public long getId();
+	public String getId();
 
 	/**
 	 * Sets the ID of the attachment.
 	 * @param id - the ID to set
 	 */
-	public void setId(long id);
+	public void setId(String id);
 
 	/**
 	 * Returns the date of the attachment.
@@ -93,5 +94,15 @@ public interface Attachment {
 	 */
 	public void setType(String type);
 	
+	/**
+	 * Returns the URI where to retrieve the attachment.
+	 * @return the content URI
+	 */
+	public URI getUri();
 	
+	/**
+	 * Sets the URI where to retrieve the attachment.
+	 * @param uri the content URI
+	 */
+	public void setUri(URI uri);
 }
