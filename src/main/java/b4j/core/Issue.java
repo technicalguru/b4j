@@ -485,6 +485,12 @@ public interface Issue {
 	public Iterator<String> getCcIterator();
 
 	/**
+	 * Returns all CCs of this bug.
+	 * @return iterator of all CCs
+	 */
+	public Iterable<String> getCc();
+
+	/**
 	 * Removes a CC.
 	 * @param o - the CC to remove
 	 * @return true if CC was found and removed
@@ -523,6 +529,12 @@ public interface Issue {
 	public Iterator<LongDescription> getLongDescriptionIterator();
 
 	/**
+	 * Returns all long description records.
+	 * @return iterator on all long descriptions
+	 */
+	public Iterable<LongDescription> getLongDescriptions();
+
+	/**
 	 * Removes a specific long description record.
 	 * @param o - the record to remove
 	 * @return true if record could be removed
@@ -559,12 +571,10 @@ public interface Issue {
 	 */
 	public Attachment addAttachment();
 
-
 	/**
 	 * Removes all attachments.
 	 */
 	public void clearAttachments();
-
 
 	/**
 	 * Returns all attachments.
@@ -572,6 +582,11 @@ public interface Issue {
 	 */
 	public Iterator<Attachment> getAttachmentIterator();
 
+	/**
+	 * Returns all attachments.
+	 * @return iterator on all attachments.
+	 */
+	public Iterable<Attachment> getAttachments();
 
 	/**
 	 * Removes an attachment.
@@ -592,7 +607,7 @@ public interface Issue {
 	 * @return Attachment or null if it doesn't exist.
 	 * @since 1.3
 	 */
-	public Attachment getAttachment(long id);
+	public Attachment getAttachment(String id);
 	
 	/**
 	 * Adds a custom field value.

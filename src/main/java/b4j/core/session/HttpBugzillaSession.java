@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -754,9 +755,10 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentAttachment = null;
 			} else if (name.equals("attachid")) {
 				if (currentAttachment != null) {
-					currentAttachment.setId(Long.parseLong(currentContent.toString()));
+					currentAttachment.setId(currentContent.toString());
+					currentAttachment.setUri(URI.create(getBaseUrl()+PAGES[BUGZILLA_GET_ATTACHMENT]+"?id="+currentAttachment.getId()));
 				} else if (currentLongDescription != null) {
-					currentLongDescription.addAttachment(Long.parseLong(currentContent.toString()));
+					currentLongDescription.addAttachment(currentContent.toString());
 				}
 				currentContent = null;
 			} else if (name.equals("date")) {

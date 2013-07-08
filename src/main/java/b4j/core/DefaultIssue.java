@@ -17,6 +17,7 @@
  */
 package b4j.core;
 
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import rs.baselib.util.CommonUtils;
 
 /**
  * Class that represents a Bugzilla bug record.
@@ -740,6 +743,14 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterable<String> getCc() {
+		return CommonUtils.iterable(getCcIterator());
+	}
+
+	/**
 	 * Removes a CC.
 	 * @param o - the CC to remove
 	 * @return true if CC was found and removed
@@ -768,7 +779,6 @@ public class DefaultIssue implements Issue {
 		return cc.size();
 	}
 
-
 	/**
 	 * Creates a new and empty long description text.
 	 * @return a fresh and new long description record.
@@ -796,6 +806,15 @@ public class DefaultIssue implements Issue {
 	public Iterator<LongDescription> getLongDescriptionIterator() {
 		return longDescriptions.iterator();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterable<LongDescription> getLongDescriptions() {
+		return CommonUtils.iterable(getLongDescriptionIterator()); 
+	}
+
 
 	/**
 	 * Removes a specific long description record.
@@ -865,7 +884,6 @@ public class DefaultIssue implements Issue {
 		attachments.clear();
 	}
 
-
 	/**
 	 * Returns all attachments.
 	 * @return iterator on all attachments.
@@ -875,6 +893,14 @@ public class DefaultIssue implements Issue {
 		return attachments.iterator();
 	}
 
+	/**
+	 * Returns all attachments.
+	 * @return iterator on all attachments.
+	 */
+	@Override
+	public Iterable<Attachment> getAttachments() {
+		return CommonUtils.iterable(getAttachmentIterator());
+	}
 
 	/**
 	 * Removes an attachment.
@@ -902,9 +928,9 @@ public class DefaultIssue implements Issue {
 	 * @return Attachment or null if it doesn't exist.
 	 */
 	@Override
-	public Attachment getAttachment(long id) {
+	public Attachment getAttachment(String id) {
 		for (Attachment a : attachments) {
-			if (a.getId() == id) return a;
+			if (CommonUtils.equals(a.getId(), id)) return a;
 		}
 		return null;
 	}
@@ -1307,7 +1333,7 @@ public class DefaultIssue implements Issue {
 		private String theText;
 		private Date lastUpdate;
 		private String updateAuthor;
-		private Set<Long> attachments;
+		private Set<String> attachments;
 		
 		/**
 		 * Default Constructor.
@@ -1315,7 +1341,7 @@ public class DefaultIssue implements Issue {
 		public DefaultLongDescription() {
 			id = "unknown";
 			when = new Date(0);
-			attachments = new HashSet<Long>();
+			attachments = new HashSet<String>();
 		}
 
 		/**
@@ -1441,7 +1467,7 @@ public class DefaultIssue implements Issue {
 		 * {@inheritDoc}
 		 */
 		@Override
-		public void addAttachment(long id) {
+		public void addAttachment(String id) {
 			attachments.add(id);
 		}
 
@@ -1460,7 +1486,7 @@ public class DefaultIssue implements Issue {
 		public Iterator<Attachment> getAttachmentIterator() {
 			return new Iterator<Attachment>() {
 				private Attachment nextAttachment = null;
-				private Iterator<Long> idIterator = attachments.iterator();
+				private Iterator<String> idIterator = attachments.iterator();
 				
 				@Override
 				public boolean hasNext() {
@@ -1492,6 +1518,14 @@ public class DefaultIssue implements Issue {
 		 * {@inheritDoc}
 		 */
 		@Override
+		public Iterable<Attachment> getAttachments() {
+			return CommonUtils.iterable(getAttachmentIterator());
+		}
+		
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
 		public boolean removeAttachment(Attachment o) {
 			return false;
 		}
@@ -1514,11 +1548,12 @@ public class DefaultIssue implements Issue {
 	 */
 	public class DefaultAttachment implements Attachment {
 		
-		private long id;
+		private String id;
 		private Date date;
 		private String description;
 		private String filename;
 		private String type;
+		private URI uri;
 		
 		/**
 		 * Default constructor.
@@ -1542,7 +1577,7 @@ public class DefaultIssue implements Issue {
 		 * @return the ID
 		 */
 		@Override
-		public long getId() {
+		public String getId() {
 			return id;
 		}
 
@@ -1551,7 +1586,7 @@ public class DefaultIssue implements Issue {
 		 * @param id - the ID to set
 		 */
 		@Override
-		public void setId(long id) {
+		public void setId(String id) {
 			this.id = id;
 		}
 
@@ -1626,6 +1661,24 @@ public class DefaultIssue implements Issue {
 		public void setType(String type) {
 			this.type = type;
 		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public URI getUri() {
+			return uri;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setUri(URI uri) {
+			this.uri = uri;
+		}
+		
+		
 	}
 	
 	/**

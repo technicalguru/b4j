@@ -111,14 +111,12 @@ public interface LongDescription {
 	 * Creates and adds an attachment to this bug record.
 	 * @param id the attachment id referenced
 	 */
-	public void addAttachment(long id);
-
+	public void addAttachment(String id);
 
 	/**
 	 * Removes all attachments.
 	 */
 	public void clearAttachments();
-
 
 	/**
 	 * Returns all attachments.
@@ -126,6 +124,11 @@ public interface LongDescription {
 	 */
 	public Iterator<Attachment> getAttachmentIterator();
 
+	/**
+	 * Returns all attachments.
+	 * @return iterator on all attachments.
+	 */
+	public Iterable<Attachment> getAttachments();
 
 	/**
 	 * Removes an attachment.
