@@ -17,7 +17,7 @@
  */
 package b4j.report;
 
-import java.io.PrintWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -35,6 +35,8 @@ import org.slf4j.LoggerFactory;
 
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
+import csv.CSVFactory;
+import csv.TableWriter;
 
 /**
  * Creates a tracking report for management purposes. The CSV file produced
@@ -68,7 +70,7 @@ import b4j.core.Issue;
 public class ManagementTrackingReport extends AbstractFileReport {
 
 	private static Logger log = LoggerFactory.getLogger(ManagementTrackingReport.class);
-	
+
 	private Map<String,SeverityStats> severityStats;
 	private Map<Integer, WeekStats> weekStats;
 	private int openCount = 0;
@@ -79,7 +81,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 	private int maxWeek = 0;
 	private Map<String,String> severityGroups;
 	private List<String> allSeverities;
-	
+
 	/**
 	 * Default constructor.
 	 */
@@ -97,108 +99,92 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			log.info("No bug matched criteria. Report is empty.");
 			return;
 		}
-		
-		PrintWriter out = new PrintWriter(getOutputStream());
-		// Header line
-		StringBuffer line = new StringBuffer();
-		Iterator<String> si = allSeverities.iterator();
-		while (si.hasNext()) {
-			String sev = si.next();
-			line.append(";OPEN ");
-			line.append(sev);
-			line.append(";CLOSED ");
-			line.append(sev);
-			line.append(";TOTAL ");
-			line.append(sev);
-			line.append(";AVG FIX ");
-			line.append(sev);
-			line.append("(days)");
-		}
-		line.append(";OPEN TOTAL");
-		line.append(";CLOSED TOTAL");
-		line.append(";TOTAL");
-		line.append(";AVG FIX (days)");
-		out.println(line.toString());
-		
-		// Iterate over each week
-		for (int i=minWeek; i<=maxWeek; i++) {
-			line = new StringBuffer();
-			line.append("KW");
-			line.append(getWeek(i));
-			line.append("/");
-			line.append(getYear(i));
-			
-			WeekStats wStats = weekStats.get(i);
-			if (wStats != null) {
-				Map<String, SeverityStats> sevStats = wStats.getSeverityWeekStats();
-				si = allSeverities.iterator();
-				while (si.hasNext()) {
-					String sev = si.next();
-					SeverityStats stats = sevStats.get(sev);
-					if (stats != null) {
-						line.append(";");
-						line.append(stats.getOpenCount());
-						line.append(";");
-						line.append(stats.getClosedCount());
-						line.append(";");
-						line.append(stats.getTotalCount());
-						line.append(";");
-						line.append(stats.getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
-					} else {
-						line.append(";0;0;0;0");
+
+		try {
+			TableWriter out = CSVFactory.getFactory().getWriter(getOutputFile()); 
+			List<Object> values = new ArrayList<Object>();
+
+			// Headers
+			values.add("Week");
+			for (String sev : allSeverities) {
+				values.add("OPEN "+sev);
+				values.add("CLOSED "+sev);
+				values.add("TOTAL "+sev);
+				values.add("AVG FIX "+sev+" (days)");
+			}
+			values.add("OPEN TOTAL");
+			values.add("CLOSED TOTAL");
+			values.add("TOTAL");
+			values.add("AVG FIX (days)");
+			out.printRow(values);
+
+			// Iterate over each week
+			for (int i=minWeek; i<=maxWeek; i++) {
+				values.clear();
+				values.add("KW"+getWeek(i)+"/"+getYear(i));
+
+				WeekStats wStats = weekStats.get(i);
+				if (wStats != null) {
+					Map<String, SeverityStats> sevStats = wStats.getSeverityWeekStats();
+					for (String sev : allSeverities) {
+						SeverityStats stats = sevStats.get(sev);
+						if (stats != null) {
+							values.add(stats.getOpenCount());
+							values.add(stats.getClosedCount());
+							values.add(stats.getTotalCount());
+							values.add(stats.getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
+						} else {
+							values.add(0);
+							values.add(0);
+							values.add(0);
+							values.add(0);
+						}
 					}
+					values.add(wStats.getOpenCount());
+					values.add(wStats.getClosedCount());
+					values.add(wStats.getTotalCount());
+					values.add(wStats.getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
+				} else {
+					for (String sev : allSeverities) {
+						values.add(0);
+						values.add(0);
+						values.add(0);
+						values.add(0);
+					}
+					values.add(0);
+					values.add(0);
+					values.add(0);
+					values.add(0);
 				}
-				line.append(";");
-				line.append(wStats.getOpenCount());
-				line.append(";");
-				line.append(wStats.getClosedCount());
-				line.append(";");
-				line.append(wStats.getTotalCount());
-				line.append(";");
-				line.append(wStats.getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
-			} else {
-				si = allSeverities.iterator();
-				while (si.hasNext()) {
-					si.next();
-					line.append(";0;0;0;0");
+				out.printRow(values);
+			}
+
+			// Total line here
+			values.clear();
+			values.add("TOTAL");
+			for (String sev : allSeverities) {
+				SeverityStats stats = severityStats.get(sev);
+				if (stats != null) {
+					values.add(stats.getOpenCount());
+					values.add(stats.getClosedCount());
+					values.add(stats.getTotalCount());
+					values.add(stats.getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
+				} else {
+					values.add(0);
+					values.add(0);
+					values.add(0);
+					values.add(0);
 				}
-				line.append(";0;0;0;0");
 			}
-			out.println(line);
-			out.flush();
+			values.add(getOpenCount());
+			values.add(getClosedCount());
+			values.add(getTotalCount());
+			values.add(getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
+			out.printRow(values);
+			out.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Cannot create CSV file", e);
 		}
-		
-		// Total line here
-		line = new StringBuffer();
-		line.append("TOTAL");
-		si = allSeverities.iterator();
-		while (si.hasNext()) {
-			String sev = si.next();
-			SeverityStats stats = severityStats.get(sev);
-			if (stats != null) {
-				line.append(";");
-				line.append(stats.getOpenCount());
-				line.append(";");
-				line.append(stats.getClosedCount());
-				line.append(";");
-				line.append(stats.getTotalCount());
-				line.append(";");
-				line.append(stats.getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
-			} else {
-				line.append(";0;0;0;0");
-			}
-		}
-		line.append(";");
-		line.append(getOpenCount());
-		line.append(";");
-		line.append(getClosedCount());
-		line.append(";");
-		line.append(getTotalCount());
-		line.append(";");
-		line.append(getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
-		out.println(line);
-		out.close();
-		
 		log.info("Report created");
 	}
 
@@ -226,7 +212,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			allSeverities.add(group);
 			grno++;
 		}
-		
+
 		// Adding all remaining severities now for later remember
 		for (int i=0; i<DefaultIssue.SEVERITIES.length; i++) {
 			if (!severityGroups.containsKey(DefaultIssue.SEVERITIES[i])) allSeverities.add(DefaultIssue.SEVERITIES[i]);
@@ -262,7 +248,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			closedCount++;
 			totalFixTime += bug.getDeltaTimestamp().getTime() - bug.getCreationTimestamp().getTime();
 		}
-		
+
 		// forward to severity stats
 		String sev = bug.getSeverity();
 		String group = severityGroups.get(sev);
@@ -284,7 +270,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			weekStats.put(week, wstats);
 		}
 		wstats.registerBug(bug);
-		
+
 		// For later memory
 		if (week > maxWeek) maxWeek = week;
 		if ((minWeek == 0) || (week < minWeek)) minWeek = week;
@@ -298,7 +284,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		if (closedCount > 0) return totalFixTime / closedCount;
 		return 0;
 	}
-	
+
 	/**
 	 * Returns the severity statistics objects.
 	 * @return the severityStats
@@ -369,7 +355,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		private int totalCount = 0;
 		private String severity;
 		private long totalFixTime = 0;
-		
+
 		/**
 		 * Default constructor.
 		 * @param severity - severity name
@@ -377,7 +363,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		public SeverityStats(String severity) {
 			this.severity = severity;
 		}
-		
+
 		/**
 		 * Registers the bug.
 		 * @param bug - the bug to collect data from.
@@ -424,7 +410,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		public String getSeverity() {
 			return severity;
 		}
-		
+
 		/**
 		 * Returns the average fix time for this severity.
 		 * @return average fix time in calendar days.
@@ -442,14 +428,14 @@ public class ManagementTrackingReport extends AbstractFileReport {
 	 *
 	 */
 	protected class WeekStats {
-		
+
 		private int openCount = 0;
 		private int closedCount = 0;
 		private int totalCount = 0;
 		private Map<String,SeverityStats> severityWeekStats;
 		private int week = 0;
 		private long totalFixTime = 0;
-		
+
 		/**
 		 * Constructor.
 		 * @param week - week no
@@ -458,7 +444,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			this.week = week;
 			severityWeekStats = new HashMap<String, SeverityStats>();
 		}
-		
+
 		/**
 		 * Registers the bug.
 		 * @param bug - the bug to collect data from.
@@ -470,7 +456,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 				closedCount++;
 				totalFixTime += bug.getDeltaTimestamp().getTime() - bug.getCreationTimestamp().getTime();
 			}
-			
+
 			// Forward to proper stat
 			String sev = bug.getSeverity();
 			String group = severityGroups.get(sev);
@@ -482,7 +468,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			}
 			stats.registerBug(bug);
 		}
-		
+
 		/**
 		 * Returns the average fix time for bugs of this week.
 		 * @return average fix time in calendar days.
@@ -533,10 +519,10 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		public int getWeek() {
 			return week;
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Returns the week in year.
 	 * @param week - week ID
@@ -545,7 +531,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 	protected static int getWeek(int week) {
 		return week - getYear(week)*100;
 	}
-	
+
 	/**
 	 * Returns the year for the week ID.
 	 * @param week - week ID
