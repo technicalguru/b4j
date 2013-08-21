@@ -109,7 +109,7 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>1.1.0-SNAPSHOT</version>
+			<version>1.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
@@ -119,7 +119,7 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>csv</artifactId>
-			<version>2.5.1-SNAPSHOT</version>
+			<version>2.6.1</version>
 		</dependency>
 		<dependency>
 			<!-- see https://ecosystem.atlassian.net/wiki/display/JRJC/Download -->
