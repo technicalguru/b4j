@@ -185,8 +185,8 @@ public class XmlRpcJiraSessionTest {
 	private void testSpecials(Issue issue) throws Exception {
 		// Special bug with timestamps
 		if (issue.getId().equals("BFJ-1")) {
-			assertEquals("Timestamp parsed invalid", 1371679896000L, issue.getDeltaTimestamp().getTime() );
-			assertEquals("Comment timestamp parsed invalid", 1354571018000L, issue.getLongDescription("10043").getWhen().getTime());
+			assertEquals("Timestamp parsed invalid", 1371672696000L, issue.getDeltaTimestamp().getTime() );
+			assertEquals("Comment timestamp parsed invalid", 1354567418000L, issue.getLongDescription("10043").getWhen().getTime());
 		}
 	}
 }
