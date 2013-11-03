@@ -27,6 +27,7 @@ import java.util.Iterator;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 
+import rs.baselib.lang.LangUtils;
 import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
@@ -90,7 +91,7 @@ public class MySQLBugzillaSession extends AbstractAuthorizedSession {
 	public boolean open() {
 		String driverUrl = "jdbc:mysql://"+mysqlHost+":"+mysqlPort+"/"+mysqlDatabase;
 		try {
-			Class.forName(mysqlDriver);
+			LangUtils.forName(mysqlDriver);
 			mysqlConnection = DriverManager.getConnection(driverUrl, getLogin(), getPassword());
 		} catch (ClassNotFoundException e) {
 			getLog().error("Cannot find driver: ", e);

@@ -7,6 +7,10 @@
 		<version>1.3.3</version>
 	</parent>
 
+	<properties>
+		<rsbaselib.version>1.2.2-SNAPSHOT</rsbaselib.version>
+	</properties>
+	
 	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>b4j</artifactId>
 	<version>1.5.0-SNAPSHOT</version>
@@ -109,12 +113,12 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>baselib</artifactId>
-			<version>1.1.0</version>
+			<version>${rsbaselib.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>templating</artifactId>
-			<version>1.1.1</version>
+			<version>${rsbaselib.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
