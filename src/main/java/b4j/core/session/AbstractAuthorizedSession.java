@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import rs.baselib.configuration.ConfigurationUtils;
+import rs.baselib.lang.LangUtils;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.Session;
@@ -99,7 +100,7 @@ public abstract class AbstractAuthorizedSession implements Session {
 			
 			className = config.getString("Issue[@class]");
 			if ((className == null) || (className.trim().length() == 0)) className = DefaultIssue.class.getName();
-			Class<?> bugzillaBugClass = Class.forName(className);
+			Class<?> bugzillaBugClass = LangUtils.forName(className);
 			setBugzillaBugClass(bugzillaBugClass);
 		} catch (ClassNotFoundException e) {
 			throw new ConfigurationException("Cannot find class: "+className, e);
