@@ -149,11 +149,11 @@ public abstract class AbstractAuthorizedSession implements Session {
 	 */
 	public Issue createIssue() {
 		try {
-			return (Issue)bugzillaBugClass.newInstance();
+			return (Issue)getBugzillaBugClass().newInstance();
 		} catch (IllegalAccessException e) {
-			throw new IllegalStateException("Cannot access constructor: "+bugzillaBugClass.getName(), e);
+			throw new IllegalStateException("Cannot access constructor: "+getBugzillaBugClass().getName(), e);
 		} catch (InstantiationException e) {
-			throw new IllegalStateException("Cannot instantiate class: "+bugzillaBugClass.getName(), e);
+			throw new IllegalStateException("Cannot instantiate class: "+getBugzillaBugClass().getName(), e);
 		}
 	}
 	
