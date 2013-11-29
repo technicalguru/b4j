@@ -129,6 +129,7 @@ public abstract class AbstractAuthorizedSession implements Session {
 	 * @return the bugzillaBugClass
 	 */
 	public Class<?> getBugzillaBugClass() {
+		if (bugzillaBugClass == null) return DefaultIssue.class;
 		return bugzillaBugClass;
 	}
 
