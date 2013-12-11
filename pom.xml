@@ -8,7 +8,7 @@
 	</parent>
 
 	<properties>
-		<rsbaselib.version>1.2.2-SNAPSHOT</rsbaselib.version>
+		<rsbaselib.version>1.2.2</rsbaselib.version>
 	</properties>
 	
 	<groupId>eu.ralph-schuster</groupId>
