@@ -70,10 +70,10 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	public static final int BUGZILLA_SHOW_BUG = 3;
 	/** Constant for requesting URL connection to get attachment content */
 	public static final int BUGZILLA_GET_ATTACHMENT = 4;
-	
+
 	private static final String MINIMUM_BUGZILLA_VERSION = "2.20";
 	private static final String MAXIMUM_BUGZILLA_VERSION = null;
-	
+
 	/** The URL paths to the Bugzilla pages */
 	protected static final String[] PAGES = new String[] {
 		"/index.cgi",
@@ -83,7 +83,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		"/attachment.cgi"
 	};
 	private static UrlParameters DEFAULT_SEARCH_PARAMETERS;
-	
+
 	/**
 	 * Default constructor.
 	 */
@@ -118,14 +118,14 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	public boolean open() {
 		if (isLoggedIn()) return true;
 		setBugzillaVersion(null);
-		
+
 		// Exception: No login required
 		if (getLogin() == null) {
 			getLog().debug("No Auth required");
 			setLoggedIn(true);
 			return true;
 		}
-		
+
 		try {
 			// Bugzilla_login = xxx
 			// Bugzilla_password = xxx
@@ -135,8 +135,8 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			params.setParameter("Bugzilla_password", getPassword());
 			params.setParameter("GoAheadAndLogIn", "Login");
 			String paramString = params.getUrlEncodedString();
-			
-			
+
+
 			// make a connection
 			HttpURLConnection con = getConnection(BUGZILLA_LOGIN);
 			con.setRequestMethod("POST");
@@ -147,12 +147,12 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			out.print(paramString);
 			out.flush();
 			out.close();
-			
+
 			// Read the response;
 			if (con.getResponseCode() == 200) {
 				//debugResponse(con);
 				boolean rc = retrieveCookies(con);
-				
+
 				// Get Bugzilla version and test for compatibility
 				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				Pattern p = Pattern.compile(".*version\\s+([\\d\\.]+).*", Pattern.CASE_INSENSITIVE);
@@ -166,7 +166,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 						break;
 					}
 				}
-				
+
 				setLoggedIn(rc);
 				if (getLog().isInfoEnabled()) {
 					if (rc) {
@@ -174,9 +174,9 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 						if (getLog().isDebugEnabled()) getLog().debug("Bugzilla-Version: "+getBugzillaVersion());
 					} else getLog().info("Bugzilla did not sent Cookie");
 				}
-				
+
 				if (rc) checkBugzillaVersion();
-				
+
 				return rc;
 			} else {
 				getLog().error("Cannot open session: Response was \""+con.getResponseMessage()+"\"");
@@ -186,14 +186,14 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Closes the previously established Bugzilla session.
 	 */
 	@Override
 	public void close() {
 		if (!isLoggedIn()) return;
-		
+
 		// Only when login was required
 		if (getLogin() != null) {
 			try {
@@ -206,7 +206,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		}
 		super.close();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -227,7 +227,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		HttpURLConnection con = getConnection(BUGZILLA_GET_ATTACHMENT, "id="+attachment.getId());
 		return con.getInputStream();
 	}
-	
+
 	/**
 	 * Performs a search for Bugzilla bugs.
 	 * This method returns an iterator over all bug records found. The returned
@@ -242,23 +242,23 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	@Override
 	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
 		if (!isLoggedIn()) return null;
-		
+
 		// Perform the search
 		try {
 			UrlParameters params = UrlParameters.createUrlParameters(searchData);
 			params.addDefaultParameters(getDefaultSearchParameters());
 			String paramString = params.getUrlEncodedString();
-			
+
 			// make a connection
 			HttpURLConnection con = getConnection(BUGZILLA_SEARCH, paramString);
-			
+
 			// Read the response;
 			if (con.getResponseCode() == 200) {
 				//debugResponse(con);
 				//if (true) return null;
-				
+
 				List<String> idList = new ArrayList<String>();
-				
+
 				// Parse the data for all bugs found
 				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				Pattern p = Pattern.compile(".*href=\"show_bug\\.cgi\\?id=(\\d+)\">\\d+</a>.*");
@@ -273,7 +273,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				}
 				if (callback != null) callback.setResultCount(idList.size());
 				if (getLog().isDebugEnabled()) getLog().debug("Found "+idList.size()+" bugs");
-				
+
 				// Return the bug iterator
 				return new BugzillaBugIterator(idList);
 			} else {
@@ -282,10 +282,10 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		} catch (IOException e) {
 			getLog().error("Cannot perform search", e);
 		}
-		
+
 		return null;
 	}
-	
+
 	/**
 	 * Makes a request to Bugzilla without any GET parameters.
 	 * @param bugzillaPage - ID of page to make the request to.
@@ -294,7 +294,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	protected HttpURLConnection getConnection(int bugzillaPage) {
 		return getConnection(bugzillaPage, null);
 	}
-	
+
 	/**
 	 * Makes a request to Bugzilla including eventual GET parameters.
 	 * The method applies all cookies registered previously to allow
@@ -305,7 +305,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	protected HttpURLConnection getConnection(int bugzillaPage, String getParams) {
 		return getConnection(getBaseUrl()+PAGES[bugzillaPage], getParams);
 	}
-	
+
 	/**
 	 * Returns default search parameters.
 	 * DO NOT modify these defaults!
@@ -349,7 +349,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		}
 		return DEFAULT_SEARCH_PARAMETERS;
 	}
-	
+
 	/**
 	 * Implementation of a bug iterator.
 	 * This implementation is based on Silberschatz' proposal
@@ -365,7 +365,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		private int delivered;
 		private List<Issue> availableBugs;
 		private XmlParser xmlParser;
-		
+
 		/**
 		 * Default constructor.
 		 * @param bugList - bug ID list to retrieve
@@ -375,7 +375,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			this.bugList = bugList;
 			availableBugs = new ArrayList<Issue>();
 		}
-		
+
 		/**
 		 * Returns true while number of delivered bugs (calls
 		 * to {@link #next()} are less than number of bugs in
@@ -401,7 +401,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			if (xmlParser == null) startXmlParser();
 			if (delivered >= bugList.size()) 
 				throw new IllegalStateException("Empty queue");
-			
+
 			while (availableBugs.isEmpty()) {
 				try {
 					wait();
@@ -409,9 +409,9 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			}
 			rc = availableBugs.remove(0);
 			delivered++;
-			
+
 			notify();
-			
+
 			return rc;
 		}
 
@@ -428,10 +428,10 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				} catch (InterruptedException e) {}
 			}
 			availableBugs.add(bug);
-			
+
 			notify();
 		}
-		
+
 		/**
 		 * Always throws an exception.
 		 */
@@ -439,7 +439,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		public void remove() {
 			throw new UnsupportedOperationException("This is a read-only iterator");
 		}
-		
+
 		/**
 		 * Starts the writer's thread.
 		 * This method will create the appropriate POST request to the Bugzilla
@@ -449,7 +449,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		protected void startXmlParser() {
 			try {
 				if (getLog().isTraceEnabled()) getLog().trace("Requesting XML file...");
-				
+
 				// Build parameters
 				UrlParameters parameters = new UrlParameters();
 				parameters.addAll("id", bugList);
@@ -482,7 +482,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			}
 		}
 	}
-	
+
 	/**
 	 * Does the actual meat by parsing the XML response.
 	 * Implementation of the separate writer thread. The XML will be parsed
@@ -491,7 +491,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	 * @author Ralph Schuster
 	 */
 	protected class XmlParser extends DefaultHandler2 implements Runnable {
-		
+
 		private InputStream xmlStream;
 		private BugzillaBugIterator iterator;
 		private XMLReader xmlReader;
@@ -502,7 +502,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		private String currentCustomField;
 		private String bugzillaVersion;
 		private String bugzillaUri;
-		
+
 		/**
 		 * Constructor.
 		 * @param xmlStream - input stream with XML response from Bugzilla
@@ -512,7 +512,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			this.xmlStream = xmlStream;
 			this.iterator = iterator;
 		}
-		
+
 		/**
 		 * Runs the extraction.
 		 */
@@ -522,11 +522,11 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				// Prevent fetching the DTD
 				factory.setValidating(false);
 				factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-				
+
 				// Create the XMLReader
 				SAXParser xmlParser = factory.newSAXParser();
 				xmlReader = xmlParser.getXMLReader();
-				
+
 				// This class itself will take care of the elements
 				xmlReader.setContentHandler(this);
 				xmlReader.parse(new InputSource(new XmlReaderFilter(new InputStreamReader(xmlStream))));
@@ -598,8 +598,16 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentContent = new StringBuffer();
 			} else if (name.equals("reporter")) {
 				currentContent = new StringBuffer();
+				String reporterName = attributes.getValue("name");
+				if (reporterName != null) {
+					currentBug.setReporterName(reporterName);
+				}
 			} else if (name.equals("assigned_to")) {
 				currentContent = new StringBuffer();
+				String assigneeName = attributes.getValue("name");
+				if (assigneeName != null) {
+					currentBug.setAssigneeName(assigneeName);
+				}
 			} else if (name.equals("qa_contact")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("long_desc")) { // multiple
@@ -608,6 +616,10 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentContent = new StringBuffer();
 			} else if (name.equals("who")) {
 				currentContent = new StringBuffer();
+				String updateAuthorName = attributes.getValue("name");
+				if ((currentLongDescription != null) && (updateAuthorName != null)) {
+					currentLongDescription.setUpdateAuthorName(updateAuthorName);
+				}
 			} else if (name.equals("bug_when")) { // 2008-07-23 12:28:22
 				currentContent = new StringBuffer();
 			} else if (name.equals("thetext")) {
@@ -648,7 +660,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				//log.warn("Custom field: "+name);
 			}
 		}
-		
+
 		/**
 		 * @see org.xml.sax.helpers.DefaultHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
 		 */
@@ -890,4 +902,4 @@ field0-0-0=noop
 type0-0-0=noop
 value0-0-0=
 
-*/
+ */

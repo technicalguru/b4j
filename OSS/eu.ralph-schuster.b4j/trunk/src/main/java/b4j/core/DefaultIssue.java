@@ -74,7 +74,7 @@ public class DefaultIssue implements Issue {
 		"trivial",
 		"enhancement"
 	};
-	
+
 	private String bugzillaVersion;
 	private String bugzillaUri;
 	private String id;
@@ -136,7 +136,7 @@ public class DefaultIssue implements Issue {
 		children = new ArrayList<IssueLink>();
 	}
 
-	
+
 	/**
 	 * Returns the version of Bugzilla this bug was retrieved from.
 	 * @return Bugzilla software version or null if unknown
@@ -934,7 +934,7 @@ public class DefaultIssue implements Issue {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Adds a custom field value.
 	 * This is a placeholder for customized fields in Bugzilla. A field
@@ -951,7 +951,7 @@ public class DefaultIssue implements Issue {
 		}
 		values.add(value);
 	}
-	
+
 	/**
 	 * Returns a list of all values of a field (or null)
 	 * @param key - name of field
@@ -961,7 +961,7 @@ public class DefaultIssue implements Issue {
 	public List<String> getCustomField(String key) {
 		return customFields.get(key);
 	}
-	
+
 	/**
 	 * Returns first value of a field (or null)
 	 * @param key - name of field
@@ -971,7 +971,7 @@ public class DefaultIssue implements Issue {
 	public String getCustomFieldString(String key) {
 		return getCustomFieldString(key, 0);
 	}
-	
+
 	/**
 	 * Returns the n-th value of a field (or null)
 	 * @param key - name of field
@@ -986,7 +986,7 @@ public class DefaultIssue implements Issue {
 		if (idx < values.size()) return values.get(idx);
 		return values.get(0);
 	}
-	
+
 	/**
 	 * Returns the names of all custom fields.
 	 * @return iterator of customized field names
@@ -995,7 +995,7 @@ public class DefaultIssue implements Issue {
 	public Iterator<String> getCustomFieldNames() {
 		return customFields.keySet().iterator();
 	}
-	
+
 	/**
 	 * Returns the number of custom fields.
 	 * @return number customized field names
@@ -1004,7 +1004,7 @@ public class DefaultIssue implements Issue {
 	public int getCustomFieldCount() {
 		return customFields.size();
 	}
-	
+
 	/**
 	 * Adds all values to a custom field.
 	 * @param key - name of field
@@ -1019,7 +1019,7 @@ public class DefaultIssue implements Issue {
 		}
 		values2.addAll(values);
 	}
-	
+
 	/**
 	 * Adds all custom fields.
 	 * @param p - map with names and values of fields
@@ -1032,7 +1032,7 @@ public class DefaultIssue implements Issue {
 			addAllCustomFields(key, p.get(key));
 		}
 	}
-	
+
 	/**
 	 * Removes a value from a custom field.
 	 * @param key - name of field
@@ -1045,7 +1045,7 @@ public class DefaultIssue implements Issue {
 		values.remove(value);
 		if (values.size() == 0) customFields.remove(key);
 	}
-	
+
 	/**
 	 * Removes all values of a custom field.
 	 * @param key - name of field.
@@ -1056,7 +1056,7 @@ public class DefaultIssue implements Issue {
 		if (values == null) return;
 		customFields.remove(key);
 	}
-	
+
 	/**
 	 * Clears all custom fields.
 	 */
@@ -1064,7 +1064,7 @@ public class DefaultIssue implements Issue {
 	public void clearCustomFields() {
 		customFields.clear();
 	}
-	
+
 	/**
 	 * Returns whether this bug can be regarded as closed.
 	 * A closed bug can have status: RESOLVED, VERIFIED, CLOSED
@@ -1076,8 +1076,8 @@ public class DefaultIssue implements Issue {
 		if (s == null) return false;
 		return s.equalsIgnoreCase("CLOSED");
 	}
-	
-	
+
+
 	/**
 	 * Returns whether this bug can be regarded as closed.
 	 * A closed bug can have status: RESOLVED, VERIFIED, CLOSED
@@ -1089,7 +1089,7 @@ public class DefaultIssue implements Issue {
 		if (s == null) return false;
 		return s.equalsIgnoreCase("RESOLVED") || s.equalsIgnoreCase("VERIFIED") || s.equalsIgnoreCase("CLOSED");
 	}
-	
+
 	public boolean isCancelled() {
 		String s = getStatus();
 		if (s == null) return false;
@@ -1100,7 +1100,7 @@ public class DefaultIssue implements Issue {
 		}
 		return rc;
 	}
-	
+
 	public boolean isDuplicate() {
 		String s = getStatus();
 		if (s == null) return false;
@@ -1111,7 +1111,7 @@ public class DefaultIssue implements Issue {
 		}
 		return rc;
 	}
-	
+
 	/**
 	 * Returns whether a bug must be regarded as still open.
 	 * An open bug can have status: UNCONFIRMED, NEW, ASSIGNED, REOPENED
@@ -1122,10 +1122,10 @@ public class DefaultIssue implements Issue {
 		String s = getStatus();
 		if (s == null) return true;
 		return s.toUpperCase().indexOf("OPEN") >= 0 || 
-		s.equalsIgnoreCase("NEW") || s.equalsIgnoreCase("CREATED") ||
-		s.equalsIgnoreCase("UNCONFIRMED") || s.equalsIgnoreCase("ASSIGNED");
+				s.equalsIgnoreCase("NEW") || s.equalsIgnoreCase("CREATED") ||
+				s.equalsIgnoreCase("UNCONFIRMED") || s.equalsIgnoreCase("ASSIGNED");
 	}
-	
+
 	/**
 	 * Returns whether a bug must be regarded as in progress.
 	 * An bug in progress is neither open or closed.
@@ -1135,7 +1135,7 @@ public class DefaultIssue implements Issue {
 	public boolean isInProgress() {
 		return !isOpen() && !isClosed();
 	}
-	
+
 	/**
 	 * Returns the alias name of the bug.
 	 * @return alias name of bug
@@ -1144,7 +1144,7 @@ public class DefaultIssue implements Issue {
 	public String getAlias() {
 		return alias;
 	}
-	
+
 	/**
 	 * Sets the alias name of this bug.
 	 * @param alias - the new alias
@@ -1153,7 +1153,7 @@ public class DefaultIssue implements Issue {
 	public void setAlias(String alias) {
 		this.alias = alias;
 	}
-	
+
 	/**
 	 * Returns the whiteboard status.
 	 * @return whiteboard status
@@ -1162,7 +1162,7 @@ public class DefaultIssue implements Issue {
 	public String getWhiteboard() {
 		return whiteboard;
 	}
-	
+
 	/**
 	 * Sets the whiteboard status for this bug.
 	 * @param whiteboard - the new whiteboard status.
@@ -1171,7 +1171,7 @@ public class DefaultIssue implements Issue {
 	public void setWhiteboard(String whiteboard) {
 		this.whiteboard = whiteboard;
 	}
-	
+
 	/**
 	 * Returns the estimated time in hours.
 	 * @return estimated time in hours
@@ -1180,7 +1180,7 @@ public class DefaultIssue implements Issue {
 	public double getEstimatedTime() {
 		return estimatedTime;
 	}
-	
+
 	/**
 	 * Sets the estimated time in hours.
 	 * @param estimatedTime - new estimated time in hours
@@ -1189,7 +1189,7 @@ public class DefaultIssue implements Issue {
 	public void setEstimatedTime(double estimatedTime) {
 		this.estimatedTime = estimatedTime;
 	}
-	
+
 	/**
 	 * Returns the remaining time in hours.
 	 * @return remaining time in hours
@@ -1198,7 +1198,7 @@ public class DefaultIssue implements Issue {
 	public double getRemainingTime() {
 		return remainingTime;
 	}
-	
+
 	/**
 	 * Sets the remaining time in hours.
 	 * @param remainingTime - new remaining time in hours
@@ -1207,7 +1207,7 @@ public class DefaultIssue implements Issue {
 	public void setRemainingTime(double remainingTime) {
 		this.remainingTime = remainingTime;
 	}
-	
+
 	/**
 	 * Returns the actual time in hours.
 	 * @return actual time in hours
@@ -1216,7 +1216,7 @@ public class DefaultIssue implements Issue {
 	public double getActualTime() {
 		return actualTime;
 	}
-	
+
 	/**
 	 * Sets the actual time in hours.
 	 * @param actualTime - new actual time in hours
@@ -1225,7 +1225,7 @@ public class DefaultIssue implements Issue {
 	public void setActualTime(double actualTime) {
 		this.actualTime = actualTime;
 	}
-	
+
 	/**
 	 * Returns the deadline time.
 	 * @return the deadline time
@@ -1234,7 +1234,7 @@ public class DefaultIssue implements Issue {
 	public Date getDeadline() {
 		return deadline;
 	}
-	
+
 	/**
 	 * Sets the dealine time.
 	 * @param deadline - the new dealine time
@@ -1246,7 +1246,7 @@ public class DefaultIssue implements Issue {
 		else
 			this.deadline.setTime(0);
 	}
-	
+
 
 	/**
 	 * @return the link
@@ -1274,27 +1274,27 @@ public class DefaultIssue implements Issue {
 	public void addLink(IssueLink l) {
 		links.add(l);
 	}
-	
+
 	public List<IssueLink> getLinks() {
 		return links;
 	}
-	
+
 	public int getLinkCount() {
 		return links.size();
 	}
-	
+
 	public void addChild(IssueLink l) {
 		children.add(l);
 	}
-	
+
 	public List<IssueLink> getChildren() {
 		return children;
 	}
-	
+
 	public int getChildCount() {
 		return children.size();
 	}
-	
+
 	/**
 	 * @param reporterTeam the reporterTeam to set
 	 */
@@ -1326,7 +1326,7 @@ public class DefaultIssue implements Issue {
 	 *
 	 */
 	public class DefaultLongDescription implements LongDescription {
-		
+
 		private String id;
 		private String who;
 		private Date when;
@@ -1334,7 +1334,8 @@ public class DefaultIssue implements Issue {
 		private Date lastUpdate;
 		private String updateAuthor;
 		private Set<String> attachments;
-		
+		private String updateAuthorName;
+
 		/**
 		 * Default Constructor.
 		 */
@@ -1435,7 +1436,7 @@ public class DefaultIssue implements Issue {
 			if (lastUpdate != null) return lastUpdate;
 			return getWhen();
 		}
-		
+
 		/**
 		 * Sets the date of last update.
 		 * @param lastUpdate date to be set
@@ -1444,7 +1445,7 @@ public class DefaultIssue implements Issue {
 		public void setLastUpdate(Date lastUpdate) {
 			this.lastUpdate = lastUpdate;
 		}
-		
+
 		/**
 		 * Returns the author of the last update.
 		 * @return name of author
@@ -1453,7 +1454,7 @@ public class DefaultIssue implements Issue {
 		public String getUpdateAuthor() {
 			return updateAuthor;
 		}
-		
+
 		/**
 		 * Sets the last update's author.
 		 * @param updateAuthor author to be set
@@ -1487,7 +1488,7 @@ public class DefaultIssue implements Issue {
 			return new Iterator<Attachment>() {
 				private Attachment nextAttachment = null;
 				private Iterator<String> idIterator = attachments.iterator();
-				
+
 				@Override
 				public boolean hasNext() {
 					if (nextAttachment == null) retrieveNext();
@@ -1505,12 +1506,12 @@ public class DefaultIssue implements Issue {
 						nextAttachment = getAttachment(idIterator.next());
 					}
 				}
-				
+
 				@Override
 				public void remove() {
 					throw new UnsupportedOperationException("remove is not supported");
 				}
-				
+
 			};
 		}
 
@@ -1521,7 +1522,7 @@ public class DefaultIssue implements Issue {
 		public Iterable<Attachment> getAttachments() {
 			return CommonUtils.iterable(getAttachmentIterator());
 		}
-		
+
 		/**
 		 * {@inheritDoc}
 		 */
@@ -1537,9 +1538,25 @@ public class DefaultIssue implements Issue {
 		public int getAttachmentCount() {
 			return DefaultIssue.this.attachments.size();
 		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public String getUpdateAuthorName() {
+			return updateAuthorName;
+		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public void setUpdateAuthorName(String updateAuthorName) {
+			this.updateAuthorName = updateAuthorName;
+		}
 	}
-	
-	
+
+
 	/**
 	 * An attachment definition.
 	 * This object represents an attachment for a bug.
@@ -1547,21 +1564,21 @@ public class DefaultIssue implements Issue {
 	 *
 	 */
 	public class DefaultAttachment implements Attachment {
-		
+
 		private String id;
 		private Date date;
 		private String description;
 		private String filename;
 		private String type;
 		private URI uri;
-		
+
 		/**
 		 * Default constructor.
 		 */
 		public DefaultAttachment() {
 			date = new Date(0);
 		}
-	
+
 		/**
 		 * Returns the Bugzilla bug report this attachment belongs to.
 		 * @return the bug record of this attachment.
@@ -1677,28 +1694,28 @@ public class DefaultIssue implements Issue {
 		public void setUri(URI uri) {
 			this.uri = uri;
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Describes a link to another issue
 	 * @author Ralph Schuster
 	 *
 	 */
 	public static class DefaultLink implements IssueLink {
-		
+
 		private int linkType;
 		private String linkTypeName;
 		private boolean inward;
 		private String linkTypeDescription;
 		private String issueId;
-		
+
 		/**
 		 * Constructor.
 		 */
 		public DefaultLink() {
-			
+
 		}
 
 		/**
@@ -1798,5 +1815,5 @@ public class DefaultIssue implements Issue {
 		return getClass().getName()+"[id="+getId()+";summary="+getShortDescription()+";status="+getStatus()+"]";
 	}
 
-	
+
 }

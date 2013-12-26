@@ -108,6 +108,18 @@ public interface LongDescription {
 	public void setUpdateAuthor(String updateAuthor);
 	
 	/**
+	 * Returns the name of the update's author.
+	 * @return name of author
+	 */
+	public String getUpdateAuthorName();
+
+	/**
+	 * Sets the name of the update's author.
+	 * @param updateAuthorName name of author
+	 */
+	public void setUpdateAuthorName(String updateAuthorName);
+	
+	/**
 	 * Creates and adds an attachment to this bug record.
 	 * @param id the attachment id referenced
 	 */
