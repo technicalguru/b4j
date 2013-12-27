@@ -250,7 +250,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		}
 
 		// forward to severity stats
-		String sev = bug.getSeverity();
+		String sev = bug.getSeverity().getName();
 		String group = severityGroups.get(sev);
 		if (group != null) sev = group;
 		SeverityStats stats = severityStats.get(sev);
@@ -458,7 +458,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			}
 
 			// Forward to proper stat
-			String sev = bug.getSeverity();
+			String sev = bug.getSeverity().getName();
 			String group = severityGroups.get(sev);
 			if (group != null) sev = group;
 			SeverityStats stats = severityWeekStats.get(sev);

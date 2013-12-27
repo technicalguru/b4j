@@ -104,12 +104,14 @@ public interface LongDescription {
 	/**
 	 * Sets the last update's author.
 	 * @param updateAuthor author to be set
+	 * @since 2.0
 	 */
 	public void setUpdateAuthor(String updateAuthor);
 	
 	/**
 	 * Returns the name of the update's author.
 	 * @return name of author
+	 * @since 2.0
 	 */
 	public String getUpdateAuthorName();
 

@@ -44,20 +44,29 @@ import org.xml.sax.ext.DefaultHandler2;
 import rs.baselib.io.XmlReaderFilter;
 import b4j.core.Attachment;
 import b4j.core.Issue;
+import b4j.core.IssueType;
 import b4j.core.LongDescription;
+import b4j.core.Priority;
+import b4j.core.Resolution;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
+import b4j.core.Severity;
+import b4j.core.Status;
+import b4j.core.session.bugzilla.BugzillaTransformer;
 import b4j.util.BugzillaUtils;
+import b4j.util.MetaData;
 import b4j.util.UrlParameters;
 
 
 /**
  * Implements Bugzilla access via HTTP.
- * There is no additional configuration required. See
- * {@link AbstractHttpSession} for configuration description.
+ * <p>There is no additional configuration required. See
+ * {@link AbstractHttpSession} for configuration description.</p>
+ * @deprecated Use {@link BugzillaRpcSession}
  * @author Ralph Schuster
  *
  */
+@Deprecated
 public class HttpBugzillaSession extends AbstractHttpSession {
 
 	/** Constant for requesting URL connection to login page */
@@ -83,6 +92,12 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		"/attachment.cgi"
 	};
 	private static UrlParameters DEFAULT_SEARCH_PARAMETERS;
+
+	private MetaData<String, IssueType> issueTypes = new MetaData<String, IssueType>(new BugzillaTransformer.IssueType());
+	private MetaData<String, Status> status = new MetaData<String, Status>(new BugzillaTransformer.Status());
+	private MetaData<String, Priority> priorities = new MetaData<String, Priority>(new BugzillaTransformer.Priority());
+	private MetaData<String, Severity> severities = new MetaData<String, Severity>(new BugzillaTransformer.Severity());
+	private MetaData<String, Resolution> resolutions = new MetaData<String, Resolution>(new BugzillaTransformer.Resolution());
 
 	/**
 	 * Default constructor.
@@ -695,11 +710,11 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			} else if (name.equals("cclist_accessible")) {
 				currentBug.setCclistAccessible(parseBoolean(currentContent.toString()));
 				currentContent = null;
-			} else if (name.equals("classification_id")) {
-				currentBug.setType(Long.parseLong(currentContent.toString()));
-				currentContent = null;
+//			} else if (name.equals("classification_id")) {
+//				currentBug.setType(Long.parseLong(currentContent.toString()));
+//				currentContent = null;
 			} else if (name.equals("classification")) {
-				currentBug.setTypeName(currentContent.toString());
+				currentBug.setType(issueTypes.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("product")) {
 				currentBug.setProduct(currentContent.toString());
@@ -717,16 +732,16 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentBug.setOpSys(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_status")) {
-				currentBug.setStatus(currentContent.toString());
+				currentBug.setStatus(status.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("resolution")) {
-				currentBug.setResolution(currentContent.toString());
+				currentBug.setResolution(resolutions.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("priority")) {
-				currentBug.setPriority(currentContent.toString());
+				currentBug.setPriority(priorities.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("bug_severity")) {
-				currentBug.setSeverity(currentContent.toString());
+				currentBug.setSeverity(severities.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("target_milestone")) {
 				currentBug.setTargetMilestone(currentContent.toString());

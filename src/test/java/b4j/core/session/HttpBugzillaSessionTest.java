@@ -29,24 +29,30 @@ import b4j.core.LongDescription;
  * @author ralph
  *
  */
+@SuppressWarnings("deprecation")
 public class HttpBugzillaSessionTest {
 
 	private static Map<String, Map<String,String>> expectedProperties = new HashMap<String, Map<String,String>>();
 	private static Map<String, Map<String,String>> expectedCommentAttachments = new HashMap<String, Map<String,String>>();
 	
 	static {
-		addBug("3", "Create abstract class for BugzillaReportGenerator");
-		addBug("5", "java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)");
-		addBug("6", "Add abstract Email Report class");
-		addBug("13", "JIRA session");
-		addBug("14", "Writing # as first column does not escape it");
-		addBug("18", "Filter searches on HttpJiraSession does not return when no issue was found");
+		addBug("3", "Create abstract class for BugzillaReportGenerator", "Java Projects", "CLOSED", "FIXED", "P3", "enhancement");
+		addBug("5", "java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)", "Java Projects", "CLOSED", "FIXED", "P3", "normal");
+		addBug("6", "Add abstract Email Report class", "Java Projects", "CLOSED", "FIXED", "P3", "enhancement");
+		addBug("13", "JIRA session", "Java Projects", "ASSIGNED", null, "P3", "normal");
+		addBug("14", "Writing # as first column does not escape it", "Java Projects", "CLOSED", "FIXED", "P3", "normal");
+		addBug("18", "Filter searches on HttpJiraSession does not return when no issue was found", "Java Projects", "CLOSED", "FIXED", "P3", "normal");
 		addCommentAttachment("30", "49", "3");
 	}
 	
-	private static void addBug(String id, String shortDescription) {
+	private static void addBug(String id, String shortDescription, String issueType, String status, String resolution, String priority, String severity) {
 		Map<String,String> props = new HashMap<String, String>();
 		props.put("shortDescription", shortDescription);
+		if (issueType != null) props.put("type.name", issueType);
+		if (status != null) props.put("status.name", status);
+		if (resolution != null) props.put("resolution.name", resolution);
+		if (priority != null) props.put("priority.name", priority);
+		if (severity != null) props.put("severity.name", severity);
 		expectedProperties.put(id, props);
 	}
 	
@@ -117,7 +123,7 @@ public class HttpBugzillaSessionTest {
 		Map<String,String> props = expectedProperties.get(id);
 		assertNotNull("No expected properties found", props);
 		for (String key : props.keySet()) {
-			assertEquals(key+" does ot match:", PropertyUtils.getProperty(issue, key), props.get(key));
+			assertEquals(key+" does not match:", props.get(key), PropertyUtils.getProperty(issue, key));
 		}		
 	}
 	
@@ -129,8 +135,8 @@ public class HttpBugzillaSessionTest {
 	private void testSpecials(HttpBugzillaSession session, Issue issue) throws Exception {
 		// Special bug with timestamps
 		if (issue.getId().equals("3")) {
-			assertEquals("Timestamp parsed invalid", issue.getDeltaTimestamp().getTime(), 1345485240000L);
-			assertEquals("Comment timestamp parsed invalid", issue.getLongDescription("4").getWhen().getTime(), 1244567618000L);
+			assertEquals("Timestamp parsed invalid", 1345485240000L, issue.getDeltaTimestamp().getTime());
+			assertEquals("Comment timestamp parsed invalid", 1244567618000L, issue.getLongDescription("4").getWhen().getTime());
 		}
 		
 		// Check attachment retrieval
@@ -140,7 +146,7 @@ public class HttpBugzillaSessionTest {
 			s = r.readLine();
 			s = r.readLine();
 			r.close();
-			assertEquals("Attachment cannot be read", s, " * This file is part of CSV package.");
+			assertEquals("Attachment cannot be read", " * This file is part of CSV package.", s);
 		}
 		
 	}

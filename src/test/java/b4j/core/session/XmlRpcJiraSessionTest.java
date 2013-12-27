@@ -28,7 +28,7 @@ import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 
 /**
- * Bugzilla Session test
+ * Jira Session test ({@link XmlRpcJiraSession}).
  * @author ralph
  *
  */

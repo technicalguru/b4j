@@ -152,30 +152,25 @@ public interface Issue {
 
 
 	/**
-	 * Returns the type id. 
-	 * @return the type ID
+	 * Returns the type. 
+	 * @return the type
 	 */
-	public long getType();
+	public IssueType getType();
 
 
 	/**
-	 * Sets the ID of the type.
-	 * @param typeId - the type ID to set
+	 * Sets the type.
+	 * @param type - the type to set
 	 */
-	public void setType(long typeId);
+	public void setType(IssueType type);
 
 
 	/**
+	 * Returns the name of the type.
 	 * @return the type name
+	 * @deprecated
 	 */
 	public String getTypeName();
-
-
-	/**
-	 * @param typeName the type name to set
-	 */
-	public void setTypeName(String typeName);
-
 
 	/**
 	 * Returns the classification name for this bug.
@@ -183,13 +178,11 @@ public interface Issue {
 	 */
 	public String getClassification();
 
-
 	/**
 	 * Sets the classification name for this bug.
 	 * @param classification - the classification name to set
 	 */
 	public void setClassification(String classification);
-
 
 	/**
 	 * Returns the product name for this bug.
@@ -197,13 +190,11 @@ public interface Issue {
 	 */
 	public String getProduct();
 
-
 	/**
 	 * Sets the product name for this bug.
 	 * @param product - the product name to set
 	 */
 	public void setProduct(String product);
-
 
 	/**
 	 * Returns the component name for this bug.
@@ -211,13 +202,11 @@ public interface Issue {
 	 */
 	public String getComponent();
 
-
 	/**
 	 * Sets the component name for this bug.
 	 * @param component - the component name to set
 	 */
 	public void setComponent(String component);
-
 
 	/**
 	 * Returns the version of the product for this bug.
@@ -226,7 +215,6 @@ public interface Issue {
 	 */
 	public String getVersion();
 
-
 	/**
 	 * Sets the product version for this bug.
 	 * Please do not mix with {@link #setBugzillaVersion(String)}.
@@ -234,13 +222,11 @@ public interface Issue {
 	 */
 	public void setVersion(String version);
 
-
 	/**
 	 * Returns the reporter's platform.
 	 * @return the reporter's platform
 	 */
 	public String getRepPlatform();
-
 
 	/**
 	 * Sets the reporter's platform.
@@ -248,13 +234,11 @@ public interface Issue {
 	 */
 	public void setRepPlatform(String repPlatform);
 
-
 	/**
 	 * Returns the operating system for this bug.
 	 * @return the operating system
 	 */
 	public String getOpSys();
-
 
 	/**
 	 * Sets the operating system for this bug.
@@ -268,69 +252,59 @@ public interface Issue {
 	 */
 	public String getLink();
 
-
 	/**
 	 * Sets the link for this bug.
 	 * @param link - the link to set
 	 */
 	public void setLink(String link);
 
-
 	/**
 	 * Returns the status of this bug.
 	 * @return the status
 	 */
-	public String getStatus();
-
+	public Status getStatus();
 
 	/**
 	 * Sets the status of this bug.
 	 * @param status - the status to set
 	 */
-	public void setStatus(String status);
-
+	public void setStatus(Status status);
 
 	/**
 	 * Returns the resolution status of this bug.
 	 * @return the resolution status
 	 */
-	public String getResolution();
-
+	public Resolution getResolution();
 
 	/**
 	 * Sets the resolution status.
 	 * @param resolution - the resolution to set
 	 */
-	public void setResolution(String resolution);
-
+	public void setResolution(Resolution resolution);
 
 	/**
 	 * Returns the priority of this bug.
 	 * @return the priority
 	 */
-	public String getPriority();
-
+	public Priority getPriority();
 
 	/**
 	 * Sets the priority for this bug.
 	 * @param priority - the priority to set
 	 */
-	public void setPriority(String priority);
-
+	public void setPriority(Priority priority);
 
 	/**
 	 * Returns the severity for this bug.
 	 * @return the severity
 	 */
-	public String getSeverity();
-
+	public Severity getSeverity();
 
 	/**
 	 * Sets the severity for this bug.
 	 * @param severity - the severity to set
 	 */
-	public void setSeverity(String severity);
-
+	public void setSeverity(Severity severity);
 
 	/**
 	 * Returns the target milestone.
@@ -338,19 +312,16 @@ public interface Issue {
 	 */
 	public String getTargetMilestone();
 
-
 	/**
 	 * Sets the target milestone.
 	 * @param targetMilestone - the target milestone to set
 	 */
 	public void setTargetMilestone(String targetMilestone);
 
-
 	/**
 	 * @return the everConfirmed
 	 */
 	public boolean isEverConfirmed();
-
 
 	/**
 	 * @param everConfirmed the everConfirmed to set
@@ -413,7 +384,6 @@ public interface Issue {
 	 */
 	public String getAssigneeTeam();
 
-
 	/**
 	 * Sets the assignee's team for this bug.
 	 * @param assigneeTeam - the assignee team to set
@@ -438,20 +408,17 @@ public interface Issue {
 	 */
 	public String getQaContact();
 
-
 	/**
 	 * Sets the QA contact.
 	 * @param qaContact - the QA contact to set
 	 */
 	public void setQaContact(String qaContact);
 
-
 	/**
 	 * Returns the file location given in this bug.
 	 * @return the file location
 	 */
 	public String getFileLocation();
-
 
 	/**
 	 * Sets the file location information.
@@ -509,7 +476,6 @@ public interface Issue {
 	 * @return number of CCs
 	 */
 	public int getCcCount();
-
 
 	/**
 	 * Creates a new and empty long description text.
