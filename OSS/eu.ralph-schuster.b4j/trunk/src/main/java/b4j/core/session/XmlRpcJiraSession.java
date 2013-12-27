@@ -21,10 +21,17 @@ import org.joda.time.DateTime;
 import rs.baselib.configuration.ConfigurationUtils;
 import b4j.core.Attachment;
 import b4j.core.Issue;
+import b4j.core.IssueType;
 import b4j.core.LongDescription;
+import b4j.core.Priority;
+import b4j.core.Resolution;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
+import b4j.core.Severity;
+import b4j.core.Status;
 import b4j.core.session.jira.AsynchronousFilterRestClient;
+import b4j.core.session.jira.JiraTransformer;
+import b4j.util.MetaData;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.AuthenticationHandler;
@@ -32,7 +39,10 @@ import com.atlassian.jira.rest.client.JiraRestClient;
 import com.atlassian.jira.rest.client.JiraRestClientFactory;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
 import com.atlassian.jira.rest.client.domain.BasicIssue;
+import com.atlassian.jira.rest.client.domain.BasicIssueType;
+import com.atlassian.jira.rest.client.domain.BasicPriority;
 import com.atlassian.jira.rest.client.domain.BasicResolution;
+import com.atlassian.jira.rest.client.domain.BasicStatus;
 import com.atlassian.jira.rest.client.domain.Comment;
 import com.atlassian.jira.rest.client.domain.SearchResult;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFactory;
@@ -54,6 +64,11 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 	private AsynchronousFilterRestClient filterClient;
 	private Proxy proxy;
 	private AuthorizationCallback proxyAuthorizationCallback;
+	private MetaData<BasicIssueType, IssueType> issueTypes = new MetaData<BasicIssueType, IssueType>(new JiraTransformer.IssueType());
+	private MetaData<BasicStatus, Status> status = new MetaData<BasicStatus, Status>(new JiraTransformer.Status());
+	private MetaData<BasicPriority, Priority> priorities = new MetaData<BasicPriority, Priority>(new JiraTransformer.Priority());
+	private MetaData<BasicPriority, Severity> severities = new MetaData<BasicPriority, Severity>(new JiraTransformer.Severity());
+	private MetaData<BasicResolution, Resolution> resolutions = new MetaData<BasicResolution, Resolution>(new JiraTransformer.Resolution());
 	
 	/**
 	 * Default constructor
@@ -232,16 +247,14 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 		rc.setAssigneeName(issue.getAssignee().getDisplayName());
 		rc.setCreationTimestamp(issue.getCreationDate().toDate());
 		rc.setBugzillaUri(issue.getSelf().toString());
-		rc.setPriority(issue.getPriority().getName());
+		rc.setPriority(priorities.get(issue.getPriority()));
 		rc.setProduct(issue.getProject().getName());
 		rc.setReporter(issue.getReporter().getName());
 		rc.setReporterName(issue.getReporter().getDisplayName());
-		BasicResolution res = issue.getResolution();
-		if (res != null) rc.setResolution(res.getName());
-		rc.setStatus(issue.getStatus().getName());
-		rc.setSeverity(issue.getPriority().getName());
-		rc.setType(issue.getIssueType().getId());
-		rc.setTypeName(issue.getIssueType().getName());
+		rc.setResolution(resolutions.get(issue.getResolution()));
+		rc.setStatus(status.get(issue.getStatus()));
+		rc.setSeverity(severities.get(issue.getPriority()));
+		rc.setType(issueTypes.get(issue.getIssueType()));
 		rc.setVersion(join(issue.getFixVersions()));
 		for (com.atlassian.jira.rest.client.domain.Attachment attachment : issue.getAttachments()) {
 			Attachment a = rc.addAttachment();

@@ -85,18 +85,17 @@ public class DefaultIssue implements Issue {
 	private Date deltaTimestamp;
 	private boolean reporterAccessible;
 	private boolean cclistAccessible;
-	private long typeId;
-	private String typeName;
+	private IssueType type;
 	private String classification;
 	private String product;
 	private String component;
 	private String version;
 	private String repPlatform;
 	private String opSys;
-	private String status;
-	private String resolution;
-	private String priority;
-	private String severity;
+	private Status status;
+	private Resolution resolution;
+	private Priority priority;
+	private Severity severity;
 	private String targetMilestone;
 	private boolean everConfirmed;
 	private String reporter;
@@ -317,43 +316,32 @@ public class DefaultIssue implements Issue {
 
 
 	/**
-	 * Returns the Bugzilla ID of the classification. 
-	 * @return the classification ID
+	 * {@inheritDoc}
 	 */
 	@Override
-	public long getType() {
-		return typeId;
+	public IssueType getType() {
+		return type;
 	}
 
 
 	/**
-	 * Sets the ID of the classification.
-	 * @param typeId - the classification ID to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setType(long typeId) {
-		this.typeId = typeId;
+	public void setType(IssueType type) {
+		this.type = type;
 	}
 
-
 	/**
-	 * @return the type name
+	 * {@inheritDoc}
 	 */
+	@SuppressWarnings("deprecation")
+	@Deprecated
 	@Override
 	public String getTypeName() {
-		if (typeName != null) return typeName;
-		return ""+getType();
+		if (getType() != null) return getType().getName();
+		return "";
 	}
-
-
-	/**
-	 * @param typeName the type name to set
-	 */
-	@Override
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
-	}
-
 
 	/**
 	 * Returns the product name for this bug.
@@ -363,7 +351,6 @@ public class DefaultIssue implements Issue {
 	public String getProduct() {
 		return product;
 	}
-
 
 	/**
 	 * Sets the product name for this bug.
@@ -383,7 +370,6 @@ public class DefaultIssue implements Issue {
 		return classification;
 	}
 
-
 	/**
 	 * Sets the classification name for this bug.
 	 * @param classification - the classification name to set
@@ -392,8 +378,6 @@ public class DefaultIssue implements Issue {
 	public void setClassification(String classification) {
 		this.classification = classification;
 	}
-
-
 
 	/**
 	 * Returns the component name for this bug.
@@ -404,7 +388,6 @@ public class DefaultIssue implements Issue {
 		return component;
 	}
 
-
 	/**
 	 * Sets the component name for this bug.
 	 * @param component - the component name to set
@@ -413,7 +396,6 @@ public class DefaultIssue implements Issue {
 	public void setComponent(String component) {
 		this.component = component;
 	}
-
 
 	/**
 	 * Returns the version of the product for this bug.
@@ -425,7 +407,6 @@ public class DefaultIssue implements Issue {
 		return version;
 	}
 
-
 	/**
 	 * Sets the product version for this bug.
 	 * Please do not mix with {@link #setBugzillaVersion(String)}.
@@ -436,7 +417,6 @@ public class DefaultIssue implements Issue {
 		this.version = version;
 	}
 
-
 	/**
 	 * Returns the reporter's platform.
 	 * @return the reporter's platform
@@ -445,7 +425,6 @@ public class DefaultIssue implements Issue {
 	public String getRepPlatform() {
 		return repPlatform;
 	}
-
 
 	/**
 	 * Sets the reporter's platform.
@@ -456,7 +435,6 @@ public class DefaultIssue implements Issue {
 		this.repPlatform = repPlatform;
 	}
 
-
 	/**
 	 * Returns the operating system for this bug.
 	 * @return the operating system
@@ -465,7 +443,6 @@ public class DefaultIssue implements Issue {
 	public String getOpSys() {
 		return opSys;
 	}
-
 
 	/**
 	 * Sets the operating system for this bug.
@@ -476,88 +453,69 @@ public class DefaultIssue implements Issue {
 		this.opSys = opSys;
 	}
 
-
 	/**
-	 * Returns the status of this bug.
-	 * @return the status
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-
 	/**
-	 * Sets the status of this bug.
-	 * @param status - the status to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-
 	/**
-	 * Returns the resolution status of this bug.
-	 * @return the resolution status
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getResolution() {
+	public Resolution getResolution() {
 		return resolution;
 	}
 
-
 	/**
-	 * Sets the resolution status.
-	 * @param resolution - the resolution to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setResolution(String resolution) {
+	public void setResolution(Resolution resolution) {
 		this.resolution = resolution;
 	}
 
-
 	/**
-	 * Returns the priority of this bug.
-	 * @return the priority
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getPriority() {
+	public Priority getPriority() {
 		return priority;
 	}
 
-
 	/**
-	 * Sets the priority for this bug.
-	 * @param priority - the priority to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPriority(String priority) {
+	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 
-
 	/**
-	 * Returns the severity for this bug.
-	 * @see #SEVERITIES
-	 * @return the severity
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getSeverity() {
+	public Severity getSeverity() {
 		return severity;
 	}
 
-
 	/**
-	 * Sets the severity for this bug.
-	 * @see #SEVERITIES
-	 * @param severity - the severity to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setSeverity(String severity) {
+	public void setSeverity(Severity severity) {
 		this.severity = severity;
 	}
-
 
 	/**
 	 * Returns the target milestone.
@@ -568,7 +526,6 @@ public class DefaultIssue implements Issue {
 		return targetMilestone;
 	}
 
-
 	/**
 	 * Sets the target milestone.
 	 * @param targetMilestone - the target milestone to set
@@ -578,7 +535,6 @@ public class DefaultIssue implements Issue {
 		this.targetMilestone = targetMilestone;
 	}
 
-
 	/**
 	 * @return the everConfirmed
 	 */
@@ -587,7 +543,6 @@ public class DefaultIssue implements Issue {
 		return everConfirmed;
 	}
 
-
 	/**
 	 * @param everConfirmed the everConfirmed to set
 	 */
@@ -595,7 +550,6 @@ public class DefaultIssue implements Issue {
 	public void setEverConfirmed(boolean everConfirmed) {
 		this.everConfirmed = everConfirmed;
 	}
-
 
 	/**
 	 * Returns the reporter of this bug.
@@ -606,7 +560,6 @@ public class DefaultIssue implements Issue {
 		return reporter;
 	}
 
-
 	/**
 	 * Sets the reporter of this bug.
 	 * @param reporter - the reporter to set
@@ -616,7 +569,6 @@ public class DefaultIssue implements Issue {
 		this.reporter = reporter;
 	}
 
-
 	/**
 	 * @return the reporterName
 	 */
@@ -625,14 +577,12 @@ public class DefaultIssue implements Issue {
 		return getReporter();
 	}
 
-
 	/**
 	 * @param reporterName the reporterName to set
 	 */
 	public void setReporterName(String reporterName) {
 		this.reporterName = reporterName;
 	}
-
 
 	/**
 	 * @return the assignee
@@ -641,14 +591,12 @@ public class DefaultIssue implements Issue {
 		return assignee;
 	}
 
-
 	/**
 	 * @param assignee the assignee to set
 	 */
 	public void setAssignee(String assignee) {
 		this.assignee = assignee;
 	}
-
 
 	/**
 	 * @return the assigneeName
@@ -657,7 +605,6 @@ public class DefaultIssue implements Issue {
 		if (assigneeName != null) return assigneeName;
 		return getAssignee();
 	}
-
 
 	/**
 	 * @param assigneeName the assigneeName to set
@@ -675,7 +622,6 @@ public class DefaultIssue implements Issue {
 		return qaContact;
 	}
 
-
 	/**
 	 * Sets the QA contact.
 	 * @param qaContact - the QA contact to set
@@ -685,7 +631,6 @@ public class DefaultIssue implements Issue {
 		this.qaContact = qaContact;
 	}
 
-
 	/**
 	 * Returns the file location given in this bug.
 	 * @return the file location
@@ -694,7 +639,6 @@ public class DefaultIssue implements Issue {
 	public String getFileLocation() {
 		return fileLocation;
 	}
-
 
 	/**
 	 * Sets the file location information.
@@ -815,7 +759,6 @@ public class DefaultIssue implements Issue {
 		return CommonUtils.iterable(getLongDescriptionIterator()); 
 	}
 
-
 	/**
 	 * Removes a specific long description record.
 	 * @param o - the record to remove
@@ -911,7 +854,6 @@ public class DefaultIssue implements Issue {
 	public boolean removeAttachment(Attachment o) {
 		return attachments.remove(o);
 	}
-
 
 	/**
 	 * Returns the number of attachments.
@@ -1066,15 +1008,13 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns whether this bug can be regarded as closed.
-	 * A closed bug can have status: RESOLVED, VERIFIED, CLOSED
-	 * @return true if bug is closed.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isClosed() {
-		String s = getStatus();
+		Status s = getStatus();
 		if (s == null) return false;
-		return s.equalsIgnoreCase("CLOSED");
+		return s.isClosed(); //s.equalsIgnoreCase("CLOSED");
 	}
 
 
@@ -1085,29 +1025,38 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public boolean isResolved() {
-		String s = getStatus();
+		Status s = getStatus();
 		if (s == null) return false;
-		return s.equalsIgnoreCase("RESOLVED") || s.equalsIgnoreCase("VERIFIED") || s.equalsIgnoreCase("CLOSED");
+		boolean rc = s.isResolved(); //s.equalsIgnoreCase("RESOLVED") || s.equalsIgnoreCase("VERIFIED") || s.equalsIgnoreCase("CLOSED");
+		if (!rc) {
+			Resolution r = getResolution();
+			if (r != null) rc = r.isResolved(); //s.toUpperCase().startsWith("CANCEL");
+		}
+		return rc;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean isCancelled() {
-		String s = getStatus();
+		Status s = getStatus();
 		if (s == null) return false;
-		boolean rc = s.toUpperCase().startsWith("CANCEL");
+		boolean rc = s.isCancelled(); //s.toUpperCase().startsWith("CANCEL");
 		if (!rc) {
-			s = getResolution();
-			if (s != null) rc = s.toUpperCase().startsWith("CANCEL");
+			Resolution r = getResolution();
+			if (r != null) rc = r.isCancelled(); //s.toUpperCase().startsWith("CANCEL");
 		}
 		return rc;
 	}
 
 	public boolean isDuplicate() {
-		String s = getStatus();
+		Status s = getStatus();
 		if (s == null) return false;
-		boolean rc = s.toUpperCase().startsWith("DUPLICATE");
+		boolean rc = s.isDuplicate(); //s.toUpperCase().startsWith("DUPLICATE");
 		if (!rc) {
-			s = getResolution();
-			if (s != null) rc = s.toUpperCase().startsWith("DUPLICATE");
+			Resolution r = getResolution();
+			if (r!= null) rc = r.isDuplicate(); //s.toUpperCase().startsWith("DUPLICATE");
 		}
 		return rc;
 	}
@@ -1119,11 +1068,12 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public boolean isOpen() {
-		String s = getStatus();
+		Status s = getStatus();
 		if (s == null) return true;
-		return s.toUpperCase().indexOf("OPEN") >= 0 || 
-				s.equalsIgnoreCase("NEW") || s.equalsIgnoreCase("CREATED") ||
-				s.equalsIgnoreCase("UNCONFIRMED") || s.equalsIgnoreCase("ASSIGNED");
+		return s.isOpen(); 
+//				s.toUpperCase().indexOf("OPEN") >= 0 || 
+//				s.equalsIgnoreCase("NEW") || s.equalsIgnoreCase("CREATED") ||
+//				s.equalsIgnoreCase("UNCONFIRMED") || s.equalsIgnoreCase("ASSIGNED");
 	}
 
 	/**
