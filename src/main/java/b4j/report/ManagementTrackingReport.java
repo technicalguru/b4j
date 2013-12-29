@@ -145,7 +145,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 					values.add(wStats.getTotalCount());
 					values.add(wStats.getAverageFixTime()/DateUtils.MILLIS_PER_DAY);
 				} else {
-					for (String sev : allSeverities) {
+					for (@SuppressWarnings("unused") String sev : allSeverities) {
 						values.add(0);
 						values.add(0);
 						values.add(0);
@@ -246,7 +246,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		if (bug.isOpen()) openCount++;
 		if (bug.isClosed()) {
 			closedCount++;
-			totalFixTime += bug.getDeltaTimestamp().getTime() - bug.getCreationTimestamp().getTime();
+			totalFixTime += bug.getUpdateTimestamp().getTime() - bug.getCreationTimestamp().getTime();
 		}
 
 		// forward to severity stats
@@ -373,7 +373,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			if (bug.isOpen()) openCount++;
 			if (bug.isClosed()) {
 				closedCount++;
-				totalFixTime += bug.getDeltaTimestamp().getTime() - bug.getCreationTimestamp().getTime();
+				totalFixTime += bug.getUpdateTimestamp().getTime() - bug.getCreationTimestamp().getTime();
 			}
 		}
 
@@ -454,7 +454,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			if (bug.isOpen()) openCount++;
 			if (bug.isClosed()) {
 				closedCount++;
-				totalFixTime += bug.getDeltaTimestamp().getTime() - bug.getCreationTimestamp().getTime();
+				totalFixTime += bug.getUpdateTimestamp().getTime() - bug.getCreationTimestamp().getTime();
 			}
 
 			// Forward to proper stat

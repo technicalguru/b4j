@@ -36,7 +36,7 @@ public class LogReport extends AbstractReportGenerator {
 	 */
 	@Override
 	public void registerBug(Issue bug) {
-		log.info(bug.getId()+": "+bug.getStatus()+" "+bug.getPriority()+" "+bug.getResolution()+" "+bug.getShortDescription());
+		log.info(bug.getId()+": "+bug.getStatus()+" "+bug.getPriority()+" "+bug.getResolution()+" "+bug.getSummary());
 		count++;
 	}
 

@@ -50,7 +50,7 @@ public class XmlRpcJiraSessionTest {
 
 	private static void addBug(String id, String shortDescription) {
 		Map<String,String> props = new HashMap<String, String>();
-		props.put("shortDescription", shortDescription);
+		props.put("summary", shortDescription);
 		expectedProperties.put(id, props);
 	}
 
@@ -137,10 +137,8 @@ public class XmlRpcJiraSessionTest {
 			assertNotNull("No ID for issue record", id);
 			log.debug("Jira issue found: "+id);
 			String attachementId = expectedCommentAttachments.get(id);
-			Iterator<Attachment> i2 = issue.getAttachmentIterator();
 			boolean found = false;
-			while (i2.hasNext()) {
-				Attachment attachment = i2.next();
+			for (Attachment attachment : issue.getAttachments()) {
 				log.debug(attachment.getId());
 				if (attachementId.equals(attachment.getId())) {
 					found = true;
@@ -185,8 +183,8 @@ public class XmlRpcJiraSessionTest {
 	private void testSpecials(Issue issue) throws Exception {
 		// Special bug with timestamps
 		if (issue.getId().equals("BFJ-1")) {
-			assertEquals("Timestamp parsed invalid", 1371672696000L, issue.getDeltaTimestamp().getTime() );
-			assertEquals("Comment timestamp parsed invalid", 1354567418000L, issue.getLongDescription("10043").getWhen().getTime());
+			assertEquals("Timestamp parsed invalid", 1371672696000L, issue.getUpdateTimestamp().getTime() );
+			assertEquals("Comment timestamp parsed invalid", 1354567418000L, issue.getComment("10043").getWhen().getTime());
 		}
 	}
 }

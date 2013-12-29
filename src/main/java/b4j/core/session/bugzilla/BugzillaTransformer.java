@@ -52,4 +52,20 @@ public class BugzillaTransformer {
 		}
 	}
 
+	/** Transformer for projects */
+	public static class Project implements Transformer {
+		@Override
+		public Object transform(Object input) {
+			return new BugzillaProject((String)input);
+		}
+	}
+
+	/** Transformer for severities */
+	public static class Component implements Transformer {
+		@Override
+		public Object transform(Object input) {
+			return new BugzillaComponent((String)input);
+		}
+	}
+
 }

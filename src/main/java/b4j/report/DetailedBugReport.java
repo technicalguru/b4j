@@ -20,7 +20,6 @@ package b4j.report;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
@@ -29,8 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import templating.Templating;
+import b4j.core.Comment;
 import b4j.core.Issue;
-import b4j.core.LongDescription;
 import b4j.util.BugzillaUtils;
 
 /**
@@ -172,28 +171,27 @@ public class DetailedBugReport extends AbstractFileReport {
 		markers.put("ID", bug.getId());
 		markers.put("ALIAS", bug.getAlias());
 		markers.put("ASSIGNEDTO", bug.getAssignee());
-		markers.put("CLASSIFICATION", bug.getTypeName());
-		markers.put("COMPONENT", bug.getComponent());
+		markers.put("CLASSIFICATION", bug.getClassification());
+		markers.put("COMPONENT", bug.getComponents());
 		markers.put("CRDATE", bug.getCreationTimestamp());
-		markers.put("MTIME", bug.getDeltaTimestamp());
+		markers.put("MTIME", bug.getUpdateTimestamp());
 		markers.put("FILELOCATION", bug.getFileLocation());
 		markers.put("PRIORITY", bug.getPriority());
 		markers.put("OPSYS", bug.getOpSys());
 		markers.put("SEVERITY", bug.getSeverity());
-		markers.put("PRODUCT", bug.getProduct());
+		markers.put("PRODUCT", bug.getProject().getName());
+		markers.put("PROJECT", bug.getProject().getName());
 		markers.put("QACONTACT", bug.getQaContact());
 		markers.put("REPORTER", bug.getReporter());
 		markers.put("RESOLUTION", bug.getResolution());
 		markers.put("REPORTER", bug.getReporter());
-		markers.put("SUMMARY", bug.getShortDescription());
+		markers.put("SUMMARY", bug.getSummary());
 		markers.put("STATUS", bug.getStatus());
-		markers.put("VERSION", bug.getVersion());
-		Iterator<LongDescription> i = bug.getLongDescriptionIterator();
+		markers.put("VERSION", bug.getFixVersions());
 		String s = "";
-		while (i.hasNext()) {
-			LongDescription desc = i.next();
-			String t = BugzillaUtils.join("\n   ", desc.getTheText().split("\\n"));
-			s += "\n\n"+desc.getWho() + " ("+desc.getWhen()+"):\n   "+t.trim();
+		for (Comment c : bug.getComments()) {
+			String t = BugzillaUtils.join("\n   ", c.getTheText().split("\\n"));
+			s += "\n\n"+c.getAuthor() + " ("+c.getWhen()+"):\n   "+t.trim();
 		}
 		markers.put("DESCRIPTIONS", s.trim());
 		template = Templating.replace(template, markers);

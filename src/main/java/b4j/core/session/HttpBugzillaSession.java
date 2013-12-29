@@ -43,16 +43,21 @@ import org.xml.sax.ext.DefaultHandler2;
 
 import rs.baselib.io.XmlReaderFilter;
 import b4j.core.Attachment;
+import b4j.core.Comment;
+import b4j.core.Component;
+import b4j.core.DefaultAttachment;
+import b4j.core.DefaultComment;
 import b4j.core.Issue;
 import b4j.core.IssueType;
-import b4j.core.LongDescription;
 import b4j.core.Priority;
+import b4j.core.Project;
 import b4j.core.Resolution;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
 import b4j.core.Severity;
 import b4j.core.Status;
 import b4j.core.session.bugzilla.BugzillaTransformer;
+import b4j.core.session.bugzilla.BugzillaUser;
 import b4j.util.BugzillaUtils;
 import b4j.util.MetaData;
 import b4j.util.UrlParameters;
@@ -98,6 +103,8 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	private MetaData<String, Priority> priorities = new MetaData<String, Priority>(new BugzillaTransformer.Priority());
 	private MetaData<String, Severity> severities = new MetaData<String, Severity>(new BugzillaTransformer.Severity());
 	private MetaData<String, Resolution> resolutions = new MetaData<String, Resolution>(new BugzillaTransformer.Resolution());
+	private MetaData<String, Project> projects = new MetaData<String, Project>(new BugzillaTransformer.Project());
+	private MetaData<String, Component> components = new MetaData<String, Component>(new BugzillaTransformer.Component());
 
 	/**
 	 * Default constructor.
@@ -510,14 +517,15 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		private InputStream xmlStream;
 		private BugzillaBugIterator iterator;
 		private XMLReader xmlReader;
-		private Issue currentBug;
-		private LongDescription currentLongDescription;
+		private Issue currentIssue;
+		private Comment currentComment;
 		private Attachment currentAttachment;
 		private StringBuffer currentContent;
 		private String currentCustomField;
 		private String bugzillaVersion;
 		private String bugzillaUri;
-
+		private BugzillaUser currentUser;
+		
 		/**
 		 * Constructor.
 		 * @param xmlStream - input stream with XML response from Bugzilla
@@ -570,9 +578,9 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				bugzillaVersion = attributes.getValue("version");
 				setBugzillaVersion(bugzillaVersion);
 			} else if (name.equals("bug")) {
-				currentBug = createIssue();
-				currentBug.setBugzillaUri(bugzillaUri);
-				currentBug.setBugzillaVersion(bugzillaVersion);
+				currentIssue = createIssue();
+				currentIssue.setServerUri(bugzillaUri);
+				currentIssue.setServerVersion(bugzillaVersion);
 			} else if (name.equals("bug_id")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("creation_ts")) { // 2008-07-23 12:28
@@ -612,28 +620,31 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			} else if (name.equals("everconfirmed")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("reporter")) {
+				currentUser = new BugzillaUser();
 				currentContent = new StringBuffer();
-				String reporterName = attributes.getValue("name");
-				if (reporterName != null) {
-					currentBug.setReporterName(reporterName);
+				String userName = attributes.getValue("name");
+				if (userName != null) {
+					currentUser.setName(userName);
 				}
 			} else if (name.equals("assigned_to")) {
+				currentUser = new BugzillaUser();
 				currentContent = new StringBuffer();
-				String assigneeName = attributes.getValue("name");
-				if (assigneeName != null) {
-					currentBug.setAssigneeName(assigneeName);
+				String userName = attributes.getValue("name");
+				if (userName != null) {
+					currentUser.setName(userName);
 				}
 			} else if (name.equals("qa_contact")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("long_desc")) { // multiple
-				currentLongDescription = currentBug.addLongDescription();
+				currentComment = new DefaultComment(currentIssue);
 			} else if (name.equals("commentid")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("who")) {
+				currentUser = new BugzillaUser();
 				currentContent = new StringBuffer();
-				String updateAuthorName = attributes.getValue("name");
-				if ((currentLongDescription != null) && (updateAuthorName != null)) {
-					currentLongDescription.setUpdateAuthorName(updateAuthorName);
+				String userName = attributes.getValue("name");
+				if (userName != null) {
+					currentUser.setName(userName);
 				}
 			} else if (name.equals("bug_when")) { // 2008-07-23 12:28:22
 				currentContent = new StringBuffer();
@@ -644,7 +655,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 			} else if (name.equals("cc")) { // multiple
 				currentContent = new StringBuffer();
 			} else if (name.equals("attachment")) { // multiple
-				currentAttachment = currentBug.addAttachment();
+				currentAttachment = new DefaultAttachment(currentIssue);
 			} else if (name.equals("attachid")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("date")) {
@@ -682,101 +693,115 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 		@Override
 		public void endElement(String uri, String localName, String name) throws SAXException {
 			if (name.equals("bug")) {
-				iterator.addBug(currentBug);
-				currentBug = null;
+				iterator.addBug(currentIssue);
+				currentIssue.setType(issueTypes.get("Issue"));
+				currentIssue = null;
 			} else if (name.equals("bug_id")) {
-				currentBug.setId(currentContent.toString());
+				currentIssue.setId(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("creation_ts")) { // 2008-07-23 12:28
 				try {
-					currentBug.setCreationTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
+					currentIssue.setCreationTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}
 				currentContent = null;
 			} else if (name.equals("short_desc")) {
-				currentBug.setShortDescription(currentContent.toString());
+				currentIssue.setSummary(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("delta_ts")) { // 2008-07-23 12:28:22
 				try {
-					currentBug.setDeltaTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
+					currentIssue.setUpdateTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}
 				currentContent = null;
 			} else if (name.equals("reporter_accessible")) {
-				currentBug.setReporterAccessible(parseBoolean(currentContent.toString()));
+				currentIssue.setReporterAccessible(parseBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("cclist_accessible")) {
-				currentBug.setCclistAccessible(parseBoolean(currentContent.toString()));
+				currentIssue.setCclistAccessible(parseBoolean(currentContent.toString()));
 				currentContent = null;
 //			} else if (name.equals("classification_id")) {
-//				currentBug.setType(Long.parseLong(currentContent.toString()));
+//				currentIssue.setType(Long.parseLong(currentContent.toString()));
 //				currentContent = null;
 			} else if (name.equals("classification")) {
-				currentBug.setType(issueTypes.get(currentContent.toString()));
+				currentIssue.setClassification(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("product")) {
-				currentBug.setProduct(currentContent.toString());
+				currentIssue.setProject(projects.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("component")) {
-				currentBug.setComponent(currentContent.toString());
+				currentIssue.addComponents(components.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("version")) {
-				currentBug.setVersion(currentContent.toString());
+				currentIssue.addFixVersions(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("rep_platform")) {
-				currentBug.setRepPlatform(currentContent.toString());
+				currentIssue.setRepPlatform(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("op_sys")) {
-				currentBug.setOpSys(currentContent.toString());
+				currentIssue.setOpSys(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_status")) {
-				currentBug.setStatus(status.get(currentContent.toString()));
+				currentIssue.setStatus(status.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("resolution")) {
-				currentBug.setResolution(resolutions.get(currentContent.toString()));
+				currentIssue.setResolution(resolutions.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("priority")) {
-				currentBug.setPriority(priorities.get(currentContent.toString()));
+				currentIssue.setPriority(priorities.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("bug_severity")) {
-				currentBug.setSeverity(severities.get(currentContent.toString()));
+				currentIssue.setSeverity(severities.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("target_milestone")) {
-				currentBug.setTargetMilestone(currentContent.toString());
+				currentIssue.addPlannedVersions(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("everconfirmed")) {
-				currentBug.setEverConfirmed(parseBoolean(currentContent.toString()));
+				currentIssue.setEverConfirmed(parseBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("reporter")) {
-				currentBug.setReporter(currentContent.toString());
+				if (currentUser != null) {
+					currentUser.setId(currentContent.toString());
+					currentIssue.setReporter(currentUser);
+				}
+				currentUser = null;
 				currentContent = null;
 			} else if (name.equals("assigned_to")) {
-				currentBug.setAssignee(currentContent.toString());
+				if (currentUser != null) {
+					currentUser.setId(currentContent.toString());
+					currentIssue.setAssignee(currentUser);
+				}
+				currentUser = null;
 				currentContent = null;
 			} else if (name.equals("qa_contact")) {
-				currentBug.setQaContact(currentContent.toString());
+				currentIssue.setQaContact(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("long_desc")) { // multiple
-				currentLongDescription = null;
+				currentIssue.addComments(currentComment);
+				currentComment = null;
 			} else if (name.equals("commentid")) {
-				currentLongDescription.setId(currentContent.toString());
+				currentComment.setId(currentContent.toString());
 			} else if (name.equals("who")) {
-				currentLongDescription.setWho(currentContent.toString());
+				if (currentUser != null) {
+					currentUser.setId(currentContent.toString());
+					currentComment.setAuthor(currentUser);
+				}
+				currentUser = null;
 				currentContent = null;
 			} else if (name.equals("bug_when")) { // 2008-07-23 12:28:22
 				try {
-					currentLongDescription.setWhen(BugzillaUtils.parseDate(currentContent.toString()));
+					currentComment.setWhen(BugzillaUtils.parseDate(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}
 				currentContent = null;
 			} else if (name.equals("thetext")) {
-				currentLongDescription.setTheText(currentContent.toString());
+				currentComment.setTheText(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_file_loc")) {
-				currentBug.setFileLocation(currentContent.toString());
+				currentIssue.setFileLocation(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("attachment")) { // multiple
 				currentAttachment = null;
@@ -784,8 +809,9 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				if (currentAttachment != null) {
 					currentAttachment.setId(currentContent.toString());
 					currentAttachment.setUri(URI.create(getBaseUrl()+PAGES[BUGZILLA_GET_ATTACHMENT]+"?id="+currentAttachment.getId()));
-				} else if (currentLongDescription != null) {
-					currentLongDescription.addAttachment(currentContent.toString());
+					currentIssue.addAttachments(currentAttachment);
+				} else if (currentComment != null) {
+					currentComment.addAttachmentIds(currentContent.toString());
 				}
 				currentContent = null;
 			} else if (name.equals("date")) {
@@ -800,37 +826,37 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 				currentAttachment.setType(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("cc")) { // multiple
-				currentBug.addCc(currentContent.toString());
+				currentIssue.addCcs(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("blocked")) {
-				currentBug.setBlocked(Long.parseLong(currentContent.toString()));
+				currentIssue.setBlocked(Long.parseLong(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("alias")) {
-				currentBug.setAlias(currentContent.toString());
+				currentIssue.setAlias(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("status_whiteboard")) {
-				currentBug.setWhiteboard(currentContent.toString());
+				currentIssue.setWhiteboard(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("estimated_time")) {
-				currentBug.setEstimatedTime(Double.parseDouble(currentContent.toString()));
+				currentIssue.setEstimatedTime(Double.parseDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("remaining_time")) {
-				currentBug.setRemainingTime(Double.parseDouble(currentContent.toString()));
+				currentIssue.setRemainingTime(Double.parseDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("actual_time")) {
-				currentBug.setActualTime(Double.parseDouble(currentContent.toString()));
+				currentIssue.setActualTime(Double.parseDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("deadline")) {
 				try {
-					currentBug.setDeadline(BugzillaUtils.parseDate(currentContent.toString()));
+					currentIssue.setDeadline(BugzillaUtils.parseDate(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this date: "+currentContent.toString());
 				}
 				currentContent = null;
 			} else {
 				if ((currentCustomField != null) && (currentContent != null)) {
-					if (currentBug != null) {
-						currentBug.setCustomField(currentCustomField, currentContent.toString());
+					if (currentIssue != null) {
+						currentIssue.setCustomField(currentCustomField, currentContent.toString());
 						currentCustomField = null;
 						currentContent = null;
 					}

@@ -20,9 +20,9 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.junit.Test;
 
 import b4j.core.Attachment;
+import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
-import b4j.core.LongDescription;
 
 /**
  * Bugzilla Session test
@@ -36,19 +36,18 @@ public class HttpBugzillaSessionTest {
 	private static Map<String, Map<String,String>> expectedCommentAttachments = new HashMap<String, Map<String,String>>();
 	
 	static {
-		addBug("3", "Create abstract class for BugzillaReportGenerator", "Java Projects", "CLOSED", "FIXED", "P3", "enhancement");
-		addBug("5", "java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)", "Java Projects", "CLOSED", "FIXED", "P3", "normal");
-		addBug("6", "Add abstract Email Report class", "Java Projects", "CLOSED", "FIXED", "P3", "enhancement");
-		addBug("13", "JIRA session", "Java Projects", "ASSIGNED", null, "P3", "normal");
-		addBug("14", "Writing # as first column does not escape it", "Java Projects", "CLOSED", "FIXED", "P3", "normal");
-		addBug("18", "Filter searches on HttpJiraSession does not return when no issue was found", "Java Projects", "CLOSED", "FIXED", "P3", "normal");
+		addBug("3", "Create abstract class for BugzillaReportGenerator", "CLOSED", "FIXED", "P3", "enhancement");
+		addBug("5", "java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)", "CLOSED", "FIXED", "P3", "normal");
+		addBug("6", "Add abstract Email Report class", "CLOSED", "FIXED", "P3", "enhancement");
+		addBug("13", "JIRA session", "ASSIGNED", null, "P3", "normal");
+		addBug("14", "Writing # as first column does not escape it", "CLOSED", "FIXED", "P3", "normal");
+		addBug("18", "Filter searches on HttpJiraSession does not return when no issue was found", "CLOSED", "FIXED", "P3", "normal");
 		addCommentAttachment("30", "49", "3");
 	}
 	
-	private static void addBug(String id, String shortDescription, String issueType, String status, String resolution, String priority, String severity) {
+	private static void addBug(String id, String shortDescription, String status, String resolution, String priority, String severity) {
 		Map<String,String> props = new HashMap<String, String>();
-		props.put("shortDescription", shortDescription);
-		if (issueType != null) props.put("type.name", issueType);
+		props.put("summary", shortDescription);
 		if (status != null) props.put("status.name", status);
 		if (resolution != null) props.put("resolution.name", resolution);
 		if (priority != null) props.put("priority.name", priority);
@@ -96,12 +95,10 @@ public class HttpBugzillaSessionTest {
 			if (expectedCommentAttachments.containsKey(id)) {
 				Map<String,String> commentMap = expectedCommentAttachments.get(id);
 				for (Map.Entry<String, String> entry : commentMap.entrySet()) {
-					LongDescription desc = issue.getLongDescription(entry.getKey());
+					Comment desc = issue.getComment(entry.getKey());
 					assertNotNull("Expected comment not found", desc);
-					Iterator<Attachment> i2 = desc.getAttachmentIterator();
 					boolean found = false;
-					while (i2.hasNext()) {
-						Attachment attachment = i2.next();
+					for (Attachment attachment : desc.getAttachments()) {
 						if (entry.getValue().equals(""+attachment.getId())) {
 							found = true;
 							break;
@@ -135,8 +132,8 @@ public class HttpBugzillaSessionTest {
 	private void testSpecials(HttpBugzillaSession session, Issue issue) throws Exception {
 		// Special bug with timestamps
 		if (issue.getId().equals("3")) {
-			assertEquals("Timestamp parsed invalid", 1345485240000L, issue.getDeltaTimestamp().getTime());
-			assertEquals("Comment timestamp parsed invalid", 1244567618000L, issue.getLongDescription("4").getWhen().getTime());
+			assertEquals("Timestamp parsed invalid", 1345485240000L, issue.getUpdateTimestamp().getTime());
+			assertEquals("Comment timestamp parsed invalid", 1244567618000L, issue.getComment("4").getWhen().getTime());
 		}
 		
 		// Check attachment retrieval

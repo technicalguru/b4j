@@ -20,15 +20,20 @@ import org.joda.time.DateTime;
 
 import rs.baselib.configuration.ConfigurationUtils;
 import b4j.core.Attachment;
+import b4j.core.Comment;
+import b4j.core.Component;
+import b4j.core.DefaultAttachment;
+import b4j.core.DefaultComment;
 import b4j.core.Issue;
 import b4j.core.IssueType;
-import b4j.core.LongDescription;
 import b4j.core.Priority;
+import b4j.core.Project;
 import b4j.core.Resolution;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
 import b4j.core.Severity;
 import b4j.core.Status;
+import b4j.core.User;
 import b4j.core.session.jira.AsynchronousFilterRestClient;
 import b4j.core.session.jira.JiraTransformer;
 import b4j.util.MetaData;
@@ -38,13 +43,16 @@ import com.atlassian.jira.rest.client.AuthenticationHandler;
 import com.atlassian.jira.rest.client.JiraRestClient;
 import com.atlassian.jira.rest.client.JiraRestClientFactory;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
+import com.atlassian.jira.rest.client.domain.BasicComponent;
 import com.atlassian.jira.rest.client.domain.BasicIssue;
 import com.atlassian.jira.rest.client.domain.BasicIssueType;
 import com.atlassian.jira.rest.client.domain.BasicPriority;
+import com.atlassian.jira.rest.client.domain.BasicProject;
 import com.atlassian.jira.rest.client.domain.BasicResolution;
 import com.atlassian.jira.rest.client.domain.BasicStatus;
-import com.atlassian.jira.rest.client.domain.Comment;
+import com.atlassian.jira.rest.client.domain.BasicUser;
 import com.atlassian.jira.rest.client.domain.SearchResult;
+import com.atlassian.jira.rest.client.domain.Version;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFactory;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
 import com.atlassian.util.concurrent.Promise;
@@ -69,6 +77,9 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 	private MetaData<BasicPriority, Priority> priorities = new MetaData<BasicPriority, Priority>(new JiraTransformer.Priority());
 	private MetaData<BasicPriority, Severity> severities = new MetaData<BasicPriority, Severity>(new JiraTransformer.Severity());
 	private MetaData<BasicResolution, Resolution> resolutions = new MetaData<BasicResolution, Resolution>(new JiraTransformer.Resolution());
+	private MetaData<BasicUser, User> users = new MetaData<BasicUser, User>(new JiraTransformer.User());
+	private MetaData<BasicProject, Project> projects = new MetaData<BasicProject, Project>(new JiraTransformer.Project());
+	private MetaData<BasicComponent, Component> components = new MetaData<BasicComponent, Component>(new JiraTransformer.Component());
 	
 	/**
 	 * Default constructor
@@ -234,47 +245,52 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 	protected Issue createIssue(com.atlassian.jira.rest.client.domain.Issue issue) {
 		Issue rc = createIssue();
 		rc.setId(issue.getKey());
-		rc.setShortDescription(issue.getSummary());
-		LongDescription desc = rc.addLongDescription();
+		rc.setSummary(issue.getSummary());
+		Comment desc = new DefaultComment(rc);
 		desc.setId(issue.getKey());
 		desc.setTheText(issue.getDescription());
 		desc.setLastUpdate(issue.getCreationDate().toDate());
 		desc.setWhen(issue.getCreationDate().toDate());
-		desc.setWho(issue.getReporter().getName());
-		desc.setUpdateAuthor(issue.getReporter().getName());
-		rc.setComponent(""+issue.getComponents());
-		rc.setAssignee(issue.getAssignee().getName());
-		rc.setAssigneeName(issue.getAssignee().getDisplayName());
+		desc.setAuthor(users.get(issue.getReporter()));
+		rc.addComments(desc);
+		rc.addComponents(components.get(issue.getComponents()));
+		rc.setAssignee(users.get(issue.getAssignee()));
 		rc.setCreationTimestamp(issue.getCreationDate().toDate());
-		rc.setBugzillaUri(issue.getSelf().toString());
+		rc.setServerUri(issue.getSelf().toString());
 		rc.setPriority(priorities.get(issue.getPriority()));
-		rc.setProduct(issue.getProject().getName());
-		rc.setReporter(issue.getReporter().getName());
-		rc.setReporterName(issue.getReporter().getDisplayName());
+		rc.setProject(projects.get(issue.getProject()));
+		rc.setReporter(users.get(issue.getReporter()));
 		rc.setResolution(resolutions.get(issue.getResolution()));
 		rc.setStatus(status.get(issue.getStatus()));
 		rc.setSeverity(severities.get(issue.getPriority()));
 		rc.setType(issueTypes.get(issue.getIssueType()));
-		rc.setVersion(join(issue.getFixVersions()));
+		for (Version v : issue.getFixVersions()) {
+			rc.addFixVersions(v.getName());
+		}
+		for (Version v : issue.getAffectedVersions()) {
+			rc.addAffectedVersions(v.getName());
+		}
 		for (com.atlassian.jira.rest.client.domain.Attachment attachment : issue.getAttachments()) {
-			Attachment a = rc.addAttachment();
+			Attachment a = new DefaultAttachment(rc);
 			a.setId(attachment.getSelf().toString());
 			a.setFilename(attachment.getFilename());
 			a.setDescription(attachment.getFilename());
 			a.setDate(attachment.getCreationDate().toDate());
 			a.setType(attachment.getMimeType());
 			a.setUri(attachment.getContentUri());
+			rc.addAttachments(a);
 		}
-		for (Comment comment : issue.getComments()) {
-			desc = rc.addLongDescription();
+		for (com.atlassian.jira.rest.client.domain.Comment comment : issue.getComments()) {
+			desc = new DefaultComment(rc);
 			desc.setId(""+comment.getId());
 			desc.setTheText(comment.getBody());
 			desc.setWhen(comment.getCreationDate().toDate());
-			desc.setWho(comment.getAuthor().getName());
+			desc.setAuthor(users.get(comment.getAuthor()));
+			desc.setUpdateAuthor(users.get(comment.getAuthor()));
 			desc.setLastUpdate(comment.getUpdateDate().toDate());
-			desc.setUpdateAuthor(comment.getUpdateAuthor().getName());
+			rc.addComments(desc);
 		}
-		rc.setDeltaTimestamp(issue.getUpdateDate().toDate());
+		rc.setUpdateTimestamp(issue.getUpdateDate().toDate());
 		DateTime d = issue.getDueDate();
 		if (d != null) rc.setDeadline(d.toDate());
 		return rc;
