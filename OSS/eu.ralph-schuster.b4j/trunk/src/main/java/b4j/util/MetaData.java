@@ -3,7 +3,10 @@
  */
 package b4j.util;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.Transformer;
@@ -30,7 +33,7 @@ public class MetaData<T, V> {
 	/**
 	 * Returns the transformed object for t.
 	 * @param t the object to transform
-	 * @return
+	 * @return transformed object
 	 */
 	public V get(T t) {
 		V rc = map.get(t);
@@ -41,6 +44,20 @@ public class MetaData<T, V> {
 		return rc;
 	}
 
+	/**
+	 * Returns the transformed objects for the list of t.
+	 * @param list the objects to transform
+	 * @return transformed objects
+	 */
+	public Collection<V> get(Iterable<T> list) {
+		List<V> rc = new ArrayList<V>();
+		for (T t : list) {
+			V v = get(t);
+			if (v != null) rc.add(v);
+		}
+		return rc;
+	}
+	
 	/**
 	 * Transforms the given object to the target type.
 	 * @param t object to be transformed

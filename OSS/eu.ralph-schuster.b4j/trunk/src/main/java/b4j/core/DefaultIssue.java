@@ -17,17 +17,15 @@
  */
 package b4j.core;
 
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import rs.baselib.util.CommonUtils;
 
@@ -75,37 +73,36 @@ public class DefaultIssue implements Issue {
 		"enhancement"
 	};
 
-	private String bugzillaVersion;
-	private String bugzillaUri;
+	private String serverVersion;
+	private String serverUri;
+	private String uri;
 	private String id;
 	private String link;
 	private String parentId;
 	private Date creationTimestamp;
-	private String shortDescription;
-	private Date deltaTimestamp;
+	private String summary;
+	private String description;
+	private Date updateTimestamp;
 	private boolean reporterAccessible;
 	private boolean cclistAccessible;
 	private IssueType type;
 	private String classification;
-	private String product;
-	private String component;
-	private String version;
+	private Project project;
+	private List<Component> components;
+	private List<String> affectedVersions;
+	private List<String> plannedVersions;
+	private List<String> fixVersions;
 	private String repPlatform;
 	private String opSys;
 	private Status status;
 	private Resolution resolution;
 	private Priority priority;
 	private Severity severity;
-	private String targetMilestone;
 	private boolean everConfirmed;
-	private String reporter;
-	private String reporterName;
-	private String reporterTeam;
-	private String assignee;
-	private String assigneeName;
-	private String assigneeTeam;
+	private User reporter;
+	private User assignee;
 	private String qaContact;
-	private List<LongDescription> longDescriptions;
+	private List<Comment> comments;
 	private String fileLocation;
 	private List<String> cc;
 	private List<Attachment> attachments;
@@ -118,114 +115,117 @@ public class DefaultIssue implements Issue {
 	private double actualTime;
 	private Date deadline;
 	private List<IssueLink> links;
-	private List<IssueLink> children;
+	private List<Issue> children;
 
 	/**
 	 * Default Constructor.
 	 */
 	public DefaultIssue() {
-		longDescriptions = new ArrayList<LongDescription>();
+		affectedVersions = new ArrayList<String>();
+		plannedVersions = new ArrayList<String>();
+		fixVersions = new ArrayList<String>();
+		components = new ArrayList<Component>();
+		comments = new ArrayList<Comment>();
 		cc = new ArrayList<String>();
 		attachments = new ArrayList<Attachment>();
 		customFields = new HashMap<String, List<String>>();
 		creationTimestamp = new Date(0);
-		deltaTimestamp = new Date(0);
+		updateTimestamp = new Date(0);
 		deadline = new Date(0);
 		links = new ArrayList<IssueLink>();
-		children = new ArrayList<IssueLink>();
+		children = new ArrayList<Issue>();
 	}
 
-
 	/**
-	 * Returns the version of Bugzilla this bug was retrieved from.
-	 * @return Bugzilla software version or null if unknown
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getBugzillaVersion() {
-		return bugzillaVersion;
+	public String getServerVersion() {
+		return serverVersion;
 	}
 
-
 	/**
-	 * Sets the Bugzilla version.
-	 * @param bugzillaVersion - version to be set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setBugzillaVersion(String bugzillaVersion) {
-		this.bugzillaVersion = bugzillaVersion;
+	public void setServerVersion(String serverVersion) {
+		this.serverVersion = serverVersion;
 	}
 
-
 	/**
-	 * Returns the URI representing the Bugzilla instance this
-	 * bug was retrieved from.
-	 * @return URI of Bugzilla instance or null
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getBugzillaUri() {
-		return bugzillaUri;
+	public String getServerUri() {
+		return serverUri;
 	}
 
-
 	/**
-	 * Sets the Bugzilla instance URI
-	 * @param bugzillaUri - the URI to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setBugzillaUri(String bugzillaUri) {
-		this.bugzillaUri = bugzillaUri;
+	public void setServerUri(String serverUri) {
+		this.serverUri = serverUri;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getUri() {
+		return uri;
+	}
 
 	/**
-	 * Returns the Bugzilla bug ID.
-	 * @return the bug ID
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getId() {
 		return id;
 	}
 
-
 	/**
-	 * Sets the Bugzilla bug ID
-	 * @param id - the ID to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setId(String id) {
 		this.id = id;
 	}
 
-
 	/**
-	 * @return the parentId
+	 * {@inheritDoc}
 	 */
+	@Override
 	public String getParentId() {
 		return parentId;
 	}
 
-
 	/**
-	 * @param parentId the parentId to set
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 
-
 	/**
-	 * Returns the timestamp when this bug was created.
-	 * @return the timestamp of creation
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Date getCreationTimestamp() {
 		return creationTimestamp;
 	}
 
-
 	/**
-	 * Sets the time of bug creation.
-	 * @param creationTimestamp - the timestamp to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setCreationTimestamp(Date creationTimestamp) {
@@ -235,85 +235,88 @@ public class DefaultIssue implements Issue {
 			this.creationTimestamp.setTime(0);
 	}
 
-
 	/**
-	 * Returns the summary of the nug.
-	 * @return the short description or summary.
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getShortDescription() {
-		return shortDescription;
+	public Date getUpdateTimestamp() {
+		return updateTimestamp;
 	}
 
-
 	/**
-	 * Sets the summary or short description of this bug.
-	 * @param shortDescription - the summary to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setShortDescription(String shortDescription) {
-		this.shortDescription = shortDescription;
+	public String getSummary() {
+		return summary;
 	}
 
-
 	/**
-	 * Returns the timestamp when this bug was last changed.
-	 * @return timestamp of last change
+	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getDeltaTimestamp() {
-		return deltaTimestamp;
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
-
 	/**
-	 * Sets the timestamp of last change.
-	 * @param deltaTimestamp - the timestamp to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setDeltaTimestamp(Date deltaTimestamp) {
-		if (deltaTimestamp != null)
-			this.deltaTimestamp.setTime(deltaTimestamp.getTime());
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setUpdateTimestamp(Date updateTimestamp) {
+		if (updateTimestamp != null)
+			this.updateTimestamp.setTime(updateTimestamp.getTime());
 		else
-			this.deltaTimestamp.setTime(getCreationTimestamp().getTime());
+			this.updateTimestamp.setTime(getCreationTimestamp().getTime());
 	}
 
-
 	/**
-	 * @return the reporterAccessible
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isReporterAccessible() {
 		return reporterAccessible;
 	}
 
-
 	/**
-	 * @param reporterAccessible - the reporterAccessible to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setReporterAccessible(boolean reporterAccessible) {
 		this.reporterAccessible = reporterAccessible;
 	}
 
-
 	/**
-	 * @return the cclistAccessible
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isCclistAccessible() {
 		return cclistAccessible;
 	}
 
-
 	/**
-	 * @param cclistAccessible - the cclistAccessible to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setCclistAccessible(boolean cclistAccessible) {
 		this.cclistAccessible = cclistAccessible;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -322,7 +325,6 @@ public class DefaultIssue implements Issue {
 	public IssueType getType() {
 		return type;
 	}
-
 
 	/**
 	 * {@inheritDoc}
@@ -335,44 +337,13 @@ public class DefaultIssue implements Issue {
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("deprecation")
-	@Deprecated
-	@Override
-	public String getTypeName() {
-		if (getType() != null) return getType().getName();
-		return "";
-	}
-
-	/**
-	 * Returns the product name for this bug.
-	 * @return product name
-	 */
-	@Override
-	public String getProduct() {
-		return product;
-	}
-
-	/**
-	 * Sets the product name for this bug.
-	 * @param product - the product name to set
-	 */
-	@Override
-	public void setProduct(String product) {
-		this.product = product;
-	}
-
-	/**
-	 * Returns the classification name for this bug.
-	 * @return classification name
-	 */
 	@Override
 	public String getClassification() {
 		return classification;
 	}
 
 	/**
-	 * Sets the classification name for this bug.
-	 * @param classification - the classification name to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setClassification(String classification) {
@@ -380,46 +351,298 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the component name for this bug.
-	 * @return the component name
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getComponent() {
-		return component;
+	public Project getProject() {
+		return project;
 	}
 
 	/**
-	 * Sets the component name for this bug.
-	 * @param component - the component name to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setComponent(String component) {
-		this.component = component;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	/**
-	 * Returns the version of the product for this bug.
-	 * Please do not mix with {@link #getBugzillaVersion()}.
-	 * @return the version of the product
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getVersion() {
-		return version;
+	public Collection<Component> getComponents() {
+		return Collections.unmodifiableList(components);
 	}
 
 	/**
-	 * Sets the product version for this bug.
-	 * Please do not mix with {@link #setBugzillaVersion(String)}.
-	 * @param version - the product version to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setVersion(String version) {
-		this.version = version;
+	public void setComponents(Collection<Component> components) {
+		removeAllComponents();
+		addComponents(components);
 	}
 
 	/**
-	 * Returns the reporter's platform.
-	 * @return the reporter's platform
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addComponents(Collection<Component> components) {
+		this.components.addAll(components);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addComponents(Component... components) {
+		for (Component item : components) {
+			this.components.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeComponents(Collection<Component> components) {
+		this.components.removeAll(components);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeComponents(Component... components) {
+		for (Component item : components) {
+			this.components.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllComponents() {
+		components.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getComponentCount() {
+		return components.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<String> getAffectedVersions() {
+		return Collections.unmodifiableList(affectedVersions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setAffectedVersions(Collection<String> versions) {
+		removeAllAffectedVersions();
+		addAffectedVersions(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addAffectedVersions(Collection<String> versions) {
+		affectedVersions.addAll(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addAffectedVersions(String... versions) {
+		for (String item : versions) {
+			affectedVersions.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAffectedVersions(Collection<String> versions) {
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAffectedVersions(String... versions) {
+		for (String item : versions) {
+			affectedVersions.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllAffectedVersions() {
+		affectedVersions.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getAffectedVersionCount() {
+		return affectedVersions.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<String> getPlannedVersions() {
+		return Collections.unmodifiableList(plannedVersions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setPlannedVersions(Collection<String> versions) {
+		removeAllPlannedVersions();
+		addPlannedVersions(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addPlannedVersions(Collection<String> versions) {
+		plannedVersions.addAll(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addPlannedVersions(String... versions) {
+		for (String item : versions) {
+			plannedVersions.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removePlannedVersions(Collection<String> versions) {
+		plannedVersions.removeAll(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removePlannedVersions(String... versions) {
+		for (String item : versions) {
+			plannedVersions.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllPlannedVersions() {
+		plannedVersions.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getPlannedVersionCount() {
+		return plannedVersions.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<String> getFixVersions() {
+		return Collections.unmodifiableList(fixVersions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setFixVersions(Collection<String> versions) {
+		removeAllFixVersions();
+		addFixVersions(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addFixVersions(Collection<String> versions) {
+		fixVersions.addAll(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addFixVersions(String... versions) {
+		for (String item : versions) {
+			fixVersions.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeFixVersions(Collection<String> versions) {
+		fixVersions.removeAll(versions);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeFixVersions(String... versions) {
+		for (String item : versions) {
+			fixVersions.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllFixVersions() {
+		fixVersions.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getFixVersionCount() {
+		return fixVersions.size();
+	}
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getRepPlatform() {
@@ -427,8 +650,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the reporter's platform.
-	 * @param repPlatform - the platform to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setRepPlatform(String repPlatform) {
@@ -436,8 +658,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the operating system for this bug.
-	 * @return the operating system
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getOpSys() {
@@ -445,8 +666,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the operating system for this bug.
-	 * @param opSys - the operating system to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setOpSys(String opSys) {
@@ -518,25 +738,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the target milestone.
-	 * @return the targetMilestone
-	 */
-	@Override
-	public String getTargetMilestone() {
-		return targetMilestone;
-	}
-
-	/**
-	 * Sets the target milestone.
-	 * @param targetMilestone - the target milestone to set
-	 */
-	@Override
-	public void setTargetMilestone(String targetMilestone) {
-		this.targetMilestone = targetMilestone;
-	}
-
-	/**
-	 * @return the everConfirmed
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isEverConfirmed() {
@@ -544,7 +746,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * @param everConfirmed the everConfirmed to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setEverConfirmed(boolean everConfirmed) {
@@ -552,70 +754,37 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the reporter of this bug.
-	 * @return the reporter
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String getReporter() {
+	public User getReporter() {
 		return reporter;
 	}
 
 	/**
-	 * Sets the reporter of this bug.
-	 * @param reporter - the reporter to set
+	 * {@inheritDoc}
 	 */
 	@Override
-	public void setReporter(String reporter) {
+	public void setReporter(User reporter) {
 		this.reporter = reporter;
 	}
 
 	/**
-	 * @return the reporterName
+	 * {@inheritDoc}
 	 */
-	public String getReporterName() {
-		if (reporterName != null) return reporterName;
-		return getReporter();
-	}
-
-	/**
-	 * @param reporterName the reporterName to set
-	 */
-	public void setReporterName(String reporterName) {
-		this.reporterName = reporterName;
-	}
-
-	/**
-	 * @return the assignee
-	 */
-	public String getAssignee() {
+	public User getAssignee() {
 		return assignee;
 	}
 
 	/**
-	 * @param assignee the assignee to set
+	 * {@inheritDoc}
 	 */
-	public void setAssignee(String assignee) {
+	public void setAssignee(User assignee) {
 		this.assignee = assignee;
 	}
 
 	/**
-	 * @return the assigneeName
-	 */
-	public String getAssigneeName() {
-		if (assigneeName != null) return assigneeName;
-		return getAssignee();
-	}
-
-	/**
-	 * @param assigneeName the assigneeName to set
-	 */
-	public void setAssigneeName(String assigneeName) {
-		this.assigneeName = assigneeName;
-	}
-
-	/**
-	 * Returns the QA contact.
-	 * @return the QA contact
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getQaContact() {
@@ -623,8 +792,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the QA contact.
-	 * @param qaContact - the QA contact to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setQaContact(String qaContact) {
@@ -632,8 +800,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the file location given in this bug.
-	 * @return the file location
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getFileLocation() {
@@ -641,8 +808,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the file location information.
-	 * @param fileLocation - the file location to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setFileLocation(String fileLocation) {
@@ -650,148 +816,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Adds a email to the CC list.
-	 * @param e - the CC to add
-	 * @return true if CC was set successfully
-	 */
-	@Override
-	public boolean addCc(String e) {
-		return cc.add(e);
-	}
-
-	/**
-	 * Adds multiple emails to the CC list.
-	 * @param c - the CCs to add
-	 * @return true if CCs could be added successfully
-	 */
-	@Override
-	public boolean addAllCc(Collection<? extends String> c) {
-		return cc.addAll(c);
-	}
-
-	/**
-	 * Clears the CC list.
-	 */
-	@Override
-	public void clearCc() {
-		cc.clear();
-	}
-
-	/**
-	 * Returns all CCs of this bug.
-	 * @return iterator of all CCs
-	 */
-	@Override
-	public Iterator<String> getCcIterator() {
-		return cc.iterator();
-	}
-
-	/**
 	 * {@inheritDoc}
-	 */
-	@Override
-	public Iterable<String> getCc() {
-		return CommonUtils.iterable(getCcIterator());
-	}
-
-	/**
-	 * Removes a CC.
-	 * @param o - the CC to remove
-	 * @return true if CC was found and removed
-	 */
-	@Override
-	public boolean removeCc(Object o) {
-		return cc.remove(o);
-	}
-
-	/**
-	 * Removes all given CCs from this bug. 
-	 * @param c - list of CCs to remove
-	 * @return true if CCs could be found and removed
-	 */
-	@Override
-	public boolean removeAllCc(Collection<?> c) {
-		return cc.removeAll(c);
-	}
-
-	/**
-	 * Returns the number of CCs.
-	 * @return number of CCs
-	 */
-	@Override
-	public int getCcCount() {
-		return cc.size();
-	}
-
-	/**
-	 * Creates a new and empty long description text.
-	 * @return a fresh and new long description record.
-	 */
-	@Override
-	public LongDescription addLongDescription() {
-		LongDescription rc = new DefaultLongDescription();
-		longDescriptions.add(rc);
-		return rc;
-	}
-
-	/**
-	 * Removes all long description texts.
-	 */
-	@Override
-	public void clearLongDescriptions() {
-		longDescriptions.clear();
-	}
-
-	/**
-	 * Returns all long description records.
-	 * @return iterator on all long descriptions
-	 */
-	@Override
-	public Iterator<LongDescription> getLongDescriptionIterator() {
-		return longDescriptions.iterator();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Iterable<LongDescription> getLongDescriptions() {
-		return CommonUtils.iterable(getLongDescriptionIterator()); 
-	}
-
-	/**
-	 * Removes a specific long description record.
-	 * @param o - the record to remove
-	 * @return true if record could be removed
-	 */
-	@Override
-	public boolean removeLongDescription(LongDescription o) {
-		return longDescriptions.remove(o);
-	}
-
-	/**
-	 * Returns the number of long description texts.
-	 * @return number of long description records
-	 */
-	@Override
-	public int getLongDescriptionCount() {
-		return longDescriptions.size();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public LongDescription getLongDescription(String id) {
-		for (LongDescription desc : longDescriptions) {
-			if (desc.getId().equals(id)) return desc;
-		}
-		return null;
-	}
-
-
-	/**
-	 * @return the blocked
 	 */
 	@Override
 	public long getBlocked() {
@@ -799,75 +824,15 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * @param blocked the blocked to set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setBlocked(long blocked) {
 		this.blocked = blocked;
 	}
 
-
 	/**
-	 * Creates and adds an attachment to this bug record.
-	 * @return the attachment created
-	 */
-	@Override
-	public Attachment addAttachment() {
-		Attachment rc = new DefaultAttachment();
-		attachments.add(rc);
-		return rc;
-	}
-
-
-	/**
-	 * Removes all attachments.
-	 */
-	@Override
-	public void clearAttachments() {
-		attachments.clear();
-	}
-
-	/**
-	 * Returns all attachments.
-	 * @return iterator on all attachments.
-	 */
-	@Override
-	public Iterator<Attachment> getAttachmentIterator() {
-		return attachments.iterator();
-	}
-
-	/**
-	 * Returns all attachments.
-	 * @return iterator on all attachments.
-	 */
-	@Override
-	public Iterable<Attachment> getAttachments() {
-		return CommonUtils.iterable(getAttachmentIterator());
-	}
-
-	/**
-	 * Removes an attachment.
-	 * @param o - the attachment to remove
-	 * @return true if attachment was found and removed
-	 */
-	@Override
-	public boolean removeAttachment(Attachment o) {
-		return attachments.remove(o);
-	}
-
-	/**
-	 * Returns the number of attachments.
-	 * @return number of attachments
-	 */
-	@Override
-	public int getAttachmentCount() {
-		return attachments.size();
-	}
-
-	/**
-	 * returns the attachment with the given id.
-	 * @param id id of attachment.
-	 * @return Attachment or null if it doesn't exist.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Attachment getAttachment(String id) {
@@ -878,11 +843,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Adds a custom field value.
-	 * This is a placeholder for customized fields in Bugzilla. A field
-	 * can have multiple values.
-	 * @param key - name of field
-	 * @param value - value of field
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setCustomField(String key, String value) {
@@ -895,9 +856,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns a list of all values of a field (or null)
-	 * @param key - name of field
-	 * @return list of values
+	 * {@inheritDoc}
 	 */
 	@Override
 	public List<String> getCustomField(String key) {
@@ -905,9 +864,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns first value of a field (or null)
-	 * @param key - name of field
-	 * @return first value of this field
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getCustomFieldString(String key) {
@@ -915,10 +872,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the n-th value of a field (or null)
-	 * @param key - name of field
-	 * @param idx - index of value
-	 * @return n-th value of field or null if not set
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getCustomFieldString(String key, int idx) {
@@ -930,8 +884,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the names of all custom fields.
-	 * @return iterator of customized field names
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Iterator<String> getCustomFieldNames() {
@@ -939,8 +892,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the number of custom fields.
-	 * @return number customized field names
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int getCustomFieldCount() {
@@ -948,9 +900,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Adds all values to a custom field.
-	 * @param key - name of field
-	 * @param values - list of values to add
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addAllCustomFields(String key, List<String> values) {
@@ -963,8 +913,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Adds all custom fields.
-	 * @param p - map with names and values of fields
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void addAllCustomFields(Map<String, List<String>> p) {
@@ -976,9 +925,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Removes a value from a custom field.
-	 * @param key - name of field
-	 * @param value - value to remove
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void removeCustomField(String key, String value) {
@@ -989,8 +936,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Removes all values of a custom field.
-	 * @param key - name of field.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void removeParameter(String key) {
@@ -1000,7 +946,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Clears all custom fields.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void clearCustomFields() {
@@ -1019,9 +965,7 @@ public class DefaultIssue implements Issue {
 
 
 	/**
-	 * Returns whether this bug can be regarded as closed.
-	 * A closed bug can have status: RESOLVED, VERIFIED, CLOSED
-	 * @return true if bug is closed.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isResolved() {
@@ -1050,6 +994,10 @@ public class DefaultIssue implements Issue {
 		return rc;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean isDuplicate() {
 		Status s = getStatus();
 		if (s == null) return false;
@@ -1062,9 +1010,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns whether a bug must be regarded as still open.
-	 * An open bug can have status: UNCONFIRMED, NEW, ASSIGNED, REOPENED
-	 * @return true if bug is open
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isOpen() {
@@ -1077,9 +1023,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns whether a bug must be regarded as in progress.
-	 * An bug in progress is neither open or closed.
-	 * @return true if bug is in progress
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isInProgress() {
@@ -1087,8 +1031,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the alias name of the bug.
-	 * @return alias name of bug
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getAlias() {
@@ -1096,8 +1039,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the alias name of this bug.
-	 * @param alias - the new alias
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setAlias(String alias) {
@@ -1105,8 +1047,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the whiteboard status.
-	 * @return whiteboard status
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String getWhiteboard() {
@@ -1114,8 +1055,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the whiteboard status for this bug.
-	 * @param whiteboard - the new whiteboard status.
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setWhiteboard(String whiteboard) {
@@ -1123,8 +1063,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the estimated time in hours.
-	 * @return estimated time in hours
+	 * {@inheritDoc}
 	 */
 	@Override
 	public double getEstimatedTime() {
@@ -1132,8 +1071,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the estimated time in hours.
-	 * @param estimatedTime - new estimated time in hours
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setEstimatedTime(double estimatedTime) {
@@ -1141,8 +1079,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the remaining time in hours.
-	 * @return remaining time in hours
+	 * {@inheritDoc}
 	 */
 	@Override
 	public double getRemainingTime() {
@@ -1150,8 +1087,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the remaining time in hours.
-	 * @param remainingTime - new remaining time in hours
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setRemainingTime(double remainingTime) {
@@ -1159,8 +1095,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the actual time in hours.
-	 * @return actual time in hours
+	 * {@inheritDoc}
 	 */
 	@Override
 	public double getActualTime() {
@@ -1168,8 +1103,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the actual time in hours.
-	 * @param actualTime - new actual time in hours
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setActualTime(double actualTime) {
@@ -1177,8 +1111,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Returns the deadline time.
-	 * @return the deadline time
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Date getDeadline() {
@@ -1186,8 +1119,7 @@ public class DefaultIssue implements Issue {
 	}
 
 	/**
-	 * Sets the dealine time.
-	 * @param deadline - the new dealine time
+	 * {@inheritDoc}
 	 */
 	@Override
 	public void setDeadline(Date deadline) {
@@ -1197,563 +1129,65 @@ public class DefaultIssue implements Issue {
 			this.deadline.setTime(0);
 	}
 
-
 	/**
-	 * @return the link
+	 * {@inheritDoc}
 	 */
+	@Override
 	public String getLink() {
 		return link;
 	}
 
-
 	/**
-	 * @param link the link to set
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void setLink(String link) {
 		this.link = link;
 	}
 
-
 	/**
-	 * @return the reporterTeam
+	 * {@inheritDoc}
 	 */
-	public String getReporterTeam() {
-		return reporterTeam;
-	}
-
-	public void addLink(IssueLink l) {
-		links.add(l);
-	}
-
-	public List<IssueLink> getLinks() {
-		return links;
-	}
-
-	public int getLinkCount() {
-		return links.size();
-	}
-
-	public void addChild(IssueLink l) {
-		children.add(l);
-	}
-
-	public List<IssueLink> getChildren() {
-		return children;
-	}
-
-	public int getChildCount() {
-		return children.size();
+	@Override
+	public Collection<Comment> getComments() {
+		return Collections.unmodifiableList(comments);
 	}
 
 	/**
-	 * @param reporterTeam the reporterTeam to set
+	 * {@inheritDoc}
 	 */
-	public void setReporterTeam(String reporterTeam) {
-		this.reporterTeam = reporterTeam;
+	@Override
+	public Comment getComment(String id) {
+		for (Comment c : comments) {
+			if (CommonUtils.equals(c.getId(), id)) return c;
+		}
+		return null;
 	}
-
-
+	
 	/**
-	 * @return the assigneeTeam
+	 * {@inheritDoc}
 	 */
-	public String getAssigneeTeam() {
-		return assigneeTeam;
-	}
-
-
-	/**
-	 * @param assigneeTeam the assigneeTeam to set
-	 */
-	public void setAssigneeTeam(String assigneeTeam) {
-		this.assigneeTeam = assigneeTeam;
-	}
-
-
-	/**
-	 * A long description entry.
-	 * This object is used to store information about long description texts.
-	 * @author ralph
-	 *
-	 */
-	public class DefaultLongDescription implements LongDescription {
-
-		private String id;
-		private String who;
-		private Date when;
-		private String theText;
-		private Date lastUpdate;
-		private String updateAuthor;
-		private Set<String> attachments;
-		private String updateAuthorName;
-
-		/**
-		 * Default Constructor.
-		 */
-		public DefaultLongDescription() {
-			id = "unknown";
-			when = new Date(0);
-			attachments = new HashSet<String>();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public String getId() {
-			return id;
-		}
-
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setId(String id) {
-			this.id = id;
-		}
-
-		/**
-		 * Returns the Bugzilla bug report this attachment belongs to.
-		 * @return the bug record of this attachment.
-		 */
-		@Override
-		public Issue getBugzillaBug() {
-			return DefaultIssue.this;
-		}
-
-		/**
-		 * Returns the author of this text.
-		 * @return the editor
-		 */
-		@Override
-		public String getWho() {
-			if (who != null) return who;
-			return getReporter();
-		}
-
-		/**
-		 * Sets the author of this text
-		 * @param who - the author to set
-		 */
-		@Override
-		public void setWho(String who) {
-			this.who = who;
-		}
-
-		/**
-		 * Returns the time of creation of this entry.
-		 * @return the time of creation
-		 */
-		@Override
-		public Date getWhen() {
-			if (when.getTime() > 0) return when;
-			return getCreationTimestamp();
-		}
-
-		/**
-		 * Sets the time of creation.
-		 * @param when - the timestamp to set
-		 */
-		@Override
-		public void setWhen(Date when) {
-			this.when.setTime(when.getTime());
-		}
-
-		/**
-		 * Returns the actual text.
-		 * @return the text
-		 */
-		@Override
-		public String getTheText() {
-			return theText;
-		}
-
-		/**
-		 * Sets the text of the description.
-		 * @param theText - the text to set
-		 */
-		@Override
-		public void setTheText(String theText) {
-			this.theText = theText;
-		}
-
-		/**
-		 * Returns the date of last update.
-		 * @return date of last update.
-		 */
-		@Override
-		public Date getLastUpdate() {
-			if (lastUpdate != null) return lastUpdate;
-			return getWhen();
-		}
-
-		/**
-		 * Sets the date of last update.
-		 * @param lastUpdate date to be set
-		 */
-		@Override
-		public void setLastUpdate(Date lastUpdate) {
-			this.lastUpdate = lastUpdate;
-		}
-
-		/**
-		 * Returns the author of the last update.
-		 * @return name of author
-		 */
-		@Override
-		public String getUpdateAuthor() {
-			return updateAuthor;
-		}
-
-		/**
-		 * Sets the last update's author.
-		 * @param updateAuthor author to be set
-		 */
-		@Override
-		public void setUpdateAuthor(String updateAuthor) {
-			this.updateAuthor = updateAuthor;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void addAttachment(String id) {
-			attachments.add(id);
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void clearAttachments() {
-			attachments.clear();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Iterator<Attachment> getAttachmentIterator() {
-			return new Iterator<Attachment>() {
-				private Attachment nextAttachment = null;
-				private Iterator<String> idIterator = attachments.iterator();
-
-				@Override
-				public boolean hasNext() {
-					if (nextAttachment == null) retrieveNext();
-					return nextAttachment != null;
-				}
-
-				@Override
-				public Attachment next() {
-					if (nextAttachment == null) retrieveNext();
-					return nextAttachment;
-				}
-
-				protected void retrieveNext() {
-					while ((nextAttachment == null) && idIterator.hasNext()) {
-						nextAttachment = getAttachment(idIterator.next());
-					}
-				}
-
-				@Override
-				public void remove() {
-					throw new UnsupportedOperationException("remove is not supported");
-				}
-
-			};
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public Iterable<Attachment> getAttachments() {
-			return CommonUtils.iterable(getAttachmentIterator());
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public boolean removeAttachment(Attachment o) {
-			return false;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public int getAttachmentCount() {
-			return DefaultIssue.this.attachments.size();
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public String getUpdateAuthorName() {
-			return updateAuthorName;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setUpdateAuthorName(String updateAuthorName) {
-			this.updateAuthorName = updateAuthorName;
-		}
-	}
-
-
-	/**
-	 * An attachment definition.
-	 * This object represents an attachment for a bug.
-	 * @author Ralph Schuster
-	 *
-	 */
-	public class DefaultAttachment implements Attachment {
-
-		private String id;
-		private Date date;
-		private String description;
-		private String filename;
-		private String type;
-		private URI uri;
-
-		/**
-		 * Default constructor.
-		 */
-		public DefaultAttachment() {
-			date = new Date(0);
-		}
-
-		/**
-		 * Returns the Bugzilla bug report this attachment belongs to.
-		 * @return the bug record of this attachment.
-		 */
-		@Override
-		public Issue getBugzillaBug() {
-			return DefaultIssue.this;
-		}
-
-
-		/**
-		 * Returns the ID of this attachment.
-		 * @return the ID
-		 */
-		@Override
-		public String getId() {
-			return id;
-		}
-
-		/**
-		 * Sets the ID of the attachment.
-		 * @param id - the ID to set
-		 */
-		@Override
-		public void setId(String id) {
-			this.id = id;
-		}
-
-		/**
-		 * Returns the date of the attachment.
-		 * @return the date
-		 */
-		@Override
-		public Date getDate() {
-			return date;
-		}
-
-		/**
-		 * Sets the date of the attachment.
-		 * @param date - the date to set
-		 */
-		@Override
-		public void setDate(Date date) {
-			this.date.setTime(date.getTime());
-		}
-
-		/**
-		 * Returns the description of the attachment.
-		 * @return the description
-		 */
-		@Override
-		public String getDescription() {
-			return description;
-		}
-
-		/**
-		 * Sets the description of the attachment.
-		 * @param description - the description to set
-		 */
-		@Override
-		public void setDescription(String description) {
-			this.description = description;
-		}
-
-		/**
-		 * Returns the filename.
-		 * @return the filename
-		 */
-		@Override
-		public String getFilename() {
-			return filename;
-		}
-
-		/**
-		 * Sets the filename.
-		 * @param filename - the filename to set
-		 */
-		@Override
-		public void setFilename(String filename) {
-			this.filename = filename;
-		}
-
-		/**
-		 * Returns the type of the attachment.
-		 * @return the type
-		 */
-		@Override
-		public String getType() {
-			return type;
-		}
-
-		/**
-		 * Sets the type of the attachment.
-		 * @param type - the type to set
-		 */
-		@Override
-		public void setType(String type) {
-			this.type = type;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public URI getUri() {
-			return uri;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void setUri(URI uri) {
-			this.uri = uri;
-		}
-
-
+	@Override
+	public void setComments(Collection<Comment> comments) {
+		removeAllComments();
+		addComments(comments);
 	}
 
 	/**
-	 * Describes a link to another issue
-	 * @author Ralph Schuster
-	 *
+	 * {@inheritDoc}
 	 */
-	public static class DefaultLink implements IssueLink {
-
-		private int linkType;
-		private String linkTypeName;
-		private boolean inward;
-		private String linkTypeDescription;
-		private String issueId;
-
-		/**
-		 * Constructor.
-		 */
-		public DefaultLink() {
-
-		}
-
-		/**
-		 * Constructor.
-		 * @param linkType type of link
-		 * @param linkTypeName name of link type
-		 * @param inward incoming?
-		 * @param linkTypeDescription description of link
-		 * @param issueId issue linked
-		 */
-		public DefaultLink(int linkType, String linkTypeName, boolean inward,
-				String linkTypeDescription, String issueId) {
-			super();
-			this.linkType = linkType;
-			this.linkTypeName = linkTypeName;
-			this.inward = inward;
-			this.linkTypeDescription = linkTypeDescription;
-			this.issueId = issueId;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public int getLinkType() {
-			return linkType;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public void setLinkType(int linkType) {
-			this.linkType = linkType;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public String getLinkTypeName() {
-			return linkTypeName;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public void setLinkTypeName(String linkTypeName) {
-			this.linkTypeName = linkTypeName;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public boolean isInward() {
-			return inward;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public void setInward(boolean inward) {
-			this.inward = inward;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public String getLinkTypeDescription() {
-			return linkTypeDescription;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public void setLinkTypeDescription(String linkTypeDescription) {
-			this.linkTypeDescription = linkTypeDescription;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public String getIssueId() {
-			return issueId;
-		}
-
-		/**
-		 * {@inheritDoc}
-		 */
-		public void setIssueId(String issueId) {
-			this.issueId = issueId;
+	@Override
+	public void addComments(Collection<Comment> comments) {
+		this.comments.addAll(comments);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addComments(Comment... comments) {
+		for (Comment item : comments) {
+			this.comments.add(item);
 		}
 	}
 
@@ -1761,8 +1195,318 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void removeComments(Collection<Comment> comments) {
+		this.comments.removeAll(comments);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeComments(Comment... comments) {
+		for (Comment item : comments) {
+			this.comments.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllComments() {
+		comments.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getCommentCount() {
+		return comments.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<Attachment> getAttachments() {
+		return Collections.unmodifiableList(attachments);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setAttachments(Collection<Attachment> attachments) {
+		removeAllAttachments();
+		addAttachments(attachments);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addAttachments(Collection<Attachment> attachments) {
+		this.attachments.addAll(attachments);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addAttachments(Attachment... attachments) {
+		for (Attachment item : attachments) {
+			this.attachments.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAttachments(Collection<Attachment> attachments) {
+		this.attachments.removeAll(attachments);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAttachments(Attachment... attachments) {
+		for (Attachment item : attachments) {
+			this.attachments.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllAttachments() {
+		attachments.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getAttachmentCount() {
+		return attachments.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<String> getCcs() {
+		return Collections.unmodifiableList(cc);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setCcs(Collection<String> cc) {
+		removeAllCcs();
+		addCcs(cc);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addCcs(Collection<String> cc) {
+		this.cc.addAll(cc);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addCcs(String... cc) {
+		for (String item : cc) {
+			this.cc.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeCcs(Collection<String> cc) {
+		this.cc.removeAll(cc);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeCcs(String... cc) {
+		for (String item : cc) {
+			this.cc.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllCcs() {
+		cc.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getCcCount() {
+		return cc.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<Issue> getChildren() {
+		return Collections.unmodifiableList(children);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setChildren(Collection<Issue> children) {
+		removeAllChildren();
+		addChildren(children);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addChildren(Collection<Issue> children) {
+		this.children.addAll(children);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addChildren(Issue... children) {
+		for (Issue item : children) {
+			this.children.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeChildren(Collection<Issue> children) {
+		this.children.removeAll(children);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeChildren(Issue... children) {
+		for (Issue item : children) {
+			this.children.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllChildren() {
+		children.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getChildCount() {
+		return children.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<IssueLink> getLinks() {
+		return Collections.unmodifiableList(links);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void setLinks(Collection<IssueLink> links) {
+		removeAllLinks();
+		addLinks(links);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addLinks(Collection<IssueLink> links) {
+		this.links.addAll(links);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void addLinks(IssueLink... links) {
+		for (IssueLink item : links) {
+			this.links.add(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeLinks(Collection<IssueLink> links) {
+		this.links.removeAll(links);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeLinks(IssueLink... links) {
+		for (IssueLink item : links) {
+			this.links.remove(item);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void removeAllLinks() {
+		links.clear();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getLinkCount() {
+		return links.size();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String toString() {
-		return getClass().getName()+"[id="+getId()+";summary="+getShortDescription()+";status="+getStatus()+"]";
+		return getClass().getName()+"[id="+getId()+";summary="+getSummary()+";status="+getStatus()+"]";
 	}
 
 

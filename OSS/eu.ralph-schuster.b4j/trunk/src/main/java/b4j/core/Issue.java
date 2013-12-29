@@ -1,18 +1,18 @@
 /*
- * This file is part of Bugzilla for Java.
+ * This file is part of issuezilla for Java.
  *
- *  Bugzilla for Java is free software: you can redistribute it 
+ *  issuezilla for Java is free software: you can redistribute it 
  *  and/or modify it under the terms of version 3 of the GNU 
  *  Lesser General Public  License as published by the Free Software 
  *  Foundation.
  *  
- *  Bugzilla for Java is distributed in the hope that it will be useful,
+ *  issuezilla for Java is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU Lesser General Public License for more details.
  *
  *  You should have received a copy of the GNU Lesser General Public 
- *  License along with Bugzilla for Java.  If not, see 
+ *  License along with issuezilla for Java.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
 package b4j.core;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Interface representing a Bugzilla bug record.
+ * Interface representing a issuezilla issue record.
  * Usually instances are delivered by a Session search query.
  * @author Ralph Schuster
  *
@@ -32,124 +32,132 @@ import java.util.Map;
 public interface Issue {
 
 	/**
-	 * Returns the version of Bugzilla this bug was retrieved from.
-	 * @return Bugzilla software version or null if unknown
+	 * Returns the version of server this issue was retrieved from.
+	 * @return server software version or null if unknown
 	 */
-	public String getBugzillaVersion();
-
+	public String getServerVersion();
 
 	/**
-	 * Sets the Bugzilla version.
-	 * @param bugzillaVersion - version to be set
+	 * Sets the server version.
+	 * @param version - version to be set
 	 */
-	public void setBugzillaVersion(String bugzillaVersion);
-
+	public void setServerVersion(String version);
 
 	/**
-	 * Returns the URI representing the Bugzilla instance this
-	 * bug was retrieved from.
-	 * @return URI of Bugzilla instance or null
+	 * Returns the URI representing the server instance this
+	 * issue was retrieved from.
+	 * @return URI of server or null
 	 */
-	public String getBugzillaUri();
-
+	public String getServerUri();
 
 	/**
-	 * Sets the Bugzilla instance URI
-	 * @param bugzillaUri - the URI to set
+	 * Sets the server instance URI
+	 * @param uri - the URI to set
 	 */
-	public void setBugzillaUri(String bugzillaUri);
-
+	public void setServerUri(String uri);
 
 	/**
-	 * Returns the Bugzilla bug ID.
-	 * @return the bug ID
+	 * Returns the URI of this issue.
+	 * @return URI of issue or null
+	 */
+	public String getUri();
+
+	/**
+	 * Sets the issue URI.
+	 * @param uri - the URI to set
+	 */
+	public void setUri(String uri);
+
+	/**
+	 * Returns the issue ID.
+	 * @return the issue ID
 	 */
 	public String getId();
 
-
 	/**
-	 * Sets the Bugzilla bug ID
+	 * Sets the issue ID
 	 * @param id - the ID to set
 	 */
 	public void setId(String id);
 
 	/**
 	 * Returns the parent id
-	 * @return ID of parent bug
+	 * @return ID of parent issue
 	 */
 	public String getParentId();
-
 
 	/**
 	 * @param parentId the parentId to set
 	 */
 	public void setParentId(String parentId);
-	
+
 	/**
-	 * Returns the timestamp when this bug was created.
+	 * Returns the timestamp when this issue was created.
 	 * @return the timestamp of creation
 	 */
 	public Date getCreationTimestamp();
 
-
 	/**
-	 * Sets the time of bug creation.
+	 * Sets the time of issue creation.
 	 * @param creationTimestamp - the timestamp to set
 	 */
 	public void setCreationTimestamp(Date creationTimestamp);
 
-
 	/**
-	 * Returns the summary of the nug.
+	 * Returns the summary of the issue.
 	 * @return the short description or summary.
 	 */
-	public String getShortDescription();
-
+	public String getSummary();
 
 	/**
-	 * Sets the summary or short description of this bug.
-	 * @param shortDescription - the summary to set
+	 * Sets the summary or short description of this issue.
+	 * @param summary - the summary to set
 	 */
-	public void setShortDescription(String shortDescription);
-
+	public void setSummary(String summary);
 
 	/**
-	 * Returns the timestamp when this bug was last changed.
+	 * Returns the description of the issue.
+	 * @return the long description or summary.
+	 */
+	public String getDescription();
+
+	/**
+	 * Sets the description of this issue.
+	 * @param description - the description to set
+	 */
+	public void setDescription(String description);
+
+	/**
+	 * Returns the timestamp when this issue was last changed.
 	 * @return timestamp of last change
 	 */
-	public Date getDeltaTimestamp();
-
+	public Date getUpdateTimestamp();
 
 	/**
 	 * Sets the timestamp of last change.
-	 * @param deltaTimestamp - the timestamp to set
+	 * @param updateTimestamp - the timestamp to set
 	 */
-	public void setDeltaTimestamp(Date deltaTimestamp);
-
+	public void setUpdateTimestamp(Date updateTimestamp);
 
 	/**
 	 * @return the reporterAccessible
 	 */
 	public boolean isReporterAccessible();
 
-
 	/**
 	 * @param reporterAccessible - the reporterAccessible to set
 	 */
 	public void setReporterAccessible(boolean reporterAccessible);
-
 
 	/**
 	 * @return the cclistAccessible
 	 */
 	public boolean isCclistAccessible();
 
-
 	/**
 	 * @param cclistAccessible - the cclistAccessible to set
 	 */
 	public void setCclistAccessible(boolean cclistAccessible);
-
 
 	/**
 	 * Returns the type. 
@@ -157,70 +165,200 @@ public interface Issue {
 	 */
 	public IssueType getType();
 
-
 	/**
 	 * Sets the type.
 	 * @param type - the type to set
 	 */
 	public void setType(IssueType type);
 
-
 	/**
-	 * Returns the name of the type.
-	 * @return the type name
-	 * @deprecated
-	 */
-	public String getTypeName();
-
-	/**
-	 * Returns the classification name for this bug.
+	 * Returns the classification name for this issue.
 	 * @return classification name
 	 */
 	public String getClassification();
 
 	/**
-	 * Sets the classification name for this bug.
+	 * Sets the classification name for this issue.
 	 * @param classification - the classification name to set
 	 */
 	public void setClassification(String classification);
 
 	/**
-	 * Returns the product name for this bug.
-	 * @return product name
+	 * Returns the project/product for this issue.
+	 * @return project
 	 */
-	public String getProduct();
+	public Project getProject();
 
 	/**
-	 * Sets the product name for this bug.
-	 * @param product - the product name to set
+	 * Sets the project/product for this issue.
+	 * @param project - the project/product to set
 	 */
-	public void setProduct(String product);
+	public void setProject(Project project);
 
 	/**
-	 * Returns the component name for this bug.
-	 * @return the component name
+	 * Returns the components for this issue.
+	 * @return the components
 	 */
-	public String getComponent();
+	public Collection<Component> getComponents();
 
 	/**
-	 * Sets the component name for this bug.
-	 * @param component - the component name to set
+	 * Sets the components for this issue.
+	 * @param components - the components to set
 	 */
-	public void setComponent(String component);
+	public void setComponents(Collection<Component> components);
 
 	/**
-	 * Returns the version of the product for this bug.
-	 * Please do not mix with {@link #getBugzillaVersion()}.
-	 * @return the version of the product
+	 * Adds the components for this issue.
+	 * @param components - the components to add
 	 */
-	public String getVersion();
+	public void addComponents(Collection<Component> components);
 
 	/**
-	 * Sets the product version for this bug.
-	 * Please do not mix with {@link #setBugzillaVersion(String)}.
-	 * @param version - the product version to set
+	 * Adds the components for this issue.
+	 * @param components - the components to add
 	 */
-	public void setVersion(String version);
+	public void addComponents(Component... components);
+
+	/**
+	 * Removes the components for this issue.
+	 * @param components - the components to remove
+	 */
+	public void removeComponents(Collection<Component> components);
+
+	/**
+	 * Removes the components for this issue.
+	 * @param components - the components to remove
+	 */
+	public void removeComponents(Component... components);
+
+	/**
+	 * Removes the components for this issue.
+	 */
+	public void removeAllComponents();
+
+	/**
+	 * Returns the number of components for this issue.
+	 * @return number of components
+	 */
+	public int getComponentCount();
+
+	/**
+	 * Returns the (fix) versions of the project/product for this issue.
+	 * Fix versions are versions where the resolution of this issue will be
+	 * delivered to.
+	 * @return the fix versions of the product
+	 */
+	public Collection<String> getFixVersions();
+
+	/**
+	 * Sets the product (fix) versions for this issue.
+	 * Fix versions are versions where the resolution of this issue will be
+	 * delivered to.
+	 * @param versions - the product fix versions to set
+	 */
+	public void setFixVersions(Collection<String> versions);
+
+	/**
+	 * Adds the product (fix) versions for this issue.
+	 * Fix versions are versions where the resolution of this issue will be
+	 * delivered to.
+	 * @param versions - the product fix versions to add
+	 */
+	public void addFixVersions(Collection<String> versions);
+
+	/**
+	 * Adds the product (fix) versions for this issue.
+	 * Fix versions are versions where the resolution of this issue will be
+	 * delivered to.
+	 * @param versions - the product fix versions to add
+	 */
+	public void addFixVersions(String... versions);
+
+	/**
+	 * Removes the product (fix) versions for this issue.
+	 * Fix versions are versions where the resolution of this issue will be
+	 * delivered to.
+	 * @param versions - the product fix versions to remove
+	 */
+	public void removeFixVersions(Collection<String> versions);
+
+	/**
+	 * Removes the product (fix) versions for this issue.
+	 * Fix versions are versions where the resolution of this issue will be
+	 * delivered to.
+	 * @param versions - the product fix versions to remove
+	 */
+	public void removeFixVersions(String... versions);
+
+	/**
+	 * Removes the fix versions for this issue.
+	 */
+	public void removeAllFixVersions();
+
+	/**
+	 * Returns the number of fix versions for this issue.
+	 * @return number of fix versions
+	 */
+	public int getFixVersionCount();
+
+	/**
+	 * Returns the (affected) versions of the project/product for this issue.
+	 * Affected versions are versions where the issue was reported to.
+	 * Usually this is set for issue reports only.
+	 * @return the affected versions of the product
+	 */
+	public Collection<String> getAffectedVersions();
+
+	/**
+	 * Sets the product (affected) versions for this issue.
+	 * Affected versions are versions where the issue was reported to.
+	 * Usually this is set for issue reports only.
+	 * @param versions - the product affected versions to set
+	 */
+	public void setAffectedVersions(Collection<String> versions);
+
+	/**
+	 * Adds the product (affected) versions for this issue.
+	 * Affected versions are versions where the issue was reported to.
+	 * Usually this is set for issue reports only.
+	 * @param versions - the product affected versions to add
+	 */
+	public void addAffectedVersions(Collection<String> versions);
+
+	/**
+	 * Adds the product (affected) versions for this issue.
+	 * Affected versions are versions where the issue was reported to.
+	 * Usually this is set for issue reports only.
+	 * @param versions - the product affected versions to add
+	 */
+	public void addAffectedVersions(String... versions);
+
+	/**
+	 * Removes the product (affected) versions for this issue.
+	 * Affected versions are versions where the issue was reported to.
+	 * Usually this is set for issue reports only.
+	 * @param versions - the product affected versions to remove
+	 */
+	public void removeAffectedVersions(Collection<String> versions);
+
+	/**
+	 * Removes the product (affected) versions for this issue.
+	 * Affected versions are versions where the issue was reported to.
+	 * Usually this is set for issue reports only.
+	 * @param versions - the product affected versions to remove
+	 */
+	public void removeAffectedVersions(String... versions);
+
+	/**
+	 * Removes the affected versions for this issue.
+	 */
+	public void removeAllAffectedVersions();
+
+	/**
+	 * Returns the number of affected versions for this issue.
+	 * @return number of affected versions
+	 */
+	public int getAffectedVersionCount();
 
 	/**
 	 * Returns the reporter's platform.
@@ -235,43 +373,43 @@ public interface Issue {
 	public void setRepPlatform(String repPlatform);
 
 	/**
-	 * Returns the operating system for this bug.
+	 * Returns the operating system for this issue.
 	 * @return the operating system
 	 */
 	public String getOpSys();
 
 	/**
-	 * Sets the operating system for this bug.
+	 * Sets the operating system for this issue.
 	 * @param opSys - the operating system to set
 	 */
 	public void setOpSys(String opSys);
 
 	/**
-	 * Returns the link for this bug.
+	 * Returns the link for this issue.
 	 * @return the link
 	 */
 	public String getLink();
 
 	/**
-	 * Sets the link for this bug.
+	 * Sets the link for this issue.
 	 * @param link - the link to set
 	 */
 	public void setLink(String link);
 
 	/**
-	 * Returns the status of this bug.
+	 * Returns the status of this issue.
 	 * @return the status
 	 */
 	public Status getStatus();
 
 	/**
-	 * Sets the status of this bug.
+	 * Sets the status of this issue.
 	 * @param status - the status to set
 	 */
 	public void setStatus(Status status);
 
 	/**
-	 * Returns the resolution status of this bug.
+	 * Returns the resolution status of this issue.
 	 * @return the resolution status
 	 */
 	public Resolution getResolution();
@@ -283,40 +421,87 @@ public interface Issue {
 	public void setResolution(Resolution resolution);
 
 	/**
-	 * Returns the priority of this bug.
+	 * Returns the priority of this issue.
 	 * @return the priority
 	 */
 	public Priority getPriority();
 
 	/**
-	 * Sets the priority for this bug.
+	 * Sets the priority for this issue.
 	 * @param priority - the priority to set
 	 */
 	public void setPriority(Priority priority);
 
 	/**
-	 * Returns the severity for this bug.
+	 * Returns the severity for this issue.
 	 * @return the severity
 	 */
 	public Severity getSeverity();
 
 	/**
-	 * Sets the severity for this bug.
+	 * Sets the severity for this issue.
 	 * @param severity - the severity to set
 	 */
 	public void setSeverity(Severity severity);
 
 	/**
-	 * Returns the target milestone.
-	 * @return the targetMilestone
+	 * Returns the (planned) versions of the project/product for this issue.
+	 * Planned versions are versions where the resolution of this issue 
+	 * is planned to be delivered to.
+	 * @return the planned versions of the product
 	 */
-	public String getTargetMilestone();
+	public Collection<String> getPlannedVersions();
 
 	/**
-	 * Sets the target milestone.
-	 * @param targetMilestone - the target milestone to set
+	 * Sets the product (planned) versions for this issue.
+	 * Planned versions are versions where the resolution of this issue 
+	 * is planned to be delivered to.
+	 * @param versions - the product planned versions to set
 	 */
-	public void setTargetMilestone(String targetMilestone);
+	public void setPlannedVersions(Collection<String> versions);
+
+	/**
+	 * Adds the product (planned) versions for this issue.
+	 * Planned versions are versions where the resolution of this issue 
+	 * is planned to be delivered to.
+	 * @param versions - the product planned versions to add
+	 */
+	public void addPlannedVersions(Collection<String> versions);
+
+	/**
+	 * Adds the product (planned) versions for this issue.
+	 * Planned versions are versions where the resolution of this issue 
+	 * is planned to be delivered to.
+	 * @param versions - the product planned versions to add
+	 */
+	public void addPlannedVersions(String... versions);
+
+	/**
+	 * Removes the product (planned) versions for this issue.
+	 * Planned versions are versions where the resolution of this issue 
+	 * is planned to be delivered to.
+	 * @param versions - the product planned versions to remove
+	 */
+	public void removePlannedVersions(Collection<String> versions);
+
+	/**
+	 * Removes the product (planned) versions for this issue.
+	 * Planned versions are versions where the resolution of this issue 
+	 * is planned to be delivered to.
+	 * @param versions - the product planned versions to remove
+	 */
+	public void removePlannedVersions(String... versions);
+
+	/**
+	 * Removes the planned versions for this issue.
+	 */
+	public void removeAllPlannedVersions();
+
+	/**
+	 * Returns the number of planned versions for this issue.
+	 * @return number of planned versions
+	 */
+	public int getPlannedVersionCount();
 
 	/**
 	 * @return the everConfirmed
@@ -329,78 +514,28 @@ public interface Issue {
 	public void setEverConfirmed(boolean everConfirmed);
 
 	/**
-	 * Returns the reporter's ID of this bug.
+	 * Returns the reporter's ID of this issue.
 	 * @return the reporter ID
 	 */
-	public String getReporter();
+	public User getReporter();
 
 	/**
-	 * Sets the reporter's ID of this bug.
+	 * Sets the reporter's ID of this issue.
 	 * @param reporter - the reporter ID to set
 	 */
-	public void setReporter(String reporter);
+	public void setReporter(User reporter);
 
 	/**
-	 * Returns the reporter's name of this bug.
-	 * @return the reporter name
-	 */
-	public String getReporterName();
-
-	/**
-	 * Sets the reporter's name of this bug.
-	 * @param reporterName - the reporter name to set
-	 */
-	public void setReporterName(String reporterName);
-
-	/**
-	 * Returns the reporter's team of this bug.
-	 * @return the reporter team
-	 */
-	public String getReporterTeam();
-
-	/**
-	 * Sets the reporter's team of this bug.
-	 * @param reporterTeam - the reporter team to set
-	 */
-	public void setReporterTeam(String reporterTeam);
-
-
-	/**
-	 * Returns the assignee's name of this bug.
-	 * @return the assignee name
-	 */
-	public String getAssigneeName();
-
-
-	/**
-	 * Sets the assignee's name for this bug.
-	 * @param assigneeName - the assignee name to set
-	 */
-	public void setAssigneeName(String assigneeName);
-
-	/**
-	 * Returns the assignee's team of this bug.
-	 * @return the assignee team
-	 */
-	public String getAssigneeTeam();
-
-	/**
-	 * Sets the assignee's team for this bug.
-	 * @param assigneeTeam - the assignee team to set
-	 */
-	public void setAssigneeTeam(String assigneeTeam);
-
-	/**
-	 * Returns the assignee's ID of this bug.
+	 * Returns the assignee's ID of this issue.
 	 * @return the assignee ID
 	 */
-	public String getAssignee();
+	public User getAssignee();
 
 	/**
-	 * Sets the assignee's ID for this bug.
+	 * Sets the assignee's ID for this issue.
 	 * @param assignee - the assignee ID to set
 	 */
-	public void setAssignee(String assignee);
+	public void setAssignee(User assignee);
 
 	/**
 	 * Returns the QA contact.
@@ -415,7 +550,7 @@ public interface Issue {
 	public void setQaContact(String qaContact);
 
 	/**
-	 * Returns the file location given in this bug.
+	 * Returns the file location given in this issue.
 	 * @return the file location
 	 */
 	public String getFileLocation();
@@ -427,104 +562,110 @@ public interface Issue {
 	public void setFileLocation(String fileLocation);
 
 	/**
-	 * Adds a email to the CC list.
-	 * @param e - the CC to add
-	 * @return true if CC was set successfully
+	 * Returns the CC e-mails of the project/product for this issue.
+	 * @return the CC e-mails of the product
 	 */
-	public boolean addCc(String e);
+	public Collection<String> getCcs();
 
 	/**
-	 * Adds multiple emails to the CC list.
-	 * @param c - the CCs to add
-	 * @return true if CCs could be added successfully
+	 * Sets the CC e-mails for this issue.
+	 * @param cc - the CC e-mails to set
 	 */
-	public boolean addAllCc(Collection<? extends String> c);
+	public void setCcs(Collection<String> cc);
 
 	/**
-	 * Clears the CC list.
+	 * Adds the CC e-mails for this issue.
+	 * @param cc - the CC e-mails to add
 	 */
-	public void clearCc();
+	public void addCcs(Collection<String> cc);
 
 	/**
-	 * Returns all CCs of this bug.
-	 * @return iterator of all CCs
+	 * Adds the CC e-mails for this issue.
+	 * @param cc - the CC e-mails to add
 	 */
-	public Iterator<String> getCcIterator();
+	public void addCcs(String... cc);
 
 	/**
-	 * Returns all CCs of this bug.
-	 * @return iterator of all CCs
+	 * Removes the CC e-mails for this issue.
+	 * @param cc - the CC e-mails to remove
 	 */
-	public Iterable<String> getCc();
+	public void removeCcs(Collection<String> cc);
 
 	/**
-	 * Removes a CC.
-	 * @param o - the CC to remove
-	 * @return true if CC was found and removed
+	 * Removes the CC e-mails for this issue.
+	 * @param cc - the CC e-mails to remove
 	 */
-	public boolean removeCc(Object o);
+	public void removeCcs(String... cc);
 
 	/**
-	 * Removes all given CCs from this bug. 
-	 * @param c - list of CCs to remove
-	 * @return true if CCs could be found and removed
+	 * Removes the CC e-mails for this issue.
 	 */
-	public boolean removeAllCc(Collection<?> c);
+	public void removeAllCcs();
 
 	/**
-	 * Returns the number of CCs.
-	 * @return number of CCs
+	 * Returns the number of CC e-mails for this issue.
+	 * @return number of CC e-mails
 	 */
 	public int getCcCount();
 
 	/**
-	 * Creates a new and empty long description text.
-	 * @return a fresh and new long description record.
+	 * Returns the comments for this issue.
+	 * @return the comments
 	 */
-	public LongDescription addLongDescription();
-
-	/**
-	 * Removes all long description texts.
-	 */
-	public void clearLongDescriptions();
-
-	/**
-	 * Returns all long description records.
-	 * @return iterator on all long descriptions
-	 */
-	public Iterator<LongDescription> getLongDescriptionIterator();
-
-	/**
-	 * Returns all long description records.
-	 * @return iterator on all long descriptions
-	 */
-	public Iterable<LongDescription> getLongDescriptions();
-
-	/**
-	 * Removes a specific long description record.
-	 * @param o - the record to remove
-	 * @return true if record could be removed
-	 */
-	public boolean removeLongDescription(LongDescription o);
-
-	/**
-	 * Returns the number of long description texts.
-	 * @return number of long description records
-	 */
-	public int getLongDescriptionCount();
+	public Collection<Comment> getComments();
 
 	/**
 	 * Returns the comment with given id.
 	 * @param id id of comment
-	 * @return comment or null if it doesn't exist.
+	 * @return the comment or null if not found
 	 */
-	public LongDescription getLongDescription(String id);
+	public Comment getComment(String id);
 	
+	/**
+	 * Sets the comments for this issue.
+	 * @param comments - the components to set
+	 */
+	public void setComments(Collection<Comment> comments);
+
+	/**
+	 * Adds the comments for this issue.
+	 * @param comments - the components to add
+	 */
+	public void addComments(Collection<Comment> comments);
+
+	/**
+	 * Adds the comments for this issue.
+	 * @param comments - the components to add
+	 */
+	public void addComments(Comment... comments);
+
+	/**
+	 * Removes the comments for this issue.
+	 * @param comments - the comments to remove
+	 */
+	public void removeComments(Collection<Comment> comments);
+
+	/**
+	 * Removes the comments for this issue.
+	 * @param comments - the comments to remove
+	 */
+	public void removeComments(Comment... comments);
+
+	/**
+	 * Removes the comments for this issue.
+	 */
+	public void removeAllComments();
+
+	/**
+	 * Returns the number of comments for this issue.
+	 * @return number of comments
+	 */
+	public int getCommentCount();
+
 	/**
 	 * @return the blocked
 	 */
 	public long getBlocked();
-
 
 	/**
 	 * @param blocked the blocked to set
@@ -532,72 +673,82 @@ public interface Issue {
 	public void setBlocked(long blocked);
 
 	/**
-	 * Creates and adds an attachment to this bug record.
-	 * @return the attachment created
+	 * Returns the attachments for this issue.
+	 * @return the attachments
 	 */
-	public Attachment addAttachment();
+	public Collection<Attachment> getAttachments();
 
 	/**
-	 * Removes all attachments.
+	 * Returns the attachment with given id.
+	 * @param id id of attachment
+	 * @return the attachment or null if not found
 	 */
-	public void clearAttachments();
+	public Attachment getAttachment(String id);
 
 	/**
-	 * Returns all attachments.
-	 * @return iterator on all attachments.
+	 * Sets the attachments for this issue.
+	 * @param attachments - the attachments to set
 	 */
-	public Iterator<Attachment> getAttachmentIterator();
+	public void setAttachments(Collection<Attachment> attachments);
 
 	/**
-	 * Returns all attachments.
-	 * @return iterator on all attachments.
+	 * Adds the attachments for this issue.
+	 * @param attachments - the attachments to add
 	 */
-	public Iterable<Attachment> getAttachments();
+	public void addAttachments(Collection<Attachment> attachments);
 
 	/**
-	 * Removes an attachment.
-	 * @param o - the attachment to remove
-	 * @return true if attachment was found and removed
+	 * Adds the attachments for this issue.
+	 * @param attachments - the attachments to add
 	 */
-	public boolean removeAttachment(Attachment o);
+	public void addAttachments(Attachment... attachments);
 
 	/**
-	 * Returns the number of attachments.
+	 * Removes the attachments for this issue.
+	 * @param attachments - the attachments to remove
+	 */
+	public void removeAttachments(Collection<Attachment> attachments);
+
+	/**
+	 * Removes the attachments for this issue.
+	 * @param attachments - the attachments to remove
+	 */
+	public void removeAttachments(Attachment... attachments);
+
+	/**
+	 * Removes the attachments for this issue.
+	 */
+	public void removeAllAttachments();
+
+	/**
+	 * Returns the number of attachments for this issue.
 	 * @return number of attachments
 	 */
 	public int getAttachmentCount();
 
 	/**
-	 * returns the attachment with the given id.
-	 * @param id id of attachment.
-	 * @return Attachment or null if it doesn't exist.
-	 * @since 1.3
-	 */
-	public Attachment getAttachment(String id);
-	
-	/**
 	 * Adds a custom field value.
-	 * This is a placeholder for customized fields in Bugzilla. A field
+	 * This is a placeholder for customized fields in issuezilla. A field
 	 * can have multiple values.
 	 * @param key - name of field
 	 * @param value - value of field
 	 */
 	public void setCustomField(String key, String value);
-	
+
 	/**
 	 * Returns a list of all values of a field (or null)
 	 * @param key - name of field
 	 * @return list of values
 	 */
 	public List<String> getCustomField(String key);
-	
+
 	/**
 	 * Returns first value of a field (or null)
 	 * @param key - name of field
 	 * @return first value of this field
 	 */
 	public String getCustomFieldString(String key);
-	
+
 	/**
 	 * Returns the n-th value of a field (or null)
 	 * @param key - name of field
@@ -605,165 +756,251 @@ public interface Issue {
 	 * @return n-th value of field or null if not set
 	 */
 	public String getCustomFieldString(String key, int idx);
-	
+
 	/**
 	 * Returns the names of all custom fields.
 	 * @return iterator of customized field names
 	 */
 	public Iterator<String> getCustomFieldNames();
-	
+
 	/**
 	 * Returns the number of custom fields.
 	 * @return number customized field names
 	 */
 	public int getCustomFieldCount();
-	
+
 	/**
 	 * Adds all values to a custom field.
 	 * @param key - name of field
 	 * @param values - list of values to add
 	 */
 	public void addAllCustomFields(String key, List<String> values);
-	
+
 	/**
 	 * Adds all custom fields.
 	 * @param p - map with names and values of fields
 	 */
 	public void addAllCustomFields(Map<String, List<String>> p);
-	
+
 	/**
 	 * Removes a value from a custom field.
 	 * @param key - name of field
 	 * @param value - value to remove
 	 */
 	public void removeCustomField(String key, String value);
-	
+
 	/**
 	 * Removes all values of a custom field.
 	 * @param key - name of field.
 	 */
 	public void removeParameter(String key);
-	
+
 	/**
 	 * Clears all custom fields.
 	 */
 	public void clearCustomFields();
-	
+
 	/**
-	 * Tells whether this bug can be regarded as closed.
-	 * @return true if bug is closed.
+	 * Tells whether this issue can be regarded as closed.
+	 * @return true if issue is closed.
 	 */
 	public boolean isClosed();
-	
+
 	/**
-	 * Tells whether this bug can be regarded as progressing.
-	 * @return true if bug is in progress.
+	 * Tells whether this issue can be regarded as progressing.
+	 * @return true if issue is in progress.
 	 */
 	public boolean isInProgress();
-	
+
 	/**
-	 * Tells whether this bug can be regarded as resolved.
-	 * @return true if bug is resolved.
+	 * Tells whether this issue can be regarded as resolved.
+	 * @return true if issue is resolved.
 	 */
 	public boolean isResolved();
-	
+
 	/**
-	 * Tells whether this bug can be regarded as cancelled.
-	 * @return true if bug is cancelled.
+	 * Tells whether this issue can be regarded as cancelled.
+	 * @return true if issue is cancelled.
 	 */
 	public boolean isCancelled();
-	
+
 	/**
-	 * Tells whether this bug is a duplicate.
-	 * @return true if bug is duplicate.
+	 * Tells whether this issue is a duplicate.
+	 * @return true if issue is duplicate.
 	 */
 	public boolean isDuplicate();
-	
+
 	/**
-	 * Tells whether a bug must be regarded as still open.
-	 * @return true if bug is open
+	 * Tells whether a issue must be regarded as still open.
+	 * @return true if issue is open
 	 */
 	public boolean isOpen();
 
 	/**
-	 * Returns the alias name of the bug.
-	 * @return alias name of bug
+	 * Returns the alias name of the issue.
+	 * @return alias name of issue
 	 */
 	public String getAlias();
-	
+
 	/**
-	 * Sets the alias name of this bug.
+	 * Sets the alias name of this issue.
 	 * @param alias - the new alias
 	 */
 	public void setAlias(String alias);
-	
+
 	/**
 	 * Returns the whiteboard status.
 	 * @return whiteboard status
 	 */
 	public String getWhiteboard();
-	
+
 	/**
-	 * Sets the whiteboard status for this bug.
+	 * Sets the whiteboard status for this issue.
 	 * @param whiteboard - the new whiteboard status.
 	 */
 	public void setWhiteboard(String whiteboard);
-	
+
 	/**
 	 * Returns the estimated time in hours.
 	 * @return estimated time in hours
 	 */
 	public double getEstimatedTime();
-	
+
 	/**
 	 * Sets the estimated time in hours.
 	 * @param estimatedTime - new estimated time in hours
 	 */
 	public void setEstimatedTime(double estimatedTime);
-	
+
 	/**
 	 * Returns the remaining time in hours.
 	 * @return remaining time in hours
 	 */
 	public double getRemainingTime();
-	
+
 	/**
 	 * Sets the remaining time in hours.
 	 * @param remainingTime - new remaining time in hours
 	 */
 	public void setRemainingTime(double remainingTime);
-	
+
 	/**
 	 * Returns the actual time in hours.
 	 * @return actual time in hours
 	 */
 	public double getActualTime();
-	
+
 	/**
 	 * Sets the actual time in hours.
 	 * @param actualTime - new actual time in hours
 	 */
 	public void setActualTime(double actualTime);
-	
+
 	/**
 	 * Returns the deadline time.
 	 * @return the deadline time
 	 */
 	public Date getDeadline();
-	
+
 	/**
 	 * Sets the dealine time.
 	 * @param deadline - the new dealine time
 	 */
 	public void setDeadline(Date deadline);
-	
-	public void addLink(IssueLink l);
-	public List<IssueLink> getLinks();
+
+	/**
+	 * Returns the links for this issue.
+	 * @return the links
+	 */
+	public Collection<IssueLink> getLinks();
+
+	/**
+	 * Sets the links for this issue.
+	 * @param links - the links to set
+	 */
+	public void setLinks(Collection<IssueLink> links);
+
+	/**
+	 * Adds the links for this issue.
+	 * @param links - the links to add
+	 */
+	public void addLinks(Collection<IssueLink> links);
+
+	/**
+	 * Adds the links for this issue.
+	 * @param links - the links to add
+	 */
+	public void addLinks(IssueLink... links);
+
+	/**
+	 * Removes the links for this issue.
+	 * @param links - the links to remove
+	 */
+	public void removeLinks(Collection<IssueLink> links);
+
+	/**
+	 * Removes the links for this issue.
+	 * @param links - the links to remove
+	 */
+	public void removeLinks(IssueLink... links);
+
+	/**
+	 * Removes the links for this issue.
+	 */
+	public void removeAllLinks();
+
+	/**
+	 * Returns the number of links for this issue.
+	 * @return number of links
+	 */
 	public int getLinkCount();
-	
-	public void addChild(IssueLink l);
-	public List<IssueLink> getChildren();
+
+	/**
+	 * Returns the children for this issue.
+	 * @return the children
+	 */
+	public Collection<Issue> getChildren();
+
+	/**
+	 * Sets the children for this issue.
+	 * @param children - the children to set
+	 */
+	public void setChildren(Collection<Issue> children);
+
+	/**
+	 * Adds the children for this issue.
+	 * @param children - the children to add
+	 */
+	public void addChildren(Collection<Issue> children);
+
+	/**
+	 * Adds the children for this issue.
+	 * @param children - the attachments to add
+	 */
+	public void addChildren(Issue... children);
+
+	/**
+	 * Removes the children for this issue.
+	 * @param children - the attachments to remove
+	 */
+	public void removeChildren(Collection<Issue> children);
+
+	/**
+	 * Removes the children for this issue.
+	 * @param children - the children to remove
+	 */
+	public void removeChildren(Issue... children);
+
+	/**
+	 * Removes the children for this issue.
+	 */
+	public void removeAllChildren();
+
+	/**
+	 * Returns the number of children for this issue.
+	 * @return number of children
+	 */
 	public int getChildCount();
-	
-	
+
+
 }

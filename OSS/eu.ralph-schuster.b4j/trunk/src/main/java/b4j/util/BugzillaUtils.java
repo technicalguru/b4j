@@ -19,19 +19,20 @@ package b4j.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import b4j.core.Attachment;
+import b4j.core.Comment;
+import b4j.core.Component;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.IssueLink;
-import b4j.core.LongDescription;
 
 /**
  * Provides some useful methods for all classes.
@@ -259,25 +260,48 @@ public class BugzillaUtils {
 	}
 	
 	/**
+	 * Transforms an {@link Iterable} into a {@link Collection}.
+	 * @param iterable iterable to transform
+	 * @return the collection
+	 */
+	public static <T> Collection<T> transform(Iterable<T> iterable) {
+		Collection<T> rc = new ArrayList<T>();
+		for (T t : iterable) {
+			rc.add(t);
+		}
+		return rc;
+	}
+	
+	/**
 	 * Debugs an issue in log file.
 	 * @param issue issue to be debugged
 	 */
 	public static void debug(Issue issue) {
-		log.debug("BugzillaVersion="+issue.getBugzillaVersion());
-		log.debug("BugzillaUri="+issue.getBugzillaUri());
+		log.debug("BugzillaVersion="+issue.getServerVersion());
+		log.debug("BugzillaUri="+issue.getServerUri());
 		log.debug("Id="+issue.getId());
 		log.debug("ParentId="+issue.getParentId());
 		log.debug("CreationTimestamp="+issue.getCreationTimestamp());
-		log.debug("ShortDescription="+issue.getShortDescription());
-		log.debug("DeltaTimestamp="+issue.getDeltaTimestamp());
+		log.debug("ShortDescription="+issue.getSummary());
+		log.debug("DeltaTimestamp="+issue.getUpdateTimestamp());
 		log.debug("ReporterAccessible="+issue.isReporterAccessible());
 		log.debug("CcListAccessible="+issue.isCclistAccessible());
 		log.debug("Type="+issue.getType());
-		log.debug("TypeName="+issue.getTypeName());
+		log.debug("TypeName="+issue.getType().getName());
 		log.debug("Classification="+issue.getClassification());
-		log.debug("Product="+issue.getProduct());
-		log.debug("Component="+issue.getComponent());
-		log.debug("Version="+issue.getVersion());
+		log.debug("Project="+issue.getProject());
+		for (Component c : issue.getComponents()) {
+			log.debug("Component="+c.getName());
+		}
+		for (String s : issue.getFixVersions()) {
+			log.debug("FixVersion="+s);
+		}
+		for (String s : issue.getPlannedVersions()) {
+			log.debug("PlannedVersion="+s);
+		}
+		for (String s : issue.getAffectedVersions()) {
+			log.debug("AffectedVersion="+s);
+		}
 		log.debug("RepPlatform="+issue.getRepPlatform());
 		log.debug("OpSys="+issue.getOpSys());
 		log.debug("Link="+issue.getLink());
@@ -285,14 +309,13 @@ public class BugzillaUtils {
 		log.debug("Resolution="+issue.getResolution());
 		log.debug("Priority="+issue.getPriority());
 		log.debug("Severity="+issue.getSeverity());
-		log.debug("TargetMilestone="+issue.getTargetMilestone());
 		log.debug("EverConfirmed="+issue.isEverConfirmed());
 		log.debug("Reporter="+issue.getReporter());
-		log.debug("ReporterName="+issue.getReporterName());
-		log.debug("ReporterTeam="+issue.getReporterTeam());
+		log.debug("ReporterName="+issue.getReporter().getName());
+		log.debug("ReporterTeam="+issue.getReporter().getTeam());
 		log.debug("Assignee="+issue.getAssignee());
-		log.debug("AssigneeName="+issue.getAssigneeName());
-		log.debug("AssigneeTeam="+issue.getAssigneeTeam());
+		log.debug("AssigneeName="+issue.getAssignee().getName());
+		log.debug("AssigneeTeam="+issue.getAssignee().getTeam());
 		log.debug("QaContact="+issue.getQaContact());
 		log.debug("FileLocation="+issue.getFileLocation());
 		log.debug("Blocked="+issue.getBlocked());
@@ -308,26 +331,20 @@ public class BugzillaUtils {
 		log.debug("RemainingTime="+issue.getRemainingTime());
 		log.debug("ActualTime="+issue.getActualTime());
 		log.debug("Deadline="+issue.getDeadline());
-		Iterator<String> ccList = issue.getCcIterator();
-		while (ccList.hasNext()) {
-			log.debug("cc="+ccList.next());
+		for (String cc : issue.getCcs()) {
+			log.debug("cc="+cc);
 		}
-		Iterator<LongDescription> ldList = issue.getLongDescriptionIterator();
-		while (ldList.hasNext()) {
-			LongDescription desc = ldList.next();
-			log.debug("comment="+desc.getWho()+" ("+desc.getWhen()+"): "+desc.getTheText());
+		for (Comment c : issue.getComments()) {
+			log.debug("comment="+c.getAuthor().getId()+" ("+c.getWhen()+"): "+c.getTheText());
 		}
-		Iterator<Attachment> attList = issue.getAttachmentIterator();
-		while (attList.hasNext()) {
-			Attachment att = attList.next();
-			log.debug("attachment="+att.getFilename()+ "("+att.getType()+"): "+att.getDescription());
+		for (Attachment a : issue.getAttachments()) {
+			log.debug("attachment="+a.getFilename()+ "("+a.getType()+"): "+a.getDescription());
 		}
 		for (IssueLink link : issue.getLinks()) {
 			log.debug("link="+link.getIssueId()+" ("+link.getLinkTypeName()+")");
 		}
-		
-		for (IssueLink link : issue.getChildren()) {
-			log.debug("child="+link.getIssueId());
+		for (Issue i : issue.getChildren()) {
+			log.debug("child="+i.getId());
 		}
 	}
 	

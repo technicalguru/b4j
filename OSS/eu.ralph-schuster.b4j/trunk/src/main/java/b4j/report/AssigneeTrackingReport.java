@@ -106,7 +106,7 @@ public class AssigneeTrackingReport extends AbstractFileReport {
 		totalCount++;
 		if (bug.isOpen()) {
 			openCount++;
-			String assignee = bug.getAssignee();
+			String assignee = bug.getAssignee().getId();
 			Long cnt = count.get(assignee);
 			if (cnt == null) cnt = new Long(0);
 			cnt = cnt+1;

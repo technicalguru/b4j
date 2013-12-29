@@ -182,7 +182,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	 * @return the change log entry generated from the bug record
 	 */
 	protected String getBugText(Issue bug) {
-		return "Fixed Bug #"+bug.getId()+" - "+bug.getShortDescription();
+		return "Fixed Bug #"+bug.getId()+" - "+bug.getSummary();
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	 * @return release for that bug
 	 */
 	protected Release getRelease(Issue bug) {
-		long closeDate = bug.getDeltaTimestamp().getTime();
+		long closeDate = bug.getUpdateTimestamp().getTime();
 		Iterator<Release> ri = releases.iterator();
 		Release lastRelease = null;
 		long lastTimestamp = 0;
