@@ -5,6 +5,8 @@ package b4j.core.session.bugzilla;
 
 import org.apache.commons.collections.Transformer;
 
+import b4j.core.DefaultClassification;
+
 /**
  * The transformations required for Bugzilla.
  * @author ralph
@@ -66,6 +68,14 @@ public class BugzillaTransformer {
 		@Override
 		public Object transform(Object input) {
 			return new BugzillaComponent((String)input);
+		}
+	}
+
+	/** Transformer for severities */
+	public static class Classification implements Transformer {
+		@Override
+		public Object transform(Object input) {
+			return new DefaultClassification((String)input);
 		}
 	}
 

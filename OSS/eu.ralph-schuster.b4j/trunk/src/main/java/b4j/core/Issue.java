@@ -172,16 +172,16 @@ public interface Issue {
 	public void setType(IssueType type);
 
 	/**
-	 * Returns the classification name for this issue.
-	 * @return classification name
+	 * Returns the classification for this issue.
+	 * @return classification
 	 */
-	public String getClassification();
+	public Classification getClassification();
 
 	/**
-	 * Sets the classification name for this issue.
-	 * @param classification - the classification name to set
+	 * Sets the classification for this issue.
+	 * @param classification - the classification to set
 	 */
-	public void setClassification(String classification);
+	public void setClassification(Classification classification);
 
 	/**
 	 * Returns the project/product for this issue.

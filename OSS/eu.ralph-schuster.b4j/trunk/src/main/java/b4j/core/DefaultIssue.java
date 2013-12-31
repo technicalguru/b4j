@@ -86,7 +86,7 @@ public class DefaultIssue implements Issue {
 	private boolean reporterAccessible;
 	private boolean cclistAccessible;
 	private IssueType type;
-	private String classification;
+	private Classification classification;
 	private Project project;
 	private List<Component> components;
 	private List<String> affectedVersions;
@@ -338,7 +338,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getClassification() {
+	public Classification getClassification() {
 		return classification;
 	}
 
@@ -346,7 +346,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setClassification(String classification) {
+	public void setClassification(Classification classification) {
 		this.classification = classification;
 	}
 

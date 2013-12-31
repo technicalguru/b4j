@@ -7,6 +7,7 @@ import java.net.URI;
 
 import javax.ws.rs.core.UriBuilder;
 
+import b4j.core.session.bugzilla.BugzillaClassificationRestClient;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
 import b4j.core.session.bugzilla.BugzillaClient;
 
@@ -23,6 +24,7 @@ import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFacto
 public class AsyncBugzillaRestClient implements BugzillaClient {
 
 	private AsyncBugzillaMetadataRestClient metadataClient;
+	private AsyncBugzillaClassificationRestClient classificationClient;
 	
 	/**
 	 * Constructor.
@@ -35,11 +37,24 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 		URI baseUri = UriBuilder.fromUri(serverUri).path("/jsonrpc.cgi").build();
 
 		metadataClient = new AsyncBugzillaMetadataRestClient(baseUri, httpClient);
+		classificationClient = new AsyncBugzillaClassificationRestClient(baseUri, httpClient);
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public BugzillaMetadataRestClient getMetadataClient() {
 		return metadataClient;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BugzillaClassificationRestClient getClassificationClient() {
+		return classificationClient;
+	}
+
+	
 }

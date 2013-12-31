@@ -22,8 +22,13 @@ public abstract class AbstractJsonParser {
 	 * @return the error string
 	 * @throws JSONException
 	 */
-	public String getError(JSONObject json) throws JSONException {
-		return json.getString("error");
+	public BugzillaJsonError getError(JSONObject json) throws JSONException {
+		String s = json.getString("error");
+		if ((s != null) && !"null".equals(s)) {
+			JSONObject err = json.getJSONObject("error");
+			return new BugzillaJsonError(err.getString("code"), err.getString("message"));
+		}
+		return null;
 	}
 
 	/**
@@ -32,8 +37,8 @@ public abstract class AbstractJsonParser {
 	 * @throws JSONException when the response has errors
 	 */
 	public void checkError(JSONObject json) throws JSONException {
-		String error = getError(json);
-		if ((error != null) && !"null".equals(error)){
+		BugzillaJsonError error = getError(json);
+		if (error != null){
 			throw new JSONException("Error: "+error);
 		}
 	}

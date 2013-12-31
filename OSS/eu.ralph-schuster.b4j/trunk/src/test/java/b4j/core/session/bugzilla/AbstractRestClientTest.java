@@ -10,7 +10,6 @@ import java.net.URL;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.junit.BeforeClass;
 
 import rs.baselib.io.FileFinder;
 import b4j.core.session.bugzilla.async.AsyncBugzillaRestClientFactory;
@@ -33,12 +32,16 @@ public abstract class AbstractRestClientTest {
 	protected static BugzillaClient client;
 	protected static Configuration config;
 	
-	@BeforeClass
 	protected static void setup() throws Exception {
+		setup(null);
+	}
+
+	protected static void setup(String bugzillaHome) throws Exception {
 		URL url = FileFinder.find("test-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration config = new XMLConfiguration(url);
-		baseUrl = new URL(config.getString("bugzilla-home"));
+		if (bugzillaHome == null) bugzillaHome = config.getString("bugzilla-home");
+		baseUrl = new URL(bugzillaHome);
 		
 		BugzillaRestClientFactory factory = new AsyncBugzillaRestClientFactory();
 		serverUri = baseUrl.toURI();
