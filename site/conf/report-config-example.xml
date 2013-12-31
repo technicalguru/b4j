@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <bugzilla-report>
-	<bugzilla-session class="b4j.core.session.HttpBugzillaSession">
+	<bugzilla-session class="b4j.core.session.BugzillaHttpSession">
 		<bugzilla-home>http://your-bugzilla.your-domain.com/</bugzilla-home>
 		<proxy-host>10.10.10.250:8080</proxy-host>
 		<ProxyAuthorizationCallback>

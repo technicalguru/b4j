@@ -72,7 +72,7 @@ import b4j.util.UrlParameters;
  *
  */
 @Deprecated
-public class HttpBugzillaSession extends AbstractHttpSession {
+public class BugzillaHttpSession extends AbstractHttpSession {
 
 	/** Constant for requesting URL connection to login page */
 	public static final int BUGZILLA_LOGIN = 0;
@@ -109,7 +109,7 @@ public class HttpBugzillaSession extends AbstractHttpSession {
 	/**
 	 * Default constructor.
 	 */
-	public HttpBugzillaSession() {
+	public BugzillaHttpSession() {
 	}
 
 	/**

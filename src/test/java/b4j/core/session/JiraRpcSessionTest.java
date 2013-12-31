@@ -28,15 +28,15 @@ import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 
 /**
- * Jira Session test ({@link XmlRpcJiraSession}).
+ * Jira Session test ({@link JiraRpcSession}).
  * @author ralph
  *
  */
-public class XmlRpcJiraSessionTest {
+public class JiraRpcSessionTest {
 
 	private static Map<String, Map<String,String>> expectedProperties = new HashMap<String, Map<String,String>>();
 	private static Map<String, String> expectedCommentAttachments = new HashMap<String, String>();
-	private static Logger log = LoggerFactory.getLogger(XmlRpcJiraSessionTest.class);
+	private static Logger log = LoggerFactory.getLogger(JiraRpcSessionTest.class);
 
 	static {
 		addBug("BFJ-1", "Create abstract class for BugzillaReportGenerator");
@@ -58,14 +58,14 @@ public class XmlRpcJiraSessionTest {
 		expectedCommentAttachments.put(id, attachmentId);
 	}
 
-	private XmlRpcJiraSession session;
+	private JiraRpcSession session;
 
 	@Before
 	public void setup() throws Exception {
 		URL url = getClass().getResource("/test-jira-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration myConfig = new XMLConfiguration(url);
-		session = new XmlRpcJiraSession();
+		session = new JiraRpcSession();
 		session.configure(myConfig);
 		session.open();
 	}

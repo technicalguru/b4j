@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
-import b4j.core.session.HttpBugzillaSession;
+import b4j.core.session.BugzillaHttpSession;
 
 /**
  * A demonstration of how a programmatic session opening will work.

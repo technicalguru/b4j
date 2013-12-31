@@ -64,7 +64,7 @@ import com.atlassian.util.concurrent.Promise;
  * @author ralph
  *
  */
-public class XmlRpcJiraSession extends AbstractAuthorizedSession {
+public class JiraRpcSession extends AbstractAuthorizedSession {
 
 	private boolean loggedIn;
 	private URL baseUrl;
@@ -86,7 +86,7 @@ public class XmlRpcJiraSession extends AbstractAuthorizedSession {
 	/**
 	 * Default constructor
 	 */
-	public XmlRpcJiraSession() {
+	public JiraRpcSession() {
 	}
 
 	/**
