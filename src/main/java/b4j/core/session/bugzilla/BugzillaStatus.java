@@ -8,6 +8,7 @@ import b4j.core.Status;
 /**
  * Bugzilla implementation of {@link Status}.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaStatus implements Status {

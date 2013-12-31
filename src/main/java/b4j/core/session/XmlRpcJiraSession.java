@@ -19,6 +19,8 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.joda.time.DateTime;
 
 import rs.baselib.configuration.ConfigurationUtils;
+import rs.baselib.security.AuthorizationCallback;
+import rs.baselib.security.DefaultAuthorizationCallback;
 import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.Component;

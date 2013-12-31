@@ -11,6 +11,7 @@ import java.util.Set;
  * A long description entry.
  * This object is used to store information about long description texts.
  * @author ralph
+ * @since 2.0
  *
  */
 public class DefaultComment implements Comment {

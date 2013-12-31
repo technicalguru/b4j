@@ -3,6 +3,8 @@
  */
 package b4j.core;
 
+import java.net.URI;
+
 /**
  * Metadata about a server.
  * @author ralph
@@ -12,8 +14,14 @@ package b4j.core;
 public interface ServerInfo {
 
 	/**
-	 * Returns the name.
+	 * Returns the Base URI.
 	 */
-	public String getName();
+	public URI getBaseUri();
+
+
+	/**
+	 * Returns the version.
+	 */
+	public String getVersion();
 
 }

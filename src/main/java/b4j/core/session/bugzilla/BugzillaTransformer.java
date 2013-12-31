@@ -8,6 +8,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * The transformations required for Bugzilla.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaTransformer {

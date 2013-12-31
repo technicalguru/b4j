@@ -8,6 +8,7 @@ import b4j.core.Resolution;
 /**
  * Represents resolutions from JIRA.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaResolution implements Resolution {
