@@ -8,6 +8,7 @@ import b4j.core.Component;
 /**
  * Bugzilla implementation of {@link Component}.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaComponent implements Component {

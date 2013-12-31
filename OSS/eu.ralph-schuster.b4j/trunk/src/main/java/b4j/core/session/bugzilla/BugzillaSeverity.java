@@ -8,6 +8,7 @@ import b4j.core.Severity;
 /**
  * Bugzilla implementation of a severity.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaSeverity implements Severity {

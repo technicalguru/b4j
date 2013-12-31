@@ -8,6 +8,7 @@ import b4j.core.IssueType;
 /**
  * Bugzilla implementation of an {@link IssueType}.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaIssueType implements IssueType {

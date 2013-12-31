@@ -26,6 +26,8 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
 
 import rs.baselib.configuration.ConfigurationUtils;
+import rs.baselib.security.AuthorizationCallback;
+import rs.baselib.security.DefaultAuthorizationCallback;
 import b4j.util.BugzillaUtils;
 
 /**

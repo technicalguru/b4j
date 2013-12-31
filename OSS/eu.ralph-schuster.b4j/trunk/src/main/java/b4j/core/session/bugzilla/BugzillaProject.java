@@ -8,6 +8,7 @@ import b4j.core.Project;
 /**
  * Bugzilla implementation of {@link Project}.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaProject implements Project {

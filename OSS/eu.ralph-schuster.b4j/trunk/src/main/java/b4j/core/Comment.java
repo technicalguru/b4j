@@ -24,6 +24,7 @@ import java.util.Date;
  * Interface for a long description entry within a issue record.
  * This object is used to store information about long description texts.
  * @author Ralph Schuster
+ * @since 2.0
  *
  */
 public interface Comment {

@@ -23,19 +23,19 @@
 			<password>your-password</password>
 		</AuthorizationCallback>
 		
-		<AuthorizationCallback class="b4j.core.session.CommandLineAuthorizationCallback"/>
+		<AuthorizationCallback class="rs.baselib.security.CommandLineAuthorizationCallback"/>
 
-		<AuthorizationCallback class="b4j.core.session.GuiAuthorizationCallback"/>
+		<AuthorizationCallback class="rs.baselib.security.GuiAuthorizationCallback"/>
 		
-		<AuthorizationCallback class="b4j.core.session.PropertiesFileAuthorizationCallback">
+		<AuthorizationCallback class="rs.baselib.security.PropertiesFileAuthorizationCallback">
 			<File>your-properties-file.properties</File>
 		</AuthorizationCallback>
 		
-		<AuthorizationCallback class="b4j.core.session.TextFileAuthorizationCallback">
+		<AuthorizationCallback class="rs.baselib.security.TextFileAuthorizationCallback">
 			<File>your-text-file.txt</File>
 		</AuthorizationCallback>
 		
-		<AuthorizationCallback class="b4j.core.session.XmlFileAuthorizationCallback">
+		<AuthorizationCallback class="rs.baselib.security.XmlFileAuthorizationCallback">
 			<File>your-xml-file.xml</File>
 		</AuthorizationCallback>
 		

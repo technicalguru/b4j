@@ -9,6 +9,7 @@ import b4j.core.User;
 /**
  * Bugzilla implementation of {@link User}.
  * @author ralph
+ * @since 2.0
  *
  */
 public class BugzillaUser implements User {

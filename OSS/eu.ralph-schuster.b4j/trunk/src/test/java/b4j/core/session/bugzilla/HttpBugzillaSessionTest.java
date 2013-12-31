@@ -1,7 +1,7 @@
 /**
  * 
  */
-package b4j.core.session;
+package b4j.core.session.bugzilla;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,6 +23,7 @@ import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
+import b4j.core.session.HttpBugzillaSession;
 
 /**
  * Bugzilla Session test
