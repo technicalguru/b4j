@@ -23,7 +23,7 @@ import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
-import b4j.core.session.HttpBugzillaSession;
+import b4j.core.session.BugzillaHttpSession;
 
 /**
  * Bugzilla Session test
@@ -31,7 +31,7 @@ import b4j.core.session.HttpBugzillaSession;
  *
  */
 @SuppressWarnings("deprecation")
-public class HttpBugzillaSessionTest {
+public class BugzillaHttpSessionTest {
 
 	private static Map<String, Map<String,String>> expectedProperties = new HashMap<String, Map<String,String>>();
 	private static Map<String, Map<String,String>> expectedCommentAttachments = new HashMap<String, Map<String,String>>();
@@ -73,7 +73,7 @@ public class HttpBugzillaSessionTest {
 		URL url = getClass().getResource("/test-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration myConfig = new XMLConfiguration(url);
-		HttpBugzillaSession session = new HttpBugzillaSession();
+		BugzillaHttpSession session = new BugzillaHttpSession();
 		session.configure(myConfig);
 
 		session.open();
@@ -130,7 +130,7 @@ public class HttpBugzillaSessionTest {
 	 * @param issue
 	 * @throws Exception
 	 */
-	private void testSpecials(HttpBugzillaSession session, Issue issue) throws Exception {
+	private void testSpecials(BugzillaHttpSession session, Issue issue) throws Exception {
 		// Special bug with timestamps
 		if (issue.getId().equals("3")) {
 			assertEquals("Timestamp parsed invalid", 1345485240000L, issue.getUpdateTimestamp().getTime());
