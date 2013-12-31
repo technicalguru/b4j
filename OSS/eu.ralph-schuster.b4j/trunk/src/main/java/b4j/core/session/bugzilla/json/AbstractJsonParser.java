@@ -5,6 +5,7 @@ package b4j.core.session.bugzilla.json;
 
 import java.util.Iterator;
 
+import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -51,6 +52,16 @@ public abstract class AbstractJsonParser {
 	 */
 	public JSONObject getResult(JSONObject json) throws JSONException {
 		return json.getJSONObject("result");
+	}
+	
+	/**
+	 * Returns the result of the response.
+	 * @param json JSON response
+	 * @return result object
+	 * @throws JSONException
+	 */
+	public JSONArray getResultAsArray(JSONObject json) throws JSONException {
+		return json.getJSONArray("result");
 	}
 	
 	/** Debugs the JSON object */

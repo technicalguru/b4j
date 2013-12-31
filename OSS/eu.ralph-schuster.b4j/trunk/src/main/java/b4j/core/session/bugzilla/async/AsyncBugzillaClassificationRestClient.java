@@ -17,7 +17,7 @@ import com.atlassian.jira.rest.client.RestClientException;
 import com.atlassian.util.concurrent.Promise;
 
 /**
- * The client responsible for getting metadata information.
+ * The client responsible for getting classification information.
  * @author ralph
  * @since 2.0
  *
@@ -28,11 +28,10 @@ public class AsyncBugzillaClassificationRestClient extends AbstractAsyncRestClie
 		"method", "Classification.get"
 	};
 	
-	private BugzillaClassificationParser serverInfoParser = new BugzillaClassificationParser();
+	private BugzillaClassificationParser classificationParser = new BugzillaClassificationParser();
 
 	/**
 	 * Constructor.
-	 * @param client
 	 */
 	public AsyncBugzillaClassificationRestClient(URI baseUri, HttpClient client) {
 		super(baseUri, client);
@@ -69,7 +68,7 @@ public class AsyncBugzillaClassificationRestClient extends AbstractAsyncRestClie
 	@Override
 	public Promise<Iterable<Classification>> getClassifications(Collection<Long> ids) {
 		URI serverInfoUri = build(CGI_PARAMS).queryParam("params", joinParameterLists(createParameterList("ids", ids.toArray()))).build();
-		return getAndParse(serverInfoUri, serverInfoParser);
+		return getAndParse(serverInfoUri, classificationParser);
 	}
 
 	

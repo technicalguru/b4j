@@ -10,6 +10,7 @@ import javax.ws.rs.core.UriBuilder;
 import b4j.core.session.bugzilla.BugzillaClassificationRestClient;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
 import b4j.core.session.bugzilla.BugzillaClient;
+import b4j.core.session.bugzilla.BugzillaProductRestClient;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.AuthenticationHandler;
@@ -25,6 +26,7 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 
 	private AsyncBugzillaMetadataRestClient metadataClient;
 	private AsyncBugzillaClassificationRestClient classificationClient;
+	private AsyncBugzillaProductRestClient productClient;
 	
 	/**
 	 * Constructor.
@@ -38,6 +40,7 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 
 		metadataClient = new AsyncBugzillaMetadataRestClient(baseUri, httpClient);
 		classificationClient = new AsyncBugzillaClassificationRestClient(baseUri, httpClient);
+		productClient = new AsyncBugzillaProductRestClient(baseUri, httpClient);
 	}
 	
 	/**
@@ -54,6 +57,14 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	@Override
 	public BugzillaClassificationRestClient getClassificationClient() {
 		return classificationClient;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BugzillaProductRestClient getProductClient() {
+		return productClient;
 	}
 
 	

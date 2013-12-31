@@ -31,4 +31,20 @@ public class JiraComponent implements Component {
 		return component.getName();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getId() {
+		return component.getId().toString();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getDescription() {
+		return component.getDescription();
+	}
+
 }

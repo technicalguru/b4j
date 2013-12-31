@@ -3,8 +3,12 @@
  */
 package b4j.core.session.jira;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import com.atlassian.jira.rest.client.domain.BasicProject;
 
+import b4j.core.Component;
 import b4j.core.Project;
 
 /**
@@ -31,4 +35,39 @@ public class JiraProject implements Project {
 		return project.getName();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getId() {
+		return project.getKey();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getDescription() {
+		return project.getName();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<String> getVersions() {
+		// TODO 
+		return Collections.emptyList();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<Component> getComponents() {
+		// TODO
+		return Collections.emptyList();
+	}
+
+	
 }
