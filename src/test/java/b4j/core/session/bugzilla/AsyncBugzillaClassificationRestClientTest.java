@@ -4,6 +4,7 @@
 package b4j.core.session.bugzilla;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,18 +24,21 @@ public class AsyncBugzillaClassificationRestClientTest extends AbstractRestClien
 	
 	@BeforeClass
 	public static void setup() throws Exception {
-		AbstractRestClientTest.setup("https://bugzilla.mozilla.org"); // Our own server has no classifications
+		AbstractRestClientTest.setup(); //"https://bugzilla.mozilla.org"); // Our own server has no classifications
 		myClient = client.getClassificationClient();		
 	}
 	
 	@Test
 	public void testGetClassification() throws Exception {
-		Promise<Iterable<Classification>> promise = myClient.getClassifications(3);
+		Promise<Iterable<Classification>> promise = myClient.getClassifications(2);
 		assertNotNull("No promise", promise);
+		int cnt = 0;
 		for (Classification c : promise.get()) {
 			assertNotNull(c.getId());
 			assertNotNull(c.getName());
+			cnt++;
 		}
+		assertEquals("Not enough classifications", 1, cnt);
 	}
 
 }

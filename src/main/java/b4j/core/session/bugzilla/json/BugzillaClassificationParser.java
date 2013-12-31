@@ -16,7 +16,7 @@ import b4j.core.DefaultClassification;
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
 /**
- * Parses the server infor for Bugzilla REST API.
+ * Parses the classification for Bugzilla REST API.
  * @author ralph
  * @since 2.0
  *

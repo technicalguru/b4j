@@ -24,4 +24,10 @@ public interface BugzillaClient {
 	 */
 	public BugzillaClassificationRestClient getClassificationClient();
 
+	/**
+	 * Returns the Product client.
+	 * @return client for performing operations on products
+	 */
+	public BugzillaProductRestClient getProductClient();
+
 }

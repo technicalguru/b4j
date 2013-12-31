@@ -15,7 +15,7 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 import com.atlassian.jira.rest.client.internal.json.JsonParseUtil;
 
 /**
- * Parses the server infor for Bugzilla REST API.
+ * Parses the server info for Bugzilla REST API.
  * @author ralph
  * @since 2.0
  *
