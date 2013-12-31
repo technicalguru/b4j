@@ -39,7 +39,7 @@ public class AsyncBugzillaMetadataRestClient extends AbstractAsyncRestClient imp
 	 */
 	@Override
 	public Promise<ServerInfo> getServerInfo() {
-		URI serverInfoUri = buildUri(CGI_PARAMS);
+		URI serverInfoUri = build(CGI_PARAMS).build();
 		return getAndParse(serverInfoUri, serverInfoParser);
 	}
 

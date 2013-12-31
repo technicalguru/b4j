@@ -13,8 +13,15 @@ package b4j.core.session.bugzilla;
 public interface BugzillaClient {
 
 	/**
+	 * Returns the Metadata client.
 	 * @return client for performing operations on meta data
 	 */
-	BugzillaMetadataRestClient getMetadataClient();
+	public BugzillaMetadataRestClient getMetadataClient();
+
+	/**
+	 * Returns the Classification client.
+	 * @return client for performing operations on classifications
+	 */
+	public BugzillaClassificationRestClient getClassificationClient();
 
 }

@@ -43,9 +43,11 @@ import org.xml.sax.ext.DefaultHandler2;
 
 import rs.baselib.io.XmlReaderFilter;
 import b4j.core.Attachment;
+import b4j.core.Classification;
 import b4j.core.Comment;
 import b4j.core.Component;
 import b4j.core.DefaultAttachment;
+import b4j.core.DefaultClassification;
 import b4j.core.DefaultComment;
 import b4j.core.Issue;
 import b4j.core.IssueType;
@@ -105,6 +107,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 	private MetaData<String, Resolution> resolutions = new MetaData<String, Resolution>(new BugzillaTransformer.Resolution());
 	private MetaData<String, Project> projects = new MetaData<String, Project>(new BugzillaTransformer.Project());
 	private MetaData<String, Component> components = new MetaData<String, Component>(new BugzillaTransformer.Component());
+	private MetaData<String, Classification> classifications = new MetaData<String, Classification>(new BugzillaTransformer.Classification());
 
 	/**
 	 * Default constructor.
@@ -722,11 +725,13 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 			} else if (name.equals("cclist_accessible")) {
 				currentIssue.setCclistAccessible(parseBoolean(currentContent.toString()));
 				currentContent = null;
-//			} else if (name.equals("classification_id")) {
-//				currentIssue.setType(Long.parseLong(currentContent.toString()));
-//				currentContent = null;
+			} else if (name.equals("classification_id")) {
+				currentIssue.setClassification(classifications.get(currentContent.toString()));
+				currentContent = null;
 			} else if (name.equals("classification")) {
-				currentIssue.setClassification(currentContent.toString());
+				if (currentIssue.getClassification() != null) {
+					((DefaultClassification)currentIssue.getClassification()).setName(currentContent.toString());
+				}
 				currentContent = null;
 			} else if (name.equals("product")) {
 				currentIssue.setProject(projects.get(currentContent.toString()));

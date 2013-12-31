@@ -16,9 +16,9 @@ import com.atlassian.util.concurrent.Promise;
 public interface BugzillaMetadataRestClient {
 
 	/**
-	 * Retrieves information about this JIRA instance
+	 * Retrieves information about this Bugzilla instance
 	 *
-	 * @return information about this JIRA instance
+	 * @return information about this Bugzilla instance
 	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
