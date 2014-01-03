@@ -26,8 +26,10 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,6 +44,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DefaultHandler2;
 
 import rs.baselib.io.XmlReaderFilter;
+import rs.baselib.lang.LangUtils;
 import b4j.core.Attachment;
 import b4j.core.Classification;
 import b4j.core.Comment;
@@ -720,10 +723,10 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				}
 				currentContent = null;
 			} else if (name.equals("reporter_accessible")) {
-				currentIssue.setReporterAccessible(parseBoolean(currentContent.toString()));
+				currentIssue.set("reporter_accessible", LangUtils.getBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("cclist_accessible")) {
-				currentIssue.setCclistAccessible(parseBoolean(currentContent.toString()));
+				currentIssue.set("cclist_accessible", LangUtils.getBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("classification_id")) {
 				currentIssue.setClassification(classifications.get(currentContent.toString()));
@@ -743,10 +746,10 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.addFixVersions(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("rep_platform")) {
-				currentIssue.setRepPlatform(currentContent.toString());
+				currentIssue.set("rep_platform", currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("op_sys")) {
-				currentIssue.setOpSys(currentContent.toString());
+				currentIssue.set("op_sys", currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_status")) {
 				currentIssue.setStatus(status.get(currentContent.toString()));
@@ -764,7 +767,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.addPlannedVersions(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("everconfirmed")) {
-				currentIssue.setEverConfirmed(parseBoolean(currentContent.toString()));
+				currentIssue.set("everconfirmed", LangUtils.getBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("reporter")) {
 				if (currentUser != null) {
@@ -781,7 +784,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentUser = null;
 				currentContent = null;
 			} else if (name.equals("qa_contact")) {
-				currentIssue.setQaContact(currentContent.toString());
+				currentIssue.set("qa_contact", currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("long_desc")) { // multiple
 				currentIssue.addComments(currentComment);
@@ -806,7 +809,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentComment.setTheText(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_file_loc")) {
-				currentIssue.setFileLocation(currentContent.toString());
+				currentIssue.set("bug_file_loc", currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("attachment")) { // multiple
 				currentAttachment = null;
@@ -831,29 +834,35 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentAttachment.setType(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("cc")) { // multiple
-				currentIssue.addCcs(currentContent.toString());
+				@SuppressWarnings("unchecked")
+				Set<String> cc = (Set<String>)currentIssue.get("cc");
+				if (cc == null) {
+					cc = new HashSet<String>();
+					currentIssue.set("cc", cc);
+				}
+				cc.add(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("blocked")) {
-				currentIssue.setBlocked(Long.parseLong(currentContent.toString()));
+				currentIssue.set("blocked", LangUtils.getLong(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("alias")) {
-				currentIssue.setAlias(currentContent.toString());
+				currentIssue.set("alias", currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("status_whiteboard")) {
-				currentIssue.setWhiteboard(currentContent.toString());
+				currentIssue.set("whiteboard", currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("estimated_time")) {
-				currentIssue.setEstimatedTime(Double.parseDouble(currentContent.toString()));
+				currentIssue.set("estimated_time", LangUtils.getDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("remaining_time")) {
-				currentIssue.setRemainingTime(Double.parseDouble(currentContent.toString()));
+				currentIssue.set("remaining_time", LangUtils.getDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("actual_time")) {
-				currentIssue.setActualTime(Double.parseDouble(currentContent.toString()));
+				currentIssue.set("actual_time", LangUtils.getDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("deadline")) {
 				try {
-					currentIssue.setDeadline(BugzillaUtils.parseDate(currentContent.toString()));
+					currentIssue.set("deadline", BugzillaUtils.parseDate(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this date: "+currentContent.toString());
 				}
@@ -861,7 +870,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 			} else {
 				if ((currentCustomField != null) && (currentContent != null)) {
 					if (currentIssue != null) {
-						currentIssue.setCustomField(currentCustomField, currentContent.toString());
+						currentIssue.set(currentCustomField, currentContent.toString());
 						currentCustomField = null;
 						currentContent = null;
 					}
@@ -897,20 +906,6 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 			super.endDocument();
 		}
 
-		/**
-		 * Parses a boolean for Bugzilla XML.
-		 * Bugzilla uses "1" to represent a TRUE value in its XML.
-		 * @param s - boolean to parse
-		 * @return true if string represented the TRUE value
-		 */
-		public boolean parseBoolean(String s) {
-			if (s == null) return false;
-			s = s.trim();
-			if (s.length() == 0) return false;
-			if (s.equals("1")) return true;
-			if (s.equals("0")) return false;
-			return Boolean.parseBoolean(s);
-		}
 	}
 }
 

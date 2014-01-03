@@ -12,6 +12,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Component;
 import b4j.core.session.bugzilla.BugzillaComponent;
+import b4j.core.session.bugzilla.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
@@ -27,6 +28,14 @@ public class BugzillaComponentParser extends AbstractJsonParser implements JsonO
 	 * Constructor.
 	 */
 	public BugzillaComponentParser() {
+		this(null);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public BugzillaComponentParser(LazyRetriever lazyRetriever) {
+		super(lazyRetriever);
 	}
 
 	@Override

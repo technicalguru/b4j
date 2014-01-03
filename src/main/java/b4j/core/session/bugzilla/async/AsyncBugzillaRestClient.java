@@ -8,11 +8,14 @@ import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
 
 import b4j.core.User;
+import b4j.core.session.bugzilla.BugzillaBugRestClient;
 import b4j.core.session.bugzilla.BugzillaClassificationRestClient;
 import b4j.core.session.bugzilla.BugzillaClient;
+import b4j.core.session.bugzilla.BugzillaLazyRetriever;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
 import b4j.core.session.bugzilla.BugzillaProductRestClient;
 import b4j.core.session.bugzilla.BugzillaUserRestClient;
+import b4j.core.session.bugzilla.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.AuthenticationHandler;
@@ -30,6 +33,8 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	private AsyncBugzillaClassificationRestClient classificationClient;
 	private AsyncBugzillaProductRestClient productClient;
 	private AsyncBugzillaUserRestClient userClient;
+	private AsyncBugzillaBugRestClient bugClient;
+	private LazyRetriever lazyRetriever;
 	private User user;
 	
 	/**
@@ -41,11 +46,12 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 
 	public AsyncBugzillaRestClient(URI serverUri, HttpClient httpClient) {
 		URI baseUri = UriBuilder.fromUri(serverUri).path("/jsonrpc.cgi").build();
-		
-		metadataClient = new AsyncBugzillaMetadataRestClient(baseUri, httpClient);
-		classificationClient = new AsyncBugzillaClassificationRestClient(baseUri, httpClient);
-		productClient = new AsyncBugzillaProductRestClient(baseUri, httpClient);
-		userClient = new AsyncBugzillaUserRestClient(baseUri, httpClient);
+		lazyRetriever = new BugzillaLazyRetriever(this);
+		metadataClient = new AsyncBugzillaMetadataRestClient(baseUri, httpClient, lazyRetriever);
+		classificationClient = new AsyncBugzillaClassificationRestClient(baseUri, httpClient, lazyRetriever);
+		productClient = new AsyncBugzillaProductRestClient(baseUri, httpClient, lazyRetriever);
+		userClient = new AsyncBugzillaUserRestClient(baseUri, httpClient, lazyRetriever);
+		bugClient = new AsyncBugzillaBugRestClient(baseUri, httpClient, lazyRetriever);
 	}
 	
 	
@@ -97,6 +103,14 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	@Override
 	public BugzillaUserRestClient getUserClient() {
 		return userClient;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public BugzillaBugRestClient getBugClient() {
+		return bugClient;
 	}
 
 	/**

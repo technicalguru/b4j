@@ -11,11 +11,33 @@ import com.atlassian.util.concurrent.Promise;
 
 /**
  * Interface for user REST clients.
+ * @see <a href="http://www.bugzilla.org/docs/4.4/en/html/api/Bugzilla/WebService/User.html">Bugzilla::WebService::User</a>
  * @author ralph
  * @since 2.0
  *
  */
 public interface BugzillaUserRestClient {
+
+	/**
+	 * Performs a user login.
+	 *
+	 * @param user username
+	 * @param password password
+	 *  
+	 * @return user logged in
+	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
+	 * @throws javax.security.auth.login.LoginException when login failed
+	 * @since 2.0
+	 */
+	public User login(String user, String password);
+
+	/**
+	 * Logs out.
+	 *
+	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
+	 * @since 2.0
+	 */
+	public void logout();
 
 	/**
 	 * Retrieves information about users.

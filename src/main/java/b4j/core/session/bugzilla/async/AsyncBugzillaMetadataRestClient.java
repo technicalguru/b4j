@@ -9,6 +9,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.ServerInfo;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
+import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaServerInfoParser;
 
 import com.atlassian.httpclient.api.HttpClient;
@@ -22,14 +23,15 @@ import com.atlassian.util.concurrent.Promise;
  */
 public class AsyncBugzillaMetadataRestClient extends AbstractAsyncRestClient implements BugzillaMetadataRestClient {
 
-	private BugzillaServerInfoParser serverInfoParser = new BugzillaServerInfoParser();
+	private BugzillaServerInfoParser serverInfoParser;
 
 	/**
 	 * Constructor.
 	 * @param client
 	 */
-	public AsyncBugzillaMetadataRestClient(URI baseUri, HttpClient client) {
-		super(baseUri, "Bugzilla", client);
+	public AsyncBugzillaMetadataRestClient(URI baseUri, HttpClient client, LazyRetriever lazyRetriever) {
+		super(baseUri, "Bugzilla", client, lazyRetriever);
+		serverInfoParser = new BugzillaServerInfoParser(lazyRetriever);
 	}
 
 	/**

@@ -14,6 +14,7 @@ import b4j.core.Component;
 import b4j.core.Project;
 import b4j.core.session.bugzilla.BugzillaComponent;
 import b4j.core.session.bugzilla.BugzillaProject;
+import b4j.core.session.bugzilla.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
@@ -26,13 +27,23 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 public class BugzillaProductParser extends AbstractJsonParser implements JsonObjectParser<Iterable<Project>> {
 
 //	private BugzillaMilestoneParser milestoneParser = new BugzillaMilestoneParser(); TODO
-	private BugzillaVersionParser versionParser = new BugzillaVersionParser();
-	private BugzillaComponentParser componentParser = new BugzillaComponentParser();
+	private BugzillaVersionParser versionParser;
+	private BugzillaComponentParser componentParser;
 	
 	/**
 	 * Constructor.
 	 */
 	public BugzillaProductParser() {
+		this(null);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public BugzillaProductParser(LazyRetriever lazyRetriever) {
+		super(lazyRetriever);
+		versionParser = new BugzillaVersionParser(lazyRetriever);
+		componentParser = new BugzillaComponentParser(lazyRetriever);
 	}
 
 	@Override

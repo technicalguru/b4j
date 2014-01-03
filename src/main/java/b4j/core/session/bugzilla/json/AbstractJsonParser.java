@@ -9,6 +9,8 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import b4j.core.session.bugzilla.LazyRetriever;
+
 /**
  * Basic implementation of JSON methods.
  * @author ralph
@@ -17,6 +19,16 @@ import org.codehaus.jettison.json.JSONObject;
  */
 public abstract class AbstractJsonParser {
 
+	private LazyRetriever lazyRetriever;
+	
+	/**
+	 * Constructor.
+	 * @param lazyRetriever the retriever to be used
+	 */
+	public AbstractJsonParser(LazyRetriever lazyRetriever) {
+		this.lazyRetriever = lazyRetriever;
+	}
+	
 	/**
 	 * Returns the error if the JSON object contains one.
 	 * @param json the JSON response
@@ -72,4 +84,14 @@ public abstract class AbstractJsonParser {
 			System.out.println(key+"="+json.getString(key));
 		}
 	}
+
+	/**
+	 * Returns the lazyRetriever.
+	 * @return the lazyRetriever
+	 */
+	protected LazyRetriever getLazyRetriever() {
+		return lazyRetriever;
+	}
+	
+	
 }

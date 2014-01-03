@@ -294,7 +294,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		}
 		rc.setUpdateTimestamp(issue.getUpdateDate().toDate());
 		DateTime d = issue.getDueDate();
-		if (d != null) rc.setDeadline(d.toDate());
+		if (d != null) rc.set("deadline", d.toDate());
 		return rc;
 	}
 	

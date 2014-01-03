@@ -6,6 +6,8 @@ package b4j.core.session.bugzilla.json;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import b4j.core.session.bugzilla.LazyRetriever;
+
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
 /**
@@ -20,6 +22,14 @@ public class BugzillaIdParser extends AbstractJsonParser implements JsonObjectPa
 	 * Constructor.
 	 */
 	public BugzillaIdParser() {
+		this(null);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public BugzillaIdParser(LazyRetriever lazyRetriever) {
+		super(lazyRetriever);
 	}
 
 	@Override

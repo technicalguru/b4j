@@ -12,6 +12,7 @@ import com.atlassian.util.concurrent.Promise;
 /**
  * Interface for classification rest clients.
  * @author ralph
+ * @see <a href="http://www.bugzilla.org/docs/4.4/en/html/api/Bugzilla/WebService/Classification.html">Bugzilla::WebService::Classification</a>
  * @since 2.0
  *
  */
