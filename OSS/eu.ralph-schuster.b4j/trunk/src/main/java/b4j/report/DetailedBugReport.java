@@ -169,19 +169,19 @@ public class DetailedBugReport extends AbstractFileReport {
 	private String getBugString(String template, Issue bug) {
 		Map<String,Object> markers = new HashMap<String, Object>();
 		markers.put("ID", bug.getId());
-		markers.put("ALIAS", bug.get("alias"));
+		markers.put("ALIAS", bug.get(Issue.ALIAS));
 		markers.put("ASSIGNEDTO", bug.getAssignee());
 		markers.put("CLASSIFICATION", bug.getClassification());
 		markers.put("COMPONENT", bug.getComponents());
 		markers.put("CRDATE", bug.getCreationTimestamp());
 		markers.put("MTIME", bug.getUpdateTimestamp());
-		markers.put("FILELOCATION", bug.get("bug_file_loc"));
+		markers.put("FILELOCATION", bug.get(Issue.BUG_FILE_LOCATION));
 		markers.put("PRIORITY", bug.getPriority());
-		markers.put("OPSYS", bug.get("op_sys"));
+		markers.put("OPSYS", bug.get(Issue.OP_SYS));
 		markers.put("SEVERITY", bug.getSeverity());
 		markers.put("PRODUCT", bug.getProject().getName());
 		markers.put("PROJECT", bug.getProject().getName());
-		markers.put("QACONTACT", bug.get("qa_contact"));
+		markers.put("QACONTACT", bug.get(Issue.QA_CONTACT));
 		markers.put("REPORTER", bug.getReporter());
 		markers.put("RESOLUTION", bug.getResolution());
 		markers.put("REPORTER", bug.getReporter());
