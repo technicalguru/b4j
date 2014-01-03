@@ -5,6 +5,8 @@ package b4j.core.session.bugzilla.async;
 
 import java.net.URI;
 
+import org.codehaus.jettison.json.JSONObject;
+
 import b4j.core.ServerInfo;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
 import b4j.core.session.bugzilla.json.BugzillaServerInfoParser;
@@ -20,10 +22,6 @@ import com.atlassian.util.concurrent.Promise;
  */
 public class AsyncBugzillaMetadataRestClient extends AbstractAsyncRestClient implements BugzillaMetadataRestClient {
 
-	private static String CGI_PARAMS[] = {
-		"method", "Bugzilla.version"
-	};
-	
 	private BugzillaServerInfoParser serverInfoParser = new BugzillaServerInfoParser();
 
 	/**
@@ -31,7 +29,7 @@ public class AsyncBugzillaMetadataRestClient extends AbstractAsyncRestClient imp
 	 * @param client
 	 */
 	public AsyncBugzillaMetadataRestClient(URI baseUri, HttpClient client) {
-		super(baseUri, client);
+		super(baseUri, "Bugzilla", client);
 	}
 
 	/**
@@ -39,8 +37,7 @@ public class AsyncBugzillaMetadataRestClient extends AbstractAsyncRestClient imp
 	 */
 	@Override
 	public Promise<ServerInfo> getServerInfo() {
-		URI serverInfoUri = build(CGI_PARAMS).build();
-		return getAndParse(serverInfoUri, serverInfoParser);
+		return postAndParse("version", (JSONObject)null, serverInfoParser);
 	}
 
 	

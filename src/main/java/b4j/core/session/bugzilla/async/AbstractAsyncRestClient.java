@@ -3,16 +3,24 @@
  */
 package b4j.core.session.bugzilla.async;
 
-import java.io.StringWriter;
 import java.net.URI;
+import java.util.Map;
 
 import javax.ws.rs.core.UriBuilder;
 
-import org.codehaus.jettison.json.JSONWriter;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import b4j.core.session.bugzilla.json.JSONUtils;
 
 import com.atlassian.httpclient.api.HttpClient;
+import com.atlassian.httpclient.api.Response;
+import com.atlassian.httpclient.api.ResponsePromise;
 import com.atlassian.jira.rest.client.RestClientException;
 import com.atlassian.jira.rest.client.internal.async.AbstractAsynchronousRestClient;
+import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
+import com.atlassian.util.concurrent.Promise;
 
 /**
  * Abstract implementation for Bugzilla REST clients.
@@ -23,40 +31,53 @@ import com.atlassian.jira.rest.client.internal.async.AbstractAsynchronousRestCli
 public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestClient {
 
 	private final URI baseUri;
+	private String webService;
 
 	/**
 	 * Constructor.
 	 * @param client
 	 */
-	public AbstractAsyncRestClient(URI baseUri, HttpClient client) {
+	public AbstractAsyncRestClient(URI baseUri, String webService, HttpClient client) {
 		super(client);
 		this.baseUri = baseUri;
+		this.webService = webService;
 	}
 
 	/**
-	 * Builds the URI from the base URI and the params
-	 * @param ARGS URI params as simple array of { key, value, key, value }...
-	 * @return the URI
+	 * Performs a POST call wit givebn parameters.
+	 * @param method method to be called
+	 * @param params parameters
+	 * @param parser the response parser 
+	 * @return the response promise
 	 */
-	protected UriBuilder build(String ARGS[]) {
-		return build(ARGS, null);
+	protected <T> Promise<T> postAndParse(String method, Map<String,Object> params, JsonObjectParser<T> parser) {
+		try {
+			JSONObject obj = JSONUtils.convert(params);
+			return postAndParse(method, obj, parser);
+		} catch (JSONException e) {
+			throw new RestClientException("Cannot post", e);
+		}
 	}
 
 	/**
-	 * Builds the URI from the base URI and the params
-	 * @param ARGS URI params as simple array of { key, value, key, value }...
-	 * @param params method parameters to be passed
-	 * @return the URI
+	 * Performs a POST call wit givebn parameters.
+	 * @param method method to be called
+	 * @param params parameters
+	 * @param parser the response parser 
+	 * @return the response promise
 	 */
-	protected UriBuilder build(String ARGS[], String params) {
-		UriBuilder builder = UriBuilder.fromUri(baseUri);
-		for (int i=0; i<ARGS.length; i+= 2) {
-			builder.queryParam(ARGS[i], ARGS[i+1]);
+	protected <T> Promise<T> postAndParse(String method, JSONObject params, JsonObjectParser<T> parser) {
+		try {
+			JSONObject entity = new JSONObject();
+			entity.put("method", webService+"."+method);
+			entity.put("id", 1);
+			JSONArray pArray = new JSONArray();
+			if ((params != null) && (params.length() > 0)) pArray.put(params);
+			entity.put("params", pArray);
+			return postAndParse(UriBuilder.fromUri(getBaseUri()).build(), entity, parser);
+		} catch (JSONException e) {
+			throw new RestClientException("Cannot post", e);
 		}
-		if (params != null) {
-			builder.queryParam("params", params);
-		}
-		return builder;
 	}
 
 	/**
@@ -67,41 +88,38 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 		return baseUri;
 	}
 
-	protected String createParameterList(String key, Object values[]) {
-		try {
-			StringWriter sw = new StringWriter();
-			JSONWriter w = new JSONWriter(sw);
-			w.object().key(key).array();
-			for (Object v : values) {
-				if (v instanceof Long) {
-					w.value(((Long)v).longValue());
-				} else if (v instanceof Number) {
-					w.value(((Number)v).doubleValue());
-				} else if (v instanceof Boolean) {
-					w.value(((Boolean)v).booleanValue());
-				} else {
-					w.value(v);
-				}
-			}
-			w.endArray().endObject();
-			return sw.toString();
-		} catch (Exception e) {
-			throw new RestClientException("Cannot build JSON parameters", e);
-		}
+	/**
+	 * Returns the response object from the POST request
+	 * @param uri URI to be called
+	 * @param entity parameters to be sent
+	 * @return the Response object
+	 * @throws Exception when a problem occurred
+	 */
+	protected Response getPostResponse(URI uri, JSONObject entity) throws Exception {
+		ResponsePromise responsePromise = client().newRequest(uri)
+				.setEntity(entity.toString())
+				.setContentType("application/json")
+				.post();
+		call(responsePromise);
+		Response response = responsePromise.get();
+		return response;
 	}
-	
-	protected String joinParameterLists(String ...params) {
-		try {
-			StringBuilder rc = new StringBuilder();
-			rc.append('[');
-			for (String v : params) {
-				if (rc.length() > 1) rc.append(",");
-				rc.append(v);
-			}
-			rc.append(']');
-			return rc.toString();
-		} catch (Exception e) {
-			throw new RestClientException("Cannot build JSON parameters", e);
-		}
+
+	/**
+	 * Issues a simple GET request.
+	 * @param uri URI to be called
+	 * @throws Exception when a problem occurred
+	 */
+	protected Promise<Void> get(URI uri) {
+		ResponsePromise responsePromise = client().newRequest(uri).get();
+		return call(responsePromise);
+	}
+
+	/**
+	 * Returns the HTTP client object.
+	 * @return the client object
+	 */
+	public HttpClient getHttpClient() {
+		return client();
 	}
 }
