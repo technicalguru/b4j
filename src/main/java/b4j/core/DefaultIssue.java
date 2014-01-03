@@ -23,7 +23,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -83,8 +82,8 @@ public class DefaultIssue implements Issue {
 	private String summary;
 	private String description;
 	private Date updateTimestamp;
-	private boolean reporterAccessible;
-	private boolean cclistAccessible;
+	//private boolean reporterAccessible;
+	//private boolean cclistAccessible;
 	private IssueType type;
 	private Classification classification;
 	private Project project;
@@ -92,28 +91,28 @@ public class DefaultIssue implements Issue {
 	private List<String> affectedVersions;
 	private List<String> plannedVersions;
 	private List<String> fixVersions;
-	private String repPlatform;
-	private String opSys;
+	//private String repPlatform;
+	//private String opSys;
 	private Status status;
 	private Resolution resolution;
 	private Priority priority;
 	private Severity severity;
-	private boolean everConfirmed;
+	//private boolean everConfirmed;
 	private User reporter;
 	private User assignee;
-	private String qaContact;
+	//private String qaContact;
 	private List<Comment> comments;
-	private String fileLocation;
-	private List<String> cc;
+	//private String fileLocation;
+	//private List<String> cc;
 	private List<Attachment> attachments;
-	private long blocked;
-	private Map<String,List<String>> customFields;
-	private String alias;
-	private String whiteboard;
-	private double estimatedTime;
-	private double remainingTime;
-	private double actualTime;
-	private Date deadline;
+	//private long blocked;
+	private Map<String,Object> customFields;
+	//private String alias;
+	//private String whiteboard;
+	//private double estimatedTime;
+	//private double remainingTime;
+	//private double actualTime;
+	//private Date deadline;
 	private List<IssueLink> links;
 	private List<Issue> children;
 
@@ -126,12 +125,12 @@ public class DefaultIssue implements Issue {
 		fixVersions = new ArrayList<String>();
 		components = new ArrayList<Component>();
 		comments = new ArrayList<Comment>();
-		cc = new ArrayList<String>();
+		//cc = new ArrayList<String>();
 		attachments = new ArrayList<Attachment>();
-		customFields = new HashMap<String, List<String>>();
+		customFields = new HashMap<String, Object>();
 		creationTimestamp = new Date(0);
 		updateTimestamp = new Date(0);
-		deadline = new Date(0);
+		//deadline = new Date(0);
 		links = new ArrayList<IssueLink>();
 		children = new ArrayList<Issue>();
 	}
@@ -290,38 +289,6 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isReporterAccessible() {
-		return reporterAccessible;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setReporterAccessible(boolean reporterAccessible) {
-		this.reporterAccessible = reporterAccessible;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isCclistAccessible() {
-		return cclistAccessible;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setCclistAccessible(boolean cclistAccessible) {
-		this.cclistAccessible = cclistAccessible;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public IssueType getType() {
 		return type;
 	}
@@ -388,7 +355,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addComponents(Collection<Component> components) {
-		this.components.addAll(components);
+		if (components != null) this.components.addAll(components);
 	}
 	
 	/**
@@ -457,7 +424,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addAffectedVersions(Collection<String> versions) {
-		affectedVersions.addAll(versions);
+		if (versions != null) affectedVersions.addAll(versions);
 	}
 
 	/**
@@ -525,7 +492,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addPlannedVersions(Collection<String> versions) {
-		plannedVersions.addAll(versions);
+		if (versions != null) plannedVersions.addAll(versions);
 	}
 
 	/**
@@ -594,7 +561,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addFixVersions(Collection<String> versions) {
-		fixVersions.addAll(versions);
+		if (versions != null) fixVersions.addAll(versions);
 	}
 
 	/**
@@ -639,38 +606,6 @@ public class DefaultIssue implements Issue {
 	@Override
 	public int getFixVersionCount() {
 		return fixVersions.size();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getRepPlatform() {
-		return repPlatform;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setRepPlatform(String repPlatform) {
-		this.repPlatform = repPlatform;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getOpSys() {
-		return opSys;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setOpSys(String opSys) {
-		this.opSys = opSys;
 	}
 
 	/**
@@ -741,22 +676,6 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isEverConfirmed() {
-		return everConfirmed;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setEverConfirmed(boolean everConfirmed) {
-		this.everConfirmed = everConfirmed;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public User getReporter() {
 		return reporter;
 	}
@@ -787,54 +706,6 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getQaContact() {
-		return qaContact;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setQaContact(String qaContact) {
-		this.qaContact = qaContact;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getFileLocation() {
-		return fileLocation;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setFileLocation(String fileLocation) {
-		this.fileLocation = fileLocation;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public long getBlocked() {
-		return blocked;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setBlocked(long blocked) {
-		this.blocked = blocked;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Attachment getAttachment(String id) {
 		for (Attachment a : attachments) {
 			if (CommonUtils.equals(a.getId(), id)) return a;
@@ -846,20 +717,15 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCustomField(String key, String value) {
-		List<String> values = customFields.get(key);
-		if (values == null) {
-			values = new ArrayList<String>();
-			customFields.put(key, values);
-		}
-		values.add(value);
+	public void set(String key, Object value) {
+		customFields.put(key, value);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<String> getCustomField(String key) {
+	public Object get(String key) {
 		return customFields.get(key);
 	}
 
@@ -867,28 +733,8 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getCustomFieldString(String key) {
-		return getCustomFieldString(key, 0);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getCustomFieldString(String key, int idx) {
-		List<String> values = customFields.get(key);
-		if (values == null) return null;
-		if (idx < 0) idx = 0;
-		if (idx < values.size()) return values.get(idx);
-		return values.get(0);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Iterator<String> getCustomFieldNames() {
-		return customFields.keySet().iterator();
+	public Iterable<String> getCustomFieldNames() {
+		return customFields.keySet();
 	}
 
 	/**
@@ -897,60 +743,6 @@ public class DefaultIssue implements Issue {
 	@Override
 	public int getCustomFieldCount() {
 		return customFields.size();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addAllCustomFields(String key, List<String> values) {
-		List<String> values2 = customFields.get(key);
-		if (values2 == null) {
-			values2 = new ArrayList<String>();
-			customFields.put(key, values2);
-		}
-		values2.addAll(values);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addAllCustomFields(Map<String, List<String>> p) {
-		Iterator<String> keys = p.keySet().iterator();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			addAllCustomFields(key, p.get(key));
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeCustomField(String key, String value) {
-		List<String> values = customFields.get(key);
-		if (values == null) return;
-		values.remove(value);
-		if (values.size() == 0) customFields.remove(key);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeParameter(String key) {
-		List<String> values = customFields.get(key);
-		if (values == null) return;
-		customFields.remove(key);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void clearCustomFields() {
-		customFields.clear();
 	}
 
 	/**
@@ -1034,105 +826,6 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getAlias() {
-		return alias;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getWhiteboard() {
-		return whiteboard;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setWhiteboard(String whiteboard) {
-		this.whiteboard = whiteboard;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public double getEstimatedTime() {
-		return estimatedTime;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setEstimatedTime(double estimatedTime) {
-		this.estimatedTime = estimatedTime;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public double getRemainingTime() {
-		return remainingTime;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setRemainingTime(double remainingTime) {
-		this.remainingTime = remainingTime;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public double getActualTime() {
-		return actualTime;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setActualTime(double actualTime) {
-		this.actualTime = actualTime;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Date getDeadline() {
-		return deadline;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setDeadline(Date deadline) {
-		if (deadline != null)
-			this.deadline.setTime(deadline.getTime());
-		else
-			this.deadline.setTime(0);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public String getLink() {
 		return link;
 	}
@@ -1178,7 +871,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addComments(Collection<Comment> comments) {
-		this.comments.addAll(comments);
+		if (comments != null) this.comments.addAll(comments);
 	}
 	
 	/**
@@ -1247,7 +940,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addAttachments(Collection<Attachment> attachments) {
-		this.attachments.addAll(attachments);
+		if (attachments != null) this.attachments.addAll(attachments);
 	}
 
 	/**
@@ -1298,75 +991,6 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<String> getCcs() {
-		return Collections.unmodifiableList(cc);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setCcs(Collection<String> cc) {
-		removeAllCcs();
-		addCcs(cc);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addCcs(Collection<String> cc) {
-		this.cc.addAll(cc);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addCcs(String... cc) {
-		for (String item : cc) {
-			this.cc.add(item);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeCcs(Collection<String> cc) {
-		this.cc.removeAll(cc);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeCcs(String... cc) {
-		for (String item : cc) {
-			this.cc.remove(item);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeAllCcs() {
-		cc.clear();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int getCcCount() {
-		return cc.size();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public Collection<Issue> getChildren() {
 		return Collections.unmodifiableList(children);
 	}
@@ -1385,7 +1009,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addChildren(Collection<Issue> children) {
-		this.children.addAll(children);
+		if (children != null) this.children.addAll(children);
 	}
 
 	/**
@@ -1454,7 +1078,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void addLinks(Collection<IssueLink> links) {
-		this.links.addAll(links);
+		if (links != null) this.links.addAll(links);
 	}
 
 	/**

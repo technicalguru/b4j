@@ -159,7 +159,8 @@ public class DefaultMetaInformation implements MetaInformation {
 	 * @return true if generators were added
 	 */
 	public boolean addAllReports(Collection<? extends BugzillaReportGenerator> c) {
-		return reports.addAll(c);
+		if (c != null) return reports.addAll(c);
+		return false;
 	}
 
 	/**
