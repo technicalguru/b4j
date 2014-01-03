@@ -84,26 +84,6 @@ public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient impleme
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("ids", ids);
 		return postAndParse("get", params, userParser);
-//		
-////		URI serverInfoUri = build(new String[] { "method", "User.get"}).queryParam("params", joinParameterLists(createParameterList("ids", ids.toArray()))).build();
-//		URI serverInfoUri = build(new String[] { }).build();
-//
-//		Map<String,Object> map = new HashMap<String,Object>();
-//		map.put("ids", new JSONArray(ids));
-//		//map.put("Bugzilla_login", "test");
-//		//map.put("Bugzilla_password", "testuser");		
-//		List<Object> l = new ArrayList<Object>();
-//		l.add(map);
-//		JSONObject paramObject = new JSONObject(map);
-//		JSONArray paramArray = new JSONArray(); paramArray.put(paramObject);
-//		
-//		Map<String,Object> map2 = new HashMap<String,Object>();
-//		map2.put("method", "User.get");
-//		map2.put("params", paramArray);
-//		map2.put("id", 1);
-//		JSONObject entity = new JSONObject(map2);
-//		System.out.println(entity.toString()+" ("+entity.toString().length()+")");
-//		return postAndParse(serverInfoUri, entity, userParser);
 	}
 
 	/**
