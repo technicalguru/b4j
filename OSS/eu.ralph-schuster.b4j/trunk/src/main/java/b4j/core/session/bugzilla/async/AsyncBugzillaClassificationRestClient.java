@@ -6,7 +6,9 @@ package b4j.core.session.bugzilla.async;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import b4j.core.Classification;
 import b4j.core.session.bugzilla.BugzillaClassificationRestClient;
@@ -24,17 +26,13 @@ import com.atlassian.util.concurrent.Promise;
  */
 public class AsyncBugzillaClassificationRestClient extends AbstractAsyncRestClient implements BugzillaClassificationRestClient {
 
-	private static String CGI_PARAMS[] = {
-		"method", "Classification.get"
-	};
-	
 	private BugzillaClassificationParser classificationParser = new BugzillaClassificationParser();
 
 	/**
 	 * Constructor.
 	 */
 	public AsyncBugzillaClassificationRestClient(URI baseUri, HttpClient client) {
-		super(baseUri, client);
+		super(baseUri, "Classification", client);
 	}
 
 	/**
@@ -67,8 +65,9 @@ public class AsyncBugzillaClassificationRestClient extends AbstractAsyncRestClie
 	 */
 	@Override
 	public Promise<Iterable<Classification>> getClassifications(Collection<Long> ids) {
-		URI serverInfoUri = build(CGI_PARAMS).queryParam("params", joinParameterLists(createParameterList("ids", ids.toArray()))).build();
-		return getAndParse(serverInfoUri, classificationParser);
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("ids", ids);
+		return postAndParse("get", params, classificationParser);
 	}
 
 	

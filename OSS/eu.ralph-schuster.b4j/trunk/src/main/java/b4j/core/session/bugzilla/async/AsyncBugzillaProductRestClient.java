@@ -6,7 +6,11 @@ package b4j.core.session.bugzilla.async;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Project;
 import b4j.core.session.bugzilla.BugzillaProductRestClient;
@@ -31,7 +35,7 @@ public class AsyncBugzillaProductRestClient extends AbstractAsyncRestClient impl
 	 * Constructor.
 	 */
 	public AsyncBugzillaProductRestClient(URI baseUri, HttpClient client) {
-		super(baseUri, client);
+		super(baseUri, "Product", client);
 	}
 
 	/**
@@ -64,8 +68,9 @@ public class AsyncBugzillaProductRestClient extends AbstractAsyncRestClient impl
 	 */
 	@Override
 	public Promise<Iterable<Project>> getProducts(Collection<Long> ids) {
-		URI serverInfoUri = build(new String[]{"method", "Product.get"}).queryParam("params", joinParameterLists(createParameterList("ids", ids.toArray()))).build();
-		return getAndParse(serverInfoUri, productParser);
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("ids", ids);
+		return postAndParse("get", params, productParser);
 	}
 
 	/**
@@ -77,10 +82,9 @@ public class AsyncBugzillaProductRestClient extends AbstractAsyncRestClient impl
 	}
 
 	protected Promise<Iterable<Project>> getProducts(String method) {
-		URI serverInfoUri = build(new String[]{"method", "Product."+method}).build();
 		try {
 			List<Long> l = new ArrayList<Long>();
-			Iterable<Long> i = getAndParse(serverInfoUri, idParser).get();
+			Iterable<Long> i = postAndParse(method, (JSONObject)null, idParser).get();
 			for (Long obj : i) {
 				l.add(obj);
 			}
