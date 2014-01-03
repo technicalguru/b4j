@@ -28,6 +28,37 @@ import java.util.Date;
  */
 public interface Issue {
 
+	/** Custom field name for Bugzilla field reporter_accessible */
+	public static final String REPORTER_ACCESSIBLE = "reporter_accessible";
+	/** Custom field name for Bugzilla field cclist_accessible */
+	public static final String CCLIST_ACCESSIBLE = "cclist_accessible";
+	/** Custom field name for Bugzilla field rep_platform */
+	public static final String REP_PLATFORM = "rep_platform";
+	/** Custom field name for Bugzilla field op_sys */
+	public static final String OP_SYS = "op_sys";
+	/** Custom field name for Bugzilla field everconfirmed */
+	public static final String CONFIRMED = "everconfirmed";
+	/** Custom field name for Bugzilla field qa_contact */
+	public static final String QA_CONTACT = "qa_contact";
+	/** Custom field name for Bugzilla field bug_file_loc */
+	public static final String BUG_FILE_LOCATION = "bug_file_loc";
+	/** Custom field name for Bugzilla field cc */
+	public static final String CC = "cc";
+	/** Custom field name for Bugzilla field blocked */
+	public static final String BLOCKED = "blocked";
+	/** Custom field name for Bugzilla field alias */
+	public static final String ALIAS = "alias";
+	/** Custom field name for Bugzilla field whiteboard */
+	public static final String WHITEBOARD = "whiteboard";
+	/** Custom field name for Bugzilla field estimated_time */
+	public static final String ESTIMATED_TIME = "estimated_time";
+	/** Custom field name for Bugzilla field remaining_time */
+	public static final String REMAINING_TIME = "remaining_time";
+	/** Custom field name for Bugzilla field actual_time */
+	public static final String ACTUAL_TIME = "actual_time";
+	/** Custom field name for Bugzilla field deadline */
+	public static final String DEADLINE = "deadline";
+	
 	/**
 	 * Returns the version of server this issue was retrieved from.
 	 * @return server software version or null if unknown

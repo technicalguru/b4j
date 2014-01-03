@@ -723,10 +723,10 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				}
 				currentContent = null;
 			} else if (name.equals("reporter_accessible")) {
-				currentIssue.set("reporter_accessible", LangUtils.getBoolean(currentContent.toString()));
+				currentIssue.set(Issue.REPORTER_ACCESSIBLE, LangUtils.getBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("cclist_accessible")) {
-				currentIssue.set("cclist_accessible", LangUtils.getBoolean(currentContent.toString()));
+				currentIssue.set(Issue.CCLIST_ACCESSIBLE, LangUtils.getBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("classification_id")) {
 				currentIssue.setClassification(classifications.get(currentContent.toString()));
@@ -746,10 +746,10 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.addFixVersions(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("rep_platform")) {
-				currentIssue.set("rep_platform", currentContent.toString());
+				currentIssue.set(Issue.REP_PLATFORM, currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("op_sys")) {
-				currentIssue.set("op_sys", currentContent.toString());
+				currentIssue.set(Issue.OP_SYS, currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_status")) {
 				currentIssue.setStatus(status.get(currentContent.toString()));
@@ -767,7 +767,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.addPlannedVersions(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("everconfirmed")) {
-				currentIssue.set("everconfirmed", LangUtils.getBoolean(currentContent.toString()));
+				currentIssue.set(Issue.CONFIRMED, LangUtils.getBoolean(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("reporter")) {
 				if (currentUser != null) {
@@ -784,7 +784,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentUser = null;
 				currentContent = null;
 			} else if (name.equals("qa_contact")) {
-				currentIssue.set("qa_contact", currentContent.toString());
+				currentIssue.set(Issue.QA_CONTACT, currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("long_desc")) { // multiple
 				currentIssue.addComments(currentComment);
@@ -809,7 +809,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentComment.setTheText(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("bug_file_loc")) {
-				currentIssue.set("bug_file_loc", currentContent.toString());
+				currentIssue.set(Issue.BUG_FILE_LOCATION, currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("attachment")) { // multiple
 				currentAttachment = null;
@@ -835,34 +835,34 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentContent = null;
 			} else if (name.equals("cc")) { // multiple
 				@SuppressWarnings("unchecked")
-				Set<String> cc = (Set<String>)currentIssue.get("cc");
+				Set<String> cc = (Set<String>)currentIssue.get(Issue.CC);
 				if (cc == null) {
 					cc = new HashSet<String>();
-					currentIssue.set("cc", cc);
+					currentIssue.set(Issue.CC, cc);
 				}
 				cc.add(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("blocked")) {
-				currentIssue.set("blocked", LangUtils.getLong(currentContent.toString()));
+				currentIssue.set(Issue.BLOCKED, LangUtils.getLong(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("alias")) {
-				currentIssue.set("alias", currentContent.toString());
+				currentIssue.set(Issue.ALIAS, currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("status_whiteboard")) {
-				currentIssue.set("whiteboard", currentContent.toString());
+				currentIssue.set(Issue.WHITEBOARD, currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("estimated_time")) {
-				currentIssue.set("estimated_time", LangUtils.getDouble(currentContent.toString()));
+				currentIssue.set(Issue.ESTIMATED_TIME, LangUtils.getDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("remaining_time")) {
-				currentIssue.set("remaining_time", LangUtils.getDouble(currentContent.toString()));
+				currentIssue.set(Issue.REMAINING_TIME, LangUtils.getDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("actual_time")) {
-				currentIssue.set("actual_time", LangUtils.getDouble(currentContent.toString()));
+				currentIssue.set(Issue.ACTUAL_TIME, LangUtils.getDouble(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("deadline")) {
 				try {
-					currentIssue.set("deadline", BugzillaUtils.parseDate(currentContent.toString()));
+					currentIssue.set(Issue.DEADLINE, BugzillaUtils.parseDate(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this date: "+currentContent.toString());
 				}

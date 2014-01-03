@@ -284,8 +284,8 @@ public class BugzillaUtils {
 		log.debug("CreationTimestamp="+issue.getCreationTimestamp());
 		log.debug("ShortDescription="+issue.getSummary());
 		log.debug("DeltaTimestamp="+issue.getUpdateTimestamp());
-		log.debug("ReporterAccessible="+issue.get("reporter_accessible"));
-		log.debug("CcListAccessible="+issue.get("cclist_accessible"));
+		log.debug("ReporterAccessible="+issue.get(Issue.REPORTER_ACCESSIBLE));
+		log.debug("CcListAccessible="+issue.get(Issue.CCLIST_ACCESSIBLE));
 		log.debug("Type="+issue.getType());
 		log.debug("TypeName="+issue.getType().getName());
 		log.debug("Classification="+issue.getClassification());
@@ -302,37 +302,37 @@ public class BugzillaUtils {
 		for (String s : issue.getAffectedVersions()) {
 			log.debug("AffectedVersion="+s);
 		}
-		log.debug("RepPlatform="+issue.get("rep_platform"));
-		log.debug("OpSys="+issue.get("op_sys"));
+		log.debug("RepPlatform="+issue.get(Issue.REP_PLATFORM));
+		log.debug("OpSys="+issue.get(Issue.OP_SYS));
 		log.debug("Link="+issue.getLink());
 		log.debug("Status="+issue.getStatus());
 		log.debug("Resolution="+issue.getResolution());
 		log.debug("Priority="+issue.getPriority());
 		log.debug("Severity="+issue.getSeverity());
-		log.debug("EverConfirmed="+issue.get("everconfirmed"));
+		log.debug("EverConfirmed="+issue.get(Issue.CONFIRMED));
 		log.debug("Reporter="+issue.getReporter());
 		log.debug("ReporterName="+issue.getReporter().getName());
 		log.debug("ReporterTeam="+issue.getReporter().getTeam());
 		log.debug("Assignee="+issue.getAssignee());
 		log.debug("AssigneeName="+issue.getAssignee().getName());
 		log.debug("AssigneeTeam="+issue.getAssignee().getTeam());
-		log.debug("QaContact="+issue.get("qa_contact"));
-		log.debug("FileLocation="+issue.get("bug_file_loc"));
-		log.debug("Blocked="+issue.get("blocked"));
+		log.debug("QaContact="+issue.get(Issue.QA_CONTACT));
+		log.debug("FileLocation="+issue.get(Issue.BUG_FILE_LOCATION));
+		log.debug("Blocked="+issue.get(Issue.BLOCKED));
 		log.debug("Closed="+issue.isClosed());
 		log.debug("InProgress="+issue.isInProgress());
 		log.debug("Resolved="+issue.isResolved());
 		log.debug("Cancelled="+issue.isCancelled());
 		log.debug("Duplicate="+issue.isDuplicate());
 		log.debug("Open="+issue.isOpen());
-		log.debug("Alias="+issue.get("alias"));
-		log.debug("Whiteboard="+issue.get("whiteboard"));
-		log.debug("EstimatedTime="+issue.get("estimated_time"));
-		log.debug("RemainingTime="+issue.get("remaining_time"));
-		log.debug("ActualTime="+issue.get("actual_time"));
-		log.debug("Deadline="+issue.get("deadline"));
+		log.debug("Alias="+issue.get(Issue.ALIAS));
+		log.debug("Whiteboard="+issue.get(Issue.WHITEBOARD));
+		log.debug("EstimatedTime="+issue.get(Issue.ESTIMATED_TIME));
+		log.debug("RemainingTime="+issue.get(Issue.REMAINING_TIME));
+		log.debug("ActualTime="+issue.get(Issue.ACTUAL_TIME));
+		log.debug("Deadline="+issue.get(Issue.DEADLINE));
 		@SuppressWarnings("unchecked")
-		Collection<String> coll = (Collection<String>)issue.get("cc");
+		Collection<String> coll = (Collection<String>)issue.get(Issue.CC);
 		for (String cc : coll) {
 			log.debug("cc="+cc);
 		}
