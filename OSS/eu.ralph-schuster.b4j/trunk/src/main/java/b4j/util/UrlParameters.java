@@ -92,7 +92,7 @@ public class UrlParameters {
 			values2 = new ArrayList<String>();
 			parameters.put(key, values2);
 		}
-		values2.addAll(values);
+		if (values != null) values2.addAll(values);
 	}
 	
 	/**

@@ -12,6 +12,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.User;
 import b4j.core.session.bugzilla.BugzillaUser;
+import b4j.core.session.bugzilla.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
@@ -22,6 +23,20 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
  */
 public class BugzillaUserParser extends AbstractJsonParser implements JsonObjectParser<Iterable<User>> {
 
+	/**
+	 * Constructor.
+	 */
+	public BugzillaUserParser() {
+		this(null);
+	}
+	
+	/**
+	 * Constructor.
+	 */
+	public BugzillaUserParser(LazyRetriever lazyRetriever) {
+		super(lazyRetriever);
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

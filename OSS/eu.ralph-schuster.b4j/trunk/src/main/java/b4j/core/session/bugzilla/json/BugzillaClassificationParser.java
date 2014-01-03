@@ -12,6 +12,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Classification;
 import b4j.core.DefaultClassification;
+import b4j.core.session.bugzilla.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
@@ -27,6 +28,14 @@ public class BugzillaClassificationParser extends AbstractJsonParser implements 
 	 * Constructor.
 	 */
 	public BugzillaClassificationParser() {
+		this(null);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public BugzillaClassificationParser(LazyRetriever lazyRetriever) {
+		super(lazyRetriever);
 	}
 
 	@Override

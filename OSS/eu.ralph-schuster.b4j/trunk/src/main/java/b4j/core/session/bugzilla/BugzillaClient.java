@@ -65,4 +65,11 @@ public interface BugzillaClient {
 	 */
 	public BugzillaUserRestClient getUserClient();
 
+
+	/**
+	 * Returns the Bug client.
+	 * @return client for performing operations on bugs
+	 */
+	public BugzillaBugRestClient getBugClient();
+
 }

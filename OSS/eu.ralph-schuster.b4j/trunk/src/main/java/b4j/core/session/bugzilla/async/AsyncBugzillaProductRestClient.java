@@ -14,6 +14,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Project;
 import b4j.core.session.bugzilla.BugzillaProductRestClient;
+import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaIdListParser;
 import b4j.core.session.bugzilla.json.BugzillaProductParser;
 
@@ -28,14 +29,16 @@ import com.atlassian.util.concurrent.Promise;
  */
 public class AsyncBugzillaProductRestClient extends AbstractAsyncRestClient implements BugzillaProductRestClient {
 
-	private BugzillaProductParser productParser = new BugzillaProductParser();
-	private BugzillaIdListParser idParser = new BugzillaIdListParser();
+	private BugzillaProductParser productParser;
+	private BugzillaIdListParser idParser;
 
 	/**
 	 * Constructor.
 	 */
-	public AsyncBugzillaProductRestClient(URI baseUri, HttpClient client) {
-		super(baseUri, "Product", client);
+	public AsyncBugzillaProductRestClient(URI baseUri, HttpClient client, LazyRetriever lazyRetriever) {
+		super(baseUri, "Product", client, lazyRetriever);
+		productParser = new BugzillaProductParser(lazyRetriever);
+		idParser = new BugzillaIdListParser(lazyRetriever);
 	}
 
 	/**

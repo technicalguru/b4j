@@ -12,6 +12,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.JSONUtils;
 
 import com.atlassian.httpclient.api.HttpClient;
@@ -32,15 +33,17 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 
 	private final URI baseUri;
 	private String webService;
-
+	private LazyRetriever lazyRetriever;
+	
 	/**
 	 * Constructor.
 	 * @param client
 	 */
-	public AbstractAsyncRestClient(URI baseUri, String webService, HttpClient client) {
+	public AbstractAsyncRestClient(URI baseUri, String webService, HttpClient client, LazyRetriever lazyRetriever) {
 		super(client);
 		this.baseUri = baseUri;
 		this.webService = webService;
+		this.lazyRetriever = lazyRetriever;
 	}
 
 	/**
@@ -116,10 +119,11 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 	}
 
 	/**
-	 * Returns the HTTP client object.
-	 * @return the client object
+	 * Returns the lazyRetriever.
+	 * @return the lazyRetriever
 	 */
-	public HttpClient getHttpClient() {
-		return client();
+	public LazyRetriever getLazyRetriever() {
+		return lazyRetriever;
 	}
+
 }

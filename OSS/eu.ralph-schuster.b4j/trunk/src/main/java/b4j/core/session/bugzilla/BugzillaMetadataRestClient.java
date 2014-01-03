@@ -9,6 +9,7 @@ import com.atlassian.util.concurrent.Promise;
 
 /**
  * Interface for metadata rest clients.
+ * @see <a href="http://www.bugzilla.org/docs/4.4/en/html/api/Bugzilla/WebService/Bugzilla.html">Bugzilla::WebService::Bugzilla</a>
  * @author ralph
  * @since 2.0
  *

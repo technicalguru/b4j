@@ -12,6 +12,7 @@ import java.util.Map;
 
 import b4j.core.Classification;
 import b4j.core.session.bugzilla.BugzillaClassificationRestClient;
+import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaClassificationParser;
 
 import com.atlassian.httpclient.api.HttpClient;
@@ -26,13 +27,14 @@ import com.atlassian.util.concurrent.Promise;
  */
 public class AsyncBugzillaClassificationRestClient extends AbstractAsyncRestClient implements BugzillaClassificationRestClient {
 
-	private BugzillaClassificationParser classificationParser = new BugzillaClassificationParser();
+	private BugzillaClassificationParser classificationParser;
 
 	/**
 	 * Constructor.
 	 */
-	public AsyncBugzillaClassificationRestClient(URI baseUri, HttpClient client) {
-		super(baseUri, "Classification", client);
+	public AsyncBugzillaClassificationRestClient(URI baseUri, HttpClient client, LazyRetriever lazyRetriever) {
+		super(baseUri, "Classification", client, lazyRetriever);
+		classificationParser = new BugzillaClassificationParser(lazyRetriever);
 	}
 
 	/**

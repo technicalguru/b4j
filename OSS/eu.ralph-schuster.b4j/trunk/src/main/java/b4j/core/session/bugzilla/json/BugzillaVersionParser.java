@@ -10,6 +10,8 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import b4j.core.session.bugzilla.LazyRetriever;
+
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
 /**
@@ -24,6 +26,14 @@ public class BugzillaVersionParser extends AbstractJsonParser implements JsonObj
 	 * Constructor.
 	 */
 	public BugzillaVersionParser() {
+		this(null);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public BugzillaVersionParser(LazyRetriever lazyRetriever) {
+		super(lazyRetriever);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.DefaultServerInfo;
 import b4j.core.ServerInfo;
+import b4j.core.session.bugzilla.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 import com.atlassian.jira.rest.client.internal.json.JsonParseUtil;
@@ -26,6 +27,14 @@ public class BugzillaServerInfoParser extends AbstractJsonParser implements Json
 	 * Constructor.
 	 */
 	public BugzillaServerInfoParser() {
+		this(null);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public BugzillaServerInfoParser(LazyRetriever lazyRetriever) {
+		super(lazyRetriever);
 	}
 
 	@Override

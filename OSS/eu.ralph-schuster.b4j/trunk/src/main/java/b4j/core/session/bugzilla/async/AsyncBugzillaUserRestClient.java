@@ -15,6 +15,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.User;
 import b4j.core.session.bugzilla.BugzillaUserRestClient;
+import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaIdParser;
 import b4j.core.session.bugzilla.json.BugzillaUserParser;
 
@@ -30,19 +31,22 @@ import com.atlassian.util.concurrent.Promise;
  */
 public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient implements BugzillaUserRestClient {
 
-	private BugzillaUserParser userParser = new BugzillaUserParser();
-	private BugzillaIdParser idParser = new BugzillaIdParser();
+	private BugzillaUserParser userParser;
+	private BugzillaIdParser idParser;
 
 	/**
 	 * Constructor.
 	 */
-	public AsyncBugzillaUserRestClient(URI baseUri, HttpClient client) {
-		super(baseUri, "User", client);
+	public AsyncBugzillaUserRestClient(URI baseUri, HttpClient client, LazyRetriever lazyRetriever) {
+		super(baseUri, "User", client, lazyRetriever);
+		userParser = new BugzillaUserParser(lazyRetriever);
+		idParser = new BugzillaIdParser(lazyRetriever);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public User login(String user, String password) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("login", user);
@@ -62,6 +66,7 @@ public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient impleme
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void logout() {
 		postAndParse("logout", (JSONObject)null, null);
 	}

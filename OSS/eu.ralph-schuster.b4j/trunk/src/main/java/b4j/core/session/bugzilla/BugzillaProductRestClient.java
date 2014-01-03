@@ -12,6 +12,7 @@ import com.atlassian.util.concurrent.Promise;
 /**
  * Interface for product rest clients.
  * @author ralph
+ * @see <a href="http://www.bugzilla.org/docs/4.4/en/html/api/Bugzilla/WebService/Product.html">Bugzilla::WebService::Product</a>
  * @since 2.0
  *
  */
