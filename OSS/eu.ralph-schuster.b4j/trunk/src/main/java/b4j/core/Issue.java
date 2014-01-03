@@ -19,9 +19,6 @@ package b4j.core;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Interface representing a issuezilla issue record.
@@ -138,26 +135,6 @@ public interface Issue {
 	 * @param updateTimestamp - the timestamp to set
 	 */
 	public void setUpdateTimestamp(Date updateTimestamp);
-
-	/**
-	 * @return the reporterAccessible
-	 */
-	public boolean isReporterAccessible();
-
-	/**
-	 * @param reporterAccessible - the reporterAccessible to set
-	 */
-	public void setReporterAccessible(boolean reporterAccessible);
-
-	/**
-	 * @return the cclistAccessible
-	 */
-	public boolean isCclistAccessible();
-
-	/**
-	 * @param cclistAccessible - the cclistAccessible to set
-	 */
-	public void setCclistAccessible(boolean cclistAccessible);
 
 	/**
 	 * Returns the type. 
@@ -361,30 +338,6 @@ public interface Issue {
 	public int getAffectedVersionCount();
 
 	/**
-	 * Returns the reporter's platform.
-	 * @return the reporter's platform
-	 */
-	public String getRepPlatform();
-
-	/**
-	 * Sets the reporter's platform.
-	 * @param repPlatform - the platform to set
-	 */
-	public void setRepPlatform(String repPlatform);
-
-	/**
-	 * Returns the operating system for this issue.
-	 * @return the operating system
-	 */
-	public String getOpSys();
-
-	/**
-	 * Sets the operating system for this issue.
-	 * @param opSys - the operating system to set
-	 */
-	public void setOpSys(String opSys);
-
-	/**
 	 * Returns the link for this issue.
 	 * @return the link
 	 */
@@ -504,16 +457,6 @@ public interface Issue {
 	public int getPlannedVersionCount();
 
 	/**
-	 * @return the everConfirmed
-	 */
-	public boolean isEverConfirmed();
-
-	/**
-	 * @param everConfirmed the everConfirmed to set
-	 */
-	public void setEverConfirmed(boolean everConfirmed);
-
-	/**
 	 * Returns the reporter's ID of this issue.
 	 * @return the reporter ID
 	 */
@@ -536,77 +479,6 @@ public interface Issue {
 	 * @param assignee - the assignee ID to set
 	 */
 	public void setAssignee(User assignee);
-
-	/**
-	 * Returns the QA contact.
-	 * @return the QA contact
-	 */
-	public String getQaContact();
-
-	/**
-	 * Sets the QA contact.
-	 * @param qaContact - the QA contact to set
-	 */
-	public void setQaContact(String qaContact);
-
-	/**
-	 * Returns the file location given in this issue.
-	 * @return the file location
-	 */
-	public String getFileLocation();
-
-	/**
-	 * Sets the file location information.
-	 * @param fileLocation - the file location to set
-	 */
-	public void setFileLocation(String fileLocation);
-
-	/**
-	 * Returns the CC e-mails of the project/product for this issue.
-	 * @return the CC e-mails of the product
-	 */
-	public Collection<String> getCcs();
-
-	/**
-	 * Sets the CC e-mails for this issue.
-	 * @param cc - the CC e-mails to set
-	 */
-	public void setCcs(Collection<String> cc);
-
-	/**
-	 * Adds the CC e-mails for this issue.
-	 * @param cc - the CC e-mails to add
-	 */
-	public void addCcs(Collection<String> cc);
-
-	/**
-	 * Adds the CC e-mails for this issue.
-	 * @param cc - the CC e-mails to add
-	 */
-	public void addCcs(String... cc);
-
-	/**
-	 * Removes the CC e-mails for this issue.
-	 * @param cc - the CC e-mails to remove
-	 */
-	public void removeCcs(Collection<String> cc);
-
-	/**
-	 * Removes the CC e-mails for this issue.
-	 * @param cc - the CC e-mails to remove
-	 */
-	public void removeCcs(String... cc);
-
-	/**
-	 * Removes the CC e-mails for this issue.
-	 */
-	public void removeAllCcs();
-
-	/**
-	 * Returns the number of CC e-mails for this issue.
-	 * @return number of CC e-mails
-	 */
-	public int getCcCount();
 
 	/**
 	 * Returns the comments for this issue.
@@ -663,16 +535,6 @@ public interface Issue {
 	public int getCommentCount();
 
 	/**
-	 * @return the blocked
-	 */
-	public long getBlocked();
-
-	/**
-	 * @param blocked the blocked to set
-	 */
-	public void setBlocked(long blocked);
-
-	/**
 	 * Returns the attachments for this issue.
 	 * @return the attachments
 	 */
@@ -727,78 +589,31 @@ public interface Issue {
 	public int getAttachmentCount();
 
 	/**
-	 * Adds a custom field value.
-	 * This is a placeholder for customized fields in issuezilla. A field
-	 * can have multiple values.
+	 * Sets a custom field value.
+	 * Setting a value to <code>null</code> effectively deletes the field.
 	 * @param key - name of field
 	 * @param value - value of field
 	 */
-	public void setCustomField(String key, String value);
+	public void set(String key, Object value);
 
 	/**
-	 * Returns a list of all values of a field (or null)
+	 * Returns value of a field.
 	 * @param key - name of field
-	 * @return list of values
+	 * @return value or null if not set.
 	 */
-	public List<String> getCustomField(String key);
-
-	/**
-	 * Returns first value of a field (or null)
-	 * @param key - name of field
-	 * @return first value of this field
-	 */
-	public String getCustomFieldString(String key);
-
-	/**
-	 * Returns the n-th value of a field (or null)
-	 * @param key - name of field
-	 * @param idx - index of value
-	 * @return n-th value of field or null if not set
-	 */
-	public String getCustomFieldString(String key, int idx);
+	public Object get(String key);
 
 	/**
 	 * Returns the names of all custom fields.
 	 * @return iterator of customized field names
 	 */
-	public Iterator<String> getCustomFieldNames();
+	public Iterable<String> getCustomFieldNames();
 
 	/**
 	 * Returns the number of custom fields.
 	 * @return number customized field names
 	 */
 	public int getCustomFieldCount();
-
-	/**
-	 * Adds all values to a custom field.
-	 * @param key - name of field
-	 * @param values - list of values to add
-	 */
-	public void addAllCustomFields(String key, List<String> values);
-
-	/**
-	 * Adds all custom fields.
-	 * @param p - map with names and values of fields
-	 */
-	public void addAllCustomFields(Map<String, List<String>> p);
-
-	/**
-	 * Removes a value from a custom field.
-	 * @param key - name of field
-	 * @param value - value to remove
-	 */
-	public void removeCustomField(String key, String value);
-
-	/**
-	 * Removes all values of a custom field.
-	 * @param key - name of field.
-	 */
-	public void removeParameter(String key);
-
-	/**
-	 * Clears all custom fields.
-	 */
-	public void clearCustomFields();
 
 	/**
 	 * Tells whether this issue can be regarded as closed.
@@ -835,78 +650,6 @@ public interface Issue {
 	 * @return true if issue is open
 	 */
 	public boolean isOpen();
-
-	/**
-	 * Returns the alias name of the issue.
-	 * @return alias name of issue
-	 */
-	public String getAlias();
-
-	/**
-	 * Sets the alias name of this issue.
-	 * @param alias - the new alias
-	 */
-	public void setAlias(String alias);
-
-	/**
-	 * Returns the whiteboard status.
-	 * @return whiteboard status
-	 */
-	public String getWhiteboard();
-
-	/**
-	 * Sets the whiteboard status for this issue.
-	 * @param whiteboard - the new whiteboard status.
-	 */
-	public void setWhiteboard(String whiteboard);
-
-	/**
-	 * Returns the estimated time in hours.
-	 * @return estimated time in hours
-	 */
-	public double getEstimatedTime();
-
-	/**
-	 * Sets the estimated time in hours.
-	 * @param estimatedTime - new estimated time in hours
-	 */
-	public void setEstimatedTime(double estimatedTime);
-
-	/**
-	 * Returns the remaining time in hours.
-	 * @return remaining time in hours
-	 */
-	public double getRemainingTime();
-
-	/**
-	 * Sets the remaining time in hours.
-	 * @param remainingTime - new remaining time in hours
-	 */
-	public void setRemainingTime(double remainingTime);
-
-	/**
-	 * Returns the actual time in hours.
-	 * @return actual time in hours
-	 */
-	public double getActualTime();
-
-	/**
-	 * Sets the actual time in hours.
-	 * @param actualTime - new actual time in hours
-	 */
-	public void setActualTime(double actualTime);
-
-	/**
-	 * Returns the deadline time.
-	 * @return the deadline time
-	 */
-	public Date getDeadline();
-
-	/**
-	 * Sets the dealine time.
-	 * @param deadline - the new dealine time
-	 */
-	public void setDeadline(Date deadline);
 
 	/**
 	 * Returns the links for this issue.
