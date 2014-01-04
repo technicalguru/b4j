@@ -88,9 +88,9 @@ public class DefaultIssue implements Issue {
 	private Classification classification;
 	private Project project;
 	private List<Component> components;
-	private List<String> affectedVersions;
-	private List<String> plannedVersions;
-	private List<String> fixVersions;
+	private List<Version> affectedVersions;
+	private List<Version> plannedVersions;
+	private List<Version> fixVersions;
 	//private String repPlatform;
 	//private String opSys;
 	private Status status;
@@ -120,9 +120,9 @@ public class DefaultIssue implements Issue {
 	 * Default Constructor.
 	 */
 	public DefaultIssue() {
-		affectedVersions = new ArrayList<String>();
-		plannedVersions = new ArrayList<String>();
-		fixVersions = new ArrayList<String>();
+		affectedVersions = new ArrayList<Version>();
+		plannedVersions = new ArrayList<Version>();
+		fixVersions = new ArrayList<Version>();
 		components = new ArrayList<Component>();
 		comments = new ArrayList<Comment>();
 		//cc = new ArrayList<String>();
@@ -373,7 +373,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void removeComponents(Collection<Component> components) {
-		this.components.removeAll(components);
+		if (components != null) this.components.removeAll(components);
 	}
 
 	/**
@@ -406,7 +406,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<String> getAffectedVersions() {
+	public Collection<Version> getAffectedVersions() {
 		return Collections.unmodifiableList(affectedVersions);
 	}
 
@@ -414,7 +414,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setAffectedVersions(Collection<String> versions) {
+	public void setAffectedVersions(Collection<Version> versions) {
 		removeAllAffectedVersions();
 		addAffectedVersions(versions);
 	}
@@ -423,7 +423,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addAffectedVersions(Collection<String> versions) {
+	public void addAffectedVersions(Collection<Version> versions) {
 		if (versions != null) affectedVersions.addAll(versions);
 	}
 
@@ -431,8 +431,8 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addAffectedVersions(String... versions) {
-		for (String item : versions) {
+	public void addAffectedVersions(Version... versions) {
+		for (Version item : versions) {
 			affectedVersions.add(item);
 		}
 	}
@@ -441,15 +441,16 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeAffectedVersions(Collection<String> versions) {
+	public void removeAffectedVersions(Collection<Version> versions) {
+		if (versions != null) affectedVersions.removeAll(versions);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeAffectedVersions(String... versions) {
-		for (String item : versions) {
+	public void removeAffectedVersions(Version... versions) {
+		for (Version item : versions) {
 			affectedVersions.remove(item);
 		}
 	}
@@ -474,7 +475,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<String> getPlannedVersions() {
+	public Collection<Version> getPlannedVersions() {
 		return Collections.unmodifiableList(plannedVersions);
 	}
 
@@ -482,7 +483,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPlannedVersions(Collection<String> versions) {
+	public void setPlannedVersions(Collection<Version> versions) {
 		removeAllPlannedVersions();
 		addPlannedVersions(versions);
 	}
@@ -491,7 +492,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addPlannedVersions(Collection<String> versions) {
+	public void addPlannedVersions(Collection<Version> versions) {
 		if (versions != null) plannedVersions.addAll(versions);
 	}
 
@@ -499,8 +500,8 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addPlannedVersions(String... versions) {
-		for (String item : versions) {
+	public void addPlannedVersions(Version... versions) {
+		for (Version item : versions) {
 			plannedVersions.add(item);
 		}
 	}
@@ -509,16 +510,16 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removePlannedVersions(Collection<String> versions) {
-		plannedVersions.removeAll(versions);
+	public void removePlannedVersions(Collection<Version> versions) {
+		if (versions != null) plannedVersions.removeAll(versions);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removePlannedVersions(String... versions) {
-		for (String item : versions) {
+	public void removePlannedVersions(Version... versions) {
+		for (Version item : versions) {
 			plannedVersions.remove(item);
 		}
 	}
@@ -543,7 +544,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<String> getFixVersions() {
+	public Collection<Version> getFixVersions() {
 		return Collections.unmodifiableList(fixVersions);
 	}
 
@@ -551,7 +552,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setFixVersions(Collection<String> versions) {
+	public void setFixVersions(Collection<Version> versions) {
 		removeAllFixVersions();
 		addFixVersions(versions);
 	}
@@ -560,7 +561,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addFixVersions(Collection<String> versions) {
+	public void addFixVersions(Collection<Version> versions) {
 		if (versions != null) fixVersions.addAll(versions);
 	}
 
@@ -568,8 +569,8 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addFixVersions(String... versions) {
-		for (String item : versions) {
+	public void addFixVersions(Version... versions) {
+		for (Version item : versions) {
 			fixVersions.add(item);
 		}
 	}
@@ -578,16 +579,16 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeFixVersions(Collection<String> versions) {
-		fixVersions.removeAll(versions);
+	public void removeFixVersions(Collection<Version> versions) {
+		if (versions != null) fixVersions.removeAll(versions);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeFixVersions(String... versions) {
-		for (String item : versions) {
+	public void removeFixVersions(Version... versions) {
+		for (Version item : versions) {
 			fixVersions.remove(item);
 		}
 	}
@@ -889,7 +890,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void removeComments(Collection<Comment> comments) {
-		this.comments.removeAll(comments);
+		if (comments != null) this.comments.removeAll(comments);
 	}
 
 	/**
@@ -958,7 +959,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void removeAttachments(Collection<Attachment> attachments) {
-		this.attachments.removeAll(attachments);
+		if (attachments != null) this.attachments.removeAll(attachments);
 	}
 
 	/**
@@ -1027,7 +1028,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void removeChildren(Collection<Issue> children) {
-		this.children.removeAll(children);
+		if (children != null) this.children.removeAll(children);
 	}
 
 	/**
@@ -1096,7 +1097,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public void removeLinks(Collection<IssueLink> links) {
-		this.links.removeAll(links);
+		if (links != null) this.links.removeAll(links);
 	}
 
 	/**

@@ -6,10 +6,11 @@ package b4j.core.session.jira;
 import java.util.Collection;
 import java.util.Collections;
 
-import com.atlassian.jira.rest.client.domain.BasicProject;
-
 import b4j.core.Component;
 import b4j.core.Project;
+import b4j.core.Version;
+
+import com.atlassian.jira.rest.client.domain.BasicProject;
 
 /**
  * Jira implementation of a {@link Project}.
@@ -55,7 +56,7 @@ public class JiraProject implements Project {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<String> getVersions() {
+	public Collection<Version> getVersions() {
 		// TODO 
 		return Collections.emptyList();
 	}

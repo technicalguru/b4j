@@ -30,7 +30,7 @@ public interface Project {
 	/**
 	 * Returns the versions.
 	 */
-	public Collection<String> getVersions();
+	public Collection<Version> getVersions();
 	
 	/**
 	 * Returns the components.

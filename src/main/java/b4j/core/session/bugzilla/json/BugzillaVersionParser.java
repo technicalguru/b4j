@@ -10,6 +10,8 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import b4j.core.Version;
+import b4j.core.session.bugzilla.BugzillaVersion;
 import b4j.core.session.bugzilla.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
@@ -20,7 +22,7 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
  * @since 2.0
  *
  */
-public class BugzillaVersionParser extends AbstractJsonParser implements JsonObjectParser<Iterable<String>> {
+public class BugzillaVersionParser extends AbstractJsonParser implements JsonObjectParser<Iterable<Version>> {
 
 	/**
 	 * Constructor.
@@ -37,12 +39,13 @@ public class BugzillaVersionParser extends AbstractJsonParser implements JsonObj
 	}
 
 	@Override
-	public Iterable<String> parse(JSONObject json) throws JSONException {
-		List<String> rc = new ArrayList<String>();
+	public Iterable<Version> parse(JSONObject json) throws JSONException {
+		debug(json);
+		List<Version> rc = new ArrayList<Version>();
 		JSONArray arr = json.getJSONArray("versions");
 		for (int i=0; i<arr.length(); i++) {
-			JSONObject milestone = arr.getJSONObject(i);
-			rc.add(milestone.getString("name"));
+			JSONObject v = arr.getJSONObject(i);
+			rc.add(new BugzillaVersion(v.getLong("id"), v.getString("name")));
 		}
 		return rc;
 	}

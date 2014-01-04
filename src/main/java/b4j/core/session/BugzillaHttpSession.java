@@ -63,6 +63,7 @@ import b4j.core.Severity;
 import b4j.core.Status;
 import b4j.core.session.bugzilla.BugzillaTransformer;
 import b4j.core.session.bugzilla.BugzillaUser;
+import b4j.core.session.bugzilla.BugzillaVersion;
 import b4j.util.BugzillaUtils;
 import b4j.util.MetaData;
 import b4j.util.UrlParameters;
@@ -743,7 +744,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.addComponents(components.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("version")) {
-				currentIssue.addFixVersions(currentContent.toString());
+				currentIssue.addFixVersions(new BugzillaVersion(null, currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("rep_platform")) {
 				currentIssue.set(Issue.REP_PLATFORM, currentContent.toString());
@@ -764,7 +765,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.setSeverity(severities.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("target_milestone")) {
-				currentIssue.addPlannedVersions(currentContent.toString());
+				currentIssue.addPlannedVersions(new BugzillaVersion(null, currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("everconfirmed")) {
 				currentIssue.set(Issue.CONFIRMED, LangUtils.getBoolean(currentContent.toString()));

@@ -12,6 +12,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Component;
 import b4j.core.Project;
+import b4j.core.Version;
 import b4j.core.session.bugzilla.BugzillaComponent;
 import b4j.core.session.bugzilla.BugzillaProject;
 import b4j.core.session.bugzilla.LazyRetriever;
@@ -69,8 +70,8 @@ public class BugzillaProductParser extends AbstractJsonParser implements JsonObj
 		}
 		rc.setDescription(json.getString("description"));
 		rc.setId(json.getString("id"));
-		for (String s : versionParser.parse(json)) { 
-			rc.addVersions(s); 
+		for (Version version : versionParser.parse(json)) { 
+			rc.addVersions(version);
 		}
 		return rc;
 	}

@@ -256,7 +256,7 @@ public interface Issue {
 	 * delivered to.
 	 * @return the fix versions of the product
 	 */
-	public Collection<String> getFixVersions();
+	public Collection<Version> getFixVersions();
 
 	/**
 	 * Sets the product (fix) versions for this issue.
@@ -264,7 +264,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to set
 	 */
-	public void setFixVersions(Collection<String> versions);
+	public void setFixVersions(Collection<Version> versions);
 
 	/**
 	 * Adds the product (fix) versions for this issue.
@@ -272,7 +272,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to add
 	 */
-	public void addFixVersions(Collection<String> versions);
+	public void addFixVersions(Collection<Version> versions);
 
 	/**
 	 * Adds the product (fix) versions for this issue.
@@ -280,7 +280,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to add
 	 */
-	public void addFixVersions(String... versions);
+	public void addFixVersions(Version... versions);
 
 	/**
 	 * Removes the product (fix) versions for this issue.
@@ -288,7 +288,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to remove
 	 */
-	public void removeFixVersions(Collection<String> versions);
+	public void removeFixVersions(Collection<Version> versions);
 
 	/**
 	 * Removes the product (fix) versions for this issue.
@@ -296,7 +296,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to remove
 	 */
-	public void removeFixVersions(String... versions);
+	public void removeFixVersions(Version... versions);
 
 	/**
 	 * Removes the fix versions for this issue.
@@ -315,7 +315,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @return the affected versions of the product
 	 */
-	public Collection<String> getAffectedVersions();
+	public Collection<Version> getAffectedVersions();
 
 	/**
 	 * Sets the product (affected) versions for this issue.
@@ -323,7 +323,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to set
 	 */
-	public void setAffectedVersions(Collection<String> versions);
+	public void setAffectedVersions(Collection<Version> versions);
 
 	/**
 	 * Adds the product (affected) versions for this issue.
@@ -331,7 +331,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to add
 	 */
-	public void addAffectedVersions(Collection<String> versions);
+	public void addAffectedVersions(Collection<Version> versions);
 
 	/**
 	 * Adds the product (affected) versions for this issue.
@@ -339,7 +339,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to add
 	 */
-	public void addAffectedVersions(String... versions);
+	public void addAffectedVersions(Version... versions);
 
 	/**
 	 * Removes the product (affected) versions for this issue.
@@ -347,7 +347,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to remove
 	 */
-	public void removeAffectedVersions(Collection<String> versions);
+	public void removeAffectedVersions(Collection<Version> versions);
 
 	/**
 	 * Removes the product (affected) versions for this issue.
@@ -355,7 +355,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to remove
 	 */
-	public void removeAffectedVersions(String... versions);
+	public void removeAffectedVersions(Version... versions);
 
 	/**
 	 * Removes the affected versions for this issue.
@@ -434,7 +434,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @return the planned versions of the product
 	 */
-	public Collection<String> getPlannedVersions();
+	public Collection<Version> getPlannedVersions();
 
 	/**
 	 * Sets the product (planned) versions for this issue.
@@ -442,7 +442,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to set
 	 */
-	public void setPlannedVersions(Collection<String> versions);
+	public void setPlannedVersions(Collection<Version> versions);
 
 	/**
 	 * Adds the product (planned) versions for this issue.
@@ -450,7 +450,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to add
 	 */
-	public void addPlannedVersions(Collection<String> versions);
+	public void addPlannedVersions(Collection<Version> versions);
 
 	/**
 	 * Adds the product (planned) versions for this issue.
@@ -458,7 +458,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to add
 	 */
-	public void addPlannedVersions(String... versions);
+	public void addPlannedVersions(Version... versions);
 
 	/**
 	 * Removes the product (planned) versions for this issue.
@@ -466,7 +466,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to remove
 	 */
-	public void removePlannedVersions(Collection<String> versions);
+	public void removePlannedVersions(Collection<Version> versions);
 
 	/**
 	 * Removes the product (planned) versions for this issue.
@@ -474,7 +474,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to remove
 	 */
-	public void removePlannedVersions(String... versions);
+	public void removePlannedVersions(Version... versions);
 
 	/**
 	 * Removes the planned versions for this issue.

@@ -84,4 +84,12 @@ public class JiraTransformer {
 		}
 	}
 
+	/** Transformer for versions */
+	public static class Version implements Transformer {
+		@Override
+		public Object transform(Object input) {
+			return new JiraVersion((com.atlassian.jira.rest.client.domain.Version)input);
+		}
+	}
+
 }

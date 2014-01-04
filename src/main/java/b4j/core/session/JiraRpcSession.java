@@ -82,6 +82,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 	private MetaData<BasicUser, User> users = new MetaData<BasicUser, User>(new JiraTransformer.User());
 	private MetaData<BasicProject, Project> projects = new MetaData<BasicProject, Project>(new JiraTransformer.Project());
 	private MetaData<BasicComponent, Component> components = new MetaData<BasicComponent, Component>(new JiraTransformer.Component());
+	private MetaData<Version, b4j.core.Version> versions = new MetaData<Version, b4j.core.Version>(new JiraTransformer.Version());
 	
 	/**
 	 * Default constructor
@@ -267,10 +268,10 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		rc.setSeverity(severities.get(issue.getPriority()));
 		rc.setType(issueTypes.get(issue.getIssueType()));
 		for (Version v : issue.getFixVersions()) {
-			rc.addFixVersions(v.getName());
+			rc.addFixVersions(versions.get(v));
 		}
 		for (Version v : issue.getAffectedVersions()) {
-			rc.addAffectedVersions(v.getName());
+			rc.addAffectedVersions(versions.get(v));
 		}
 		for (com.atlassian.jira.rest.client.domain.Attachment attachment : issue.getAttachments()) {
 			Attachment a = new DefaultAttachment(rc);

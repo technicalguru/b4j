@@ -10,6 +10,7 @@ import java.util.List;
 
 import b4j.core.Component;
 import b4j.core.Project;
+import b4j.core.Version;
 
 /**
  * Bugzilla implementation of {@link Project}.
@@ -22,14 +23,14 @@ public class BugzillaProject implements Project {
 	private String id;
 	private String name;
 	private String description;
-	private List<String> versions;
+	private List<Version> versions;
 	private List<Component> components;
 	
 	/**
 	 * Constructor.
 	 */
 	public BugzillaProject(String name) {
-		versions = new ArrayList<String>();
+		versions = new ArrayList<Version>();
 		components = new ArrayList<Component>();
 		setName(name);
 	}
@@ -86,7 +87,7 @@ public class BugzillaProject implements Project {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<String> getVersions() {
+	public Collection<Version> getVersions() {
 		return Collections.unmodifiableList(versions);
 	}
 
@@ -94,8 +95,8 @@ public class BugzillaProject implements Project {
 	 * Adds versions
 	 * @param versions versions to add
 	 */
-	public void addVersions(String... versions) {
-		for (String v : versions) {
+	public void addVersions(Version... versions) {
+		for (Version v : versions) {
 			this.versions.add(v);
 		}
 	}
@@ -104,8 +105,8 @@ public class BugzillaProject implements Project {
 	 * Removes versions
 	 * @param versions versions to remove
 	 */
-	public void removeVersions(String... versions) {
-		for (String v : versions) {
+	public void removeVersions(Version... versions) {
+		for (Version v : versions) {
 			this.versions.remove(v);
 		}
 	}
