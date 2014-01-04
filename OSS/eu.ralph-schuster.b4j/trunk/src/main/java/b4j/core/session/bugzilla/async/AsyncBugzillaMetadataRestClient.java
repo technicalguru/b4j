@@ -9,8 +9,8 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.ServerInfo;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
-import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaServerInfoParser;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.util.concurrent.Promise;

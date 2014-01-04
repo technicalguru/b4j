@@ -14,8 +14,8 @@ import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.Issue;
 import b4j.core.session.bugzilla.BugzillaBugRestClient;
-import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaBugParser;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.util.concurrent.Promise;

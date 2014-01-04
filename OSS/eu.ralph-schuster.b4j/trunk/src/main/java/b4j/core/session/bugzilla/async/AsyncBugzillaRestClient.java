@@ -15,7 +15,7 @@ import b4j.core.session.bugzilla.BugzillaLazyRetriever;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
 import b4j.core.session.bugzilla.BugzillaProductRestClient;
 import b4j.core.session.bugzilla.BugzillaUserRestClient;
-import b4j.core.session.bugzilla.LazyRetriever;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.AuthenticationHandler;

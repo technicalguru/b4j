@@ -6,21 +6,16 @@ package b4j.core.session.bugzilla;
 import b4j.core.Attachment;
 import b4j.core.Classification;
 import b4j.core.Comment;
-import b4j.core.Component;
-import b4j.core.IssueType;
-import b4j.core.Priority;
 import b4j.core.Project;
-import b4j.core.Resolution;
-import b4j.core.Severity;
-import b4j.core.Status;
 import b4j.core.User;
+import b4j.util.AbstractLazyRetriever;
 
 /**
- * Retrieves registered objects lazily.
+ * Retrieves registered objects lazily from Bugzilla.
  * @author ralph
  *
  */
-public class BugzillaLazyRetriever implements LazyRetriever {
+public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 
 	private BugzillaClient client;
 	
@@ -35,333 +30,142 @@ public class BugzillaLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerClassification(String name) {
-		// TODO Auto-generated method stub
-
+	protected void loadClassifications() throws Exception {
+		for (Classification c : client.getClassificationClient().getClassifications(getClassificationIds()).get()) {
+			registerClassification(c);
+		}
+		for (Classification c : client.getClassificationClient().getClassificationsByName(getClassificationNames()).get()) {
+			registerClassification(c);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerClassification(long id) {
-		// TODO Auto-generated method stub
-
+	protected void loadProducts() throws Exception {
+		for (Project p : client.getProductClient().getProducts(getProductIds()).get()) {
+			registerProduct(p);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerClassification(Classification classification) {
-		// TODO Auto-generated method stub
-
+	protected void loadComponents() throws Exception {
+		// TODO Load the products!
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerProduct(long id) {
-		// TODO Auto-generated method stub
-
+	protected void loadUsers() throws Exception {
+		for (User u : client.getUserClient().getUsers(getUserIds()).get()) {
+			registerUser(u);
+		}
+		for (User u : client.getUserClient().getUsersByName(getUserNames()).get()) {
+			registerUser(u);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerProduct(Project product) {
-		// TODO Auto-generated method stub
-
+	protected void loadComments() throws Exception {
+		for (Comment c : client.getBugClient().getComments(getCommentIds()).get()) {
+			registerComment(c);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerComponent(String name) {
-		// TODO Auto-generated method stub
-
+	protected void loadAttachments() throws Exception {
+		for (Attachment a : client.getBugClient().getAttachments(getAttachmentIds()).get()) {
+			registerAttachment(a);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerComponent(Component component) {
-		// TODO Auto-generated method stub
-
+	protected void loadPriorities() throws Exception {
+		registerPriority(new BugzillaPriority("P1"));
+		registerPriority(new BugzillaPriority("P2"));
+		registerPriority(new BugzillaPriority("P3"));
+		registerPriority(new BugzillaPriority("P4"));
+		registerPriority(new BugzillaPriority("P5"));
+		for (String s : getPriorityNames()) {
+			registerPriority(new BugzillaPriority(s));
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerUser(String name) {
-		// TODO Auto-generated method stub
-
+	protected void loadSeverities() throws Exception {
+		registerSeverity(new BugzillaSeverity("blocker"));
+		registerSeverity(new BugzillaSeverity("critical"));
+		registerSeverity(new BugzillaSeverity("major"));
+		registerSeverity(new BugzillaSeverity("blocker"));
+		registerSeverity(new BugzillaSeverity("normal"));
+		registerSeverity(new BugzillaSeverity("minor"));
+		registerSeverity(new BugzillaSeverity("trivial"));
+		registerSeverity(new BugzillaSeverity("enhancement"));
+		for (String s : getSeverityNames()) {
+			registerSeverity(new BugzillaSeverity(s));
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerUser(long id) {
-		// TODO Auto-generated method stub
-
+	protected void loadStatus() throws Exception {
+		registerStatus(new BugzillaStatus("NEW"));
+		registerStatus(new BugzillaStatus("ASSIGNED"));
+		registerStatus(new BugzillaStatus("UNCONFIRMED"));
+		registerStatus(new BugzillaStatus("CONFIRMED"));
+		registerStatus(new BugzillaStatus("VERIFIED"));
+		registerStatus(new BugzillaStatus("IN_PROGRESS"));
+		registerStatus(new BugzillaStatus("RESOLVED"));
+		registerStatus(new BugzillaStatus("CLOSED"));		
+		for (String s : getStatusNames()) {
+			registerStatus(new BugzillaStatus(s));
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerUser(User user) {
-		// TODO Auto-generated method stub
-
+	protected void loadResolutions() throws Exception {
+		registerResolution(new BugzillaResolution("FIXED"));
+		registerResolution(new BugzillaResolution("INVALID"));
+		registerResolution(new BugzillaResolution("WONTFIX"));
+		registerResolution(new BugzillaResolution("DUPLICATE"));
+		registerResolution(new BugzillaResolution("WORKSFORME"));
+		for (String s : getResolutionNames()) {
+			registerResolution(new BugzillaResolution(s));
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerComment(long id) {
-		// TODO Auto-generated method stub
-
+	protected void loadIssueTypes() throws Exception {
+		registerIssueType(new BugzillaIssueType("bug"));
+		for (String s : getIssueTypeNames()) {
+			registerIssueType(new BugzillaIssueType(s));
+		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerComment(Comment comment) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerAttachment(long id) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerAttachment(Attachment attachment) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerPriority(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerPriority(Priority priority) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerSeverity(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerSeverity(Severity severity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerStatus(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerStatus(Status status) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerResolution(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerResolution(Resolution resolution) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerIssueType(String name) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void registerIssueType(IssueType issueType) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Classification getClassification(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Classification getClassification(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Project getProduct(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Component getComponent(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public User getUser(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public User getUser(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Comment getComment(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Attachment getAttachment(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Priority getPriority(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Severity getSeverity(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Status getStatus(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Resolution getResolution(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public IssueType getIssueType(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

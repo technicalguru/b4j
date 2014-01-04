@@ -14,9 +14,9 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Project;
 import b4j.core.session.bugzilla.BugzillaProductRestClient;
-import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaIdListParser;
 import b4j.core.session.bugzilla.json.BugzillaProductParser;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.RestClientException;

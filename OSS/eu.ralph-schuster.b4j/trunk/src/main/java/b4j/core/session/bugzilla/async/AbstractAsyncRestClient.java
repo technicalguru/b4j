@@ -12,8 +12,8 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.JSONUtils;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.httpclient.api.Response;

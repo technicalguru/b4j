@@ -61,6 +61,8 @@ import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
 import b4j.core.Severity;
 import b4j.core.Status;
+import b4j.core.session.bugzilla.BugzillaComponent;
+import b4j.core.session.bugzilla.BugzillaProject;
 import b4j.core.session.bugzilla.BugzillaTransformer;
 import b4j.core.session.bugzilla.BugzillaUser;
 import b4j.core.session.bugzilla.BugzillaVersion;
@@ -739,9 +741,18 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentContent = null;
 			} else if (name.equals("product")) {
 				currentIssue.setProject(projects.get(currentContent.toString()));
+				for (Component c : currentIssue.getComponents()) {
+					if (c.getProject() == null) {
+						((BugzillaComponent)c).setProject((BugzillaProject)currentIssue.getProject());
+					}
+				}
 				currentContent = null;
 			} else if (name.equals("component")) {
-				currentIssue.addComponents(components.get(currentContent.toString()));
+				Component c = components.get(currentContent.toString());
+				if ((c.getProject() != null) && (currentIssue.getProject() != null)) {
+					((BugzillaComponent)c).setProject((BugzillaProject)currentIssue.getProject());
+				}
+				currentIssue.addComponents(c);
 				currentContent = null;
 			} else if (name.equals("version")) {
 				currentIssue.addFixVersions(new BugzillaVersion(null, currentContent.toString()));

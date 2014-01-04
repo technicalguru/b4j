@@ -15,7 +15,7 @@ import b4j.core.Project;
 import b4j.core.Version;
 import b4j.core.session.bugzilla.BugzillaComponent;
 import b4j.core.session.bugzilla.BugzillaProject;
-import b4j.core.session.bugzilla.LazyRetriever;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 

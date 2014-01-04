@@ -41,4 +41,17 @@ public class AsyncBugzillaClassificationRestClientTest extends AbstractRestClien
 		assertEquals("Not enough classifications", 1, cnt);
 	}
 
+	@Test
+	public void testGetClassificationByName() throws Exception {
+		Promise<Iterable<Classification>> promise = myClient.getClassificationsByName("Java Projects");
+		assertNotNull("No promise", promise);
+		int cnt = 0;
+		for (Classification c : promise.get()) {
+			assertNotNull(c.getId());
+			assertNotNull(c.getName());
+			cnt++;
+		}
+		assertEquals("Not enough classifications", 1, cnt);
+	}
+
 }
