@@ -58,6 +58,8 @@ public interface Issue {
 	public static final String ACTUAL_TIME = "actual_time";
 	/** Custom field name for Bugzilla field deadline */
 	public static final String DEADLINE = "deadline";
+	/** Custom field name for Bugzilla field target_milestone */
+	public static final String MILESTONE = "target_milestone";
 	
 	/**
 	 * Returns the version of server this issue was retrieved from.
