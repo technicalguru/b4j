@@ -77,6 +77,7 @@ public class BugzillaComponent implements Component {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Project getProject() {
 		return project;
 	}

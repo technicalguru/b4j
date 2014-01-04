@@ -12,7 +12,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Version;
 import b4j.core.session.bugzilla.BugzillaVersion;
-import b4j.core.session.bugzilla.LazyRetriever;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 

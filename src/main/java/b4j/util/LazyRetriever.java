@@ -1,7 +1,7 @@
 /**
  * 
  */
-package b4j.core.session.bugzilla;
+package b4j.util;
 
 import b4j.core.Attachment;
 import b4j.core.Classification;
@@ -30,7 +30,7 @@ public interface LazyRetriever {
 	public void registerProduct(long id);
 	public void registerProduct(Project product);
 
-	public void registerComponent(String name);
+	public void registerComponent(String projectName, String name);
 	public void registerComponent(Component component);
 
 	public void registerUser(String name);
@@ -61,7 +61,7 @@ public interface LazyRetriever {
 	public Classification getClassification(String name);
 	public Classification getClassification(long id);
 	public Project getProduct(long id);
-	public Component getComponent(String name);
+	public Component getComponent(String projectName, String name);
 	public User getUser(String name);
 	public User getUser(long id);
 	public Comment getComment(long id);

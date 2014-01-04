@@ -15,8 +15,8 @@ import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.IssueType;
 import b4j.core.session.bugzilla.BugzillaIssueType;
-import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.util.BugzillaUtils;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 

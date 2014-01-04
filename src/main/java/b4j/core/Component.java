@@ -12,6 +12,11 @@ package b4j.core;
 public interface Component {
 
 	/**
+	 * Returns the project for this component.
+	 */
+	public Project getProject();
+	
+	/**
 	 * Returns the name.
 	 */
 	public String getId();

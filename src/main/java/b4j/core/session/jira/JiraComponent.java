@@ -4,6 +4,7 @@
 package b4j.core.session.jira;
 
 import b4j.core.Component;
+import b4j.core.Project;
 
 import com.atlassian.jira.rest.client.domain.BasicComponent;
 
@@ -15,6 +16,7 @@ import com.atlassian.jira.rest.client.domain.BasicComponent;
 public class JiraComponent implements Component {
 
 	private BasicComponent component;
+	private Project project;
 	
 	/**
 	 * Constructor.
@@ -47,4 +49,21 @@ public class JiraComponent implements Component {
 		return component.getDescription();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Project getProject() {
+		return project;
+	}
+
+	/**
+	 * Sets the project.
+	 * @param project the project to set
+	 */
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	
 }

@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
@@ -37,6 +38,7 @@ import b4j.core.Severity;
 import b4j.core.Status;
 import b4j.core.User;
 import b4j.core.session.jira.AsynchronousFilterRestClient;
+import b4j.core.session.jira.JiraComponent;
 import b4j.core.session.jira.JiraTransformer;
 import b4j.util.MetaData;
 
@@ -256,12 +258,18 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		desc.setWhen(issue.getCreationDate().toDate());
 		desc.setAuthor(users.get(issue.getReporter()));
 		rc.addComments(desc);
-		rc.addComponents(components.get(issue.getComponents()));
+		rc.setProject(projects.get(issue.getProject()));
+		Collection<Component> cList = components.get(issue.getComponents());
+		for (Component o : cList) {
+			if (o.getProject() == null) {
+				((JiraComponent)o).setProject(rc.getProject());
+			}
+		}
+		rc.addComponents(cList);
 		rc.setAssignee(users.get(issue.getAssignee()));
 		rc.setCreationTimestamp(issue.getCreationDate().toDate());
 		rc.setServerUri(issue.getSelf().toString());
 		rc.setPriority(priorities.get(issue.getPriority()));
-		rc.setProject(projects.get(issue.getProject()));
 		rc.setReporter(users.get(issue.getReporter()));
 		rc.setResolution(resolutions.get(issue.getResolution()));
 		rc.setStatus(status.get(issue.getStatus()));

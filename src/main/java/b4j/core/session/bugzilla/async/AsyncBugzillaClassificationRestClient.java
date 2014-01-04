@@ -12,8 +12,8 @@ import java.util.Map;
 
 import b4j.core.Classification;
 import b4j.core.session.bugzilla.BugzillaClassificationRestClient;
-import b4j.core.session.bugzilla.LazyRetriever;
 import b4j.core.session.bugzilla.json.BugzillaClassificationParser;
+import b4j.util.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.RestClientException;
@@ -69,6 +69,41 @@ public class AsyncBugzillaClassificationRestClient extends AbstractAsyncRestClie
 	public Promise<Iterable<Classification>> getClassifications(Collection<Long> ids) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("ids", ids);
+		return postAndParse("get", params, classificationParser);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Classification getClassificationByName(String name) {
+		try {
+			for (Classification rc : getClassificationsByName(name).get()) {
+				return rc;
+			}
+		} catch (Exception e) {
+			throw new RestClientException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Promise<Iterable<Classification>> getClassificationsByName(String... names) {
+		List<String> l = new ArrayList<String>();
+		for (int i=0; i<names.length; i++) l.add(names[i]);
+		return getClassificationsByName(l);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Promise<Iterable<Classification>> getClassificationsByName(Collection<String> names) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("names", names);
 		return postAndParse("get", params, classificationParser);
 	}
 
