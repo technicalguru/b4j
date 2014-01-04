@@ -40,7 +40,6 @@ public class BugzillaVersionParser extends AbstractJsonParser implements JsonObj
 
 	@Override
 	public Iterable<Version> parse(JSONObject json) throws JSONException {
-		debug(json);
 		List<Version> rc = new ArrayList<Version>();
 		JSONArray arr = json.getJSONArray("versions");
 		for (int i=0; i<arr.length(); i++) {
