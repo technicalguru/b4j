@@ -33,6 +33,7 @@ import b4j.core.Component;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.IssueLink;
+import b4j.core.Version;
 
 /**
  * Provides some useful methods for all classes.
@@ -293,13 +294,13 @@ public class BugzillaUtils {
 		for (Component c : issue.getComponents()) {
 			log.debug("Component="+c.getName());
 		}
-		for (String s : issue.getFixVersions()) {
+		for (Version s : issue.getFixVersions()) {
 			log.debug("FixVersion="+s);
 		}
-		for (String s : issue.getPlannedVersions()) {
+		for (Version s : issue.getPlannedVersions()) {
 			log.debug("PlannedVersion="+s);
 		}
-		for (String s : issue.getAffectedVersions()) {
+		for (Version s : issue.getAffectedVersions()) {
 			log.debug("AffectedVersion="+s);
 		}
 		log.debug("RepPlatform="+issue.get(Issue.REP_PLATFORM));

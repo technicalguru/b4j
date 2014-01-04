@@ -185,7 +185,8 @@ public class DefaultMetaInformation implements MetaInformation {
 	 * @return true if all reports were removed
 	 */
 	public boolean removeAllReports(Collection<?> c) {
-		return reports.removeAll(c);
+		if (c != null) return reports.removeAll(c);
+		return true;
 	}
 
 	/**

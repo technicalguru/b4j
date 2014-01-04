@@ -86,11 +86,11 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.setSummary(json.getString("summary"));
 		rc.set(Issue.REP_PLATFORM, json.getString("platform"));
 		//rc.setSeverity(severities.get(json.getString("severity")));
-		rc.addFixVersions(json.getString("version"));
+		//rc.addFixVersions(json.getString("version"));
 		// component string
 		rc.set(Issue.REPORTER_ACCESSIBLE, json.getBoolean("is_creator_accessible"));
 		//rc.setProject(projects.get(json.getString("product")));
-		rc.addPlannedVersions(json.getString("target_milestone"));
+		//rc.addPlannedVersions(json.getString("target_milestone"));
 		rc.set(Issue.CONFIRMED, json.getBoolean("is_confirmed"));
 		return rc;
 	}
