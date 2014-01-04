@@ -765,7 +765,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.setSeverity(severities.get(currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("target_milestone")) {
-				currentIssue.addPlannedVersions(new BugzillaVersion(null, currentContent.toString()));
+				currentIssue.set(Issue.MILESTONE, currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("everconfirmed")) {
 				currentIssue.set(Issue.CONFIRMED, LangUtils.getBoolean(currentContent.toString()));
