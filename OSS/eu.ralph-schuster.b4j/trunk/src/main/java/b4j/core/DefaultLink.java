@@ -7,7 +7,7 @@ package b4j.core;
  */
 public class DefaultLink implements IssueLink {
 
-	private int linkType;
+	private Type linkType;
 	private String linkTypeName;
 	private boolean inward;
 	private String linkTypeDescription;
@@ -28,7 +28,7 @@ public class DefaultLink implements IssueLink {
 	 * @param linkTypeDescription description of link
 	 * @param issueId issue linked
 	 */
-	public DefaultLink(int linkType, String linkTypeName, boolean inward, String linkTypeDescription, String issueId) {
+	public DefaultLink(Type linkType, String linkTypeName, boolean inward, String linkTypeDescription, String issueId) {
 		super();
 		this.linkType = linkType;
 		this.linkTypeName = linkTypeName;
@@ -40,14 +40,14 @@ public class DefaultLink implements IssueLink {
 	/**
 	 * {@inheritDoc}
 	 */
-	public int getLinkType() {
+	public Type getLinkType() {
 		return linkType;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void setLinkType(int linkType) {
+	public void setLinkType(Type linkType) {
 		this.linkType = linkType;
 	}
 
