@@ -17,6 +17,7 @@
  */
 package b4j.core;
 
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +27,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import rs.baselib.util.CommonUtils;
+import b4j.util.LazyRetriever;
 
 /**
  * Class that represents a Bugzilla bug record.
@@ -290,6 +294,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public IssueType getType() {
+		type = check(type, "issueType");
 		return type;
 	}
 
@@ -306,6 +311,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Classification getClassification() {
+		classification = check(classification, "classification");
 		return classification;
 	}
 
@@ -322,6 +328,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Project getProject() {
+		project = check(project, "project");
 		return project;
 	}
 
@@ -338,6 +345,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Component> getComponents() {
+		check(components, "component");
 		return Collections.unmodifiableList(components);
 	}
 
@@ -357,7 +365,7 @@ public class DefaultIssue implements Issue {
 	public void addComponents(Collection<Component> components) {
 		if (components != null) this.components.addAll(components);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -407,6 +415,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Version> getAffectedVersions() {
+		check(affectedVersions, "affectedVersion", "version");
 		return Collections.unmodifiableList(affectedVersions);
 	}
 
@@ -444,7 +453,7 @@ public class DefaultIssue implements Issue {
 	public void removeAffectedVersions(Collection<Version> versions) {
 		if (versions != null) affectedVersions.removeAll(versions);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -476,6 +485,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Version> getPlannedVersions() {
+		check(plannedVersions, "plannedVersion", "version");
 		return Collections.unmodifiableList(plannedVersions);
 	}
 
@@ -545,6 +555,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Version> getFixVersions() {
+		check(fixVersions, "fixVersion", "version");
 		return Collections.unmodifiableList(fixVersions);
 	}
 
@@ -614,6 +625,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Status getStatus() {
+		status = check(status, "status");
 		return status;
 	}
 
@@ -630,6 +642,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Resolution getResolution() {
+		resolution = check(resolution, "resolution");
 		return resolution;
 	}
 
@@ -646,6 +659,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Priority getPriority() {
+		priority = check(priority, "priority");
 		return priority;
 	}
 
@@ -662,6 +676,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Severity getSeverity() {
+		severity = check(severity, "severity");
 		return severity;
 	}
 
@@ -678,6 +693,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public User getReporter() {
+		reporter = check(reporter, "reporter", "user");
 		return reporter;
 	}
 
@@ -693,6 +709,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	public User getAssignee() {
+		assignee = check(assignee, "assignee", "user");
 		return assignee;
 	}
 
@@ -708,6 +725,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Attachment getAttachment(String id) {
+		check(attachments, "attachment");
 		for (Attachment a : attachments) {
 			if (CommonUtils.equals(a.getId(), id)) return a;
 		}
@@ -810,9 +828,9 @@ public class DefaultIssue implements Issue {
 		Status s = getStatus();
 		if (s == null) return true;
 		return s.isOpen(); 
-//				s.toUpperCase().indexOf("OPEN") >= 0 || 
-//				s.equalsIgnoreCase("NEW") || s.equalsIgnoreCase("CREATED") ||
-//				s.equalsIgnoreCase("UNCONFIRMED") || s.equalsIgnoreCase("ASSIGNED");
+		//				s.toUpperCase().indexOf("OPEN") >= 0 || 
+		//				s.equalsIgnoreCase("NEW") || s.equalsIgnoreCase("CREATED") ||
+		//				s.equalsIgnoreCase("UNCONFIRMED") || s.equalsIgnoreCase("ASSIGNED");
 	}
 
 	/**
@@ -844,6 +862,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Comment> getComments() {
+		check(comments, "comment");
 		return Collections.unmodifiableList(comments);
 	}
 
@@ -857,7 +876,7 @@ public class DefaultIssue implements Issue {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -874,7 +893,7 @@ public class DefaultIssue implements Issue {
 	public void addComments(Collection<Comment> comments) {
 		if (comments != null) this.comments.addAll(comments);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -924,6 +943,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Attachment> getAttachments() {
+		check(attachments, "attachment");
 		return Collections.unmodifiableList(attachments);
 	}
 
@@ -1134,5 +1154,121 @@ public class DefaultIssue implements Issue {
 		return getClass().getName()+"[id="+getId()+";summary="+getSummary()+";status="+getStatus()+"]";
 	}
 
+	/**
+	 * Checks the lazy retrieval of the given value.
+	 * <p>The method checks whether <code>originalValue</code> is already set and returns this. Otherwise
+	 * it will check for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
+	 * <code>${propertyPrefix}_id</code> custom fields. If either of them is set, the {@link LazyRetriever}
+	 * is asked for an actual value to be returned.</p>
+	 * @param originalValue the value currently stored
+	 * @param propertyPrefix the property to be checked
+	 * @return the value (either originalValue or the lazily retrieved value or <code>null</code>)
+	 */
+	protected <T> T check(T originalValue, String propertyPrefix) {
+		return check(originalValue, propertyPrefix, propertyPrefix);
+	}
+	
+	/**
+	 * Checks the lazy retrieval of the given value.
+	 * <p>The method checks whether <code>originalValue</code> is already set and returns this. Otherwise
+	 * it will check for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
+	 * <code>${propertyPrefix}_id</code> custom fields. If either of them is set, the {@link LazyRetriever}
+	 * is asked for an actual value to be returned.</p>
+	 * @param originalValue the value currently stored
+	 * @param propertyPrefix the property to be checked
+	 * @param typeProperty name of property at {@link LazyRetriever}
+	 * @return the value (either originalValue or the lazily retrieved value or <code>null</code>)
+	 */
+	protected <T> T check(T originalValue, String propertyPrefix, String typeProperty) {
+		if (originalValue != null) return originalValue;
+		LazyRetriever retriever = (LazyRetriever)get("lazyRetriever");
+		if (retriever == null) return null;
+		String name = (String)get(propertyPrefix+"_name");
+		if (name != null) {
+			T obj = retrieve(retriever, typeProperty, name);
+			if (obj != null) return obj;
+		}
+		Long id = (Long)get(propertyPrefix+"_id");
+		if (id != null) {
+			T obj = retrieve(retriever, typeProperty, id);
+			return obj;
+		}
+		return null;
+	}
 
+	/**
+	 * Checks the lazy retrieval of the given collection values.
+	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
+	 * <code>${propertyPrefix}_id</code> custom fields (can be collections or single values. If either of them is set, 
+	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * @param collection the value currently stored and enhanced with found values.
+	 * @param propertyPrefix the property to be checked
+	 */
+	protected <T> void check(Collection<T> collection, String propertyPrefix) {
+		check(collection, propertyPrefix, propertyPrefix);
+	}
+	
+	/**
+	 * Checks the lazy retrieval of the given collection values.
+	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
+	 * <code>${propertyPrefix}_id</code> custom fields (can be collections or single values. If either of them is set, 
+	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * @param collection the value currently stored and enhanced with found values.
+	 * @param propertyPrefix the property to be checked
+	 * @param typeProperty name of property at {@link LazyRetriever}
+	 */
+	@SuppressWarnings("unchecked")
+	protected <T> void check(Collection<T> collection, String propertyPrefix, String typeProperty) {
+		LazyRetriever retriever = (LazyRetriever)get("lazyRetriever");
+		if (retriever != null) {
+			Object o = get(propertyPrefix+"_name");
+			Collection<String> names = null;
+			if (!(o instanceof Collection)) {
+				names = new ArrayList<String>();
+			} else {
+				names = (Collection<String>)o;
+			}
+			for (String name : names) {
+				T obj = retrieve(retriever, typeProperty, name);
+				if (obj != null) collection.add(obj);
+			}
+
+			o = get(propertyPrefix+"_id");
+			Collection<Long> ids = null;
+			if (!(o instanceof Collection)) {
+				ids = new ArrayList<Long>();
+			} else {
+				ids = (Collection<Long>)o;
+			}
+			for (Long id : ids) {
+				T obj = retrieve(retriever, typeProperty, id);
+				if (obj != null) collection.add(obj);
+			}
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T retrieve(LazyRetriever retriever, String property, String name) {
+		try {
+			String methodName = "get"+StringUtils.capitalize(property);
+			Method m = retriever.getClass().getMethod(methodName, String.class);
+			return (T)m.invoke(retriever, name);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T> T retrieve(LazyRetriever retriever, String property, Long id) {
+		try {
+			String methodName = "get"+StringUtils.capitalize(property);
+			Method m = retriever.getClass().getMethod(methodName, Long.TYPE);
+			return (T)m.invoke(retriever, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
