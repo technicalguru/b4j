@@ -70,5 +70,13 @@ public class DefaultTeam implements Team {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 
 }

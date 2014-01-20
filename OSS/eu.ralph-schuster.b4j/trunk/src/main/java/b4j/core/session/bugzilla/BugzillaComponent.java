@@ -139,6 +139,14 @@ public class BugzillaComponent implements Component {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 
 	
 }

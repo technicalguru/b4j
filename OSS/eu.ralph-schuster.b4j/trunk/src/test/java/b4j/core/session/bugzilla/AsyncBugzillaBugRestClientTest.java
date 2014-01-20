@@ -27,6 +27,7 @@ import org.junit.Test;
 
 import b4j.core.Issue;
 import b4j.core.Project;
+import b4j.util.BugzillaUtils;
 
 import com.atlassian.util.concurrent.Promise;
 
@@ -50,6 +51,7 @@ public class AsyncBugzillaBugRestClientTest extends AbstractRestClientTest {
 		Iterator<Issue> i = myClient.getBugs(2,3).get().iterator();
 		while (i.hasNext()) {
 			Issue issue = i.next();
+			BugzillaUtils.debug(issue);
 		}
 	}
 

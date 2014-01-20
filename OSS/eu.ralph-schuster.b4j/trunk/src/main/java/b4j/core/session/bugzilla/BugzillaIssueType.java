@@ -70,4 +70,13 @@ public class BugzillaIssueType implements IssueType {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+	
 }
