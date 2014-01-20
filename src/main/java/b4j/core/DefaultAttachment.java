@@ -139,7 +139,7 @@ public class DefaultAttachment implements Attachment {
 	 * @return {@link #id} or {@link #filename}
 	 */
 	private Object getHashAttribute() {
-		if (getId() != null) return getHashAttribute();
+		if (getId() != null) return getId();
 		return getFilename();
 	}
 	

@@ -109,7 +109,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerClassification(String name) {
-		if (searchClassification(name) == null) {
+		if ((name != null) && (searchClassification(name) == null)) {
 			classificationNameQueue.add(name);
 		}
 	}
@@ -176,7 +176,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerProject(String name) {
-		if (searchProject(name) == null) {
+		if ((name != null) && (searchProject(name) == null)) {
 			projectNameQueue.add(name);
 		}
 	}
@@ -223,7 +223,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerComponent(String projectName, String name) {
-		if (searchComponent(projectName, name) == null) {
+		if ((name != null) && (projectName != null) && (searchComponent(projectName, name) == null)) {
 			Set<String> names = componentNameQueue.get(projectName);
 			if (names == null) {
 				names = new HashSet<String>();
@@ -262,7 +262,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerUser(String name) {
-		if (searchUser(name) == null) {
+		if ((name != null) && (searchUser(name) == null)) {
 			userNameQueue.add(name);
 		}
 	}
@@ -385,7 +385,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerPriority(String name) {
-		if (searchPriority(name) == null) {
+		if ((name != null) && (searchPriority(name) == null)) {
 			priorityNameQueue.add(name);
 		}
 	}
@@ -417,7 +417,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerSeverity(String name) {
-		if (searchSeverity(name) == null) {
+		if ((name != null) && (searchSeverity(name) == null)) {
 			severityNameQueue.add(name);
 		}
 	}
@@ -449,7 +449,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerStatus(String name) {
-		if (searchStatus(name) == null) {
+		if ((name != null) && (searchStatus(name) == null)) {
 			statusNameQueue.add(name);
 		}
 	}
@@ -481,7 +481,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerResolution(String name) {
-		if (searchResolution(name) == null) {
+		if ((name != null) && (searchResolution(name) == null)) {
 			resolutionNameQueue.add(name);
 		}
 	}
@@ -513,7 +513,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerIssueType(String name) {
-		if (searchIssueType(name) == null) {
+		if ((name != null) && (searchIssueType(name) == null)) {
 			issueTypeNameQueue.add(name);
 		}
 	}
@@ -545,7 +545,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 */
 	@Override
 	public void registerVersion(String projectName, String name) {
-		if (searchVersion(projectName, name) == null) {
+		if ((name != null) && (projectName != null) && (searchVersion(projectName, name) == null)) {
 			Set<String> names = versionNameQueue.get(projectName);
 			if (names == null) {
 				names = new HashSet<String>();

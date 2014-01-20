@@ -91,7 +91,7 @@ public class BugzillaUser implements User {
 	 * @return {@link #id} or {@link #name}
 	 */
 	private Object getHashAttribute() {
-		if (getId() != null) return getHashAttribute();
+		if (getId() != null) return getId();
 		return getName();
 	}
 	
@@ -119,6 +119,14 @@ public class BugzillaUser implements User {
 			if (other.getHashAttribute() != null) return false;
 		} else if (!getHashAttribute().equals(other.getHashAttribute())) return false;
 		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
 	}
 
 

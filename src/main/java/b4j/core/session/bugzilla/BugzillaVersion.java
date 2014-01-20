@@ -119,7 +119,7 @@ public class BugzillaVersion implements Version {
 	 * @return {@link #id} or {@link #name}
 	 */
 	private Object getHashAttribute() {
-		if (getId() != null) return getHashAttribute();
+		if (getId() != null) return getId();
 		return getName();
 	}
 	
