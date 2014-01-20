@@ -56,7 +56,8 @@ public abstract class AbstractRestClientTest {
 	}
 
 	protected static void setup(String bugzillaHome) throws Exception {
-		URL url = FileFinder.find("test-config.xml");
+		URL url = FileFinder.find(AbstractRestClientTest.class, "local-test-config.xml");
+		if (url == null) url = FileFinder.find(AbstractRestClientTest.class, "test-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		XMLConfiguration config = new XMLConfiguration(url);
 		if (bugzillaHome == null) bugzillaHome = config.getString("bugzilla-home");
