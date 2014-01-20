@@ -71,7 +71,7 @@ public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 	 */
 	@Override
 	protected void loadComponents() throws Exception {
-		// TODO Load the products!
+		loadProjects();
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 	 */
 	@Override
 	protected void loadVersions() throws Exception {
-		// TODO Load the products!
+		loadProjects();
 	}
 
 	

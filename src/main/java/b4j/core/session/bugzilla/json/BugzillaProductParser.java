@@ -74,18 +74,23 @@ public class BugzillaProductParser extends AbstractJsonParser implements JsonObj
 	}
 
 	public Project parseSingle(JSONObject json) throws JSONException {
+		LazyRetriever retriever = getLazyRetriever();
 		BugzillaProject rc = new BugzillaProject(json.getString("name"));
 //		for (String s : milestoneParser.parse(json)) { 
 //			rc.addMilestone(s); 
 //		}
 		for (Component c : componentParser.parse(json)) {
 			((BugzillaComponent)c).setProject(rc);
+			if (retriever != null) {
+				retriever.registerComponent(c);
+			}
 			rc.addComponents(c);
 		}
 		rc.setDescription(json.getString("description"));
 		rc.setId(json.getString("id"));
 		versionParser.setProject(rc);
 		for (Version version : versionParser.parse(json)) { 
+			retriever.registerVersion(version);
 			rc.addVersions(version);
 		}
 		return rc;
