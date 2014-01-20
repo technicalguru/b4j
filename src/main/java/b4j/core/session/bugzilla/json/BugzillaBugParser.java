@@ -19,6 +19,7 @@ package b4j.core.session.bugzilla.json;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.codehaus.jettison.json.JSONArray;
@@ -26,7 +27,9 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.DefaultIssue;
+import b4j.core.DefaultLink;
 import b4j.core.Issue;
+import b4j.core.IssueLink.Type;
 import b4j.core.IssueType;
 import b4j.core.session.bugzilla.BugzillaIssueType;
 import b4j.util.BugzillaUtils;
@@ -84,7 +87,7 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set("reporter_name", json.getString("creator")); if (retriever != null) retriever.registerUser(json.getString("creator"));
 		rc.setUpdateTimestamp(BugzillaUtils.parseDate(json.getString("last_change_time")));
 		rc.set(Issue.CCLIST_ACCESSIBLE, json.getBoolean("is_cc_accessible"));
-		//rc.setCcs(null); string array
+		rc.set(Issue.CC, getStringCollection(json.getJSONArray("cc")));
 		rc.setUri(null);
 		rc.set("assignee_name", json.getString("assigned_to"));  if (retriever != null) retriever.registerUser(json.getString("assigned_to"));
 		rc.setId(json.getString("id"));
@@ -92,8 +95,14 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set(Issue.WHITEBOARD, json.getString("whiteboard"));
 		rc.set(Issue.QA_CONTACT, json.getString("qa_contact"));
 		// depends_on int array
+		getIntCollection(json.getJSONArray("depends_on"));
 		// blocks int array
+		getIntCollection(json.getJSONArray("blocks"));
 		// dupe_of int
+		String dupe = json.getString("dupe_of");
+		if (dupe != null) {
+			rc.addLinks(new DefaultLink(Type.DUPLICATE, "Duplicate", false, "Duplicate of other issue", dupe));
+		}
 		rc.set("resolution_name", json.getString("resolution"));  if (retriever != null) retriever.registerResolution(json.getString("resolution"));
 		rc.set("classification_name", json.getString("classification"));  if (retriever != null) retriever.registerClassification(json.getString("classification"));
 		rc.set(Issue.ALIAS, json.getString("alias"));
@@ -108,6 +117,22 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set("project_name", json.getString("product")); if (retriever != null) retriever.registerProject(json.getString("product"));
 		rc.set(Issue.MILESTONE, json.getString("target_milestone"));
 		rc.set(Issue.CONFIRMED, json.getBoolean("is_confirmed"));
+		return rc;
+	}
+	
+	protected Collection<Long> getIntCollection(JSONArray arr) throws JSONException {
+		Collection<Long> rc = new ArrayList<Long>();
+		for (int i=0; i<arr.length(); i++) {
+			rc.add(arr.getLong(i));
+		}
+		return rc;
+	}
+	
+	protected Collection<String> getStringCollection(JSONArray arr) throws JSONException {
+		Collection<String> rc = new ArrayList<String>();
+		for (int i=0; i<arr.length(); i++) {
+			rc.add(arr.getString(i));
+		}
 		return rc;
 	}
 }
