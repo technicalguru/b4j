@@ -95,12 +95,16 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set(Issue.WHITEBOARD, json.getString("whiteboard"));
 		rc.set(Issue.QA_CONTACT, json.getString("qa_contact"));
 		// depends_on int array
-		getIntCollection(json.getJSONArray("depends_on"));
+		for (String otherId : getStringCollection(json.getJSONArray("depends_on"))) {
+			rc.addLinks(new DefaultLink(Type.DEPENDS_ON, "Depends on", true, "Depends on other issue", otherId));
+		}
 		// blocks int array
-		getIntCollection(json.getJSONArray("blocks"));
+		for (String otherId : getStringCollection(json.getJSONArray("blocks"))) {
+			rc.addLinks(new DefaultLink(Type.UNSPECIFIED, "Blocks", true, "Blocks the other issue", otherId));
+		}
 		// dupe_of int
 		String dupe = json.getString("dupe_of");
-		if (dupe != null) {
+		if ((dupe != null) && !dupe.equals("null")) {
 			rc.addLinks(new DefaultLink(Type.DUPLICATE, "Duplicate", false, "Duplicate of other issue", dupe));
 		}
 		rc.set("resolution_name", json.getString("resolution"));  if (retriever != null) retriever.registerResolution(json.getString("resolution"));
