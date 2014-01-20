@@ -53,7 +53,9 @@ import b4j.core.session.jira.JiraStatus;
 import b4j.core.session.jira.JiraTransformer;
 import b4j.core.session.jira.JiraUser;
 import b4j.core.session.jira.JiraVersion;
+import b4j.util.CombinedAuthenticationHandler;
 import b4j.util.MetaData;
+import b4j.util.ProxyAuthenticationHandler;
 
 import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.AuthenticationHandler;
@@ -170,8 +172,28 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		try {
 			JiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
 			URI jiraServerUri = getBaseUrl().toURI();
-			AuthenticationHandler authenticationHandler = new BasicHttpAuthenticationHandler(getLogin(), getPassword());
-			httpClient = new AsynchronousHttpClientFactory().createClient(jiraServerUri, authenticationHandler);
+			String login = getLogin();
+			String passwd = getPassword();
+			AuthenticationHandler authenticationHandler = null;
+			if (login != null) {
+				authenticationHandler = new BasicHttpAuthenticationHandler(login, passwd);
+			}
+			Proxy proxy = getProxy();
+			if ((proxy != null) && (proxy.type() == Proxy.Type.HTTP)) {
+				InetSocketAddress address = (InetSocketAddress)proxy.address();
+				System.setProperty("http.proxyHost", address.getHostName());
+				System.setProperty("http.proxyPort", ""+address.getPort());
+			}
+			AuthenticationHandler proxyAuthHandler = null;
+			AuthorizationCallback proxyAuthCallback = getProxyAuthorizationCallback();
+			if (proxyAuthCallback != null) {
+				String proxyLogin  = proxyAuthCallback.getName();
+				String proxyPasswd = proxyAuthCallback.getPassword();
+				proxyAuthHandler = new ProxyAuthenticationHandler(proxyLogin, proxyPasswd);
+			}
+			AuthenticationHandler authHandler = new CombinedAuthenticationHandler(proxyAuthHandler, authenticationHandler);
+
+			httpClient = new AsynchronousHttpClientFactory().createClient(jiraServerUri, authHandler);
 			jiraClient = factory.create(jiraServerUri, httpClient);
 			//jiraVersion = jiraClient.getMetadataClient().getServerInfo().get().getVersion();
 			filterClient = new AsynchronousFilterRestClient(jiraServerUri, httpClient, jiraClient.getSearchClient());
