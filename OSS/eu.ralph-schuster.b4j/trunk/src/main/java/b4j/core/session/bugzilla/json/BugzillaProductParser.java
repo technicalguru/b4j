@@ -84,6 +84,7 @@ public class BugzillaProductParser extends AbstractJsonParser implements JsonObj
 		}
 		rc.setDescription(json.getString("description"));
 		rc.setId(json.getString("id"));
+		versionParser.setProject(rc);
 		for (Version version : versionParser.parse(json)) { 
 			rc.addVersions(version);
 		}

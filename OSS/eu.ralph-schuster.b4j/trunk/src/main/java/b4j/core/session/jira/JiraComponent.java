@@ -36,7 +36,15 @@ public class JiraComponent implements Component {
 	 * Constructor.
 	 */
 	public JiraComponent(BasicComponent component) {
+		this(null, component);
+	}
+
+	/**
+	 * Constructor.
+	 */
+	public JiraComponent(Project project, BasicComponent component) {
 		this.component = component;
+		this.project = project;
 	}
 
 	/**

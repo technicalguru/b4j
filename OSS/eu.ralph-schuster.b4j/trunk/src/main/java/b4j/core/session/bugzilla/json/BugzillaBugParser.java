@@ -76,15 +76,16 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 
 	public Issue parseSingleBug(JSONObject json) throws JSONException, ParseException {
 		DefaultIssue rc = new DefaultIssue();
-		debug(json);
+		rc.set(DefaultIssue.LAZY_RETRIEVER, getLazyRetriever());
+		//debug(json);
 		rc.setType(BUG_TYPE);
-		//rc.setPriority(priorities.get(json.getString("priority")));
-		//rc.setReporter(json.getString("creator"));
+		rc.set("priority_name", json.getString("priority"));
+		rc.set("reporter_name", json.getString("creator"));
 		rc.setUpdateTimestamp(BugzillaUtils.parseDate(json.getString("last_change_time")));
 		rc.set(Issue.CCLIST_ACCESSIBLE, json.getBoolean("is_cc_accessible"));
 		//rc.setCcs(null); string array
 		rc.setUri(null);
-		//rc.setAssignee(json.getString("assigned_to"));
+		rc.set("assignee_name", json.getString("assigned_to"));
 		rc.setId(json.getString("id"));
 		rc.setCreationTimestamp(BugzillaUtils.parseDate(json.getString("creation_time")));
 		rc.set(Issue.WHITEBOARD, json.getString("whiteboard"));
@@ -92,18 +93,18 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		// depends_on int array
 		// blocks int array
 		// dupe_of int
-		//rc.setResolution(resolutions.get(json.getString("resolution")));
-		//rc.setClassification(classifications.get(json.getString("classification")));
-		//rc.setAlias(json.getString("alias"));
+		rc.set("resolution_name", json.getString("resolution"));
+		rc.set("classification_name", json.getString("classification"));
+		rc.set(Issue.ALIAS, json.getString("alias"));
 		rc.set(Issue.OP_SYS, json.getString("op_sys"));
-		//rc.setStatus(status.get(json.getString("status")));
+		rc.set("status_name", json.getString("status"));
 		rc.setSummary(json.getString("summary"));
 		rc.set(Issue.REP_PLATFORM, json.getString("platform"));
-		//rc.setSeverity(severities.get(json.getString("severity")));
-		//rc.addFixVersions(json.getString("version"));
-		// component string
+		rc.set("severity_name", json.getString("severity"));
+		rc.set("fixVersion_name", json.getString("version"));
+		rc.set("component_name", json.getString("component"));
 		rc.set(Issue.REPORTER_ACCESSIBLE, json.getBoolean("is_creator_accessible"));
-		//rc.setProject(projects.get(json.getString("product")));
+		rc.set("project_name", json.getString("product"));
 		rc.set(Issue.MILESTONE, json.getString("target_milestone"));
 		rc.set(Issue.CONFIRMED, json.getBoolean("is_confirmed"));
 		return rc;

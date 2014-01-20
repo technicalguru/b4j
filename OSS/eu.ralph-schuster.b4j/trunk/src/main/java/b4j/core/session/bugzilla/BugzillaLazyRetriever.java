@@ -57,9 +57,12 @@ public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void loadProducts() throws Exception {
-		for (Project p : client.getProductClient().getProducts(getProductIds()).get()) {
-			registerProduct(p);
+	protected void loadProjects() throws Exception {
+		for (Project p : client.getProductClient().getProducts(getProjectIds()).get()) {
+			registerProject(p);
+		}
+		for (Project p : client.getProductClient().getProductsByName(getProjectNames()).get()) {
+			registerProject(p);
 		}
 	}
 
@@ -179,6 +182,14 @@ public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 		for (String s : getIssueTypeNames()) {
 			registerIssueType(new BugzillaIssueType(s));
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected void loadVersions() throws Exception {
+		// TODO Load the products!
 	}
 
 	

@@ -19,6 +19,7 @@ package b4j.core.session.bugzilla;
 
 import java.util.Date;
 
+import b4j.core.Project;
 import b4j.core.Version;
 
 /**
@@ -28,6 +29,7 @@ import b4j.core.Version;
  */
 public class BugzillaVersion implements Version {
 
+	private Project project;
 	private Long id;
 	private String name;
 	private Date releaseDate;
@@ -36,14 +38,15 @@ public class BugzillaVersion implements Version {
 	 * Constructor.
 	 */
 	public BugzillaVersion() {
-		this(null, null);
+		this(null, null, null);
 	}
 
 	/**
 	 * Constructor.
 	 */
-	public BugzillaVersion(Long id, String name) {
+	public BugzillaVersion(Long id, Project project, String name) {
 		setId(id);
+		setProject(project);
 		setName(name);
 	}
 
@@ -53,6 +56,14 @@ public class BugzillaVersion implements Version {
 	@Override
 	public Long getId() {
 		return id;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Project getProject() {
+		return project;
 	}
 
 	/**
@@ -77,6 +88,14 @@ public class BugzillaVersion implements Version {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * Sets the project.
+	 * @param project the project to set
+	 */
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	/**

@@ -348,7 +348,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Component> getComponents() {
-		check(components, "component");
+		checkComponents();
 		return Collections.unmodifiableList(components);
 	}
 
@@ -356,7 +356,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setComponents(Collection<Component> components) {
+	public void setComponents(Collection<? extends Component> components) {
 		removeAllComponents();
 		addComponents(components);
 	}
@@ -365,7 +365,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addComponents(Collection<Component> components) {
+	public void addComponents(Collection<? extends Component> components) {
 		if (components != null) this.components.addAll(components);
 	}
 
@@ -383,7 +383,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeComponents(Collection<Component> components) {
+	public void removeComponents(Collection<? extends Component> components) {
 		if (components != null) this.components.removeAll(components);
 	}
 
@@ -418,7 +418,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Version> getAffectedVersions() {
-		check(affectedVersions, "affectedVersion", "version");
+		checkAffectedVersions();
 		return Collections.unmodifiableList(affectedVersions);
 	}
 
@@ -426,7 +426,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setAffectedVersions(Collection<Version> versions) {
+	public void setAffectedVersions(Collection<? extends Version> versions) {
 		removeAllAffectedVersions();
 		addAffectedVersions(versions);
 	}
@@ -435,7 +435,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addAffectedVersions(Collection<Version> versions) {
+	public void addAffectedVersions(Collection<? extends Version> versions) {
 		if (versions != null) affectedVersions.addAll(versions);
 	}
 
@@ -453,7 +453,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeAffectedVersions(Collection<Version> versions) {
+	public void removeAffectedVersions(Collection<? extends Version> versions) {
 		if (versions != null) affectedVersions.removeAll(versions);
 	}
 
@@ -488,7 +488,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Version> getPlannedVersions() {
-		check(plannedVersions, "plannedVersion", "version");
+		checkPlannedVersions();
 		return Collections.unmodifiableList(plannedVersions);
 	}
 
@@ -496,7 +496,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setPlannedVersions(Collection<Version> versions) {
+	public void setPlannedVersions(Collection<? extends Version> versions) {
 		removeAllPlannedVersions();
 		addPlannedVersions(versions);
 	}
@@ -505,7 +505,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addPlannedVersions(Collection<Version> versions) {
+	public void addPlannedVersions(Collection<? extends Version> versions) {
 		if (versions != null) plannedVersions.addAll(versions);
 	}
 
@@ -523,7 +523,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removePlannedVersions(Collection<Version> versions) {
+	public void removePlannedVersions(Collection<? extends Version> versions) {
 		if (versions != null) plannedVersions.removeAll(versions);
 	}
 
@@ -558,7 +558,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Version> getFixVersions() {
-		check(fixVersions, "fixVersion", "version");
+		checkFixVersions();
 		return Collections.unmodifiableList(fixVersions);
 	}
 
@@ -566,7 +566,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setFixVersions(Collection<Version> versions) {
+	public void setFixVersions(Collection<? extends Version> versions) {
 		removeAllFixVersions();
 		addFixVersions(versions);
 	}
@@ -575,7 +575,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addFixVersions(Collection<Version> versions) {
+	public void addFixVersions(Collection<? extends Version> versions) {
 		if (versions != null) fixVersions.addAll(versions);
 	}
 
@@ -593,7 +593,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeFixVersions(Collection<Version> versions) {
+	public void removeFixVersions(Collection<? extends Version> versions) {
 		if (versions != null) fixVersions.removeAll(versions);
 	}
 
@@ -884,7 +884,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setComments(Collection<Comment> comments) {
+	public void setComments(Collection<? extends Comment> comments) {
 		removeAllComments();
 		addComments(comments);
 	}
@@ -893,7 +893,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addComments(Collection<Comment> comments) {
+	public void addComments(Collection<? extends Comment> comments) {
 		if (comments != null) this.comments.addAll(comments);
 	}
 
@@ -911,7 +911,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeComments(Collection<Comment> comments) {
+	public void removeComments(Collection<? extends Comment> comments) {
 		if (comments != null) this.comments.removeAll(comments);
 	}
 
@@ -954,7 +954,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setAttachments(Collection<Attachment> attachments) {
+	public void setAttachments(Collection<? extends Attachment> attachments) {
 		removeAllAttachments();
 		addAttachments(attachments);
 	}
@@ -963,7 +963,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addAttachments(Collection<Attachment> attachments) {
+	public void addAttachments(Collection<? extends Attachment> attachments) {
 		if (attachments != null) this.attachments.addAll(attachments);
 	}
 
@@ -981,7 +981,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeAttachments(Collection<Attachment> attachments) {
+	public void removeAttachments(Collection<? extends Attachment> attachments) {
 		if (attachments != null) this.attachments.removeAll(attachments);
 	}
 
@@ -1023,7 +1023,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setChildren(Collection<Issue> children) {
+	public void setChildren(Collection<? extends Issue> children) {
 		removeAllChildren();
 		addChildren(children);
 	}
@@ -1032,7 +1032,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addChildren(Collection<Issue> children) {
+	public void addChildren(Collection<? extends Issue> children) {
 		if (children != null) this.children.addAll(children);
 	}
 
@@ -1050,7 +1050,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeChildren(Collection<Issue> children) {
+	public void removeChildren(Collection<? extends Issue> children) {
 		if (children != null) this.children.removeAll(children);
 	}
 
@@ -1092,7 +1092,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setLinks(Collection<IssueLink> links) {
+	public void setLinks(Collection<? extends IssueLink> links) {
 		removeAllLinks();
 		addLinks(links);
 	}
@@ -1101,7 +1101,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addLinks(Collection<IssueLink> links) {
+	public void addLinks(Collection<? extends IssueLink> links) {
 		if (links != null) this.links.addAll(links);
 	}
 
@@ -1119,7 +1119,7 @@ public class DefaultIssue implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeLinks(Collection<IssueLink> links) {
+	public void removeLinks(Collection<? extends IssueLink> links) {
 		if (links != null) this.links.removeAll(links);
 	}
 
@@ -1248,6 +1248,94 @@ public class DefaultIssue implements Issue {
 			for (Long id : ids) {
 				T obj = retrieve(retriever, typeProperty, id);
 				if (obj != null) collection.add(obj);
+			}
+		}
+
+	}
+
+	/**
+	 * Checks the lazy retrieval of components.
+	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>component_name</code>
+	 * custom field (can be collection or single value. If it is set, 
+	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * <p>This method is separate due to the nature of components within projects.</p> 
+	 */
+	@SuppressWarnings("unchecked")
+	protected void checkComponents() {
+		LazyRetriever retriever = (LazyRetriever)get("lazyRetriever");
+		if (retriever != null) {
+			Object o = get("component_name");
+			Collection<String> names = null;
+			if (!(o instanceof Collection)) {
+				names = new ArrayList<String>();
+				if (o instanceof String) names.add((String)o);
+			} else {
+				names = (Collection<String>)o;
+			}
+			Project p = getProject();
+			for (String name : names) {
+				if (p != null) {
+					String projectName = p.getName();
+					Component c = retriever.getComponent(projectName, name);
+					if (c != null) components.add(c);
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Checks the lazy retrieval of affected versions.
+	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>affectedVersion_name</code>
+	 * custom field (can be collection or single value. If it is set, 
+	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * <p>This method is separate due to the nature of versions within projects.</p> 
+	 */
+	protected void checkAffectedVersions() {
+		checkVersions(affectedVersions, "affectedVersion_name");
+	}
+	
+	/**
+	 * Checks the lazy retrieval of fixed versions.
+	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>fixVersion_name</code>
+	 * custom field (can be collection or single value. If it is set, 
+	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * <p>This method is separate due to the nature of versions within projects.</p> 
+	 */
+	protected void checkFixVersions() {
+		checkVersions(fixVersions, "fixVersion_name");
+	}
+	
+	/**
+	 * Checks the lazy retrieval of planned versions.
+	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>plannedVersion_name</code>
+	 * custom field (can be collection or single value. If it is set, 
+	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * <p>This method is separate due to the nature of versions within projects.</p> 
+	 */
+	protected void checkPlannedVersions() {
+		checkVersions(plannedVersions, "plannedVersion_name");
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void checkVersions(Collection<Version> versions, String propertyName) {
+		LazyRetriever retriever = (LazyRetriever)get("lazyRetriever");
+		if (retriever != null) {
+			Object o = get(propertyName);
+			Collection<String> names = null;
+			if (!(o instanceof Collection)) {
+				names = new ArrayList<String>();
+				if (o instanceof String) names.add((String)o);
+			} else {
+				names = (Collection<String>)o;
+			}
+			Project p = getProject();
+			for (String name : names) {
+				if (p != null) {
+					String projectName = p.getName();
+					Version v = retriever.getVersion(projectName, name);
+					if (v != null) versions.add(v);
+				}
 			}
 		}
 

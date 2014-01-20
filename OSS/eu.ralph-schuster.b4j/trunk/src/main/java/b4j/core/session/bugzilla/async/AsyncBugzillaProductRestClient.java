@@ -94,6 +94,41 @@ public class AsyncBugzillaProductRestClient extends AbstractAsyncRestClient impl
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Project getProduct(String name) {
+		try {
+			for (Project rc : getProductsByName(name).get()) {
+				return rc;
+			}
+		} catch (Exception e) {
+			throw new RestClientException(e);
+		}
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Promise<Iterable<Project>> getProductsByName(String... names) {
+		List<String> l = new ArrayList<String>();
+		for (int i=0; i<names.length; i++) l.add(names[i]);
+		return getProductsByName(l);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Promise<Iterable<Project>> getProductsByName(Collection<String> names) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("names", names);
+		return postAndParse("get", params, productParser);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Promise<Iterable<Project>> getSelectableProducts() {
 		return getProducts("get_selectable_products");
 	}
