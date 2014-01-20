@@ -28,6 +28,7 @@ import b4j.core.Resolution;
 import b4j.core.Severity;
 import b4j.core.Status;
 import b4j.core.User;
+import b4j.core.Version;
 
 /**
  * Retrieves object lazily when they are needed.
@@ -41,8 +42,9 @@ public interface LazyRetriever {
 	public void registerClassification(long id);
 	public void registerClassification(Classification classification);
 	
-	public void registerProduct(long id);
-	public void registerProduct(Project product);
+	public void registerProject(String name);
+	public void registerProject(long id);
+	public void registerProject(Project project);
 
 	public void registerComponent(String projectName, String name);
 	public void registerComponent(Component component);
@@ -72,9 +74,13 @@ public interface LazyRetriever {
 	public void registerIssueType(String name);
 	public void registerIssueType(IssueType issueType);
 	
+	public void registerVersion(String projectName, String name);
+	public void registerVersion(Version version);
+	
 	public Classification getClassification(String name);
 	public Classification getClassification(long id);
-	public Project getProduct(long id);
+	public Project getProject(long id);
+	public Project getProject(String name);
 	public Component getComponent(String projectName, String name);
 	public User getUser(String name);
 	public User getUser(long id);
@@ -85,5 +91,5 @@ public interface LazyRetriever {
 	public Status getStatus(String name);
 	public Resolution getResolution(String name);
 	public IssueType getIssueType(String name);
-	
+	public Version getVersion(String projectName, String name);
 }

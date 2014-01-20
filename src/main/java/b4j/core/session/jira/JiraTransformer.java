@@ -17,7 +17,7 @@
  */
 package b4j.core.session.jira;
 
-import org.apache.commons.collections.Transformer;
+import b4j.util.TypedTransformer;
 
 import com.atlassian.jira.rest.client.domain.BasicComponent;
 import com.atlassian.jira.rest.client.domain.BasicIssueType;
@@ -35,74 +35,74 @@ import com.atlassian.jira.rest.client.domain.BasicUser;
 public class JiraTransformer {
 
 	/** Transformer for issue types */
-	public static class IssueType implements Transformer {
+	public static class IssueType implements TypedTransformer<BasicIssueType,JiraIssueType> {
 		@Override
-		public Object transform(Object input) {
+		public JiraIssueType transform(BasicIssueType input, Object... args) {
 			return new JiraIssueType((BasicIssueType)input);
 		}
 	}
 
 	/** Transformer for priorities */
-	public static class Priority implements Transformer {
+	public static class Priority implements TypedTransformer<BasicPriority,JiraPriority> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraPriority((BasicPriority)input);
+		public JiraPriority transform(BasicPriority input, Object... args) {
+			return new JiraPriority(input);
 		}
 	}
 
 	/** Transformer for resolutions */
-	public static class Resolution implements Transformer {
+	public static class Resolution implements TypedTransformer<BasicResolution,JiraResolution> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraResolution((BasicResolution)input);
+		public JiraResolution transform(BasicResolution input, Object... args) {
+			return new JiraResolution(input);
 		}
 	}
 	
 	/** Transformer for status */
-	public static class Status implements Transformer {
+	public static class Status implements TypedTransformer<BasicStatus,JiraStatus> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraStatus((BasicStatus)input);
+		public JiraStatus transform(BasicStatus input, Object... args) {
+			return new JiraStatus(input);
 		}
 	}
 
 	/** Transformer for severities */
-	public static class Severity implements Transformer {
+	public static class Severity implements TypedTransformer<BasicPriority,JiraSeverity> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraSeverity((BasicPriority)input);
+		public JiraSeverity transform(BasicPriority input, Object... args) {
+			return new JiraSeverity(input);
 		}
 	}
 
 	/** Transformer for users */
-	public static class User implements Transformer {
+	public static class User implements TypedTransformer<BasicUser,JiraUser> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraUser((BasicUser)input);
+		public JiraUser transform(BasicUser input, Object... args) {
+			return new JiraUser(input);
 		}
 	}
 
 	/** Transformer for projects */
-	public static class Project implements Transformer {
+	public static class Project implements TypedTransformer<BasicProject,JiraProject> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraProject((BasicProject)input);
+		public JiraProject transform(BasicProject input, Object... args) {
+			return new JiraProject(input);
 		}
 	}
 
 	/** Transformer for components */
-	public static class Component implements Transformer {
+	public static class Component implements TypedTransformer<BasicComponent,JiraComponent> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraComponent((BasicComponent)input);
+		public JiraComponent transform(BasicComponent input, Object... args) {
+			return new JiraComponent((b4j.core.Project)args[0], input);
 		}
 	}
 
 	/** Transformer for versions */
-	public static class Version implements Transformer {
+	public static class Version implements TypedTransformer<com.atlassian.jira.rest.client.domain.Version,JiraVersion> {
 		@Override
-		public Object transform(Object input) {
-			return new JiraVersion((com.atlassian.jira.rest.client.domain.Version)input);
+		public JiraVersion transform(com.atlassian.jira.rest.client.domain.Version input, Object... args) {
+			return new JiraVersion((b4j.core.Project)args[0], input);
 		}
 	}
 

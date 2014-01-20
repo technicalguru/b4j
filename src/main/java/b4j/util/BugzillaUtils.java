@@ -43,10 +43,10 @@ import b4j.core.Version;
 public class BugzillaUtils {
 
 	private static Logger log = LoggerFactory.getLogger(BugzillaUtils.class);
-	
+
 	/** The Java version we are running in */
 	private static String javaVersion = null;
-	
+
 	/**
 	 * Returns true if version is in range of minVersion and maxVersion.
 	 * Note that 1.2.0 is greater than 1.2
@@ -62,15 +62,15 @@ public class BugzillaUtils {
 		String maxParts[] = null;
 		if (minVersion != null) minParts = minVersion.split("\\.");
 		if (maxVersion != null) maxParts = maxVersion.split("\\.");
-		
+
 		// Check minimum version
 		if ((minParts != null) && (compareVersion(minParts, vParts) > 0)) return false;
 		// Check maximum version
 		if ((maxParts != null) && (compareVersion(maxParts, vParts) < 0)) return false;
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Compares versions.
 	 * @param v1 - version 1 divided into separate parts
@@ -92,15 +92,15 @@ public class BugzillaUtils {
 				if (rc != 0) return rc;
 			}
 		}
-		
+
 		// Usually equal here, but check remaining minor versions
 		if (v1.length > v2.length) return 1;
 		if (v1.length < v2.length) return -1;
-		
+
 		// Equal now
 		return 0;
 	}
-	
+
 	/**
 	 * Makes a join of a string array.
 	 * @param separator - the string to be used inbetween parts
@@ -113,7 +113,7 @@ public class BugzillaUtils {
 		if (s.length() > 0) s = s.substring(separator.length());
 		return s;
 	}
-	
+
 	/**
 	 * Recursively debugs objects and adds this in the string buffer.
 	 * @param s string buffer to enhance
@@ -168,11 +168,11 @@ public class BugzillaUtils {
 	 */
 	public static int getInt(Object o) {
 		if (o == null) return 0;
-		
+
 		if (o instanceof Number) {
 			return ((Number)o).intValue();
 		}
-		
+
 		return Integer.parseInt(o.toString());
 	}
 
@@ -183,11 +183,11 @@ public class BugzillaUtils {
 	 */
 	public static long getLong(Object o) {
 		if (o == null) return 0;
-		
+
 		if (o instanceof Number) {
 			return ((Number)o).longValue();
 		}
-		
+
 		return Long.parseLong(o.toString());
 	}
 
@@ -198,11 +198,11 @@ public class BugzillaUtils {
 	 */
 	public static double getDouble(Object o) {
 		if (o == null) return 0;
-		
+
 		if (o instanceof Number) {
 			return ((Number)o).longValue();
 		}
-		
+
 		return Double.parseDouble(o.toString());
 	}
 
@@ -213,21 +213,21 @@ public class BugzillaUtils {
 	 */
 	public static boolean getBoolean(Object o) {
 		if (o == null) return false;
-		
+
 		if (o instanceof Boolean) {
 			return ((Boolean)o).booleanValue();
 		}
-		
+
 		String s = o.toString().toLowerCase().trim();
 		if (s.equals("1")) return true;
 		if (s.equals("true")) return true;
 		if (s.equals("on")) return true;
 		if (s.equals("yes")) return true;
 		if (s.equals("y")) return true;
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Converts the object to a date.
 	 * @param o object to be converted
@@ -244,7 +244,7 @@ public class BugzillaUtils {
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Returns true when the runtime is Java 6.
 	 * @return true if Java 6, false otherwise.
@@ -259,7 +259,7 @@ public class BugzillaUtils {
 		}
 		return javaVersion.equals("1.6");
 	}
-	
+
 	/**
 	 * Transforms an {@link Iterable} into a {@link Collection}.
 	 * @param iterable iterable to transform
@@ -272,7 +272,7 @@ public class BugzillaUtils {
 		}
 		return rc;
 	}
-	
+
 	/**
 	 * Debugs an issue in log file.
 	 * @param issue issue to be debugged
@@ -312,11 +312,15 @@ public class BugzillaUtils {
 		log.debug("Severity="+issue.getSeverity());
 		log.debug("EverConfirmed="+issue.get(Issue.CONFIRMED));
 		log.debug("Reporter="+issue.getReporter());
-		log.debug("ReporterName="+issue.getReporter().getName());
-		log.debug("ReporterTeam="+issue.getReporter().getTeam());
+		if (issue.getReporter() != null) {
+			log.debug("ReporterName="+issue.getReporter().getName());
+			log.debug("ReporterTeam="+issue.getReporter().getTeam());
+		}
 		log.debug("Assignee="+issue.getAssignee());
-		log.debug("AssigneeName="+issue.getAssignee().getName());
-		log.debug("AssigneeTeam="+issue.getAssignee().getTeam());
+		if (issue.getAssignee() != null) {
+			log.debug("AssigneeName="+issue.getAssignee().getName());
+			log.debug("AssigneeTeam="+issue.getAssignee().getTeam());
+		}
 		log.debug("QaContact="+issue.get(Issue.QA_CONTACT));
 		log.debug("FileLocation="+issue.get(Issue.BUG_FILE_LOCATION));
 		log.debug("Blocked="+issue.get(Issue.BLOCKED));
@@ -334,8 +338,10 @@ public class BugzillaUtils {
 		log.debug("Deadline="+issue.get(Issue.DEADLINE));
 		@SuppressWarnings("unchecked")
 		Collection<String> coll = (Collection<String>)issue.get(Issue.CC);
-		for (String cc : coll) {
-			log.debug("cc="+cc);
+		if (coll != null) {
+			for (String cc : coll) {
+				log.debug("cc="+cc);
+			}
 		}
 		for (Comment c : issue.getComments()) {
 			log.debug("comment="+c.getAuthor().getId()+" ("+c.getWhen()+"): "+c.getTheText());
@@ -350,7 +356,7 @@ public class BugzillaUtils {
 			log.debug("child="+i.getId());
 		}
 	}
-	
+
 	/**
 	 * Parses the date by trying various formats.
 	 * @param s string to parse

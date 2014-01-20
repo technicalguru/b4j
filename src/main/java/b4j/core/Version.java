@@ -27,6 +27,12 @@ import java.util.Date;
 public interface Version {
 
 	/**
+	 * Returns the project.
+	 * @return the project
+	 */
+	public Project getProject();
+	
+	/**
 	 * Returns the ID.
 	 */
 	public Long getId();

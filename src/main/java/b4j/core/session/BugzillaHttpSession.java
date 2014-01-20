@@ -755,7 +755,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 				currentIssue.addComponents(c);
 				currentContent = null;
 			} else if (name.equals("version")) {
-				currentIssue.addFixVersions(new BugzillaVersion(null, currentContent.toString()));
+				currentIssue.addFixVersions(new BugzillaVersion(null, currentIssue.getProject(), currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("rep_platform")) {
 				currentIssue.set(Issue.REP_PLATFORM, currentContent.toString());

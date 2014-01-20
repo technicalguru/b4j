@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.Iterator;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -43,9 +44,15 @@ public class AsyncBugzillaBugRestClientTest extends AbstractRestClientTest {
 	@BeforeClass
 	public static void setup() throws Exception {
 		AbstractRestClientTest.setup(); // Our own server has no classifications
-		myClient = client.getBugClient();		
+		myClient = client.getBugClient();
+		client.getUserClient().login("test", "testuser");
 	}
 
+	@AfterClass
+	public static void shutdown() throws Exception {
+		client.getUserClient().logout();
+	}
+	
 	@Test
 	public void testGetBugs() throws Exception {
 		Iterator<Issue> i = myClient.getBugs(2,3).get().iterator();

@@ -24,6 +24,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import b4j.core.Project;
 import b4j.core.Version;
 import b4j.core.session.bugzilla.BugzillaVersion;
 import b4j.util.LazyRetriever;
@@ -38,6 +39,8 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
  */
 public class BugzillaVersionParser extends AbstractJsonParser implements JsonObjectParser<Iterable<Version>> {
 
+	private Project project;
+	
 	/**
 	 * Constructor.
 	 */
@@ -58,9 +61,18 @@ public class BugzillaVersionParser extends AbstractJsonParser implements JsonObj
 		JSONArray arr = json.getJSONArray("versions");
 		for (int i=0; i<arr.length(); i++) {
 			JSONObject v = arr.getJSONObject(i);
-			rc.add(new BugzillaVersion(v.getLong("id"), v.getString("name")));
+			rc.add(new BugzillaVersion(v.getLong("id"), project, v.getString("name")));
 		}
 		return rc;
 	}
 
+	/**
+	 * Sets the project to be assigned to new versions.
+	 * @param project the project to set
+	 */
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	
 }

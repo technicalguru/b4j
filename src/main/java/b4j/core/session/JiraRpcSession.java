@@ -24,7 +24,6 @@ import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
@@ -38,22 +37,22 @@ import rs.baselib.security.AuthorizationCallback;
 import rs.baselib.security.DefaultAuthorizationCallback;
 import b4j.core.Attachment;
 import b4j.core.Comment;
-import b4j.core.Component;
 import b4j.core.DefaultAttachment;
 import b4j.core.DefaultComment;
 import b4j.core.Issue;
-import b4j.core.IssueType;
-import b4j.core.Priority;
-import b4j.core.Project;
-import b4j.core.Resolution;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
-import b4j.core.Severity;
-import b4j.core.Status;
-import b4j.core.User;
 import b4j.core.session.jira.AsynchronousFilterRestClient;
 import b4j.core.session.jira.JiraComponent;
+import b4j.core.session.jira.JiraIssueType;
+import b4j.core.session.jira.JiraPriority;
+import b4j.core.session.jira.JiraProject;
+import b4j.core.session.jira.JiraResolution;
+import b4j.core.session.jira.JiraSeverity;
+import b4j.core.session.jira.JiraStatus;
 import b4j.core.session.jira.JiraTransformer;
+import b4j.core.session.jira.JiraUser;
+import b4j.core.session.jira.JiraVersion;
 import b4j.util.MetaData;
 
 import com.atlassian.httpclient.api.HttpClient;
@@ -90,15 +89,15 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 	private AsynchronousFilterRestClient filterClient;
 	private Proxy proxy;
 	private AuthorizationCallback proxyAuthorizationCallback;
-	private MetaData<BasicIssueType, IssueType> issueTypes = new MetaData<BasicIssueType, IssueType>(new JiraTransformer.IssueType());
-	private MetaData<BasicStatus, Status> status = new MetaData<BasicStatus, Status>(new JiraTransformer.Status());
-	private MetaData<BasicPriority, Priority> priorities = new MetaData<BasicPriority, Priority>(new JiraTransformer.Priority());
-	private MetaData<BasicPriority, Severity> severities = new MetaData<BasicPriority, Severity>(new JiraTransformer.Severity());
-	private MetaData<BasicResolution, Resolution> resolutions = new MetaData<BasicResolution, Resolution>(new JiraTransformer.Resolution());
-	private MetaData<BasicUser, User> users = new MetaData<BasicUser, User>(new JiraTransformer.User());
-	private MetaData<BasicProject, Project> projects = new MetaData<BasicProject, Project>(new JiraTransformer.Project());
-	private MetaData<BasicComponent, Component> components = new MetaData<BasicComponent, Component>(new JiraTransformer.Component());
-	private MetaData<Version, b4j.core.Version> versions = new MetaData<Version, b4j.core.Version>(new JiraTransformer.Version());
+	private MetaData<BasicIssueType, JiraIssueType> issueTypes = new MetaData<BasicIssueType, JiraIssueType>(new JiraTransformer.IssueType());
+	private MetaData<BasicStatus, JiraStatus> status = new MetaData<BasicStatus, JiraStatus>(new JiraTransformer.Status());
+	private MetaData<BasicPriority, JiraPriority> priorities = new MetaData<BasicPriority, JiraPriority>(new JiraTransformer.Priority());
+	private MetaData<BasicPriority, JiraSeverity> severities = new MetaData<BasicPriority, JiraSeverity>(new JiraTransformer.Severity());
+	private MetaData<BasicResolution, JiraResolution> resolutions = new MetaData<BasicResolution, JiraResolution>(new JiraTransformer.Resolution());
+	private MetaData<BasicUser, JiraUser> users = new MetaData<BasicUser, JiraUser>(new JiraTransformer.User());
+	private MetaData<BasicProject, JiraProject> projects = new MetaData<BasicProject, JiraProject>(new JiraTransformer.Project());
+	private MetaData<BasicComponent, JiraComponent> components = new MetaData<BasicComponent, JiraComponent>(new JiraTransformer.Component());
+	private MetaData<Version, JiraVersion> versions = new MetaData<Version, JiraVersion>(new JiraTransformer.Version());
 	
 	/**
 	 * Default constructor
@@ -273,13 +272,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		desc.setAuthor(users.get(issue.getReporter()));
 		rc.addComments(desc);
 		rc.setProject(projects.get(issue.getProject()));
-		Collection<Component> cList = components.get(issue.getComponents());
-		for (Component o : cList) {
-			if (o.getProject() == null) {
-				((JiraComponent)o).setProject(rc.getProject());
-			}
-		}
-		rc.addComponents(cList);
+		rc.addComponents(components.get(issue.getComponents(), rc.getProject()));
 		rc.setAssignee(users.get(issue.getAssignee()));
 		rc.setCreationTimestamp(issue.getCreationDate().toDate());
 		rc.setServerUri(issue.getSelf().toString());
@@ -289,12 +282,8 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		rc.setStatus(status.get(issue.getStatus()));
 		rc.setSeverity(severities.get(issue.getPriority()));
 		rc.setType(issueTypes.get(issue.getIssueType()));
-		for (Version v : issue.getFixVersions()) {
-			rc.addFixVersions(versions.get(v));
-		}
-		for (Version v : issue.getAffectedVersions()) {
-			rc.addAffectedVersions(versions.get(v));
-		}
+		rc.addFixVersions(versions.get(issue.getFixVersions(), rc.getProject()));
+		rc.addAffectedVersions(versions.get(issue.getAffectedVersions(), rc.getProject()));
 		for (com.atlassian.jira.rest.client.domain.Attachment attachment : issue.getAttachments()) {
 			Attachment a = new DefaultAttachment(rc);
 			a.setId(attachment.getSelf().toString());

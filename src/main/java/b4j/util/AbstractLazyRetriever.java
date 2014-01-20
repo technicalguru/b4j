@@ -34,6 +34,7 @@ import b4j.core.Resolution;
 import b4j.core.Severity;
 import b4j.core.Status;
 import b4j.core.User;
+import b4j.core.Version;
 
 /**
  * Retrieves registered objects lazily (abstract implementation).
@@ -45,8 +46,9 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	private Set<String> classificationNameQueue;
 	private Set<Long> classificationIdQueue;
 	private Set<Classification> classifications;
-	private Set<Long> productIdQueue;
-	private Set<Project> products;
+	private Set<String> projectNameQueue;
+	private Set<Long> projectIdQueue;
+	private Set<Project> projects;
 	private Map<String,Set<String>> componentNameQueue;
 	private Set<Component> components;
 	private Set<String> userNameQueue;
@@ -66,6 +68,8 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	private Set<Status> status;
 	private Set<String> issueTypeNameQueue;
 	private Set<IssueType> issueTypes;
+	private Map<String,Set<String>> versionNameQueue;
+	private Set<Version> versions;
 
 	/**
 	 * Constructor.
@@ -74,8 +78,9 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		classificationNameQueue = new HashSet<String>();
 		classificationIdQueue = new HashSet<Long>();
 		classifications = new HashSet<Classification>();
-		productIdQueue = new HashSet<Long>();
-		products = new HashSet<Project>();
+		projectNameQueue = new HashSet<String>();
+		projectIdQueue = new HashSet<Long>();
+		projects = new HashSet<Project>();
 		componentNameQueue = new HashMap<String,Set<String>>();
 		components = new HashSet<Component>();
 		userNameQueue = new HashSet<String>();
@@ -95,6 +100,8 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		status = new HashSet<Status>();
 		issueTypeNameQueue = new HashSet<String>();
 		issueTypes = new HashSet<IssueType>();
+		versionNameQueue = new HashMap<String,Set<String>>();
+		versions = new HashSet<Version>();
 	}
 
 	/**
@@ -158,17 +165,36 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerProduct(long id) {
-		if (searchProduct(id) == null) {
-			productIdQueue.add(id);
+	public void registerProject(long id) {
+		if (searchProject(id) == null) {
+			projectIdQueue.add(id);
 		}
 	}
 
-	/** Searches the product whether it is already loaded */
-	protected Project searchProduct(long id) {
-		for (Project o : products) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void registerProject(String name) {
+		if (searchProject(name) == null) {
+			projectNameQueue.add(name);
+		}
+	}
+
+	/** Searches the project whether it is already loaded */
+	protected Project searchProject(long id) {
+		for (Project o : projects) {
 			String oid = o.getId();
 			if ((oid != null) && oid.equals(Long.toString(id))) return o;
+		}
+		return null;
+	}
+
+	/** Searches the project whether it is already loaded */
+	protected Project searchProject(String name) {
+		for (Project o : projects) {
+			String oid = o.getName();
+			if ((oid != null) && oid.equals(name)) return o;
 		}
 		return null;
 	}
@@ -177,35 +203,40 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerProduct(Project product) {
-		if (!products.contains(product)) products.add(product);
-		productIdQueue.remove(Long.getLong(product.getId()));
+	public void registerProject(Project project) {
+		if (!projects.contains(project)) projects.add(project);
+		projectIdQueue.remove(Long.getLong(project.getId()));
 	}
 
-	/** Returns the products */
-	protected Collection<Long> getProductIds() {
-		return productIdQueue;
+	/** Returns the projects */
+	protected Collection<Long> getProjectIds() {
+		return projectIdQueue;
+	}
+
+	/** Returns the projects */
+	protected Collection<String> getProjectNames() {
+		return projectNameQueue;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerComponent(String productName, String name) {
-		if (searchComponent(productName, name) == null) {
-			Set<String> names = componentNameQueue.get(productName);
+	public void registerComponent(String projectName, String name) {
+		if (searchComponent(projectName, name) == null) {
+			Set<String> names = componentNameQueue.get(projectName);
 			if (names == null) {
 				names = new HashSet<String>();
-				componentNameQueue.put(productName, names);
+				componentNameQueue.put(projectName, names);
 			}
 			names.add(name);
 		}
 	}
 
 	/** Searches the component whether it is already loaded */
-	protected Component searchComponent(String productName, String name) {
+	protected Component searchComponent(String projectName, String name) {
 		for (Component o : components) {
-			if (name.equals(o.getName()) && productName.equals(o.getProject().getName())) return o;
+			if (name.equals(o.getName()) && projectName.equals(o.getProject().getName())) return o;
 		}
 		return null;
 	}
@@ -216,12 +247,12 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	@Override
 	public void registerComponent(Component component) {
 		if (!components.contains(component)) components.add(component);
-		String productName = component.getProject().getName();
-		Set<String> names = componentNameQueue.get(productName);
+		String projectName = component.getProject().getName();
+		Set<String> names = componentNameQueue.get(projectName);
 		if (names != null) {
 			names.remove(component.getName());
 			if (names.size() == 0) {
-				componentNameQueue.remove(productName);
+				componentNameQueue.remove(projectName);
 			}
 		}
 	}
@@ -513,6 +544,45 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public void registerVersion(String projectName, String name) {
+		if (searchVersion(projectName, name) == null) {
+			Set<String> names = versionNameQueue.get(projectName);
+			if (names == null) {
+				names = new HashSet<String>();
+				versionNameQueue.put(projectName, names);
+			}
+			names.add(name);
+		}
+	}
+
+	/** Searches the issue type whether it is already loaded */
+	protected Version searchVersion(String projectName, String name) {
+		for (Version o : versions) {
+			if (name.equals(o.getName()) && projectName.equals(o.getProject().getName())) return o;
+		}
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void registerVersion(Version version) {
+		if (!versions.contains(version)) versions.add(version);
+		String projectName = version.getProject().getName();
+		Set<String> names = versionNameQueue.get(projectName);
+		if (names != null) {
+			names.remove(version.getName());
+			if (names.size() == 0) {
+				versionNameQueue.remove(projectName);
+			}
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Classification getClassification(String name) {
 		Classification rc = searchClassification(name);
 		if (rc == null) {
@@ -550,35 +620,52 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Project getProduct(long id) {
-		Project rc = searchProduct(id);
+	public Project getProject(String name) {
+		Project rc = searchProject(name);
 		if (rc == null) {
 			try {
-				loadProducts();
+				loadProjects();
 			} catch (Exception e) {
-				throw new RuntimeException("Cannot load products", e);
+				throw new RuntimeException("Cannot load classifications", e);
 			}
-			rc = searchProduct(id);
+			rc = searchProject(name);
 		}
 		return rc;
 	}
-
-	/** Loads the products */
-	protected abstract void loadProducts() throws Exception;
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Component getComponent(String productName, String name) {
-		Component rc = searchComponent(productName, name);
+	public Project getProject(long id) {
+		Project rc = searchProject(id);
+		if (rc == null) {
+			try {
+				loadProjects();
+			} catch (Exception e) {
+				throw new RuntimeException("Cannot load projects", e);
+			}
+			rc = searchProject(id);
+		}
+		return rc;
+	}
+
+	/** Loads the projects */
+	protected abstract void loadProjects() throws Exception;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Component getComponent(String projectName, String name) {
+		Component rc = searchComponent(projectName, name);
 		if (rc == null) {
 			try {
 				loadComponents();
 			} catch (Exception e) {
 				throw new RuntimeException("Cannot load components", e);
 			}
-			rc = searchComponent(productName, name);
+			rc = searchComponent(projectName, name);
 		}
 		return rc;
 	}
@@ -762,5 +849,25 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 
 	/** Loads the issue types */
 	protected abstract void loadIssueTypes() throws Exception;
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Version getVersion(String projectName, String name) {
+		Version rc = searchVersion(projectName, name);
+		if (rc == null) {
+			try {
+				loadVersions();
+			} catch (Exception e) {
+				throw new RuntimeException("Cannot load versions", e);
+			}
+			rc = searchVersion(projectName, name);
+		}
+		return rc;
+	}
+
+	/** Loads the issue types */
+	protected abstract void loadVersions() throws Exception;
 
 }

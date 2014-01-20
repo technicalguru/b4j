@@ -215,13 +215,13 @@ public interface Issue {
 	 * Sets the components for this issue.
 	 * @param components - the components to set
 	 */
-	public void setComponents(Collection<Component> components);
+	public void setComponents(Collection<? extends Component> components);
 
 	/**
 	 * Adds the components for this issue.
 	 * @param components - the components to add
 	 */
-	public void addComponents(Collection<Component> components);
+	public void addComponents(Collection<? extends Component> components);
 
 	/**
 	 * Adds the components for this issue.
@@ -233,7 +233,7 @@ public interface Issue {
 	 * Removes the components for this issue.
 	 * @param components - the components to remove
 	 */
-	public void removeComponents(Collection<Component> components);
+	public void removeComponents(Collection<? extends Component> components);
 
 	/**
 	 * Removes the components for this issue.
@@ -266,7 +266,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to set
 	 */
-	public void setFixVersions(Collection<Version> versions);
+	public void setFixVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Adds the product (fix) versions for this issue.
@@ -274,7 +274,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to add
 	 */
-	public void addFixVersions(Collection<Version> versions);
+	public void addFixVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Adds the product (fix) versions for this issue.
@@ -290,7 +290,7 @@ public interface Issue {
 	 * delivered to.
 	 * @param versions - the product fix versions to remove
 	 */
-	public void removeFixVersions(Collection<Version> versions);
+	public void removeFixVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Removes the product (fix) versions for this issue.
@@ -325,7 +325,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to set
 	 */
-	public void setAffectedVersions(Collection<Version> versions);
+	public void setAffectedVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Adds the product (affected) versions for this issue.
@@ -333,7 +333,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to add
 	 */
-	public void addAffectedVersions(Collection<Version> versions);
+	public void addAffectedVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Adds the product (affected) versions for this issue.
@@ -349,7 +349,7 @@ public interface Issue {
 	 * Usually this is set for issue reports only.
 	 * @param versions - the product affected versions to remove
 	 */
-	public void removeAffectedVersions(Collection<Version> versions);
+	public void removeAffectedVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Removes the product (affected) versions for this issue.
@@ -444,7 +444,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to set
 	 */
-	public void setPlannedVersions(Collection<Version> versions);
+	public void setPlannedVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Adds the product (planned) versions for this issue.
@@ -452,7 +452,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to add
 	 */
-	public void addPlannedVersions(Collection<Version> versions);
+	public void addPlannedVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Adds the product (planned) versions for this issue.
@@ -468,7 +468,7 @@ public interface Issue {
 	 * is planned to be delivered to.
 	 * @param versions - the product planned versions to remove
 	 */
-	public void removePlannedVersions(Collection<Version> versions);
+	public void removePlannedVersions(Collection<? extends Version> versions);
 
 	/**
 	 * Removes the product (planned) versions for this issue.
@@ -530,13 +530,13 @@ public interface Issue {
 	 * Sets the comments for this issue.
 	 * @param comments - the components to set
 	 */
-	public void setComments(Collection<Comment> comments);
+	public void setComments(Collection<? extends Comment> comments);
 
 	/**
 	 * Adds the comments for this issue.
 	 * @param comments - the components to add
 	 */
-	public void addComments(Collection<Comment> comments);
+	public void addComments(Collection<? extends Comment> comments);
 
 	/**
 	 * Adds the comments for this issue.
@@ -548,7 +548,7 @@ public interface Issue {
 	 * Removes the comments for this issue.
 	 * @param comments - the comments to remove
 	 */
-	public void removeComments(Collection<Comment> comments);
+	public void removeComments(Collection<? extends Comment> comments);
 
 	/**
 	 * Removes the comments for this issue.
@@ -584,13 +584,13 @@ public interface Issue {
 	 * Sets the attachments for this issue.
 	 * @param attachments - the attachments to set
 	 */
-	public void setAttachments(Collection<Attachment> attachments);
+	public void setAttachments(Collection<? extends Attachment> attachments);
 
 	/**
 	 * Adds the attachments for this issue.
 	 * @param attachments - the attachments to add
 	 */
-	public void addAttachments(Collection<Attachment> attachments);
+	public void addAttachments(Collection<? extends Attachment> attachments);
 
 	/**
 	 * Adds the attachments for this issue.
@@ -602,7 +602,7 @@ public interface Issue {
 	 * Removes the attachments for this issue.
 	 * @param attachments - the attachments to remove
 	 */
-	public void removeAttachments(Collection<Attachment> attachments);
+	public void removeAttachments(Collection<? extends Attachment> attachments);
 
 	/**
 	 * Removes the attachments for this issue.
@@ -694,13 +694,13 @@ public interface Issue {
 	 * Sets the links for this issue.
 	 * @param links - the links to set
 	 */
-	public void setLinks(Collection<IssueLink> links);
+	public void setLinks(Collection<? extends IssueLink> links);
 
 	/**
 	 * Adds the links for this issue.
 	 * @param links - the links to add
 	 */
-	public void addLinks(Collection<IssueLink> links);
+	public void addLinks(Collection<? extends IssueLink> links);
 
 	/**
 	 * Adds the links for this issue.
@@ -712,7 +712,7 @@ public interface Issue {
 	 * Removes the links for this issue.
 	 * @param links - the links to remove
 	 */
-	public void removeLinks(Collection<IssueLink> links);
+	public void removeLinks(Collection<? extends IssueLink> links);
 
 	/**
 	 * Removes the links for this issue.
@@ -741,13 +741,13 @@ public interface Issue {
 	 * Sets the children for this issue.
 	 * @param children - the children to set
 	 */
-	public void setChildren(Collection<Issue> children);
+	public void setChildren(Collection<? extends Issue> children);
 
 	/**
 	 * Adds the children for this issue.
 	 * @param children - the children to add
 	 */
-	public void addChildren(Collection<Issue> children);
+	public void addChildren(Collection<? extends Issue> children);
 
 	/**
 	 * Adds the children for this issue.
@@ -759,7 +759,7 @@ public interface Issue {
 	 * Removes the children for this issue.
 	 * @param children - the attachments to remove
 	 */
-	public void removeChildren(Collection<Issue> children);
+	public void removeChildren(Collection<? extends Issue> children);
 
 	/**
 	 * Removes the children for this issue.

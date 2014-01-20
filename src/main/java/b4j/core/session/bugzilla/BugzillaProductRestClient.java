@@ -43,6 +43,16 @@ public interface BugzillaProductRestClient {
 	public Project getProduct(long id);
 
 	/**
+	 * Retrieves information a product.
+	 *
+	 * @param name name of product
+	 * @return information about a product
+	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
+	 * @since 2.0
+	 */
+	public Project getProduct(String name);
+
+	/**
 	 * Retrieves information about products.
 	 *
 	 * @param ids IDs of products
@@ -62,6 +72,26 @@ public interface BugzillaProductRestClient {
 	 */
 	public Promise<Iterable<Project>> getProducts(Collection<Long> ids);
 
+	/**
+	 * Retrieves information about products.
+	 *
+	 * @param names names of products
+	 * @return information about a products
+	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
+	 * @since 2.0
+	 */
+	public Promise<Iterable<Project>> getProductsByName(String... names);
+	
+	/**
+	 * Retrieves information about products.
+	 *
+	 * @param names names of products
+	 * @return information about a products
+	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
+	 * @since 2.0
+	 */
+	public Promise<Iterable<Project>> getProductsByName(Collection<String> names);
+	
 	/**
 	 * Retrieves information about selectable product.
 	 *

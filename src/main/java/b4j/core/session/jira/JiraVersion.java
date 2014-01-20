@@ -19,6 +19,7 @@ package b4j.core.session.jira;
 
 import java.util.Date;
 
+import b4j.core.Project;
 import b4j.core.Version;
 
 /**
@@ -28,13 +29,23 @@ import b4j.core.Version;
  */
 public class JiraVersion implements Version {
 
+	private Project project;
 	private com.atlassian.jira.rest.client.domain.Version version;
 	
 	/**
 	 * Constructor.
 	 */
-	public JiraVersion(com.atlassian.jira.rest.client.domain.Version version) {
+	public JiraVersion(Project project, com.atlassian.jira.rest.client.domain.Version version) {
+		this.project = project;
 		this.version = version;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Project getProject() {
+		return project;
 	}
 
 	/**
@@ -65,6 +76,14 @@ public class JiraVersion implements Version {
 	@Override
 	public Date getReleaseDate() {
 		return new Date(version.getReleaseDate().getMillis());
+	}
+
+	/**
+	 * Sets the project.
+	 * @param project the project to set
+	 */
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	
