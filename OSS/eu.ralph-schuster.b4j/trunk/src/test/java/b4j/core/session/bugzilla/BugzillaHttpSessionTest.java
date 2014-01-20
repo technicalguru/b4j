@@ -33,6 +33,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.junit.Test;
 
+import rs.baselib.io.FileFinder;
 import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
@@ -84,7 +85,8 @@ public class BugzillaHttpSessionTest {
 	 */
 	@Test
 	public void testSession() throws Exception {
-		URL url = getClass().getResource("/test-config.xml");
+		URL url = FileFinder.find(getClass(), "local-test-config.xml");
+		if (url == null) url = FileFinder.find(getClass(), "test-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration myConfig = new XMLConfiguration(url);
 		BugzillaHttpSession session = new BugzillaHttpSession();

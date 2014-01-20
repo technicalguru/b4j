@@ -37,6 +37,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import rs.baselib.io.FileFinder;
 import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
@@ -76,7 +77,8 @@ public class JiraRpcSessionTest {
 
 	@Before
 	public void setup() throws Exception {
-		URL url = getClass().getResource("/test-jira-config.xml");
+		URL url = FileFinder.find(getClass(), "local-test-jira-config.xml");
+		if (url == null) url = FileFinder.find(getClass(), "test-jira-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration myConfig = new XMLConfiguration(url);
 		session = new JiraRpcSession();
