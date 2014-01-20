@@ -71,4 +71,31 @@ public class BugzillaResolution implements Resolution {
 		return name.equals("resolved") || name.equals("verified") || name.equals("closed") || name.startsWith("cancel");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		BugzillaResolution other = (BugzillaResolution) obj;
+		if (getName() == null) {
+			if (other.getName() != null) return false;
+		} else if (!getName().equals(other.getName())) return false;
+		return true;
+	}
+
+
 }

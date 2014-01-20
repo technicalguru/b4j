@@ -86,5 +86,40 @@ public class BugzillaUser implements User {
 		this.team = team;
 	}
 
+	/**
+	 * Returns the best attribute for using in {@link #hashCode()} and {@link #equals(Object)} methods.
+	 * @return {@link #id} or {@link #name}
+	 */
+	private Object getHashAttribute() {
+		if (getId() != null) return getHashAttribute();
+		return getName();
+	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getHashAttribute() == null) ? 0 : getHashAttribute().hashCode());
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		BugzillaUser other = (BugzillaUser) obj;
+		if (getHashAttribute() == null) {
+			if (other.getHashAttribute() != null) return false;
+		} else if (!getHashAttribute().equals(other.getHashAttribute())) return false;
+		return true;
+	}
+
+
 }
