@@ -130,5 +130,13 @@ public class BugzillaVersion implements Version {
 		return true;
 	}
 
-	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+
 }

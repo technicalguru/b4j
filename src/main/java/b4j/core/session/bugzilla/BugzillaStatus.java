@@ -119,5 +119,13 @@ public class BugzillaStatus implements Status {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 
 }

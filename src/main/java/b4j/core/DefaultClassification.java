@@ -134,5 +134,13 @@ public class DefaultClassification implements Classification {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 	
 }

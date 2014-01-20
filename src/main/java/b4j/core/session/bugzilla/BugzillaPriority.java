@@ -70,4 +70,13 @@ public class BugzillaPriority implements Priority {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
+
 }

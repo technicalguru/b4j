@@ -179,5 +179,13 @@ public class BugzillaProject implements Project {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 
 }

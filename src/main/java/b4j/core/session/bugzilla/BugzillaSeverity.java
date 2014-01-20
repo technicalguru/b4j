@@ -70,5 +70,13 @@ public class BugzillaSeverity implements Severity {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 
 }

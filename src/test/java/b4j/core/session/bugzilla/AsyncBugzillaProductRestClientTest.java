@@ -69,8 +69,23 @@ public class AsyncBugzillaProductRestClientTest extends AbstractRestClientTest {
 	}
 
 	@Test
-	public void testGetProducts() throws Exception {
+	public void testGetProductsById() throws Exception {
 		Promise<Iterable<Project>> promise = myClient.getProducts(4);
+		assertNotNull("No promise", promise);
+		Project p = promise.get().iterator().next();
+		// name
+		assertEquals("Not the right product", "B4J - Bugzilla for Java", p.getName());
+		// 3 components
+		assertEquals("Not enough components", 3, p.getComponents().size());
+		// 4 versions
+		assertEquals("Not enough components", 4, p.getVersions().size());
+		//assertNotNull(p.getId());
+		//assertNotNull(p.getName());
+	}
+
+	@Test
+	public void testGetProductsByName() throws Exception {
+		Promise<Iterable<Project>> promise = myClient.getProductsByName("B4J - Bugzilla for Java");
 		assertNotNull("No promise", promise);
 		Project p = promise.get().iterator().next();
 		// name

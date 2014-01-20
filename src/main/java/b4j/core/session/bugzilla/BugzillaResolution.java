@@ -97,5 +97,13 @@ public class BugzillaResolution implements Resolution {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
+
 
 }

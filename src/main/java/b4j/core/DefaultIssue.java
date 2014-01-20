@@ -61,6 +61,9 @@ public class DefaultIssue implements Issue {
 	 */
 	public static final SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
 
+	/** Key for {@link LazyRetriever} object */
+	public static final String LAZY_RETRIEVER = "lazyRetriever";
+	
 	/**
 	 * The standard severities used in Bugzilla.
 	 * Currently this is (in order): "blocker", "critical", "major", "normal",
@@ -407,7 +410,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public int getComponentCount() {
-		return components.size();
+		return getComponents().size();
 	}
 
 	/**
@@ -477,7 +480,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public int getAffectedVersionCount() {
-		return affectedVersions.size();
+		return getAffectedVersions().size();
 	}
 
 	/**
@@ -547,7 +550,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public int getPlannedVersionCount() {
-		return plannedVersions.size();
+		return getPlannedVersions().size();
 	}
 
 	/**
@@ -617,7 +620,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public int getFixVersionCount() {
-		return fixVersions.size();
+		return getFixVersions().size();
 	}
 
 	/**
@@ -871,7 +874,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Comment getComment(String id) {
-		for (Comment c : comments) {
+		for (Comment c : getComments()) {
 			if (CommonUtils.equals(c.getId(), id)) return c;
 		}
 		return null;
@@ -935,7 +938,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public int getCommentCount() {
-		return comments.size();
+		return getComments().size();
 	}
 
 	/**
@@ -1005,7 +1008,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public int getAttachmentCount() {
-		return attachments.size();
+		return getAttachments().size();
 	}
 
 	/**
@@ -1181,7 +1184,7 @@ public class DefaultIssue implements Issue {
 	 */
 	protected <T> T check(T originalValue, String propertyPrefix, String typeProperty) {
 		if (originalValue != null) return originalValue;
-		LazyRetriever retriever = (LazyRetriever)get("lazyRetriever");
+		LazyRetriever retriever = (LazyRetriever)get(LAZY_RETRIEVER);
 		if (retriever == null) return null;
 		String name = (String)get(propertyPrefix+"_name");
 		if (name != null) {
@@ -1225,6 +1228,7 @@ public class DefaultIssue implements Issue {
 			Collection<String> names = null;
 			if (!(o instanceof Collection)) {
 				names = new ArrayList<String>();
+				if (o instanceof String) names.add((String)o);
 			} else {
 				names = (Collection<String>)o;
 			}
@@ -1237,6 +1241,7 @@ public class DefaultIssue implements Issue {
 			Collection<Long> ids = null;
 			if (!(o instanceof Collection)) {
 				ids = new ArrayList<Long>();
+				if (o instanceof Long) ids.add((Long)o);
 			} else {
 				ids = (Collection<Long>)o;
 			}
