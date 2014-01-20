@@ -76,16 +76,17 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 
 	public Issue parseSingleBug(JSONObject json) throws JSONException, ParseException {
 		DefaultIssue rc = new DefaultIssue();
-		rc.set(DefaultIssue.LAZY_RETRIEVER, getLazyRetriever());
-		//debug(json);
+		LazyRetriever retriever = getLazyRetriever();
+		rc.set(DefaultIssue.LAZY_RETRIEVER, retriever);
+		debug(json);
 		rc.setType(BUG_TYPE);
-		rc.set("priority_name", json.getString("priority"));
-		rc.set("reporter_name", json.getString("creator"));
+		rc.set("priority_name", json.getString("priority")); if (retriever != null) retriever.registerPriority(json.getString("priority"));
+		rc.set("reporter_name", json.getString("creator")); if (retriever != null) retriever.registerUser(json.getString("creator"));
 		rc.setUpdateTimestamp(BugzillaUtils.parseDate(json.getString("last_change_time")));
 		rc.set(Issue.CCLIST_ACCESSIBLE, json.getBoolean("is_cc_accessible"));
 		//rc.setCcs(null); string array
 		rc.setUri(null);
-		rc.set("assignee_name", json.getString("assigned_to"));
+		rc.set("assignee_name", json.getString("assigned_to"));  if (retriever != null) retriever.registerUser(json.getString("assigned_to"));
 		rc.setId(json.getString("id"));
 		rc.setCreationTimestamp(BugzillaUtils.parseDate(json.getString("creation_time")));
 		rc.set(Issue.WHITEBOARD, json.getString("whiteboard"));
@@ -93,18 +94,18 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		// depends_on int array
 		// blocks int array
 		// dupe_of int
-		rc.set("resolution_name", json.getString("resolution"));
-		rc.set("classification_name", json.getString("classification"));
+		rc.set("resolution_name", json.getString("resolution"));  if (retriever != null) retriever.registerResolution(json.getString("resolution"));
+		rc.set("classification_name", json.getString("classification"));  if (retriever != null) retriever.registerClassification(json.getString("classification"));
 		rc.set(Issue.ALIAS, json.getString("alias"));
 		rc.set(Issue.OP_SYS, json.getString("op_sys"));
-		rc.set("status_name", json.getString("status"));
+		rc.set("status_name", json.getString("status"));  if (retriever != null) retriever.registerStatus(json.getString("status"));
 		rc.setSummary(json.getString("summary"));
 		rc.set(Issue.REP_PLATFORM, json.getString("platform"));
-		rc.set("severity_name", json.getString("severity"));
-		rc.set("fixVersion_name", json.getString("version"));
-		rc.set("component_name", json.getString("component"));
+		rc.set("severity_name", json.getString("severity")); if (retriever != null) retriever.registerSeverity(json.getString("severity"));
+		rc.set("fixVersion_name", json.getString("version"));  if (retriever != null) retriever.registerVersion(json.getString("product"), json.getString("version"));
+		rc.set("component_name", json.getString("component")); if (retriever != null) retriever.registerVersion(json.getString("product"), json.getString("component"));
 		rc.set(Issue.REPORTER_ACCESSIBLE, json.getBoolean("is_creator_accessible"));
-		rc.set("project_name", json.getString("product"));
+		rc.set("project_name", json.getString("product")); if (retriever != null) retriever.registerProject(json.getString("product"));
 		rc.set(Issue.MILESTONE, json.getString("target_milestone"));
 		rc.set(Issue.CONFIRMED, json.getBoolean("is_confirmed"));
 		return rc;
