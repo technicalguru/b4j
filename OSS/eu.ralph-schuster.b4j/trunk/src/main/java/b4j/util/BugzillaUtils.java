@@ -278,7 +278,7 @@ public class BugzillaUtils {
 	 * @param issue issue to be debugged
 	 */
 	public static void debug(Issue issue) {
-		log.debug("Id="+issue.getId());
+		log.debug("Issue:Id="+issue.getId());
 		log.debug("   ServerVersion="+issue.getServerVersion());
 		log.debug("   ServerUri="+issue.getServerUri());
 		log.debug("   IssueUri="+issue.getUri());
@@ -348,6 +348,21 @@ public class BugzillaUtils {
 		}
 	}
 
+	/**
+	 * Debugs an issue in log file.
+	 * @param issue issue to be debugged
+	 */
+	public static void debug(Comment comment) {
+		log.debug("Comment:Id="+comment.getId());
+		log.debug("   issue="+comment.getIssue().getId());
+		log.debug("   author="+comment.getAuthor());
+		log.debug("   creationTime="+comment.getWhen());
+		log.debug("   updateAuthor="+comment.getUpdateAuthor());
+		log.debug("   updateTime="+comment.getLastUpdate());
+		log.debug("   text="+comment.getTheText());
+		log.debug("   attachments="+comment.getAttachmentCount());
+	}
+	
 	/**
 	 * Parses the date by trying various formats.
 	 * @param s string to parse

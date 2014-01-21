@@ -18,19 +18,19 @@
 package b4j.core.session.bugzilla;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import b4j.core.Comment;
 import b4j.core.Issue;
-import b4j.core.Project;
-import b4j.util.BugzillaUtils;
-
-import com.atlassian.util.concurrent.Promise;
 
 /**
  * Tests the {@link b4j.core.session.bugzilla.async.AsyncBugzillaBugRestClient}.
@@ -53,25 +53,50 @@ public class AsyncBugzillaBugRestClientTest extends AbstractRestClientTest {
 		client.getUserClient().logout();
 	}
 	
+	/** Test the get method */
 	@Test
 	public void testGetBugs() throws Exception {
-		Iterator<Issue> i = myClient.getBugs(2,3).get().iterator();
-		while (i.hasNext()) {
-			Issue issue = i.next();
-			BugzillaUtils.debug(issue);
+		List<String> expected = getStringList(new int[] { 2,3 });
+		for (Issue issue :  myClient.getBugs(2,3).get()) {
+			assertTrue("Issue "+issue.getId()+" was not expected to be delivered by get()", expected.remove(issue.getId()));
 		}
+		assertEquals("Not the correct issues returned by get()", 0, expected.size());
 	}
 
-
-	@SuppressWarnings("unused")
-	public void testGetProducts(Promise<Iterable<Project>> promise, int expected) throws Exception {
-		assertNotNull("No promise", promise);
+	/** Test the search method */
+	@Test
+	public void testSearchBugs() throws Exception {
+		List<String> expected = getStringList(new int[] { 2,4,7,8,9,10,11,12,15,16,17,19,20,21,22,23,24,25,26,27,28,29,30 });
 		
-		int cnt = 0;
-		for (Project p : promise.get()) {
-			cnt++;
+		// Search closed, fixed bugs
+		Map<String,Object> criteria = new HashMap<String, Object>();
+		criteria.put("status", new String[] { "RESOLVED", "VERIFIED", "CLOSED", "UNCONFIRMED", "NEW", "ASSIGNED", "REOPENED" });
+		criteria.put("product", "CSV Utility Package");
+		for (Issue issue :  myClient.findBugs(criteria).get()) {
+			assertTrue("Issue "+issue.getId()+" was not expected to be delivered by get()", expected.remove(issue.getId()));
 		}
-		assertEquals("Not enough products", expected, cnt);
+		assertEquals("Not the correct issues returned by get()", 0, expected.size());
+	}
+
+	private List<String> getStringList(int arr[]) {
+		List<String> rc = new ArrayList<String>();
+		for (int i : arr) rc.add(Integer.toString(i));
+		return rc;
+	}
+	
+	/** Test the get method */
+	@Test
+	public void testGetComments() throws Exception {
+		List<Issue> issues = new ArrayList<Issue>();
+		for (Issue issue :  myClient.getBugs(2,4,7,8,9,10,11,12,15,16,17,19,20,21,22,23,24,25,26,27,28,29,30).get()) {
+			if (issue != null) issues.add(issue);
+		}
+		
+		List<String> expected = getStringList(new int[] { 16,30,32,34,8,12,42,23,24,2,3,10,33,49,50,36,37,22,45,46,43,47,40,41,44,48,14,17,20,21,29,31,35,9,13,5,11,38,39,15,27,28 });
+		for (Comment comment : myClient.getComments(issues).get()) {
+			assertTrue("Issue "+comment.getId()+" was not expected to be delivered by get()", expected.remove(comment.getId()));
+		};
+		assertEquals("Not the correct issues returned by get()", 0, expected.size());
 	}
 
 }

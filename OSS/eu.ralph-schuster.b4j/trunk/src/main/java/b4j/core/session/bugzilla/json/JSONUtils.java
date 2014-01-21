@@ -42,6 +42,7 @@ public class JSONUtils {
 	public static JSONArray convert(Collection<?> collection) throws JSONException {
 		JSONArray rc = new JSONArray();
 		for (Object o : collection) {
+			if (o == null) continue;
 			if (o instanceof Collection) {
 				rc.put(convert((Collection<?>)o));
 			} else if (o instanceof Map) {
