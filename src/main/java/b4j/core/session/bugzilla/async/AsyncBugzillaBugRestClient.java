@@ -28,6 +28,7 @@ import b4j.core.Comment;
 import b4j.core.Issue;
 import b4j.core.session.bugzilla.BugzillaBugRestClient;
 import b4j.core.session.bugzilla.json.BugzillaBugParser;
+import b4j.core.session.bugzilla.json.BugzillaCommentParser;
 
 import com.atlassian.util.concurrent.Promise;
 
@@ -75,8 +76,7 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	 */
 	@Override
 	public Promise<Iterable<Issue>> findBugs(Map<String, Object> criteria) {
-		// TODO Auto-generated method stub
-		return null;
+		return postAndParse("search", criteria, bugParser);
 	}
 
 	/**
@@ -101,19 +101,28 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Promise<Iterable<Comment>> getComments(long... ids) {
-		// TODO Auto-generated method stub
-		return null;
+	public Promise<Iterable<Comment>> getComments(Issue... issues) {
+		Collection<Issue> coll = new ArrayList<Issue>();
+		for (Issue i : issues) coll.add(i);
+		return getComments(coll);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Promise<Iterable<Comment>> getComments(Collection<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+	public Promise<Iterable<Comment>> getComments(Collection<Issue> issues) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("ids", getIds(issues));
+		return postAndParse("comments", params, new BugzillaCommentParser(getMainClient(), issues));
 	}
 
-	
+	protected Collection<Long> getIds(Collection<Issue> issues) {
+		Collection<Long> rc = new ArrayList<Long>();
+		for (Issue issue : issues) {
+			rc.add(Long.parseLong(issue.getId()));
+		}
+		return rc;
+	}
+
 }

@@ -31,9 +31,7 @@ import b4j.core.DefaultIssue;
 import b4j.core.DefaultLink;
 import b4j.core.Issue;
 import b4j.core.IssueLink.Type;
-import b4j.core.IssueType;
 import b4j.core.ServerInfo;
-import b4j.core.session.bugzilla.BugzillaIssueType;
 import b4j.core.session.bugzilla.async.AsyncBugzillaRestClient;
 import b4j.util.BugzillaUtils;
 import b4j.util.LazyRetriever;
@@ -48,8 +46,6 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
  */
 public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectParser<Iterable<Issue>> {
 
-	private static final IssueType BUG_TYPE = new BugzillaIssueType("bug");
-	
 	private AsyncBugzillaRestClient mainClient;
 	private ServerInfo serverInfo = null;
 	private boolean serverInfoError = false;
@@ -94,7 +90,7 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.setServerVersion(serverInfo.getVersion());
 		rc.setUri(mainClient.getServerUri()+"show_bug.cgi?id="+rc.getId());
 		//debug(json);
-		rc.setType(BUG_TYPE);
+		rc.setType(getLazyRetriever().getIssueType("bug"));
 		rc.set("priority_name", json.getString("priority")); if (retriever != null) retriever.registerPriority(json.getString("priority"));
 		rc.set("reporter_name", json.getString("creator")); if (retriever != null) retriever.registerUser(json.getString("creator"));
 		rc.setUpdateTimestamp(BugzillaUtils.parseDate(json.getString("last_change_time")));

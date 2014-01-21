@@ -17,10 +17,13 @@
  */
 package b4j.util;
 
+import java.util.Collection;
+
 import b4j.core.Attachment;
 import b4j.core.Classification;
 import b4j.core.Comment;
 import b4j.core.Component;
+import b4j.core.Issue;
 import b4j.core.IssueType;
 import b4j.core.Priority;
 import b4j.core.Project;
@@ -41,55 +44,55 @@ public interface LazyRetriever {
 	public void registerClassification(String name);
 	public void registerClassification(long id);
 	public void registerClassification(Classification classification);
+	public Classification getClassification(String name);
+	public Classification getClassification(long id);
 	
+	public Project getProject(long id);
+	public Project getProject(String name);
 	public void registerProject(String name);
 	public void registerProject(long id);
 	public void registerProject(Project project);
 
+	public Collection<Comment> getComments(Issue issue);
+	public void registerComment(Issue issue);
+	public void registerCommentsLoaded(Issue issue);
+	
+	public Component getComponent(String projectName, String name);
 	public void registerComponent(String projectName, String name);
 	public void registerComponent(Component component);
 
+	public User getUser(String name);
+	public User getUser(long id);
 	public void registerUser(String name);
 	public void registerUser(long id);
 	public void registerUser(User user);
 
-	public void registerComment(long id);
-	public void registerComment(Comment comment);
-
+	public Attachment getAttachment(long id);
 	public void registerAttachment(long id);
 	public void registerAttachment(Attachment attachment);
 
+	public Priority getPriority(String name);
 	public void registerPriority(String name);
 	public void registerPriority(Priority priority);
 
+	public Severity getSeverity(String name);
 	public void registerSeverity(String name);
 	public void registerSeverity(Severity severity);
 
+	public Status getStatus(String name);
 	public void registerStatus(String name);
 	public void registerStatus(Status status);
 
+	public Resolution getResolution(String name);
 	public void registerResolution(String name);
 	public void registerResolution(Resolution resolution);
 
+	public IssueType getIssueType(String name);
 	public void registerIssueType(String name);
 	public void registerIssueType(IssueType issueType);
 	
+	public Version getVersion(String projectName, String name);
 	public void registerVersion(String projectName, String name);
 	public void registerVersion(Version version);
 	
-	public Classification getClassification(String name);
-	public Classification getClassification(long id);
-	public Project getProject(long id);
-	public Project getProject(String name);
-	public Component getComponent(String projectName, String name);
-	public User getUser(String name);
-	public User getUser(long id);
-	public Comment getComment(long id);
-	public Attachment getAttachment(long id);
-	public Priority getPriority(String name);
-	public Severity getSeverity(String name);
-	public Status getStatus(String name);
-	public Resolution getResolution(String name);
-	public IssueType getIssueType(String name);
-	public Version getVersion(String projectName, String name);
 }

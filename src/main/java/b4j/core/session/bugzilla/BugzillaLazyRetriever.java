@@ -17,9 +17,11 @@
  */
 package b4j.core.session.bugzilla;
 
+import java.util.ArrayList;
+
 import b4j.core.Attachment;
 import b4j.core.Classification;
-import b4j.core.Comment;
+import b4j.core.Issue;
 import b4j.core.Project;
 import b4j.core.User;
 import b4j.util.AbstractLazyRetriever;
@@ -92,8 +94,9 @@ public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 	 */
 	@Override
 	protected void loadComments() throws Exception {
-		for (Comment c : client.getBugClient().getComments(getCommentIds()).get()) {
-			registerComment(c);
+		client.getBugClient().getComments(getCommentIssues()).get();
+		for (Issue issue : new ArrayList<Issue>(getCommentIssues())) {
+			registerCommentsLoaded(issue);
 		}
 	}
 

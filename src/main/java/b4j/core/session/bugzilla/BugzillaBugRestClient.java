@@ -89,22 +89,22 @@ public interface BugzillaBugRestClient {
 	/**
 	 * Retrieves information about comments.
 	 *
-	 * @param ids IDs of comments
+	 * @param issues issues the comments shall be retrieved for
 	 * @return information about comments
 	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
-	public Promise<Iterable<Comment>> getComments(long... ids);
+	public Promise<Iterable<Comment>> getComments(Issue... issues);
 
 	/**
 	 * Retrieves information about comments.
 	 *
-	 * @param ids IDs of comments
+	 * @param issues issues the comments shall be retrieved for
 	 * @return information about comments
 	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
-	public Promise<Iterable<Comment>> getComments(Collection<Long> ids);
+	public Promise<Iterable<Comment>> getComments(Collection<Issue> issues);
 
 
 }
