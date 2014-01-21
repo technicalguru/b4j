@@ -50,6 +50,9 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	private AsyncBugzillaBugRestClient bugClient;
 	private LazyRetriever lazyRetriever;
 	private User user;
+	private HttpClient httpClient;
+	private URI serverUri;
+	private URI baseUri;
 	
 	/**
 	 * Constructor.
@@ -59,13 +62,15 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	}
 
 	public AsyncBugzillaRestClient(URI serverUri, HttpClient httpClient) {
-		URI baseUri = UriBuilder.fromUri(serverUri).path("/jsonrpc.cgi").build();
-		lazyRetriever = new BugzillaLazyRetriever(this);
-		metadataClient = new AsyncBugzillaMetadataRestClient(baseUri, httpClient, lazyRetriever);
-		classificationClient = new AsyncBugzillaClassificationRestClient(baseUri, httpClient, lazyRetriever);
-		productClient = new AsyncBugzillaProductRestClient(baseUri, httpClient, lazyRetriever);
-		userClient = new AsyncBugzillaUserRestClient(baseUri, httpClient, lazyRetriever);
-		bugClient = new AsyncBugzillaBugRestClient(baseUri, httpClient, lazyRetriever);
+		this.serverUri = serverUri;
+		this.baseUri = UriBuilder.fromUri(serverUri).path("/jsonrpc.cgi").build();
+		this.httpClient = httpClient;
+		this.lazyRetriever = new BugzillaLazyRetriever(this);
+		metadataClient = new AsyncBugzillaMetadataRestClient(this);
+		classificationClient = new AsyncBugzillaClassificationRestClient(this);
+		productClient = new AsyncBugzillaProductRestClient(this);
+		userClient = new AsyncBugzillaUserRestClient(this);
+		bugClient = new AsyncBugzillaBugRestClient(this);
 	}
 	
 	
@@ -133,6 +138,38 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	@Override
 	public User getUser() {
 		return user;
+	}
+
+	/**
+	 * Returns the lazyRetriever.
+	 * @return the lazyRetriever
+	 */
+	public LazyRetriever getLazyRetriever() {
+		return lazyRetriever;
+	}
+
+	/**
+	 * Returns the serverUri.
+	 * @return the serverUri
+	 */
+	public URI getServerUri() {
+		return serverUri;
+	}
+
+	/**
+	 * Returns the baseUri.
+	 * @return the baseUri
+	 */
+	public URI getBaseUri() {
+		return baseUri;
+	}
+
+	/**
+	 * Returns the httpClient.
+	 * @return the httpClient
+	 */
+	public HttpClient getHttpClient() {
+		return httpClient;
 	}
 
 	

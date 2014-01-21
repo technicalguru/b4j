@@ -42,9 +42,14 @@ public class DefaultIssue implements Issue {
 
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
-	 * Format is yyyy-MM-dd HH:mm:ss
+	 * Format is yyyy-MM-dd HH:mm:ss Z
 	 */
 	public static final SimpleDateFormat DATETIME_WITH_SEC_TZ = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+	/**
+	 * Formatter and Parser for JSON-retrieved dates from Bugzilla.
+	 * Format is yyyy-MM-dd'T'HH:mm:ssZ
+	 */
+	public static final SimpleDateFormat JSON_DATETIME_WITH_SEC_TZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm:ss
@@ -83,7 +88,6 @@ public class DefaultIssue implements Issue {
 	private String serverUri;
 	private String uri;
 	private String id;
-	private String link;
 	private String parentId;
 	private Date creationTimestamp;
 	private String summary;
@@ -842,22 +846,6 @@ public class DefaultIssue implements Issue {
 	@Override
 	public boolean isInProgress() {
 		return !isOpen() && !isClosed();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getLink() {
-		return link;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void setLink(String link) {
-		this.link = link;
 	}
 
 	/**

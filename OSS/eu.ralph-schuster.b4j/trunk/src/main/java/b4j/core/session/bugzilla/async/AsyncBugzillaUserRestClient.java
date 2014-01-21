@@ -17,7 +17,6 @@
  */
 package b4j.core.session.bugzilla.async;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,9 +30,7 @@ import b4j.core.User;
 import b4j.core.session.bugzilla.BugzillaUserRestClient;
 import b4j.core.session.bugzilla.json.BugzillaIdParser;
 import b4j.core.session.bugzilla.json.BugzillaUserParser;
-import b4j.util.LazyRetriever;
 
-import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.RestClientException;
 import com.atlassian.util.concurrent.Promise;
 
@@ -51,10 +48,10 @@ public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient impleme
 	/**
 	 * Constructor.
 	 */
-	public AsyncBugzillaUserRestClient(URI baseUri, HttpClient client, LazyRetriever lazyRetriever) {
-		super(baseUri, "User", client, lazyRetriever);
-		userParser = new BugzillaUserParser(lazyRetriever);
-		idParser = new BugzillaIdParser(lazyRetriever);
+	public AsyncBugzillaUserRestClient(AsyncBugzillaRestClient mainClient) {
+		super(mainClient, "User");
+		userParser = new BugzillaUserParser(getLazyRetriever());
+		idParser = new BugzillaIdParser(getLazyRetriever());
 	}
 
 	/**
