@@ -278,82 +278,73 @@ public class BugzillaUtils {
 	 * @param issue issue to be debugged
 	 */
 	public static void debug(Issue issue) {
-		log.debug("BugzillaVersion="+issue.getServerVersion());
-		log.debug("BugzillaUri="+issue.getServerUri());
 		log.debug("Id="+issue.getId());
-		log.debug("ParentId="+issue.getParentId());
-		log.debug("CreationTimestamp="+issue.getCreationTimestamp());
-		log.debug("ShortDescription="+issue.getSummary());
-		log.debug("DeltaTimestamp="+issue.getUpdateTimestamp());
-		log.debug("ReporterAccessible="+issue.get(Issue.REPORTER_ACCESSIBLE));
-		log.debug("CcListAccessible="+issue.get(Issue.CCLIST_ACCESSIBLE));
-		log.debug("Type="+issue.getType());
-		log.debug("TypeName="+issue.getType().getName());
-		log.debug("Classification="+issue.getClassification());
-		log.debug("Project="+issue.getProject());
+		log.debug("   ServerVersion="+issue.getServerVersion());
+		log.debug("   ServerUri="+issue.getServerUri());
+		log.debug("   IssueUri="+issue.getUri());
+		log.debug("   ParentId="+issue.getParentId());
+		log.debug("   CreationTimestamp="+issue.getCreationTimestamp());
+		log.debug("   Summary="+issue.getSummary());
+		log.debug("   UpdateTimestamp="+issue.getUpdateTimestamp());
+		log.debug("   Type="+issue.getType());
+		log.debug("   TypeName="+issue.getType().getName());
+		log.debug("   Classification="+issue.getClassification());
+		log.debug("   Project="+issue.getProject());
 		for (Component c : issue.getComponents()) {
-			log.debug("Component="+c.getName());
+			log.debug("   Component="+c.getName());
 		}
 		for (Version s : issue.getFixVersions()) {
-			log.debug("FixVersion="+s);
+			log.debug("   FixVersion="+s);
 		}
 		for (Version s : issue.getPlannedVersions()) {
-			log.debug("PlannedVersion="+s);
+			log.debug("   PlannedVersion="+s);
 		}
 		for (Version s : issue.getAffectedVersions()) {
-			log.debug("AffectedVersion="+s);
+			log.debug("   AffectedVersion="+s);
 		}
-		log.debug("RepPlatform="+issue.get(Issue.REP_PLATFORM));
-		log.debug("OpSys="+issue.get(Issue.OP_SYS));
-		log.debug("Link="+issue.getLink());
-		log.debug("Status="+issue.getStatus());
-		log.debug("Resolution="+issue.getResolution());
-		log.debug("Priority="+issue.getPriority());
-		log.debug("Severity="+issue.getSeverity());
-		log.debug("EverConfirmed="+issue.get(Issue.CONFIRMED));
-		log.debug("Reporter="+issue.getReporter());
+		log.debug("   Status="+issue.getStatus());
+		log.debug("   Resolution="+issue.getResolution());
+		log.debug("   Priority="+issue.getPriority());
+		log.debug("   Severity="+issue.getSeverity());
+		log.debug("   Reporter="+issue.getReporter());
 		if (issue.getReporter() != null) {
-			log.debug("ReporterName="+issue.getReporter().getName());
-			log.debug("ReporterTeam="+issue.getReporter().getTeam());
+			log.debug("   ReporterName="+issue.getReporter().getName());
+			log.debug("   ReporterTeam="+issue.getReporter().getTeam());
 		}
-		log.debug("Assignee="+issue.getAssignee());
+		log.debug("   Assignee="+issue.getAssignee());
 		if (issue.getAssignee() != null) {
-			log.debug("AssigneeName="+issue.getAssignee().getName());
-			log.debug("AssigneeTeam="+issue.getAssignee().getTeam());
+			log.debug("   AssigneeName="+issue.getAssignee().getName());
+			log.debug("   AssigneeTeam="+issue.getAssignee().getTeam());
 		}
-		log.debug("QaContact="+issue.get(Issue.QA_CONTACT));
-		log.debug("FileLocation="+issue.get(Issue.BUG_FILE_LOCATION));
-		log.debug("Blocked="+issue.get(Issue.BLOCKED));
-		log.debug("Closed="+issue.isClosed());
-		log.debug("InProgress="+issue.isInProgress());
-		log.debug("Resolved="+issue.isResolved());
-		log.debug("Cancelled="+issue.isCancelled());
-		log.debug("Duplicate="+issue.isDuplicate());
-		log.debug("Open="+issue.isOpen());
-		log.debug("Alias="+issue.get(Issue.ALIAS));
-		log.debug("Whiteboard="+issue.get(Issue.WHITEBOARD));
-		log.debug("EstimatedTime="+issue.get(Issue.ESTIMATED_TIME));
-		log.debug("RemainingTime="+issue.get(Issue.REMAINING_TIME));
-		log.debug("ActualTime="+issue.get(Issue.ACTUAL_TIME));
-		log.debug("Deadline="+issue.get(Issue.DEADLINE));
-		@SuppressWarnings("unchecked")
-		Collection<String> coll = (Collection<String>)issue.get(Issue.CC);
-		if (coll != null) {
-			for (String cc : coll) {
-				log.debug("cc="+cc);
-			}
-		}
+		log.debug("   Closed="+issue.isClosed());
+		log.debug("   InProgress="+issue.isInProgress());
+		log.debug("   Resolved="+issue.isResolved());
+		log.debug("   Cancelled="+issue.isCancelled());
+		log.debug("   Duplicate="+issue.isDuplicate());
+		log.debug("   Open="+issue.isOpen());
 		for (Comment c : issue.getComments()) {
-			log.debug("comment="+c.getAuthor().getId()+" ("+c.getWhen()+"): "+c.getTheText());
+			log.debug("   comment="+c.getAuthor().getId()+" ("+c.getWhen()+"): "+c.getTheText());
 		}
 		for (Attachment a : issue.getAttachments()) {
-			log.debug("attachment="+a.getFilename()+ "("+a.getType()+"): "+a.getDescription());
+			log.debug("   attachment="+a.getFilename()+ "("+a.getType()+"): "+a.getDescription());
 		}
 		for (IssueLink link : issue.getLinks()) {
-			log.debug("link="+link.getIssueId()+" ("+link.getLinkTypeName()+")");
+			log.debug("   link="+link.getIssueId()+" ("+link.getLinkTypeName()+")");
 		}
 		for (Issue i : issue.getChildren()) {
-			log.debug("child="+i.getId());
+			log.debug("   child="+i.getId());
+		}
+		for (String key : issue.getCustomFieldNames()) {
+			if (key.endsWith("_id") || key.endsWith("_name")) continue;
+			if (key.equals(DefaultIssue.LAZY_RETRIEVER)) continue;
+			Object value = issue.get(key);
+			if (value instanceof Collection) {
+				for (Object o : (Collection<?>)value) {
+					log.debug("   "+key+"="+o);
+				}
+			} else {
+				log.debug("   "+key+"="+value);
+			}
 		}
 	}
 
@@ -364,6 +355,12 @@ public class BugzillaUtils {
 	 * @throws ParseException when the date could not be parsed
 	 */
 	public static Date parseDate(String s) throws ParseException {
+		// JSON format
+		if (s.matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z")) {
+			String date = s.substring(0,10);
+			String time = s.substring(11,19);
+			s = date + " " + time + " UTC";
+		}
 		try {
 			return DefaultIssue.DATETIME_WITH_SEC_TZ.parse(s);
 		} catch (ParseException e) { }

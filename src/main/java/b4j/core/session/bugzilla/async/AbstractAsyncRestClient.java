@@ -29,7 +29,6 @@ import org.codehaus.jettison.json.JSONObject;
 import b4j.core.session.bugzilla.json.JSONUtils;
 import b4j.util.LazyRetriever;
 
-import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.httpclient.api.Response;
 import com.atlassian.httpclient.api.ResponsePromise;
 import com.atlassian.jira.rest.client.RestClientException;
@@ -45,19 +44,17 @@ import com.atlassian.util.concurrent.Promise;
  */
 public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestClient {
 
-	private final URI baseUri;
+	private AsyncBugzillaRestClient mainClient;
 	private String webService;
-	private LazyRetriever lazyRetriever;
 	
 	/**
 	 * Constructor.
 	 * @param client
 	 */
-	public AbstractAsyncRestClient(URI baseUri, String webService, HttpClient client, LazyRetriever lazyRetriever) {
-		super(client);
-		this.baseUri = baseUri;
+	public AbstractAsyncRestClient(AsyncBugzillaRestClient mainClient, String webService) {
+		super(mainClient.getHttpClient());
+		this.mainClient = mainClient;
 		this.webService = webService;
-		this.lazyRetriever = lazyRetriever;
 	}
 
 	/**
@@ -102,7 +99,15 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 	 * @return the baseUri
 	 */
 	public URI getBaseUri() {
-		return baseUri;
+		return getMainClient().getBaseUri();
+	}
+
+	/**
+	 * Returns the mainClient.
+	 * @return the mainClient
+	 */
+	public AsyncBugzillaRestClient getMainClient() {
+		return mainClient;
 	}
 
 	/**
@@ -137,7 +142,7 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 	 * @return the lazyRetriever
 	 */
 	public LazyRetriever getLazyRetriever() {
-		return lazyRetriever;
+		return getMainClient().getLazyRetriever();
 	}
 
 }

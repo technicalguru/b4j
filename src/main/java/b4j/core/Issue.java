@@ -371,18 +371,6 @@ public interface Issue {
 	public int getAffectedVersionCount();
 
 	/**
-	 * Returns the link for this issue.
-	 * @return the link
-	 */
-	public String getLink();
-
-	/**
-	 * Sets the link for this issue.
-	 * @param link - the link to set
-	 */
-	public void setLink(String link);
-
-	/**
 	 * Returns the status of this issue.
 	 * @return the status
 	 */

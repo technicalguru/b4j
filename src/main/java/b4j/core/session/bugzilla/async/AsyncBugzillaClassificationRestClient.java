@@ -17,7 +17,6 @@
  */
 package b4j.core.session.bugzilla.async;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,9 +26,7 @@ import java.util.Map;
 import b4j.core.Classification;
 import b4j.core.session.bugzilla.BugzillaClassificationRestClient;
 import b4j.core.session.bugzilla.json.BugzillaClassificationParser;
-import b4j.util.LazyRetriever;
 
-import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.jira.rest.client.RestClientException;
 import com.atlassian.util.concurrent.Promise;
 
@@ -46,9 +43,9 @@ public class AsyncBugzillaClassificationRestClient extends AbstractAsyncRestClie
 	/**
 	 * Constructor.
 	 */
-	public AsyncBugzillaClassificationRestClient(URI baseUri, HttpClient client, LazyRetriever lazyRetriever) {
-		super(baseUri, "Classification", client, lazyRetriever);
-		classificationParser = new BugzillaClassificationParser(lazyRetriever);
+	public AsyncBugzillaClassificationRestClient(AsyncBugzillaRestClient mainClient) {
+		super(mainClient, "Classification");
+		classificationParser = new BugzillaClassificationParser(getLazyRetriever());
 	}
 
 	/**

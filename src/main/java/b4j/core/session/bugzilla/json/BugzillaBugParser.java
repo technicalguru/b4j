@@ -25,13 +25,16 @@ import java.util.List;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.slf4j.LoggerFactory;
 
 import b4j.core.DefaultIssue;
 import b4j.core.DefaultLink;
 import b4j.core.Issue;
 import b4j.core.IssueLink.Type;
 import b4j.core.IssueType;
+import b4j.core.ServerInfo;
 import b4j.core.session.bugzilla.BugzillaIssueType;
+import b4j.core.session.bugzilla.async.AsyncBugzillaRestClient;
 import b4j.util.BugzillaUtils;
 import b4j.util.LazyRetriever;
 
@@ -47,22 +50,27 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 
 	private static final IssueType BUG_TYPE = new BugzillaIssueType("bug");
 	
-	/**
-	 * Constructor.
-	 */
-	public BugzillaBugParser() {
-		this(null);
-	}
+	private AsyncBugzillaRestClient mainClient;
+	private ServerInfo serverInfo = null;
+	private boolean serverInfoError = false;
 	
 	/**
 	 * Constructor.
 	 */
-	public BugzillaBugParser(LazyRetriever lazyRetriever) {
-		super(lazyRetriever);
+	public BugzillaBugParser(AsyncBugzillaRestClient mainClient) {
+		super(mainClient.getLazyRetriever());
+		this.mainClient = mainClient;
 	}
 
 	@Override
 	public Iterable<Issue> parse(JSONObject json) throws JSONException {
+		if ((serverInfo == null) && !serverInfoError) try {
+			serverInfo = mainClient.getMetadataClient().getServerInfo().get();
+		} catch (Exception e) {
+			LoggerFactory.getLogger(getClass()).error("Cannot retrieve server info. Issues will omit this information", e);
+			serverInfoError = true;
+		}
+		
 		List<Issue> rc = new ArrayList<Issue>();
 		checkError(json); // Throws exception when error occurred
 		JSONArray arr = getResult(json).getJSONArray("bugs");
@@ -80,17 +88,19 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 	public Issue parseSingleBug(JSONObject json) throws JSONException, ParseException {
 		DefaultIssue rc = new DefaultIssue();
 		LazyRetriever retriever = getLazyRetriever();
+		rc.setId(json.getString("id"));
 		rc.set(DefaultIssue.LAZY_RETRIEVER, retriever);
-		debug(json);
+		rc.setServerUri(mainClient.getServerUri().toString());
+		rc.setServerVersion(serverInfo.getVersion());
+		rc.setUri(mainClient.getServerUri()+"show_bug.cgi?id="+rc.getId());
+		//debug(json);
 		rc.setType(BUG_TYPE);
 		rc.set("priority_name", json.getString("priority")); if (retriever != null) retriever.registerPriority(json.getString("priority"));
 		rc.set("reporter_name", json.getString("creator")); if (retriever != null) retriever.registerUser(json.getString("creator"));
 		rc.setUpdateTimestamp(BugzillaUtils.parseDate(json.getString("last_change_time")));
 		rc.set(Issue.CCLIST_ACCESSIBLE, json.getBoolean("is_cc_accessible"));
 		rc.set(Issue.CC, getStringCollection(json.getJSONArray("cc")));
-		rc.setUri(null);
 		rc.set("assignee_name", json.getString("assigned_to"));  if (retriever != null) retriever.registerUser(json.getString("assigned_to"));
-		rc.setId(json.getString("id"));
 		rc.setCreationTimestamp(BugzillaUtils.parseDate(json.getString("creation_time")));
 		rc.set(Issue.WHITEBOARD, json.getString("whiteboard"));
 		rc.set(Issue.QA_CONTACT, json.getString("qa_contact"));
@@ -121,6 +131,10 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set("project_name", json.getString("product")); if (retriever != null) retriever.registerProject(json.getString("product"));
 		rc.set(Issue.MILESTONE, json.getString("target_milestone"));
 		rc.set(Issue.CONFIRMED, json.getBoolean("is_confirmed"));
+		rc.set(Issue.ACTUAL_TIME, json.getInt("actual_time"));
+		rc.set(Issue.ESTIMATED_TIME, json.getInt("estimated_time"));
+		rc.set(Issue.REMAINING_TIME, json.getInt("remaining_time"));
+
 		return rc;
 	}
 	

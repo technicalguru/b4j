@@ -17,16 +17,12 @@
  */
 package b4j.core.session.bugzilla.async;
 
-import java.net.URI;
-
 import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.ServerInfo;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
 import b4j.core.session.bugzilla.json.BugzillaServerInfoParser;
-import b4j.util.LazyRetriever;
 
-import com.atlassian.httpclient.api.HttpClient;
 import com.atlassian.util.concurrent.Promise;
 
 /**
@@ -43,9 +39,9 @@ public class AsyncBugzillaMetadataRestClient extends AbstractAsyncRestClient imp
 	 * Constructor.
 	 * @param client
 	 */
-	public AsyncBugzillaMetadataRestClient(URI baseUri, HttpClient client, LazyRetriever lazyRetriever) {
-		super(baseUri, "Bugzilla", client, lazyRetriever);
-		serverInfoParser = new BugzillaServerInfoParser(lazyRetriever);
+	public AsyncBugzillaMetadataRestClient(AsyncBugzillaRestClient mainClient) {
+		super(mainClient, "Bugzilla");
+		serverInfoParser = new BugzillaServerInfoParser(getLazyRetriever());
 	}
 
 	/**

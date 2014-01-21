@@ -53,11 +53,13 @@ public class TextFileReleaseProvider extends AbstractFileReleaseProvider {
 	 * @param file - file to load releases from
 	 * @throws ConfigurationException - if an error occurs
 	 */
+	@SuppressWarnings("resource")
 	@Override
 	protected void loadReleases(File file) throws ConfigurationException {
 		String line = null;
+		BufferedReader reader = null;
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new FileReader(file));
 			while ((line = reader.readLine()) != null) {
 				line = line.trim();
 				if (line.startsWith("#")) continue;
@@ -72,6 +74,10 @@ public class TextFileReleaseProvider extends AbstractFileReleaseProvider {
 			throw new ConfigurationException("Cannot read file: "+file.getAbsolutePath(), e);
 		} catch (ParseException e) {
 			throw new ConfigurationException("Invalid release information: "+line);
+		} finally {
+			try {
+				if (reader != null) reader.close();
+			} catch (Exception e) { }
 		}
 	}
 
