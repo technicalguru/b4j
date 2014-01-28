@@ -43,10 +43,10 @@ public interface Comment {
 	public void setId(String id);
 
 	/**
-	 * Returns the issue this entry belongs to.
-	 * @return the issue of this long description.
+	 * Returns the ID of the issue this entry belongs to.
+	 * @return the ID of the issue of this comment.
 	 */
-	public Issue getIssue();
+	public String getIssueId();
 	
 	/**
 	 * Returns the author of this text.
@@ -110,82 +110,52 @@ public interface Comment {
 	public void setUpdateAuthor(User updateAuthor);
 	
 	/**
-	 * Returns the attachments for this issue.
-	 * @return the attachments
+	 * Returns the attachment IDs for this comment.
+	 * @return the attachment IDs
 	 */
-	public Collection<Attachment> getAttachments();
+	public Collection<String> getAttachments();
 
 	/**
-	 * Sets the attachments for this issue.
+	 * Sets the attachment IDs for this comment.
 	 * @param attachments - the attachments to set
 	 */
-	public void setAttachments(Collection<Attachment> attachments);
+	public void setAttachments(Collection<String> attachments);
 
 	/**
-	 * Sets the attachments for this issue.
-	 * @param attachments - the attachments to set
+	 * Sets the attachment IDs for this comment.
+	 * @param attachments - the attachment IDs to set
 	 */
-	public void setAttachments(Attachment... attachments);
+	public void setAttachments(String... attachments);
 
 	/**
-	 * Sets the attachments for this issue.
+	 * Sets the attachments IDs for this comment.
 	 * @param ids - the ids to set
 	 */
 	public void setAttachmentIds(Collection<String> ids);
 
 	/**
-	 * Sets the attachments for this issue.
-	 * @param ids - the ids to set
-	 */
-	public void setAttachmentIds(String... ids);
-
-	/**
-	 * Adds the attachments for this issue.
+	 * Adds the attachment IDs for this comment.
 	 * @param attachments - the attachments to add
 	 */
-	public void addAttachments(Collection<Attachment> attachments);
+	public void addAttachments(Collection<String> attachments);
 
 	/**
-	 * Adds the attachments for this issue.
+	 * Adds the attachment IDs for this comment.
 	 * @param attachments - the attachments to add
 	 */
-	public void addAttachments(Attachment... attachments);
+	public void addAttachments(String... attachments);
 
 	/**
-	 * Adds the attachments for this issue.
-	 * @param ids - the attachments to add
-	 */
-	public void addAttachmentIds(Collection<String> ids);
-
-	/**
-	 * Adds the attachments for this issue.
-	 * @param ids - the attachments to add
-	 */
-	public void addAttachmentIds(String... ids);
-
-	/**
-	 * Removes the attachments for this issue.
+	 * Removes the attachment IDs for this comment.
 	 * @param attachments - the attachments to remove
 	 */
-	public void removeAttachments(Collection<Attachment> attachments);
+	public void removeAttachments(Collection<String> attachments);
 
 	/**
-	 * Removes the attachments for this issue.
+	 * Removes the attachment IDs for this issue.
 	 * @param attachments - the attachments to remove
 	 */
-	public void removeAttachments(Attachment... attachments);
-
-	/**
-	 * Removes the attachments for this issue.
-	 * @param attachments - the attachments to remove
-	 */
-	public void removeAttachmentIds(Collection<String> attachments);
-
-	/**
-	 * Removes the attachments for this issue.
-	 * @param attachments - the attachments to remove
-	 */
-	public void removeAttachmentIds(String... attachments);
+	public void removeAttachments(String... attachments);
 
 	/**
 	 * Removes the attachments for this issue.

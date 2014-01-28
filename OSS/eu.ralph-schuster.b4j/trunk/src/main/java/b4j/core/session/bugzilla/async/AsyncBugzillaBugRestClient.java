@@ -101,9 +101,9 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Promise<Iterable<Comment>> getComments(Issue... issues) {
-		Collection<Issue> coll = new ArrayList<Issue>();
-		for (Issue i : issues) coll.add(i);
+	public Promise<Iterable<Comment>> getComments(String... issueIds) {
+		Collection<String> coll = new ArrayList<String>();
+		for (String i : issueIds) coll.add(i);
 		return getComments(coll);
 	}
 
@@ -111,10 +111,10 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Promise<Iterable<Comment>> getComments(Collection<Issue> issues) {
+	public Promise<Iterable<Comment>> getComments(Collection<String> issueIds) {
 		Map<String,Object> params = new HashMap<String, Object>();
-		params.put("ids", getIds(issues));
-		return postAndParse("comments", params, new BugzillaCommentParser(getMainClient(), issues));
+		params.put("ids", issueIds);
+		return postAndParse("comments", params, new BugzillaCommentParser(getMainClient()));
 	}
 
 	protected Collection<Long> getIds(Collection<Issue> issues) {

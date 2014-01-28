@@ -68,7 +68,7 @@ public class DefaultIssue implements Issue {
 
 	/** Key for {@link LazyRetriever} object */
 	public static final String LAZY_RETRIEVER = "lazyRetriever";
-	
+
 	/**
 	 * The standard severities used in Bugzilla.
 	 * Currently this is (in order): "blocker", "critical", "major", "normal",
@@ -93,8 +93,6 @@ public class DefaultIssue implements Issue {
 	private String summary;
 	private String description;
 	private Date updateTimestamp;
-	//private boolean reporterAccessible;
-	//private boolean cclistAccessible;
 	private IssueType type;
 	private Classification classification;
 	private Project project;
@@ -102,28 +100,16 @@ public class DefaultIssue implements Issue {
 	private List<Version> affectedVersions;
 	private List<Version> plannedVersions;
 	private List<Version> fixVersions;
-	//private String repPlatform;
-	//private String opSys;
 	private Status status;
 	private Resolution resolution;
 	private Priority priority;
 	private Severity severity;
-	//private boolean everConfirmed;
 	private User reporter;
 	private User assignee;
-	//private String qaContact;
 	private List<Comment> comments;
-	//private String fileLocation;
-	//private List<String> cc;
+	private boolean commentsRetrieved = false;
 	private List<Attachment> attachments;
-	//private long blocked;
 	private Map<String,Object> customFields;
-	//private String alias;
-	//private String whiteboard;
-	//private double estimatedTime;
-	//private double remainingTime;
-	//private double actualTime;
-	//private Date deadline;
 	private List<IssueLink> links;
 	private List<Issue> children;
 
@@ -274,6 +260,9 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public String getDescription() {
+		if ((description == null) && !commentsRetrieved) {
+			getComments();
+		}
 		return description;
 	}
 
@@ -853,10 +842,34 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Comment> getComments() {
-		check(comments, "comment");
+		if (!commentsRetrieved) {
+			commentsRetrieved = true;
+			LazyRetriever retriever = (LazyRetriever)get(LAZY_RETRIEVER);
+			if (retriever != null) {
+				comments.addAll(retriever.getComments(getId()));
+				if (description == null) {
+					setDescription(getFirstComment());
+				}
+				
+			}
+		}
 		return Collections.unmodifiableList(comments);
 	}
 
+	/** Return the first comment */
+	private String getFirstComment() {
+		String s = null;
+		Date minDate = null;
+		for (Comment c : comments) {
+			Date d = c.getWhen();
+			if (d == null) continue; // Weird! Unknown comment date
+			if ((minDate == null) || minDate.after(d)) {
+				minDate = d;
+				s = c.getTheText();
+			}
+		}
+		return s;
+	}
 	/**
 	 * {@inheritDoc}
 	 */
@@ -1142,7 +1155,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public String toString() {
-		return getClass().getName()+"[id="+getId()+";summary="+getSummary()+";status="+getStatus()+"]";
+		return getClass().getName()+"[id="+getId()+";summary="+getSummary()+";status="+getStatus()+";hashCode="+super.hashCode()+"]";
 	}
 
 	/**
@@ -1158,7 +1171,7 @@ public class DefaultIssue implements Issue {
 	protected <T> T check(T originalValue, String propertyPrefix) {
 		return check(originalValue, propertyPrefix, propertyPrefix);
 	}
-	
+
 	/**
 	 * Checks the lazy retrieval of the given value.
 	 * <p>The method checks whether <code>originalValue</code> is already set and returns this. Otherwise
@@ -1194,11 +1207,12 @@ public class DefaultIssue implements Issue {
 	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
 	 * @param collection the value currently stored and enhanced with found values.
 	 * @param propertyPrefix the property to be checked
+	 * @return <code>true</code> when lazy loading took place
 	 */
-	protected <T> void check(Collection<T> collection, String propertyPrefix) {
-		check(collection, propertyPrefix, propertyPrefix);
+	protected <T> boolean check(Collection<T> collection, String propertyPrefix) {
+		return check(collection, propertyPrefix, propertyPrefix);
 	}
-	
+
 	/**
 	 * Checks the lazy retrieval of the given collection values.
 	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
@@ -1207,38 +1221,48 @@ public class DefaultIssue implements Issue {
 	 * @param collection the value currently stored and enhanced with found values.
 	 * @param propertyPrefix the property to be checked
 	 * @param typeProperty name of property at {@link LazyRetriever}
+	 * @return <code>true</code> when lazy loading took place
 	 */
 	@SuppressWarnings("unchecked")
-	protected <T> void check(Collection<T> collection, String propertyPrefix, String typeProperty) {
+	protected <T> boolean check(Collection<T> collection, String propertyPrefix, String typeProperty) {
 		LazyRetriever retriever = (LazyRetriever)get("lazyRetriever");
-		if (retriever != null) {
+		boolean rc = false;
+		if ((retriever != null) && collection.isEmpty()){
 			Object o = get(propertyPrefix+"_name");
-			Collection<String> names = null;
-			if (!(o instanceof Collection)) {
-				names = new ArrayList<String>();
-				if (o instanceof String) names.add((String)o);
-			} else {
-				names = (Collection<String>)o;
-			}
-			for (String name : names) {
-				T obj = retrieve(retriever, typeProperty, name);
-				if (obj != null) collection.add(obj);
+			if (o != null) {
+				rc = true;
+				Collection<String> names = null;
+				if (!(o instanceof Collection)) {
+					names = new ArrayList<String>();
+					if (o instanceof String) names.add((String)o);
+				} else {
+					names = (Collection<String>)o;
+				}
+				for (String name : names) {
+					T obj = retrieve(retriever, typeProperty, name);
+					if (obj != null) collection.add(obj);
+				}
+				set(propertyPrefix+"_name", null);
 			}
 
 			o = get(propertyPrefix+"_id");
-			Collection<Long> ids = null;
-			if (!(o instanceof Collection)) {
-				ids = new ArrayList<Long>();
-				if (o instanceof Long) ids.add((Long)o);
-			} else {
-				ids = (Collection<Long>)o;
-			}
-			for (Long id : ids) {
-				T obj = retrieve(retriever, typeProperty, id);
-				if (obj != null) collection.add(obj);
+			if (o != null) {
+				rc = true;
+				Collection<Long> ids = null;
+				if (!(o instanceof Collection)) {
+					ids = new ArrayList<Long>();
+					if (o instanceof Long) ids.add((Long)o);
+				} else {
+					ids = (Collection<Long>)o;
+				}
+				for (Long id : ids) {
+					T obj = retrieve(retriever, typeProperty, id);
+					if (obj != null) collection.add(obj);
+				}
+				set(propertyPrefix+"_id", null);
 			}
 		}
-
+		return rc;
 	}
 
 	/**
@@ -1282,7 +1306,7 @@ public class DefaultIssue implements Issue {
 	protected void checkAffectedVersions() {
 		checkVersions(affectedVersions, "affectedVersion_name");
 	}
-	
+
 	/**
 	 * Checks the lazy retrieval of fixed versions.
 	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>fixVersion_name</code>
@@ -1293,7 +1317,7 @@ public class DefaultIssue implements Issue {
 	protected void checkFixVersions() {
 		checkVersions(fixVersions, "fixVersion_name");
 	}
-	
+
 	/**
 	 * Checks the lazy retrieval of planned versions.
 	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>plannedVersion_name</code>
@@ -1304,7 +1328,7 @@ public class DefaultIssue implements Issue {
 	protected void checkPlannedVersions() {
 		checkVersions(plannedVersions, "plannedVersion_name");
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	protected void checkVersions(Collection<Version> versions, String propertyName) {
 		LazyRetriever retriever = (LazyRetriever)get("lazyRetriever");
@@ -1352,4 +1376,31 @@ public class DefaultIssue implements Issue {
 		}
 		return null;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		DefaultIssue other = (DefaultIssue) obj;
+		if (getId() == null) {
+			if (other.getId() != null) return false;
+		} else if (!getId().equals(other.getId())) return false;
+		return true;
+	}
+
 }

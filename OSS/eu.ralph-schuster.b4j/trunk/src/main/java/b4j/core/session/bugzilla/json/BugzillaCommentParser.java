@@ -29,7 +29,6 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.Comment;
 import b4j.core.DefaultComment;
-import b4j.core.Issue;
 import b4j.core.session.bugzilla.async.AsyncBugzillaRestClient;
 import b4j.util.BugzillaUtils;
 
@@ -43,14 +42,11 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
  */
 public class BugzillaCommentParser extends AbstractJsonParser implements JsonObjectParser<Iterable<Comment>> {
 
-	private Collection<Issue> issues;
-
 	/**
 	 * Constructor.
 	 */
-	public BugzillaCommentParser(AsyncBugzillaRestClient mainClient, Collection<Issue> issues) {
+	public BugzillaCommentParser(AsyncBugzillaRestClient mainClient) {
 		super(mainClient.getLazyRetriever());
-		this.issues = issues;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -62,26 +58,16 @@ public class BugzillaCommentParser extends AbstractJsonParser implements JsonObj
 		Iterator<String> keys = bugs.keys();
 		while (keys.hasNext()) {
 			String issueId = keys.next();
-			Issue issue = getIssue(issueId);
-			if (issue != null) {
-				JSONArray comments = bugs.getJSONObject(issueId).getJSONArray("comments");
-				for (int i=0; i<comments.length(); i++) {
-					rc.add(parseSingleComment(issue, comments.getJSONObject(i)));
-				}
+			JSONArray comments = bugs.getJSONObject(issueId).getJSONArray("comments");
+			for (int i=0; i<comments.length(); i++) {
+				rc.add(parseSingleComment(comments.getJSONObject(i)));
 			}
 		}
 		return rc;
 	}
 
-	private Issue getIssue(String id) {
-		for (Issue issue : issues) {
-			if (id.equals(issue.getId())) return issue;
-		}
-		return null;
-	}
-
-	public Comment parseSingleComment(Issue issue, JSONObject json) throws JSONException {
-		DefaultComment rc = new DefaultComment(issue);
+	public Comment parseSingleComment(JSONObject json) throws JSONException {
+		DefaultComment rc = new DefaultComment(json.getString("bug_id"));
 		rc.setId(json.getString("id"));
 		rc.setAuthor(getLazyRetriever().getUser(json.getString("creator")));
 		rc.setUpdateAuthor(getLazyRetriever().getUser(json.getString("author")));
@@ -93,8 +79,7 @@ public class BugzillaCommentParser extends AbstractJsonParser implements JsonObj
 		}
 		rc.setTheText(json.getString("text"));
 		String s = json.getString("attachment_id");
-		if ((s != null) && !s.equals("null")) rc.setAttachmentIds(s);
-		issue.addComments(rc);
+		if ((s != null) && !s.equals("null")) rc.setAttachments(s);
 		return rc;
 	}
 

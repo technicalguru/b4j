@@ -27,7 +27,6 @@ import b4j.core.Attachment;
 import b4j.core.Classification;
 import b4j.core.Comment;
 import b4j.core.Component;
-import b4j.core.Issue;
 import b4j.core.IssueType;
 import b4j.core.Priority;
 import b4j.core.Project;
@@ -55,8 +54,8 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	private Set<String> userNameQueue;
 	private Set<Long> userIdQueue;
 	private Set<User> users;
-	private Set<Issue> commentQueue;
-	private Set<Issue> comments;
+	private Set<String> commentQueue;
+	private Map<String,Set<Comment>> comments; 
 	private Set<Long> attachmentIdQueue;
 	private Set<Attachment> attachments;
 	private Set<String> priorityNameQueue;
@@ -87,8 +86,8 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		userNameQueue = new HashSet<String>();
 		userIdQueue = new HashSet<Long>();
 		users = new HashSet<User>();
-		commentQueue = new HashSet<Issue>();
-		comments = new HashSet<Issue>();
+		commentQueue = new HashSet<String>();
+		comments = new HashMap<String,Set<Comment>>();
 		attachmentIdQueue = new HashSet<Long>();
 		attachments = new HashSet<Attachment>();
 		priorityNameQueue = new HashSet<String>();
@@ -319,15 +318,15 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerComment(Issue issue) {
-		if (searchComment(issue) == null) {
-			commentQueue.add(issue);
+	public void registerComment(String issueId) {
+		if ((searchComment(issueId) == null) && !commentQueue.contains(issueId)) {
+			commentQueue.add(issueId);
 		}
 	}
 
 	/** Searches the comment whether it is already loaded */
-	protected Collection<Comment> searchComment(Issue issue) {
-		if (comments.contains(issue)) return issue.getComments();
+	protected Collection<Comment> searchComment(String issueId) {
+		if (comments.containsKey(issueId)) return comments.get(issueId);
 		return null;
 	}
 
@@ -335,13 +334,13 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerCommentsLoaded(Issue issue) {
-		commentQueue.remove(issue);
-		comments.add(issue);
+	public void registerComments(String issueId, Set<Comment> comments) {
+		commentQueue.remove(issueId);
+		this.comments.put(issueId, comments);
 	}
 
 	/** Returns the comments */
-	protected Collection<Issue> getCommentIssues() {
+	protected Collection<String> getCommentIssues() {
 		return commentQueue;
 	}
 
@@ -712,7 +711,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<Comment> getComments(Issue issue) {
+	public Collection<Comment> getComments(String issue) {
 		Collection<Comment> rc = searchComment(issue);
 		if (rc == null) {
 			try {

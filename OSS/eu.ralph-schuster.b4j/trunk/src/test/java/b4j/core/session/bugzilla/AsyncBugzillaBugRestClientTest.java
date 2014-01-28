@@ -93,10 +93,16 @@ public class AsyncBugzillaBugRestClientTest extends AbstractRestClientTest {
 		}
 		
 		List<String> expected = getStringList(new int[] { 16,30,32,34,8,12,42,23,24,2,3,10,33,49,50,36,37,22,45,46,43,47,40,41,44,48,14,17,20,21,29,31,35,9,13,5,11,38,39,15,27,28 });
-		for (Comment comment : myClient.getComments(issues).get()) {
-			assertTrue("Issue "+comment.getId()+" was not expected to be delivered by get()", expected.remove(comment.getId()));
+		for (Issue issue: issues) {
+			for (Comment comment : issue.getComments()) {
+				assertTrue("Issue "+comment.getId()+" was not expected to be delivered by get()", expected.remove(comment.getId()));
+			}
 		};
-		assertEquals("Not the correct issues returned by get()", 0, expected.size());
+		assertEquals("Not the correct comments returned by LazyRetriever.getComments()", 0, expected.size());
 	}
 
+	/** Test the get method */
+	@Test
+	public void testGetAttachments() throws Exception {
+	}
 }
