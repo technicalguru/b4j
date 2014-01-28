@@ -285,6 +285,7 @@ public class BugzillaUtils {
 		log.debug("   ParentId="+issue.getParentId());
 		log.debug("   CreationTimestamp="+issue.getCreationTimestamp());
 		log.debug("   Summary="+issue.getSummary());
+		debug("   Description=", issue.getDescription());
 		log.debug("   UpdateTimestamp="+issue.getUpdateTimestamp());
 		log.debug("   Type="+issue.getType());
 		log.debug("   TypeName="+issue.getType().getName());
@@ -323,7 +324,7 @@ public class BugzillaUtils {
 		log.debug("   Duplicate="+issue.isDuplicate());
 		log.debug("   Open="+issue.isOpen());
 		for (Comment c : issue.getComments()) {
-			log.debug("   comment="+c.getAuthor().getId()+" ("+c.getWhen()+"): "+c.getTheText());
+			debug("   comment "+c.getId()+" by "+c.getAuthor().getName()+" ("+c.getWhen()+"): ", c.getTheText());
 		}
 		for (Attachment a : issue.getAttachments()) {
 			log.debug("   attachment="+a.getFilename()+ "("+a.getType()+"): "+a.getDescription());
@@ -348,21 +349,32 @@ public class BugzillaUtils {
 		}
 	}
 
+	private static void debug(String linePrefix, String value) {
+		if (value != null) {
+			String l[] = value.split("\\n");
+			for (String s : l) {
+				log.debug(linePrefix+s);
+			}
+		} else {
+			log.debug(linePrefix+value);
+		}
+	}
+
 	/**
 	 * Debugs an issue in log file.
 	 * @param issue issue to be debugged
 	 */
 	public static void debug(Comment comment) {
 		log.debug("Comment:Id="+comment.getId());
-		log.debug("   issue="+comment.getIssue().getId());
+		log.debug("   issue="+comment.getIssueId());
 		log.debug("   author="+comment.getAuthor());
 		log.debug("   creationTime="+comment.getWhen());
 		log.debug("   updateAuthor="+comment.getUpdateAuthor());
 		log.debug("   updateTime="+comment.getLastUpdate());
-		log.debug("   text="+comment.getTheText());
+		debug("   text=", comment.getTheText());
 		log.debug("   attachments="+comment.getAttachmentCount());
 	}
-	
+
 	/**
 	 * Parses the date by trying various formats.
 	 * @param s string to parse

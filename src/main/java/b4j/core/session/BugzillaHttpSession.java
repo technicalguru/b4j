@@ -645,7 +645,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 			} else if (name.equals("qa_contact")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("long_desc")) { // multiple
-				currentComment = new DefaultComment(currentIssue);
+				currentComment = new DefaultComment(currentIssue.getId());
 			} else if (name.equals("commentid")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("who")) {
@@ -831,7 +831,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 					currentAttachment.setUri(URI.create(getBaseUrl()+PAGES[BUGZILLA_GET_ATTACHMENT]+"?id="+currentAttachment.getId()));
 					currentIssue.addAttachments(currentAttachment);
 				} else if (currentComment != null) {
-					currentComment.addAttachmentIds(currentContent.toString());
+					currentComment.addAttachments(currentContent.toString());
 				}
 				currentContent = null;
 			} else if (name.equals("date")) {

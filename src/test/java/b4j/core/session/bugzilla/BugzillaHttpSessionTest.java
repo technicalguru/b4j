@@ -34,7 +34,6 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.junit.Test;
 
 import rs.baselib.io.FileFinder;
-import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
@@ -115,8 +114,8 @@ public class BugzillaHttpSessionTest {
 					Comment desc = issue.getComment(entry.getKey());
 					assertNotNull("Expected comment not found", desc);
 					boolean found = false;
-					for (Attachment attachment : desc.getAttachments()) {
-						if (entry.getValue().equals(""+attachment.getId())) {
+					for (String attachment : desc.getAttachments()) {
+						if (entry.getValue().equals(""+attachment)) {
 							found = true;
 							break;
 						}

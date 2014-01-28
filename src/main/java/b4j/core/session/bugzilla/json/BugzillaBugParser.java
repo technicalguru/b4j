@@ -130,7 +130,8 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set(Issue.ACTUAL_TIME, json.getInt("actual_time"));
 		rc.set(Issue.ESTIMATED_TIME, json.getInt("estimated_time"));
 		rc.set(Issue.REMAINING_TIME, json.getInt("remaining_time"));
-
+		if (retriever != null) retriever.registerComment(rc.getId());
+		
 		return rc;
 	}
 	

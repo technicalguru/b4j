@@ -17,11 +17,10 @@
  */
 package b4j.core;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,7 +35,7 @@ public class DefaultComment implements Comment {
 	/**
 	 * 
 	 */
-	private final Issue issue;
+	private String issueId;
 	private String id;
 	private User author;
 	private Date when;
@@ -48,8 +47,8 @@ public class DefaultComment implements Comment {
 	/**
 	 * Default Constructor.
 	 */
-	public DefaultComment(Issue issue) {
-		this.issue = issue;
+	public DefaultComment(String issueId) {
+		this.issueId = issueId;
 		id = "unknown";
 		when = new Date(0);
 		attachments = new HashSet<String>();
@@ -75,8 +74,8 @@ public class DefaultComment implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Issue getIssue() {
-		return this.issue;
+	public String getIssueId() {
+		return this.issueId;
 	}
 
 	/**
@@ -84,8 +83,7 @@ public class DefaultComment implements Comment {
 	 */
 	@Override
 	public User getAuthor() {
-		if (author != null) return author;
-		return this.issue.getReporter();
+		return author;
 	}
 
 	/**
@@ -101,8 +99,7 @@ public class DefaultComment implements Comment {
 	 */
 	@Override
 	public Date getWhen() {
-		if (when.getTime() > 0) return when;
-		return this.issue.getCreationTimestamp();
+		return when;
 	}
 
 	/**
@@ -166,7 +163,7 @@ public class DefaultComment implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setAttachments(Collection<Attachment> attachments) {
+	public void setAttachments(Collection<String> attachments) {
 		removeAllAttachments();
 		addAttachments(attachments);
 	}
@@ -175,7 +172,7 @@ public class DefaultComment implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setAttachments(Attachment... attachments) {
+	public void setAttachments(String... attachments) {
 		removeAllAttachments();
 		addAttachments(attachments);
 	}
@@ -186,25 +183,16 @@ public class DefaultComment implements Comment {
 	@Override
 	public void setAttachmentIds(Collection<String> ids) {
 		removeAllAttachments();
-		addAttachmentIds(ids);
+		addAttachments(ids);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setAttachmentIds(String... ids) {
-		removeAllAttachments();
-		addAttachmentIds(ids);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addAttachmentIds(Collection<String> ids) {
-		for (String id : ids) {
-			attachments.add(id);
+	public void addAttachments(String... attachments) {
+		for (String item : attachments) {
+			this.attachments.add(item);
 		}
 	}
 
@@ -212,29 +200,9 @@ public class DefaultComment implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addAttachmentIds(String... ids) {
-		for (String id : ids) {
-			attachments.add(id);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addAttachments(Attachment... attachments) {
-		for (Attachment item : attachments) {
-			this.attachments.add(item.getId());
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void addAttachments(Collection<Attachment> attachments) {
-		for (Attachment item : attachments) {
-			this.attachments.add(item.getId());
+	public void addAttachments(Collection<String> attachments) {
+		for (String item : attachments) {
+			this.attachments.add(item);
 		}
 	}
 
@@ -250,25 +218,17 @@ public class DefaultComment implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Collection<Attachment> getAttachments() {
-		List<Attachment> rc = new ArrayList<Attachment>();
-		for (String id : this.attachments) {
-			for (Attachment item : issue.getAttachments()) {
-				if (item.getId().equals(id)) {
-					rc.add(item);
-				}
-			}
-		}
-		return rc;
+	public Collection<String> getAttachments() {
+		return Collections.unmodifiableSet(attachments);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeAttachments(Collection<Attachment> attachments) {
-		for (Attachment item : attachments) {
-			this.attachments.remove(item.getId());
+	public void removeAttachments(Collection<String> attachments) {
+		for (String item : attachments) {
+			this.attachments.remove(item);
 		}
 	}
 
@@ -276,29 +236,9 @@ public class DefaultComment implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void removeAttachments(Attachment... attachments) {
-		for (Attachment item : attachments) {
-			this.attachments.remove(item.getId());
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeAttachmentIds(Collection<String> ids) {
-		for (String id : ids) {
-			this.attachments.remove(id);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void removeAttachmentIds(String... ids) {
-		for (String id : ids) {
-			this.attachments.remove(id);
+	public void removeAttachments(String... attachments) {
+		for (String item : attachments) {
+			this.attachments.remove(item);
 		}
 	}
 

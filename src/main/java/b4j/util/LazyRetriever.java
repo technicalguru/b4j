@@ -18,12 +18,12 @@
 package b4j.util;
 
 import java.util.Collection;
+import java.util.Set;
 
 import b4j.core.Attachment;
 import b4j.core.Classification;
 import b4j.core.Comment;
 import b4j.core.Component;
-import b4j.core.Issue;
 import b4j.core.IssueType;
 import b4j.core.Priority;
 import b4j.core.Project;
@@ -53,9 +53,9 @@ public interface LazyRetriever {
 	public void registerProject(long id);
 	public void registerProject(Project project);
 
-	public Collection<Comment> getComments(Issue issue);
-	public void registerComment(Issue issue);
-	public void registerCommentsLoaded(Issue issue);
+	public Collection<Comment> getComments(String issueId);
+	public void registerComment(String issueId);
+	public void registerComments(String issueId, Set<Comment> comments);
 	
 	public Component getComponent(String projectName, String name);
 	public void registerComponent(String projectName, String name);

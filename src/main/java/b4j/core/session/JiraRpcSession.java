@@ -36,7 +36,6 @@ import rs.baselib.configuration.ConfigurationUtils;
 import rs.baselib.security.AuthorizationCallback;
 import rs.baselib.security.DefaultAuthorizationCallback;
 import b4j.core.Attachment;
-import b4j.core.Comment;
 import b4j.core.DefaultAttachment;
 import b4j.core.DefaultComment;
 import b4j.core.Issue;
@@ -286,13 +285,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		Issue rc = createIssue();
 		rc.setId(issue.getKey());
 		rc.setSummary(issue.getSummary());
-		Comment desc = new DefaultComment(rc);
-		desc.setId(issue.getKey());
-		desc.setTheText(issue.getDescription());
-		desc.setLastUpdate(issue.getCreationDate().toDate());
-		desc.setWhen(issue.getCreationDate().toDate());
-		desc.setAuthor(users.get(issue.getReporter()));
-		rc.addComments(desc);
+		rc.setDescription(issue.getDescription());
 		rc.setProject(projects.get(issue.getProject()));
 		rc.addComponents(components.get(issue.getComponents(), rc.getProject()));
 		rc.setAssignee(users.get(issue.getAssignee()));
@@ -317,7 +310,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 			rc.addAttachments(a);
 		}
 		for (com.atlassian.jira.rest.client.domain.Comment comment : issue.getComments()) {
-			desc = new DefaultComment(rc);
+			DefaultComment desc = new DefaultComment(rc.getId());
 			desc.setId(""+comment.getId());
 			desc.setTheText(comment.getBody());
 			desc.setWhen(comment.getCreationDate().toDate());
