@@ -18,6 +18,7 @@
 package b4j.util;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -56,8 +57,8 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	private Set<User> users;
 	private Set<String> commentQueue;
 	private Map<String,Set<Comment>> comments; 
-	private Set<Long> attachmentIdQueue;
-	private Set<Attachment> attachments;
+	private Set<String> attachmentQueue;
+	private Map<String,Set<Attachment>> attachments;
 	private Set<String> priorityNameQueue;
 	private Set<Priority> priorities;
 	private Set<String> severityNameQueue;
@@ -88,8 +89,8 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		users = new HashSet<User>();
 		commentQueue = new HashSet<String>();
 		comments = new HashMap<String,Set<Comment>>();
-		attachmentIdQueue = new HashSet<Long>();
-		attachments = new HashSet<Attachment>();
+		attachmentQueue = new HashSet<String>();
+		attachments = new HashMap<String,Set<Attachment>>();
 		priorityNameQueue = new HashSet<String>();
 		priorities = new HashSet<Priority>();
 		severityNameQueue = new HashSet<String>();
@@ -348,33 +349,29 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerAttachment(long id) {
-		if (searchAttachment(id) == null) {
-			attachmentIdQueue.add(id);
+	public void registerAttachment(String issueId) {
+		if (searchAttachment(issueId) == null) {
+			attachmentQueue.add(issueId);
 		}
 	}
 
 	/** Searches the attachment whether it is already loaded */
-	protected Attachment searchAttachment(long id) {
-		for (Attachment o : attachments) {
-			String oid = o.getId();
-			if ((oid != null) && oid.equals(Long.toString(id))) return o;
-		}
-		return null;
+	protected Set<Attachment> searchAttachment(String issueId) {
+		return attachments.get(issueId);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void registerAttachment(Attachment attachment) {
-		if (!attachments.contains(attachment)) attachments.add(attachment);
-		attachmentIdQueue.remove(Long.getLong(attachment.getId()));
+	public void registerAttachments(String issueId, Set<Attachment> attachments) {
+		attachmentQueue.remove(issueId);
+		this.attachments.put(issueId, attachments);
 	}
 
 	/** Returns the attachments */
-	protected Collection<Long> getAttachmentIds() {
-		return attachmentIdQueue;
+	protected Collection<String> getAttachmentIssues() {
+		return attachmentQueue;
 	}
 
 	/**
@@ -731,16 +728,17 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Attachment getAttachment(long id) {
-		Attachment rc = searchAttachment(id);
+	public Collection<Attachment> getAttachments(String issueId) {
+		Collection<Attachment> rc = searchAttachment(issueId);
 		if (rc == null) {
 			try {
 				loadAttachments();
 			} catch (Exception e) {
 				throw new RuntimeException("Cannot load attachments", e);
 			}
-			rc = searchAttachment(id);
+			rc = searchAttachment(issueId);
 		}
+		if (rc == null) rc = Collections.emptySet();
 		return rc;
 	}
 

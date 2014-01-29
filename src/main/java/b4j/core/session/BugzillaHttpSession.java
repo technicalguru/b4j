@@ -664,7 +664,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 			} else if (name.equals("cc")) { // multiple
 				currentContent = new StringBuffer();
 			} else if (name.equals("attachment")) { // multiple
-				currentAttachment = new DefaultAttachment(currentIssue);
+				currentAttachment = new DefaultAttachment(currentIssue.getId());
 			} else if (name.equals("attachid")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("date")) {

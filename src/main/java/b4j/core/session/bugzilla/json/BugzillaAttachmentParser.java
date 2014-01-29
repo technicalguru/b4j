@@ -26,8 +26,8 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import b4j.core.Comment;
-import b4j.core.DefaultComment;
+import b4j.core.Attachment;
+import b4j.core.DefaultAttachment;
 import b4j.core.session.bugzilla.async.AsyncBugzillaRestClient;
 import b4j.util.BugzillaUtils;
 
@@ -39,46 +39,45 @@ import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
  * @since 2.0
  *
  */
-public class BugzillaCommentParser extends AbstractJsonParser implements JsonObjectParser<Iterable<Comment>> {
+public class BugzillaAttachmentParser extends AbstractJsonParser implements JsonObjectParser<Iterable<Attachment>> {
 
 	/**
 	 * Constructor.
 	 */
-	public BugzillaCommentParser(AsyncBugzillaRestClient mainClient) {
+	public BugzillaAttachmentParser(AsyncBugzillaRestClient mainClient) {
 		super(mainClient.getLazyRetriever());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Iterable<Comment> parse(JSONObject json) throws JSONException {
-		List<Comment> rc = new ArrayList<Comment>();
+	public Iterable<Attachment> parse(JSONObject json) throws JSONException {
+		List<Attachment> rc = new ArrayList<Attachment>();
 		checkError(json); // Throws exception when error occurred
 		JSONObject bugs = getResult(json).getJSONObject("bugs");
+
 		Iterator<String> keys = bugs.keys();
 		while (keys.hasNext()) {
 			String issueId = keys.next();
-			JSONArray comments = bugs.getJSONObject(issueId).getJSONArray("comments");
-			for (int i=0; i<comments.length(); i++) {
-				rc.add(parseSingleComment(comments.getJSONObject(i)));
+			JSONArray attachments = bugs.getJSONArray(issueId);
+			for (int i=0; i<attachments.length(); i++) {
+				rc.add(parseSingleAttachment(attachments.getJSONObject(i)));
 			}
 		}
 		return rc;
 	}
 
-	public Comment parseSingleComment(JSONObject json) throws JSONException {
-		DefaultComment rc = new DefaultComment(json.getString("bug_id"));
+	public Attachment parseSingleAttachment(JSONObject json) throws JSONException {
+		DefaultAttachment rc = new DefaultAttachment(json.getString("bug_id"));
 		rc.setId(json.getString("id"));
-		rc.setAuthor(getLazyRetriever().getUser(json.getString("creator")));
-		rc.setUpdateAuthor(getLazyRetriever().getUser(json.getString("author")));
+		rc.setDescription(json.getString("description"));
+		rc.setFilename(json.getString("file_name"));
+		rc.setContent(json.getInt("size"), json.getString("data"));
+		rc.setType(json.getString("content_type"));
 		try {
-			rc.setLastUpdate(BugzillaUtils.parseDate(json.getString("time")));
-			rc.setWhen(BugzillaUtils.parseDate(json.getString("creation_time")));
+			rc.setDate(BugzillaUtils.parseDate(json.getString("last_change_time")));
 		} catch (ParseException e) {
 			throw new JSONException(e);
 		}
-		rc.setTheText(json.getString("text"));
-		String s = json.getString("attachment_id");
-		if ((s != null) && !s.equals("null")) rc.setAttachments(s);
 		return rc;
 	}
 

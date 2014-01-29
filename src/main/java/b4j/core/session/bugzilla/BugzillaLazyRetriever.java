@@ -118,8 +118,19 @@ public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 	 */
 	@Override
 	protected void loadAttachments() throws Exception {
-		for (Attachment a : client.getBugClient().getAttachments(getAttachmentIds()).get()) {
-			registerAttachment(a);
+		Map<String,Set<Attachment>> loaded = new HashMap<String, Set<Attachment>>();
+		Iterable<Attachment> i = client.getBugClient().getAttachments(getAttachmentIssues()).get();
+		for (Attachment a : i) {
+			String issueId = a.getIssueId();
+			Set<Attachment> attachments = loaded.get(issueId);
+			if (attachments == null) {
+				attachments = new HashSet<Attachment>();
+				loaded.put(issueId, attachments);
+			}
+			attachments.add(a);
+		}
+		for (Map.Entry<String,Set<Attachment>> entry : loaded.entrySet()) {
+			registerAttachments(entry.getKey(), entry.getValue());
 		}
 	}
 

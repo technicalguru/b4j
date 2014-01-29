@@ -300,7 +300,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		rc.addFixVersions(versions.get(issue.getFixVersions(), rc.getProject()));
 		rc.addAffectedVersions(versions.get(issue.getAffectedVersions(), rc.getProject()));
 		for (com.atlassian.jira.rest.client.domain.Attachment attachment : issue.getAttachments()) {
-			Attachment a = new DefaultAttachment(rc);
+			Attachment a = new DefaultAttachment(rc.getId());
 			a.setId(attachment.getSelf().toString());
 			a.setFilename(attachment.getFilename());
 			a.setDescription(attachment.getFilename());
