@@ -109,6 +109,7 @@ public class DefaultIssue implements Issue {
 	private List<Comment> comments;
 	private boolean commentsRetrieved = false;
 	private List<Attachment> attachments;
+	private boolean attachmentsRetrieved = false;
 	private Map<String,Object> customFields;
 	private List<IssueLink> links;
 	private List<Issue> children;
@@ -721,8 +722,7 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Attachment getAttachment(String id) {
-		check(attachments, "attachment");
-		for (Attachment a : attachments) {
+		for (Attachment a : getAttachments()) {
 			if (CommonUtils.equals(a.getId(), id)) return a;
 		}
 		return null;
@@ -947,7 +947,13 @@ public class DefaultIssue implements Issue {
 	 */
 	@Override
 	public Collection<Attachment> getAttachments() {
-		check(attachments, "attachment");
+		if (!attachmentsRetrieved) {
+			attachmentsRetrieved = true;
+			LazyRetriever retriever = (LazyRetriever)get(LAZY_RETRIEVER);
+			if (retriever != null) {
+				attachments.addAll(retriever.getAttachments(getId()));
+			}
+		}
 		return Collections.unmodifiableList(attachments);
 	}
 

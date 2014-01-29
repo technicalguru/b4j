@@ -3,6 +3,8 @@ package b4j.core;
 import java.net.URI;
 import java.util.Date;
 
+import com.sun.jersey.core.util.Base64;
+
 /**
  * An attachment definition.
  * This object represents an attachment for a bug.
@@ -14,19 +16,21 @@ public class DefaultAttachment implements Attachment {
 	/**
 	 * 
 	 */
-	private final Issue issue;
+	private String issueId;
 	private String id;
 	private Date date;
 	private String description;
 	private String filename;
 	private String type;
 	private URI uri;
-
+	private int length;
+	private byte content[];
+	
 	/**
 	 * Default constructor.
 	 */
-	public DefaultAttachment(Issue issue) {
-		this.issue = issue;
+	public DefaultAttachment(String issueId) {
+		this.issueId = issueId;
 		date = new Date(0);
 	}
 
@@ -34,8 +38,8 @@ public class DefaultAttachment implements Attachment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Issue getIssue() {
-		return issue;
+	public String getIssueId() {
+		return issueId;
 	}
 
 	/**
@@ -169,5 +173,31 @@ public class DefaultAttachment implements Attachment {
 		return true;
 	}
 
+	/**
+	 * Sets the content of the attachment.
+	 * @param length the length
+	 * @param bytes the bytes
+	 */
+	public void setContent(int length, String bytes) {
+		this.length = length;
+		this.content = Base64.decode(bytes);
+	}
 
+	/**
+	 * Returns the content length.
+	 * @return the length
+	 */
+	public int getLength() {
+		return length;
+	}
+
+	/**
+	 * Returns the content.
+	 * @return the content
+	 */
+	public byte[] getContent() {
+		return content;
+	}
+	
+	
 }

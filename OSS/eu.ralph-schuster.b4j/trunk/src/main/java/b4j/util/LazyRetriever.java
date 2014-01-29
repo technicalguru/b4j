@@ -67,9 +67,9 @@ public interface LazyRetriever {
 	public void registerUser(long id);
 	public void registerUser(User user);
 
-	public Attachment getAttachment(long id);
-	public void registerAttachment(long id);
-	public void registerAttachment(Attachment attachment);
+	public Collection<Attachment> getAttachments(String issueIdd);
+	public void registerAttachment(String issueId);
+	public void registerAttachments(String issueId, Set<Attachment> attachment);
 
 	public Priority getPriority(String name);
 	public void registerPriority(String name);

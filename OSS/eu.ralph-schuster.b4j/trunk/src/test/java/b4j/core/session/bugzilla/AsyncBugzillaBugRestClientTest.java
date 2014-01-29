@@ -29,6 +29,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.Issue;
 
@@ -95,7 +96,7 @@ public class AsyncBugzillaBugRestClientTest extends AbstractRestClientTest {
 		List<String> expected = getStringList(new int[] { 16,30,32,34,8,12,42,23,24,2,3,10,33,49,50,36,37,22,45,46,43,47,40,41,44,48,14,17,20,21,29,31,35,9,13,5,11,38,39,15,27,28 });
 		for (Issue issue: issues) {
 			for (Comment comment : issue.getComments()) {
-				assertTrue("Issue "+comment.getId()+" was not expected to be delivered by get()", expected.remove(comment.getId()));
+				assertTrue("Comment "+comment.getId()+" was not expected to be delivered by get()", expected.remove(comment.getId()));
 			}
 		};
 		assertEquals("Not the correct comments returned by LazyRetriever.getComments()", 0, expected.size());
@@ -104,5 +105,17 @@ public class AsyncBugzillaBugRestClientTest extends AbstractRestClientTest {
 	/** Test the get method */
 	@Test
 	public void testGetAttachments() throws Exception {
+		List<Issue> issues = new ArrayList<Issue>();
+		for (Issue issue :  myClient.getBugs(2,4,7,8,9,10,11,12,15,16,17,19,20,21,22,23,24,25,26,27,28,29,30).get()) {
+			if (issue != null) issues.add(issue);
+		}
+		
+		List<String> expected = getStringList(new int[] { 1, 2, 3 });
+		for (Issue issue: issues) {
+			for (Attachment a : issue.getAttachments()) {
+				assertTrue("Attachment "+a.getId()+" was not expected to be delivered by get()", expected.remove(a.getId()));
+			}
+		};
+		assertEquals("Not the correct attachments returned by LazyRetriever.getAttachments()", 0, expected.size());
 	}
 }

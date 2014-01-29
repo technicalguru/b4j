@@ -29,12 +29,6 @@ import java.util.Date;
 public interface Attachment {
 
 	/**
-	 * Returns the issue report this attachment belongs to.
-	 * @return the issue record of this attachment.
-	 */
-	public Issue getIssue();
-	
-	/**
 	 * Returns the ID of this attachment.
 	 * @return the ID
 	 */
@@ -46,6 +40,12 @@ public interface Attachment {
 	 */
 	public void setId(String id);
 
+	/**
+	 * Returns the issue ID this attachment belongs to.
+	 * @return the issue ID of this attachment.
+	 */
+	public String getIssueId();
+	
 	/**
 	 * Returns the date of the attachment.
 	 * @return the date

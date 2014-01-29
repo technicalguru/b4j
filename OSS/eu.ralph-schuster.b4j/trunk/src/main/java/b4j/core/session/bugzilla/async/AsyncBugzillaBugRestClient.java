@@ -27,6 +27,7 @@ import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.Issue;
 import b4j.core.session.bugzilla.BugzillaBugRestClient;
+import b4j.core.session.bugzilla.json.BugzillaAttachmentParser;
 import b4j.core.session.bugzilla.json.BugzillaBugParser;
 import b4j.core.session.bugzilla.json.BugzillaCommentParser;
 
@@ -41,7 +42,9 @@ import com.atlassian.util.concurrent.Promise;
 public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implements BugzillaBugRestClient {
 
 	private BugzillaBugParser bugParser;
-
+	private BugzillaCommentParser commentParser;
+	private BugzillaAttachmentParser attachmentParser;
+	
 	/**
 	 * Constructor.
 	 * @param client
@@ -49,6 +52,8 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	public AsyncBugzillaBugRestClient(AsyncBugzillaRestClient mainClient) {
 		super(mainClient, "Bug");
 		bugParser = new BugzillaBugParser(mainClient);
+		commentParser = new BugzillaCommentParser(mainClient);
+		attachmentParser = new BugzillaAttachmentParser(mainClient);
 	}
 
 	/**
@@ -83,18 +88,20 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Promise<Iterable<Attachment>> getAttachments(long... ids) {
-		// TODO Auto-generated method stub
-		return null;
+	public Promise<Iterable<Attachment>> getAttachments(String... issueIds) {
+		Collection<String> coll = new ArrayList<String>();
+		for (String i : issueIds) coll.add(i);
+		return getAttachments(coll);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Promise<Iterable<Attachment>> getAttachments(Collection<Long> ids) {
-		// TODO Auto-generated method stub
-		return null;
+	public Promise<Iterable<Attachment>> getAttachments(Collection<String> issueIds) {
+		Map<String,Object> params = new HashMap<String, Object>();
+		params.put("ids", issueIds);
+		return postAndParse("attachments", params, attachmentParser);
 	}
 
 	/**
@@ -114,7 +121,7 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	public Promise<Iterable<Comment>> getComments(Collection<String> issueIds) {
 		Map<String,Object> params = new HashMap<String, Object>();
 		params.put("ids", issueIds);
-		return postAndParse("comments", params, new BugzillaCommentParser(getMainClient()));
+		return postAndParse("comments", params, commentParser);
 	}
 
 	protected Collection<Long> getIds(Collection<Issue> issues) {
