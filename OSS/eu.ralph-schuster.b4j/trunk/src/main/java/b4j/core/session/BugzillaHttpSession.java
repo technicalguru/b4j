@@ -67,6 +67,7 @@ import b4j.core.session.bugzilla.BugzillaTransformer;
 import b4j.core.session.bugzilla.BugzillaUser;
 import b4j.core.session.bugzilla.BugzillaVersion;
 import b4j.util.BugzillaUtils;
+import b4j.util.HttpSessionParams;
 import b4j.util.MetaData;
 import b4j.util.UrlParameters;
 
@@ -74,13 +75,13 @@ import b4j.util.UrlParameters;
 /**
  * Implements Bugzilla access via HTTP.
  * <p>There is no additional configuration required. See
- * {@link AbstractHttpSession} for configuration description.</p>
+ * {@link AbstractPlainHttpSession} for configuration description.</p>
  * @deprecated Use {@link BugzillaRpcSession}
  * @author Ralph Schuster
  *
  */
 @Deprecated
-public class BugzillaHttpSession extends AbstractHttpSession {
+public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 	/** Constant for requesting URL connection to login page */
 	public static final int BUGZILLA_LOGIN = 0;
@@ -150,8 +151,11 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 		if (isLoggedIn()) return true;
 		setBugzillaVersion(null);
 
+		HttpSessionParams httpParams = getHttpSessionParams();
+		if (httpParams == null) httpParams = new HttpSessionParams();
+		
 		// Exception: No login required
-		if (getLogin() == null) {
+		if (httpParams.getLogin() == null) {
 			getLog().debug("No Auth required");
 			setLoggedIn(true);
 			return true;
@@ -162,8 +166,8 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 			// Bugzilla_password = xxx
 			// GoAheadAndLogIn = Login
 			UrlParameters params = new UrlParameters();
-			params.setParameter("Bugzilla_login", getLogin());
-			params.setParameter("Bugzilla_password", getPassword());
+			params.setParameter("Bugzilla_login", httpParams.getLogin());
+			params.setParameter("Bugzilla_password", httpParams.getPassword());
 			params.setParameter("GoAheadAndLogIn", "Login");
 			String paramString = params.getUrlEncodedString();
 
@@ -226,7 +230,7 @@ public class BugzillaHttpSession extends AbstractHttpSession {
 		if (!isLoggedIn()) return;
 
 		// Only when login was required
-		if (getLogin() != null) {
+		if (getHttpSessionParams().getLogin() != null) {
 			try {
 				// make a connection
 				HttpURLConnection con = getConnection(BUGZILLA_LOGOUT);

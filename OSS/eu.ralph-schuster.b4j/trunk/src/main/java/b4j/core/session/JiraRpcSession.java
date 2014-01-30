@@ -19,9 +19,7 @@ package b4j.core.session;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
-import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
 import java.util.Iterator;
@@ -29,12 +27,8 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.HierarchicalConfiguration;
 import org.joda.time.DateTime;
 
-import rs.baselib.configuration.ConfigurationUtils;
-import rs.baselib.security.AuthorizationCallback;
-import rs.baselib.security.DefaultAuthorizationCallback;
 import b4j.core.Attachment;
 import b4j.core.DefaultAttachment;
 import b4j.core.DefaultComment;
@@ -52,15 +46,11 @@ import b4j.core.session.jira.JiraStatus;
 import b4j.core.session.jira.JiraTransformer;
 import b4j.core.session.jira.JiraUser;
 import b4j.core.session.jira.JiraVersion;
-import b4j.util.CombinedAuthenticationHandler;
 import b4j.util.MetaData;
-import b4j.util.ProxyAuthenticationHandler;
 
 import com.atlassian.httpclient.api.HttpClient;
-import com.atlassian.jira.rest.client.AuthenticationHandler;
 import com.atlassian.jira.rest.client.JiraRestClient;
 import com.atlassian.jira.rest.client.JiraRestClientFactory;
-import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
 import com.atlassian.jira.rest.client.domain.BasicComponent;
 import com.atlassian.jira.rest.client.domain.BasicIssue;
 import com.atlassian.jira.rest.client.domain.BasicIssueType;
@@ -71,7 +61,6 @@ import com.atlassian.jira.rest.client.domain.BasicStatus;
 import com.atlassian.jira.rest.client.domain.BasicUser;
 import com.atlassian.jira.rest.client.domain.SearchResult;
 import com.atlassian.jira.rest.client.domain.Version;
-import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFactory;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
 import com.atlassian.util.concurrent.Promise;
 
@@ -80,16 +69,13 @@ import com.atlassian.util.concurrent.Promise;
  * @author ralph
  *
  */
-public class JiraRpcSession extends AbstractAuthorizedSession {
+public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 
 	private boolean loggedIn;
 	private URL baseUrl;
 	private String jiraVersion;
-	private HttpClient httpClient;
 	private JiraRestClient jiraClient;
 	private AsynchronousFilterRestClient filterClient;
-	private Proxy proxy;
-	private AuthorizationCallback proxyAuthorizationCallback;
 	private MetaData<BasicIssueType, JiraIssueType> issueTypes = new MetaData<BasicIssueType, JiraIssueType>(new JiraTransformer.IssueType());
 	private MetaData<BasicStatus, JiraStatus> status = new MetaData<BasicStatus, JiraStatus>(new JiraTransformer.Status());
 	private MetaData<BasicPriority, JiraPriority> priorities = new MetaData<BasicPriority, JiraPriority>(new JiraTransformer.Priority());
@@ -104,6 +90,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 	 * Default constructor
 	 */
 	public JiraRpcSession() {
+		getHttpSessionParams().setBasicAuthentication(true);
 	}
 
 	/**
@@ -117,43 +104,11 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {
 		super.configure(config);
-		String className = null;
 		try {
 			String home = config.getString("jira-home");
 			if (home == null) home = config.getString("bugzilla-home");
 			setBaseUrl(new URL(home));
 			
-			// proxy configuration
-			String s = config.getString("proxy-host");
-			if (s != null) {
-				int pos = -1;
-				int port = 80;
-				pos = s.indexOf(':');
-				if (pos > 0) {
-					port = Integer.parseInt(s.substring(pos+1));
-					s = s.substring(0, pos);
-				}
-				setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(s, port)));
-				
-				// Proxy authorization
-				try {
-					Configuration authCfg = ((HierarchicalConfiguration)config).configurationAt("ProxyAuthorizationCallback(0)");
-					if (authCfg != null) {
-						AuthorizationCallback callback = null;
-						className = authCfg.getString("[@class]");
-						if ((className.trim().length() == 0) 
-								|| className.toLowerCase().trim().equals("null")
-								|| className.toLowerCase().trim().equals("nil")) {
-							className = DefaultAuthorizationCallback.class.getName();
-						}
-						callback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
-						setProxyAuthorizationCallback(callback);
-					}
-				} catch (IllegalArgumentException e) {
-					// No auth config for proxy
-				}
-
-			}
 		} catch (MalformedURLException e) {
 			throw new ConfigurationException("Malformed JIRA URL: ", e);
 		}
@@ -171,34 +126,12 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		try {
 			JiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
 			URI jiraServerUri = getBaseUrl().toURI();
-			String login = getLogin();
-			String passwd = getPassword();
-			AuthenticationHandler authenticationHandler = null;
-			if (login != null) {
-				authenticationHandler = new BasicHttpAuthenticationHandler(login, passwd);
-			}
-			Proxy proxy = getProxy();
-			if ((proxy != null) && (proxy.type() == Proxy.Type.HTTP)) {
-				InetSocketAddress address = (InetSocketAddress)proxy.address();
-				System.setProperty("http.proxyHost", address.getHostName());
-				System.setProperty("http.proxyPort", ""+address.getPort());
-			}
-			AuthenticationHandler proxyAuthHandler = null;
-			AuthorizationCallback proxyAuthCallback = getProxyAuthorizationCallback();
-			if (proxyAuthCallback != null) {
-				String proxyLogin  = proxyAuthCallback.getName();
-				String proxyPasswd = proxyAuthCallback.getPassword();
-				proxyAuthHandler = new ProxyAuthenticationHandler(proxyLogin, proxyPasswd);
-			}
-			AuthenticationHandler authHandler = new CombinedAuthenticationHandler(proxyAuthHandler, authenticationHandler);
-
-			httpClient = new AsynchronousHttpClientFactory().createClient(jiraServerUri, authHandler);
+			
+			HttpClient httpClient = getHttpClient(jiraServerUri);
 			jiraClient = factory.create(jiraServerUri, httpClient);
-			//jiraVersion = jiraClient.getMetadataClient().getServerInfo().get().getVersion();
+			jiraVersion = jiraClient.getMetadataClient().getServerInfo().get().getVersion();
 			filterClient = new AsynchronousFilterRestClient(jiraServerUri, httpClient, jiraClient.getSearchClient());
 			setLoggedIn(true);
-		//} catch (ExecutionException e) {
-		//	getLog().error("Cannot login as "+getLogin(), e);
 		} catch (Exception e) {
 			getLog().error("Cannot connect to JIRA:", e);
 		}
@@ -214,7 +147,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 		if (!isLoggedIn()) return;
 		jiraClient = null;
 		filterClient = null;
-		httpClient = null;
+		setHttpClient(null);
 		setLoggedIn(false);
 	}
 
@@ -350,7 +283,7 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 	@Override
 	public InputStream getAttachment(Attachment attachment) throws IOException {
 		try {
-			return httpClient.newRequest(attachment.getUri()).get().get().getEntityStream();
+			return getHttpClient().newRequest(attachment.getUri()).get().get().getEntityStream();
 		} catch (InterruptedException e) {
 			throw new IOException("Request was interrupted", e);
 		} catch (ExecutionException e) {
@@ -403,38 +336,6 @@ public class JiraRpcSession extends AbstractAuthorizedSession {
 	 */
 	public void setBaseUrl(URL baseUrl) {
 		this.baseUrl = baseUrl;
-	}
-
-	/**
-	 * Returns the proxy.
-	 * @return the proxy
-	 */
-	public Proxy getProxy() {
-		return proxy;
-	}
-
-	/**
-	 * Sets the proxy.
-	 * @param proxy the proxy to set
-	 */
-	public void setProxy(Proxy proxy) {
-		this.proxy = proxy;
-	}
-
-	/**
-	 * Returns the proxyAuthorizationCallback.
-	 * @return the proxyAuthorizationCallback
-	 */
-	public AuthorizationCallback getProxyAuthorizationCallback() {
-		return proxyAuthorizationCallback;
-	}
-
-	/**
-	 * Sets the proxyAuthorizationCallback.
-	 * @param proxyAuthorizationCallback the proxyAuthorizationCallback to set
-	 */
-	public void setProxyAuthorizationCallback(AuthorizationCallback proxyAuthorizationCallback) {
-		this.proxyAuthorizationCallback = proxyAuthorizationCallback;
 	}
 
 	protected class SearchIterator implements Iterator<Issue> {

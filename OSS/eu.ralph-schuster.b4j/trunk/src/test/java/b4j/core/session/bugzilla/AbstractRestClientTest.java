@@ -23,20 +23,14 @@ import java.net.URI;
 import java.net.URL;
 
 import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.SubnodeConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 
-import rs.baselib.configuration.ConfigurationUtils;
 import rs.baselib.io.FileFinder;
-import rs.baselib.security.AuthorizationCallback;
 import b4j.core.session.bugzilla.async.AsyncBugzillaRestClientFactory;
-import b4j.util.CombinedAuthenticationHandler;
-import b4j.util.ProxyAuthenticationHandler;
+import b4j.util.HttpClients;
+import b4j.util.HttpSessionParams;
 
 import com.atlassian.httpclient.api.HttpClient;
-import com.atlassian.jira.rest.client.AuthenticationHandler;
-import com.atlassian.jira.rest.client.auth.AnonymousAuthenticationHandler;
-import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFactory;
 
 /**
  * Abstract setup for tests.
@@ -61,39 +55,15 @@ public abstract class AbstractRestClientTest {
 		assertNotNull("Cannot find test-config.xml", url);
 		XMLConfiguration config = new XMLConfiguration(url);
 		if (bugzillaHome == null) bugzillaHome = config.getString("bugzilla-home");
-		String proxyHost = null;
-		AuthenticationHandler proxyAuthHandler = null;
-		try {
-			proxyHost = config.getString("proxy-host");
-			if (proxyHost != null) {
-				String s[] = proxyHost.split(":", 2);
-				String host = s[0];
-				String port = "80";
-				if (s.length > 1) port = s[1];
-				System.setProperty("http.proxyHost", host);
-				System.setProperty("http.proxyPort", port);
-			}
-			
-			if (proxyHost != null) {
-				SubnodeConfiguration authCfg = config.configurationAt("ProxyAuthorizationCallback(0)");
-				if (authCfg != null) {
-					AuthorizationCallback callback = (AuthorizationCallback)ConfigurationUtils.load(authCfg, true);
-					String login  = callback.getName();
-					String passwd = callback.getPassword();
-					proxyAuthHandler = new ProxyAuthenticationHandler(login, passwd);
-				}
-			}
-		} catch (Exception e) {
-			// No proxy
-		}
+		HttpSessionParams params = new HttpSessionParams();
+		params.configure(config);
+		
 		baseUrl = new URL(bugzillaHome);
 		
 		BugzillaRestClientFactory factory = new AsyncBugzillaRestClientFactory();
 		serverUri = baseUrl.toURI();
 		
-		AuthenticationHandler authenticationHandler = new CombinedAuthenticationHandler(proxyAuthHandler, new AnonymousAuthenticationHandler());
-		//new BasicHttpAuthenticationHandler(login, password);
-		httpClient = new AsynchronousHttpClientFactory().createClient(serverUri, authenticationHandler);
+		httpClient = HttpClients.createAtlassianClient(serverUri, params);
 		client = factory.create(serverUri, httpClient);
 	}
 

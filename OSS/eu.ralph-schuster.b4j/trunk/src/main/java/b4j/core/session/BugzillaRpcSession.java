@@ -17,13 +17,22 @@
  */
 package b4j.core.session;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Iterator;
+
+import b4j.core.Attachment;
+import b4j.core.Issue;
+import b4j.core.SearchData;
+import b4j.core.SearchResultCountCallback;
+
 /**
  * Accesses Bugzilla via REST.
  * @author ralph
  * @since 2.0
  *
  */
-public class BugzillaRpcSession {
+public class BugzillaRpcSession extends AbstractHttpSession {
 
 	/**
 	 * Constructor.
@@ -31,4 +40,86 @@ public class BugzillaRpcSession {
 	public BugzillaRpcSession() {
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isLoggedIn() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean open() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Issue getIssue(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public InputStream getAttachment(Attachment attachment) throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getMinimumBugzillaVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getMaximumBugzillaVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getBugzillaVersion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
