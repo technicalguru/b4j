@@ -29,7 +29,7 @@ import b4j.report.BugzillaReportGenerator;
  * @author Ralph Schuster
  *
  */
-public interface MetaInformation {
+public interface MetaInformation extends BugzillaObject {
 
 	/**
 	 * Returns the session object to be used.

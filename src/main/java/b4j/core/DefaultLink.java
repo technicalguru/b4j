@@ -5,7 +5,7 @@ package b4j.core;
  * @author Ralph Schuster
  *
  */
-public class DefaultLink implements IssueLink {
+public class DefaultLink extends AbstractBugzillaObject implements IssueLink {
 
 	private Type linkType;
 	private String linkTypeName;

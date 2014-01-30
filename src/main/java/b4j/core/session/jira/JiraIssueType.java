@@ -19,6 +19,7 @@ package b4j.core.session.jira;
 
 import com.atlassian.jira.rest.client.domain.BasicIssueType;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.IssueType;
 
 /**
@@ -26,7 +27,7 @@ import b4j.core.IssueType;
  * @author ralph
  *
  */
-public class JiraIssueType implements IssueType {
+public class JiraIssueType extends AbstractBugzillaObject implements IssueType {
 
 	private BasicIssueType issueType;
 	

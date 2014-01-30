@@ -20,6 +20,7 @@ package b4j.core.session.jira;
 import java.util.Collection;
 import java.util.Collections;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Component;
 import b4j.core.Project;
 import b4j.core.Version;
@@ -31,7 +32,7 @@ import com.atlassian.jira.rest.client.domain.BasicProject;
  * @author ralph
  *
  */
-public class JiraProject implements Project {
+public class JiraProject extends AbstractBugzillaObject implements Project {
 
 	private BasicProject project;
 	

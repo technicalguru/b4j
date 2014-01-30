@@ -17,6 +17,7 @@
  */
 package b4j.core.session.jira;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Component;
 import b4j.core.Project;
 
@@ -27,7 +28,7 @@ import com.atlassian.jira.rest.client.domain.BasicComponent;
  * @author ralph
  *
  */
-public class JiraComponent implements Component {
+public class JiraComponent extends AbstractBugzillaObject implements Component {
 
 	private BasicComponent component;
 	private Project project;

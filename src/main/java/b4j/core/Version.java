@@ -24,7 +24,7 @@ import java.util.Date;
  * @author ralph
  *
  */
-public interface Version {
+public interface Version extends BugzillaObject {
 
 	/**
 	 * Returns the project.

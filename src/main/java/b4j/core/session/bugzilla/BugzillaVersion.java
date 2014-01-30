@@ -19,6 +19,7 @@ package b4j.core.session.bugzilla;
 
 import java.util.Date;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Project;
 import b4j.core.Version;
 
@@ -27,7 +28,7 @@ import b4j.core.Version;
  * @author ralph
  *
  */
-public class BugzillaVersion implements Version {
+public class BugzillaVersion extends AbstractBugzillaObject implements Version {
 
 	private Project project;
 	private Long id;

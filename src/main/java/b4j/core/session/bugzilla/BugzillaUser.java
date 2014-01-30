@@ -17,6 +17,7 @@
  */
 package b4j.core.session.bugzilla;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Team;
 import b4j.core.User;
 
@@ -26,7 +27,7 @@ import b4j.core.User;
  * @since 2.0
  *
  */
-public class BugzillaUser implements User {
+public class BugzillaUser extends AbstractBugzillaObject implements User {
 
 	private String id;
 	private String name;

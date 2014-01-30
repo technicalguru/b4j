@@ -17,6 +17,7 @@
  */
 package b4j.core.session.bugzilla;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Status;
 
 /**
@@ -25,7 +26,7 @@ import b4j.core.Status;
  * @since 2.0
  *
  */
-public class BugzillaStatus implements Status {
+public class BugzillaStatus extends AbstractBugzillaObject implements Status {
 
 	private String status;
 	

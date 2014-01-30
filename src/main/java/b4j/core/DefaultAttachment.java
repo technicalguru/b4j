@@ -11,7 +11,7 @@ import com.sun.jersey.core.util.Base64;
  * @author Ralph Schuster
  *
  */
-public class DefaultAttachment implements Attachment {
+public class DefaultAttachment extends AbstractBugzillaObject implements Attachment {
 
 	/**
 	 * 

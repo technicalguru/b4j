@@ -19,6 +19,7 @@ package b4j.core.session.jira;
 
 import com.atlassian.jira.rest.client.domain.BasicResolution;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Resolution;
 
 /**
@@ -26,7 +27,7 @@ import b4j.core.Resolution;
  * @author ralph
  *
  */
-public class JiraResolution implements Resolution {
+public class JiraResolution extends AbstractBugzillaObject implements Resolution {
 
 	private BasicResolution resolution;
 	

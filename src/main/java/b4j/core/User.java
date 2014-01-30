@@ -22,7 +22,7 @@ package b4j.core;
  * @author ralph
  *
  */
-public interface User {
+public interface User extends BugzillaObject {
 
 	/**
 	 * Returns the user ID.

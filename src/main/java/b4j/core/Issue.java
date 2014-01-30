@@ -26,7 +26,7 @@ import java.util.Date;
  * @author Ralph Schuster
  *
  */
-public interface Issue {
+public interface Issue extends BugzillaObject {
 
 	/** Custom field name for Bugzilla field reporter_accessible */
 	public static final String REPORTER_ACCESSIBLE = "reporter_accessible";
@@ -608,33 +608,6 @@ public interface Issue {
 	 * @return number of attachments
 	 */
 	public int getAttachmentCount();
-
-	/**
-	 * Sets a custom field value.
-	 * Setting a value to <code>null</code> effectively deletes the field.
-	 * @param key - name of field
-	 * @param value - value of field
-	 */
-	public void set(String key, Object value);
-
-	/**
-	 * Returns value of a field.
-	 * @param key - name of field
-	 * @return value or null if not set.
-	 */
-	public Object get(String key);
-
-	/**
-	 * Returns the names of all custom fields.
-	 * @return iterator of customized field names
-	 */
-	public Iterable<String> getCustomFieldNames();
-
-	/**
-	 * Returns the number of custom fields.
-	 * @return number customized field names
-	 */
-	public int getCustomFieldCount();
 
 	/**
 	 * Tells whether this issue can be regarded as closed.

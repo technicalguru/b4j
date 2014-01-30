@@ -27,7 +27,7 @@ import java.util.Date;
  * @since 2.0
  *
  */
-public interface Comment {
+public interface Comment extends BugzillaObject {
 
 	/**
 	 * Returns the description ID.

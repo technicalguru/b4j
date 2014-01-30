@@ -25,7 +25,7 @@ import java.net.URI;
  * @since 2.0
  *
  */
-public interface ServerInfo {
+public interface ServerInfo extends BugzillaObject {
 
 	/**
 	 * Returns the Base URI.
