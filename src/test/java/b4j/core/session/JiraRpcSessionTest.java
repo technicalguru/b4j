@@ -126,7 +126,6 @@ public class JiraRpcSessionTest {
 			Issue issue = i.next();
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
-			log.debug("Jira issue found: "+id);
 			if (expectedProperties.containsKey(id)) {
 				testIssue(id, issue);
 			}
@@ -151,7 +150,6 @@ public class JiraRpcSessionTest {
 			Issue issue = i.next();
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
-			log.debug("Jira issue found: "+id);
 			String attachementId = expectedCommentAttachments.get(id);
 			boolean found = false;
 			for (Attachment attachment : issue.getAttachments()) {

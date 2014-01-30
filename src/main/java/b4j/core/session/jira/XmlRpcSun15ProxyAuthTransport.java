@@ -15,7 +15,7 @@
  *  License along with Bugzilla for Java.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package b4j.core.session;
+package b4j.core.session.jira;
 
 import java.io.IOException;
 import java.net.URL;

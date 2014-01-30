@@ -17,440 +17,159 @@
  */
 package b4j.core.session;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpCookie;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
-import java.net.Proxy;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import rs.baselib.configuration.ConfigurationUtils;
-import rs.baselib.security.AuthorizationCallback;
-import rs.baselib.security.DefaultAuthorizationCallback;
+import rs.baselib.lang.LangUtils;
+import b4j.core.DefaultIssue;
+import b4j.core.Issue;
+import b4j.core.Session;
+import b4j.core.UnsupportedVersionException;
 import b4j.util.BugzillaUtils;
+import b4j.util.HttpSessionParams;
 
 /**
- * Implements an abstract HTTP session including usage with proxies.
- * <p>Configuration:</p>
- * <pre>
- * &lt;bugzilla-session class="..."&gt;
- * 
- *    &lt;!-- The home URL of Bugzilla --&gt;
- *    &lt;bugzilla-home&gt;http://your-bugzilla.your-domain.com/&lt;/bugzilla-home&gt;
- *    
- *    &lt;!-- Optional: AuthenticationCallback implementation --&gt;
- *    &lt;AuthorizationCallback class="..."&gt;
- *       ...
- *    &lt;/AuthorizationCallback&gt;
- *    
- *    &lt;!-- Issue implementation class --&gt;
- *    &lt;BugzillaBug class="b4j.core.DefaultIssue"/&gt;
- *    
- *    &lt;!-- Optional: Proxy definition --&gt;
- *    &lt;proxy-host&gt;10.10.10.250:8080&lt;/proxy-host&gt;
- *    
- *    &lt;!-- Optional: Proxy AuthenticationCallback implementation --&gt;
- *    &lt;ProxyAuthorizationCallback class="..."&gt;
- *       ...
- *    &lt;/ProxyAuthorizationCallback&gt;
- *
- * &lt;/bugzilla-session&gt;
- * </pre>
+ * This is the base class for all authorization-based sessions
+ * (which usually is required for Bugzilla access, regardless what
+ * way you use).
+ * This abstract implementation takes care of login and password
+ * retrieval out of configuration definitions. Configuration usually
+ * tells what classes shall be used for callback. Each callback itself
+ * has it's own configuration methodology.
  * @author Ralph Schuster
- * @see AuthorizationCallback
- * @see b4j.core.Issue
+ *
  */
-public abstract class AbstractHttpSession extends AbstractAuthorizedSession {
+public abstract class AbstractHttpSession implements Session {
 
-	private boolean loggedIn;
-	private Set<HttpCookie> cookies;
-	private URL baseUrl;
-	private String bugzillaVersion;
-	private Proxy proxy;
-	private AuthorizationCallback proxyAuthorizationCallback;
+	private Logger log = null;
+	private HttpSessionParams httpSessionParams;
+	private Class<?> bugzillaBugClass;
 	
 	/**
 	 * Constructor.
 	 */
 	public AbstractHttpSession() {
-		cookies = new HashSet<HttpCookie>();
+		log = LoggerFactory.getLogger(getClass());
+		httpSessionParams = new HttpSessionParams();
 	}
 
 	/**
 	 * Configures the session.
 	 * The method is called to initialize the session object from a configuration.
-	 * The configuration object must ensure to contain the elements "login",
-	 * "password" and "bugzilla-home" to contain account information and
-	 * HTTP URL. 
-	 * <p>
-	 * A proxy can be configured by using "proxy-host" element. Use the colon
-	 * to separate host and port information.
+	 * This implementation looks for an element &lt;AuthorizationCallback&gt;. It
+	 * defines the implementation class that will deliver login name and password.
+	 * If no class was given or class is "null" then the content of the tag
+	 * must contain two elements &lt:login&gt; and &lt;password&gt;.
+	 * <P>
+	 * The default {@link Issue} implementation class to be used can also
+	 * be configured using the &lt;Issue&gt; tag, e.g.
 	 * </p>
 	 * <p>
-	 * Proxy authorization is configured by element &lt;ProxyAuthorizationCallback&gt;. It
-	 * defines the implementation class that will deliver login name and password.
+	 * &lt;Issue class="b4j.core.DefaultIssue"/&gt;
+	 * </p>
+	 * <p>
+	 * If the tag is missing or class is empty then {@link DefaultIssue} is assumed.
 	 * </p>
 	 * @param config - configuration object
 	 * @throws ConfigurationException - when configuration fails
 	 */
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {
-		super.configure(config);
 		String className = null;
 		try {
-			baseUrl = new URL(config.getString("bugzilla-home"));
+			httpSessionParams.configure(config);
 			
-			if (getLog().isDebugEnabled()) {
-				getLog().debug("Bugzilla URL: "+baseUrl);
-			}
-			
-			// proxy configuration
-			String s = config.getString("proxy-host");
-			if (s != null) {
-				if (getLog().isDebugEnabled()) {
-					getLog().debug("Using HTTP Proxy: "+s);
-				}
-				
-				int pos = -1;
-				int port = 80;
-				pos = s.indexOf(':');
-				if (pos > 0) {
-					port = Integer.parseInt(s.substring(pos+1));
-					s = s.substring(0, pos);
-				}
-				setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(s, port)));
-				
-				// Proxy authorization
-				try {
-					Configuration authCfg = ((HierarchicalConfiguration)config).configurationAt("ProxyAuthorizationCallback(0)");
-					if (authCfg != null) {
-						className = authCfg.getString("[@class]");
-						AuthorizationCallback callback = null;
-						if ((className == null) 
-								|| (className.trim().length() == 0) 
-								|| className.toLowerCase().trim().equals("null")
-								|| className.toLowerCase().trim().equals("nil")) {
-							className = DefaultAuthorizationCallback.class.getName();
-						}
-						callback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
-						setProxyAuthorizationCallback(callback);
-					}
-				} catch (IllegalArgumentException e) {
-					// No auth config for proxy
-				}
-
-			}
-		} catch (MalformedURLException e) {
-			throw new ConfigurationException("Malformed Bugzilla URL: ", e);
+			className = config.getString("Issue[@class]");
+			if ((className == null) || (className.trim().length() == 0)) className = DefaultIssue.class.getName();
+			Class<?> bugzillaBugClass = LangUtils.forName(className);
+			setBugzillaBugClass(bugzillaBugClass);
+		} catch (ClassNotFoundException e) {
+			throw new ConfigurationException("Cannot find class: "+className, e);
 		}
 	}
-	
+
 	/**
-	 * Closes the previously established Bugzilla session.
+	 * Returns the bugzillaBugClass.
+	 * @return the bugzillaBugClass
 	 */
-	@Override
-	public void close() {
-		cookies.clear();
-		baseUrl = null;
-		setLoggedIn(false);
-		if (getLog().isInfoEnabled()) getLog().info("Session closed");
-	}
-	
-	/**
-	 * @return the baseUrl
-	 */
-	public URL getBaseUrl() {
-		return baseUrl;
+	public Class<?> getBugzillaBugClass() {
+		if (bugzillaBugClass == null) return DefaultIssue.class;
+		return bugzillaBugClass;
 	}
 
 	/**
-	 * @param baseUrl the baseUrl to set
+	 * Sets the bugzillaBugClass.
+	 * @param bugzillaBugClass the bugzillaBugClass to set
 	 */
-	public void setBaseUrl(URL baseUrl) {
-		this.baseUrl = baseUrl;
+	public void setBugzillaBugClass(Class<?> bugzillaBugClass) {
+		this.bugzillaBugClass = bugzillaBugClass;
 	}
 
 	/**
-	 * @return the proxy
+	 * Creates an instance of Issue.
+	 * This method returns a fresh instance of Issue. The implementation class is
+	 * defined by the configuration.
+	 * @return new instance of Issue
 	 */
-	public Proxy getProxy() {
-		return proxy;
-	}
-
-	/**
-	 * @param proxy the proxy to set
-	 */
-	public void setProxy(Proxy proxy) {
-		this.proxy = proxy;
-	}
-
-	/**
-	 * @return the proxyAuthorizationCallback
-	 */
-	public AuthorizationCallback getProxyAuthorizationCallback() {
-		return proxyAuthorizationCallback;
-	}
-
-	/**
-	 * @param proxyAuthorizationCallback the proxyAuthorizationCallback to set
-	 */
-	public void setProxyAuthorizationCallback(AuthorizationCallback proxyAuthorizationCallback) {
-		this.proxyAuthorizationCallback = proxyAuthorizationCallback;
-	}
-
-	/**
-	 * Returns the bugzilla version this session object is connected to.
-	 * Can return null if version is unknown.
-	 * @return version number or null if unknown or not connected
-	 */
-	@Override
-	public String getBugzillaVersion() {
-		return bugzillaVersion;
-	}
-
-	/**
-	 * Sets the Bugzilla version connected to.
-	 * @param s new version
-	 */
-	protected void setBugzillaVersion(String s) {
-		bugzillaVersion = s;
-	}
-	
-	/**
-	 * Returns true when session is connected to Bugzilla.
-	 * @return true if session was successfully established, false otherwise
-	 */
-	@Override
-	public boolean isLoggedIn() {
-		return loggedIn;
-	}
-
-	/**
-	 * Sets the login status.
-	 * @param loggedIn - the login status to set
-	 */
-	protected void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
-		if (loggedIn) getLog().info("Session opened: "+getBaseUrl().toString());
-	}
-
-	/**
-	 * Returns all cookies from the Bugzilla session
-	 * @return iterator on all cookies
-	 */
-	public Iterator<HttpCookie> getCookies() {
-		return cookies.iterator();
-	}
-
-	/**
-	 * Adds a cookie to the session.
-	 * @param cookie - the cookie to add
-	 */
-	protected void addCookie(HttpCookie cookie) {
-		cookies.add(cookie);
-		if (getLog().isDebugEnabled()) getLog().debug("new cookie found: "+cookie.toString());
-	}
-
-	/**
-	 * Makes a request to Bugzilla including eventual GET parameters.
-	 * The method applies all cookies registered previously to allow
-	 * a successful session connection.
-	 * @param urlPath URL path to request
-	 * @param params param string to be appended
-	 * @return HTTP connection object
-	 */
-	protected HttpURLConnection getConnection(String urlPath, String params) {
-		return getConnection(urlPath, params, null, true);
-	}
-	
-	/**
-	 * Makes a request to Bugzilla including eventual GET parameters.
-	 * The method applies all cookies registered previously to allow
-	 * a successful session connection.
-	 * @param urlPath URL path to request
-	 * @param params param string to be appended
-	 * @param requestProperties properties of the request
-	 * @return HTTP connection object
-	 */
-	protected HttpURLConnection getConnection(String urlPath, String params, Map<String,String> requestProperties) {
-		return getConnection(urlPath, params, requestProperties, true);
-	}
-	
-	/**
-	 * Makes a request to Bugzilla including eventual GET parameters.
-	 * The method applies all cookies registered previously to allow
-	 * a successful session connection.
-	 * @param urlPath URL path to request
-	 * @param params param string to be appended
-	 * @param requestProperties properties of the request
-	 * @param isGet true when a GET request shall be prepared, false if this will be a POST request.
-	 * @return HTTP connection object
-	 */
-	protected HttpURLConnection getConnection(String urlPath, String params, Map<String,String> requestProperties, boolean isGet) {
+	public Issue createIssue() {
 		try {
-			URL url = null;
-			if (isGet) {
-				if (params == null) params = "";
-				else params = "?" + params;
-				url = new URL(urlPath+params);
-			} else {
-				url = new URL(urlPath);
-			}
-			if (getLog().isDebugEnabled()) getLog().debug(url.toString());
-			
-			// apply proxy
-			HttpURLConnection con = null;
-			if (proxy != null) {
-				getLog().debug("Using proxy: "+getProxy());
-				con = (HttpURLConnection)url.openConnection(getProxy());
-				AuthorizationCallback callback = getProxyAuthorizationCallback();
-				if (callback != null) {
-					// apply proxy authorization
-					// "Proxy-Authorization: Basic "<base64(user:password)>"
-					// commons.codec delivers Base64 Encoder
-					String authName = callback.getName();
-					String authPass = callback.getPassword();
-					if (authPass == null) authPass = "";
-					String auth = authName + ':' + authPass;
-					auth = new String(Base64.encodeBase64(auth.getBytes()));
-					con.setRequestProperty("Proxy-Authorization", "Basic "+auth+"");
-				}
-			} else {
-				con = (HttpURLConnection)url.openConnection();
-			}
-			
-			// Apply all cookies if available
-			applyCookies(con);
-			
-			// Apply request properties
-			if (requestProperties != null) {
-				for (String key : requestProperties.keySet()) {
-					con.setRequestProperty(key, requestProperties.get(key));
-				}
-			}
-			
-			// Apply POST parameters
-			if (!isGet) {
-				if (params == null) params = "";
-				con.setRequestMethod("POST");
-				con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-				con.setRequestProperty("Content-Length", "" + params.length());
+			return (Issue)getBugzillaBugClass().newInstance();
+		} catch (IllegalAccessException e) {
+			throw new IllegalStateException("Cannot access constructor: "+getBugzillaBugClass().getName(), e);
+		} catch (InstantiationException e) {
+			throw new IllegalStateException("Cannot instantiate class: "+getBugzillaBugClass().getName(), e);
+		}
+	}
+	
+	
+	/**
+	 * Returns the logger.
+	 * @return the log
+	 */
+	public Logger getLog() {
+		return log;
+	}
 
-				con.setDoOutput(true);
-				PrintWriter out = new PrintWriter(con.getOutputStream());
-				out.print(params);
-				out.flush();
-				out.close();
-			}
-			
-			return con;
-		} catch (MalformedURLException e) {
-			getLog().error("Invalid URL: ", e);
-		} catch (IOException e) {
-			getLog().error("Error when making request", e);
-		}
-		return null;
-	}
-	
-	/**
-	 * Retrieves and saves the cookies from the URL connection.
-	 * @param con - the HTTP connection
-	 * @return true when cookies were found, false otherwise
-	 * @throws MalformedURLException - when the URL had a problem
-	 */
-	protected boolean retrieveCookies(URLConnection con) throws MalformedURLException {
-		List<String> cookieHeaders = con.getHeaderFields().get("Set-Cookie");
-		
-		if (cookieHeaders != null) {
-			Iterator<String> cookieHeader = cookieHeaders.iterator();
-			while (cookieHeader.hasNext()) {
-				String header = cookieHeader.next();
-				// Fix #31 : Java 6 cannot understand HttpOnly attribute
-				if (BugzillaUtils.isJava6()) {
-					header = header.replaceAll("(?i);?\\s*httponly", "");
-				}
-				List<HttpCookie> cookies = HttpCookie.parse("Set-Cookie: "+header);
-				Iterator<HttpCookie> i = cookies.iterator();
-				while (i.hasNext()) {
-					HttpCookie cookie = i.next();
-					String domain = cookie.getDomain();
-					if ((domain == null) || HttpCookie.domainMatches(domain, baseUrl.getHost())) {
-						addCookie(cookie);
-					} else if (getLog().isDebugEnabled()) {
-						getLog().debug("Cookie not applicable: "+cookie.toString());
-					}
-				}
-			}
-			return cookies.size() > 0;
-		}
-		return false;
-	}
-	
-	/**
-	 * Applies the registered cookies with this connection.
-	 * @param con - HTTP connection object
-	 */
-	protected void applyCookies(HttpURLConnection con) {
-		StringBuffer rc = new StringBuffer();
-		Iterator<HttpCookie> cookies = getCookies();
-		while (cookies.hasNext()) {
-			if (rc.length() > 0) rc.append(";");
-			rc.append(cookies.next().toString());
-		}
-		if (rc.length() > 0) con.setRequestProperty("Cookie", rc.toString());
-		if (getLog().isTraceEnabled()) getLog().trace("applied cookie: "+rc.toString());
-
-	}
-	
-	/**
-	 * Debugs the response from a connection.
-	 * All headers and the content will be dumped into the log.
-	 * @param con - HTTP connection to dump
-	 */
-	public void debugResponse(HttpURLConnection con) {
-		if (!getLog().isDebugEnabled()) return;
-		try {
-			Map<String,List<String>> headerFields = con.getHeaderFields();
-			Iterator<String> i = headerFields.keySet().iterator();
-			while (i.hasNext()) {
-				String key = i.next();
-				Iterator<String> j = headerFields.get(key).iterator();
-				while (j.hasNext()) getLog().debug(key+": "+j.next());
-			}
-			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream()));
-			String line;
-			while ((line = r.readLine()) != null) {
-				getLog().debug(line);
-			}
-		} catch (IOException e) {
-			getLog().error("Error while debugging connection", e);
-		}
-	}
-	
 	/**
 	 * Debugs information into log.
 	 */
 	@Override
 	public void dump() {
 		if (!getLog().isDebugEnabled()) return;
-		getLog().debug("bugzilla-home="+getBaseUrl().toString());
-		super.dump();
+		getLog().debug("bugzilla-login="+getHttpSessionParams().getLogin());
+		getLog().debug("bugzilla-password=<hidden>");
+	}
+
+	/**
+	 * Checks the Bugzilla version connected to.
+	 * The method will throw an {@link UnsupportedVersionException} if the version does not match.
+	 */
+	protected void checkBugzillaVersion() {
+		if (!BugzillaUtils.isCompatibleVersion(getMinimumBugzillaVersion(), getMaximumBugzillaVersion(), getBugzillaVersion())) {
+			String req = "required:";
+			if (getMinimumBugzillaVersion() != null) req += " min. "+getMinimumBugzillaVersion(); 
+			if (getMaximumBugzillaVersion() != null) req += " max. "+getMaximumBugzillaVersion(); 
+			throw new UnsupportedVersionException("Incompatible version: "+getBugzillaVersion()+" ("+req+")");
+		}
+	}
+
+	/**
+	 * Returns the httpSessionParams.
+	 * @return the httpSessionParams
+	 */
+	public HttpSessionParams getHttpSessionParams() {
+		return httpSessionParams;
+	}
+
+	/**
+	 * Sets the httpSessionParams.
+	 * @param httpSessionParams the httpSessionParams to set
+	 */
+	public void setHttpSessionParams(HttpSessionParams httpSessionParams) {
+		this.httpSessionParams = httpSessionParams;
 	}
 	
-
+	
 }
