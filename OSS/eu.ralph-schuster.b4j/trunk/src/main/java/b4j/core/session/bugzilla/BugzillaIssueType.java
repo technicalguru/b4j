@@ -17,6 +17,7 @@
  */
 package b4j.core.session.bugzilla;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.IssueType;
 
 /**
@@ -25,7 +26,7 @@ import b4j.core.IssueType;
  * @since 2.0
  *
  */
-public class BugzillaIssueType implements IssueType {
+public class BugzillaIssueType extends AbstractBugzillaObject implements IssueType {
 
 	private String issueType;
 	

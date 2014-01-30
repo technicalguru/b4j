@@ -17,6 +17,7 @@
  */
 package b4j.core.session.jira;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Team;
 import b4j.core.User;
 
@@ -27,7 +28,7 @@ import com.atlassian.jira.rest.client.domain.BasicUser;
  * @author ralph
  *
  */
-public class JiraUser implements User {
+public class JiraUser extends AbstractBugzillaObject implements User {
 
 	private BasicUser user;
 	private Team team;

@@ -41,7 +41,7 @@ import b4j.report.BugzillaReportGenerator;
  * @author Ralph Schuster
  *
  */
-public class DefaultMetaInformation implements MetaInformation {
+public class DefaultMetaInformation extends AbstractBugzillaObject implements MetaInformation {
 
 	private static Logger log = LoggerFactory.getLogger(DefaultMetaInformation.class);
 	

@@ -17,6 +17,7 @@
  */
 package b4j.core.session.bugzilla;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Priority;
 
 /**
@@ -25,7 +26,7 @@ import b4j.core.Priority;
  * @since 2.0
  *
  */
-public class BugzillaPriority implements Priority {
+public class BugzillaPriority extends AbstractBugzillaObject implements Priority {
 
 	private String priority;
 	

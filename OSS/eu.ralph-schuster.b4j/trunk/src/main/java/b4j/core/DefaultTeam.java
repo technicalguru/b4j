@@ -25,7 +25,7 @@ package b4j.core;
  * @since 2.0
  *
  */
-public class DefaultTeam implements Team {
+public class DefaultTeam extends AbstractBugzillaObject implements Team {
 
 	private String name;
 	

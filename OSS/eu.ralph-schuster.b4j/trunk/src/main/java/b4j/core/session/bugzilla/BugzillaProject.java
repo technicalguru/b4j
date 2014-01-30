@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Component;
 import b4j.core.Project;
 import b4j.core.Version;
@@ -32,7 +33,7 @@ import b4j.core.Version;
  * @since 2.0
  *
  */
-public class BugzillaProject implements Project {
+public class BugzillaProject extends AbstractBugzillaObject implements Project {
 
 	private String id;
 	private String name;

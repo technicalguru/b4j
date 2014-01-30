@@ -20,9 +20,10 @@ package b4j.core;
 /**
  * Information about a classification.
  * @author ralph
+ * @since 2.0
  *
  */
-public interface Classification {
+public interface Classification extends BugzillaObject {
 
 	/**
 	 * Returns the ID.

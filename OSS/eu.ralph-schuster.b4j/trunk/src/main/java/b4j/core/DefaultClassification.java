@@ -21,9 +21,10 @@ package b4j.core;
 /**
  * Default implementation of a {@link Classification}.
  * @author ralph
+ * @since 2.0
  *
  */
-public class DefaultClassification implements Classification {
+public class DefaultClassification extends AbstractBugzillaObject implements Classification {
 
 	private String id;
 	private String name;

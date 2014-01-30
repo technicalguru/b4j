@@ -19,6 +19,7 @@ package b4j.core.session.jira;
 
 import com.atlassian.jira.rest.client.domain.BasicStatus;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Status;
 
 /**
@@ -26,7 +27,7 @@ import b4j.core.Status;
  * @author ralph
  *
  */
-public class JiraStatus implements Status {
+public class JiraStatus extends AbstractBugzillaObject implements Status {
 
 	private BasicStatus status;
 	

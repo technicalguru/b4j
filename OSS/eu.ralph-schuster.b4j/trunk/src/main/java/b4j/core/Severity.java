@@ -23,7 +23,7 @@ package b4j.core;
  * @since 2.0
  *
  */
-public interface Severity {
+public interface Severity extends BugzillaObject {
 
 	/**
 	 * Returns the name.

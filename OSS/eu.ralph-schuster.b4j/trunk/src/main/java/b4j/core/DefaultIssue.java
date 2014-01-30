@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -38,7 +36,7 @@ import b4j.util.LazyRetriever;
  * @author Ralph Schuster
  *
  */
-public class DefaultIssue implements Issue {
+public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
@@ -110,7 +108,6 @@ public class DefaultIssue implements Issue {
 	private boolean commentsRetrieved = false;
 	private List<Attachment> attachments;
 	private boolean attachmentsRetrieved = false;
-	private Map<String,Object> customFields;
 	private List<IssueLink> links;
 	private List<Issue> children;
 
@@ -125,7 +122,6 @@ public class DefaultIssue implements Issue {
 		comments = new ArrayList<Comment>();
 		//cc = new ArrayList<String>();
 		attachments = new ArrayList<Attachment>();
-		customFields = new HashMap<String, Object>();
 		creationTimestamp = new Date(0);
 		updateTimestamp = new Date(0);
 		//deadline = new Date(0);
@@ -726,38 +722,6 @@ public class DefaultIssue implements Issue {
 			if (CommonUtils.equals(a.getId(), id)) return a;
 		}
 		return null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public void set(String key, Object value) {
-		customFields.put(key, value);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Object get(String key) {
-		return customFields.get(key);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Iterable<String> getCustomFieldNames() {
-		return customFields.keySet();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int getCustomFieldCount() {
-		return customFields.size();
 	}
 
 	/**

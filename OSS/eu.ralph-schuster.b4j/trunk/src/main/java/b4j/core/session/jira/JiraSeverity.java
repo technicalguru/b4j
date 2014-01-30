@@ -19,6 +19,7 @@ package b4j.core.session.jira;
 
 import com.atlassian.jira.rest.client.domain.BasicPriority;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Severity;
 
 /**
@@ -27,7 +28,7 @@ import b4j.core.Severity;
  * @author ralph
  *
  */
-public class JiraSeverity implements Severity {
+public class JiraSeverity extends AbstractBugzillaObject implements Severity {
 
 	private BasicPriority priority;
 	

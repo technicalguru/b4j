@@ -24,7 +24,7 @@ import java.util.Collection;
  * @author ralph
  *
  */
-public interface Project {
+public interface Project extends BugzillaObject {
 
 	/**
 	 * Returns the name.

@@ -22,7 +22,7 @@ package b4j.core;
  * @author ralph
  *
  */
-public interface Team {
+public interface Team extends BugzillaObject {
 
 	/**
 	 * Returns the name.

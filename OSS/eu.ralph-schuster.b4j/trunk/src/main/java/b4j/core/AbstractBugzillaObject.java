@@ -15,35 +15,59 @@
  *  License along with Bugzilla for Java.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package b4j.core.session.jira;
 
-import com.atlassian.jira.rest.client.domain.BasicPriority;
+package b4j.core;
 
-import b4j.core.AbstractBugzillaObject;
-import b4j.core.Priority;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Jira implementation of a {@link Priority}.
+ * Provides the possibility to store custom values.
  * @author ralph
+ * @since 2.0
  *
  */
-public class JiraPriority extends AbstractBugzillaObject implements Priority {
+public abstract class AbstractBugzillaObject implements BugzillaObject {
 
-	private BasicPriority priority;
-	
+	private Map<String,Object> customFields;
+
 	/**
 	 * Constructor.
 	 */
-	public JiraPriority(BasicPriority priority) {
-		this.priority = priority;
+	public AbstractBugzillaObject() {
+		customFields = new HashMap<String, Object>();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String getName() {
-		return priority.getName();
+	public void set(String key, Object value) {
+		customFields.put(key, value);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object get(String key) {
+		return customFields.get(key);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Iterable<String> getCustomFieldNames() {
+		return customFields.keySet();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getCustomFieldCount() {
+		return customFields.size();
 	}
 
 }

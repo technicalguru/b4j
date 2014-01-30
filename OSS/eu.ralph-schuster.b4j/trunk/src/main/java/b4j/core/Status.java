@@ -23,7 +23,7 @@ package b4j.core;
  * @since 2.0
  *
  */
-public interface Status {
+public interface Status extends BugzillaObject {
 
 	/**
 	 * Returns the name.

@@ -17,6 +17,7 @@
  */
 package b4j.core.session.bugzilla;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Resolution;
 
 /**
@@ -25,7 +26,7 @@ import b4j.core.Resolution;
  * @since 2.0
  *
  */
-public class BugzillaResolution implements Resolution {
+public class BugzillaResolution extends AbstractBugzillaObject implements Resolution {
 
 	private String resolution;
 	

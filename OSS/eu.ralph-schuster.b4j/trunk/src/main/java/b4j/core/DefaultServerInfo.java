@@ -25,7 +25,7 @@ import java.net.URI;
  * @since 2.0
  *
  */
-public class DefaultServerInfo implements ServerInfo {
+public class DefaultServerInfo extends AbstractBugzillaObject implements ServerInfo {
 
 	private URI baseUri;
 	private String version;

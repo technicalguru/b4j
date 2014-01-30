@@ -17,6 +17,7 @@
  */
 package b4j.core.session.bugzilla;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Severity;
 
 /**
@@ -25,7 +26,7 @@ import b4j.core.Severity;
  * @since 2.0
  *
  */
-public class BugzillaSeverity implements Severity {
+public class BugzillaSeverity extends AbstractBugzillaObject implements Severity {
 
 	private String severity;
 	

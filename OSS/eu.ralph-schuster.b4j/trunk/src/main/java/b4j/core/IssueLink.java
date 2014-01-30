@@ -22,7 +22,7 @@ package b4j.core;
  * @author Ralph Schuster
  *
  */
-public interface IssueLink {
+public interface IssueLink extends BugzillaObject {
 	
 	public static enum Type {
 		/** No specification made */

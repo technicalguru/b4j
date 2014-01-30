@@ -26,7 +26,7 @@ import java.util.Date;
  * @author Ralph Schuster
  *
  */
-public interface Attachment {
+public interface Attachment extends BugzillaObject {
 
 	/**
 	 * Returns the ID of this attachment.

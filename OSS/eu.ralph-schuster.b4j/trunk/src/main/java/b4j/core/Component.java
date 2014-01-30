@@ -23,7 +23,7 @@ package b4j.core;
  * @since 2.0
  *
  */
-public interface Component {
+public interface Component extends BugzillaObject {
 
 	/**
 	 * Returns the project for this component.

@@ -17,6 +17,7 @@
  */
 package b4j.core.session.bugzilla;
 
+import b4j.core.AbstractBugzillaObject;
 import b4j.core.Component;
 import b4j.core.Project;
 
@@ -26,7 +27,7 @@ import b4j.core.Project;
  * @since 2.0
  *
  */
-public class BugzillaComponent implements Component {
+public class BugzillaComponent extends AbstractBugzillaObject implements Component {
 
 	private String id;
 	private String name;

@@ -23,7 +23,7 @@ package b4j.core;
  * @since 2.0
  *
  */
-public interface Priority {
+public interface Priority extends BugzillaObject {
 
 	/**
 	 * Returns the name.

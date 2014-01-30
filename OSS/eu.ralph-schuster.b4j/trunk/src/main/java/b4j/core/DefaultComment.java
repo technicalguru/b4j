@@ -30,7 +30,7 @@ import java.util.Set;
  * @since 2.0
  *
  */
-public class DefaultComment implements Comment {
+public class DefaultComment extends AbstractBugzillaObject implements Comment {
 
 	/**
 	 * 

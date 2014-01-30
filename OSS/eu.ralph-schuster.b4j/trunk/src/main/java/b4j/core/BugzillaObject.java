@@ -15,35 +15,42 @@
  *  License along with Bugzilla for Java.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package b4j.core.session.jira;
 
-import com.atlassian.jira.rest.client.domain.BasicPriority;
-
-import b4j.core.AbstractBugzillaObject;
-import b4j.core.Priority;
+package b4j.core;
 
 /**
- * Jira implementation of a {@link Priority}.
+ * Super interface for all other interfaces.
  * @author ralph
+ * @since 2.0
  *
  */
-public class JiraPriority extends AbstractBugzillaObject implements Priority {
-
-	private BasicPriority priority;
-	
-	/**
-	 * Constructor.
-	 */
-	public JiraPriority(BasicPriority priority) {
-		this.priority = priority;
-	}
+public interface BugzillaObject {
 
 	/**
-	 * {@inheritDoc}
+	 * Sets a custom field value.
+	 * Setting a value to <code>null</code> effectively deletes the field.
+	 * @param key - name of field
+	 * @param value - value of field
 	 */
-	@Override
-	public String getName() {
-		return priority.getName();
-	}
+	public void set(String key, Object value);
+
+	/**
+	 * Returns value of a field.
+	 * @param key - name of field
+	 * @return value or null if not set.
+	 */
+	public Object get(String key);
+
+	/**
+	 * Returns the names of all custom fields.
+	 * @return iterator of customized field names
+	 */
+	public Iterable<String> getCustomFieldNames();
+
+	/**
+	 * Returns the number of custom fields.
+	 * @return number customized field names
+	 */
+	public int getCustomFieldCount();
 
 }
