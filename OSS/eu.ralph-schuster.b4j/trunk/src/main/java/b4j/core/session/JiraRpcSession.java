@@ -96,10 +96,8 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	/**
 	 * Configuration allows:<br/>
 	 * &lt;jira-home&gt;URL&lt;/jira-home&gt; - the JIRA base URL<br/>
-	 * &lt;proxy-host&gt; - HTTP proxy (proxy authorization not possible yet)<br/>
-	 * &lt;team name="NAME"&gt;<br/>
-	 * &lt;Member name="FULLNAME"&gtUID&lt;/Member&gt;<br/>
-	 * &lt;/Team&gt; - team and member UID associations 
+	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br/>
+	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)<br/>
 	 */
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {
@@ -301,13 +299,14 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	 * </ul>
 	 */
 	@Override
-	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
-		if (!isLoggedIn()) throw new IllegalStateException("Session is closed");
+	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
+		checkLoggedIn();
+		
 		Promise<SearchResult> result = null;
 		if (searchData.hasParameter("filterId")) {
-			result = filterClient.search(searchData.get("filterId").next());
+			result = filterClient.search(searchData.get("filterId").iterator().next());
 		} else if (searchData.hasParameter("jql")) {
-			result = jiraClient.getSearchClient().searchJql(searchData.get("jql").next());
+			result = jiraClient.getSearchClient().searchJql(searchData.get("jql").iterator().next());
 		} else if (searchData.hasParameter("key")) {
 			result = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")");
 		} else {
@@ -338,7 +337,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		this.baseUrl = baseUrl;
 	}
 
-	protected class SearchIterator implements Iterator<Issue> {
+	protected class SearchIterator implements Iterable<Issue>, Iterator<Issue> {
 
 		private SearchResult result;
 		private Iterator<BasicIssue> issues;
@@ -370,6 +369,11 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		@Override
 		public void remove() {
 			throw new RuntimeException("Remove is not supported");
+		}
+
+		@Override
+		public Iterator<Issue> iterator() {
+			return this;
 		}
 		
 	}

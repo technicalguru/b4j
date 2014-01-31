@@ -156,6 +156,15 @@ public abstract class AbstractHttpSession implements Session {
 	}
 
 	/**
+	 * Throws a {@link IllegalStateException} when the session was not opened yet.
+	 */
+	protected void checkLoggedIn() {
+		if (!isLoggedIn()) {
+			throw new IllegalStateException("No session available");
+		}
+	}
+	
+	/**
 	 * Returns the httpSessionParams.
 	 * @return the httpSessionParams
 	 */

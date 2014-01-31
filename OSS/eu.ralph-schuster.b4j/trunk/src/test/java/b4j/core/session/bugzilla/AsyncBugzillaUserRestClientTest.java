@@ -45,7 +45,7 @@ public class AsyncBugzillaUserRestClientTest extends AbstractRestClientTest {
 
 	@Test
 	public void testLogin() throws Exception {
-		User user = myClient.login("test", "testuser");
+		User user = myClient.login("test", "password");
 		assertEquals("Not the right user", "test", user.getName());
 		assertEquals("Not the right user", "2", user.getId());
 		testGetUsers(myClient.getUsers(1,2,3), 3);

@@ -19,7 +19,6 @@ package b4j.core;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
 
 import rs.baselib.configuration.IConfigurable;
 
@@ -71,7 +70,7 @@ public interface Session extends IConfigurable {
 	 * found for this search
 	 * @return iterator on all bugs fulfilling the criteria expressed by search parameters.
 	 */
-	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback);
+	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback);
 	
 	/**
 	 * Returns the given issue

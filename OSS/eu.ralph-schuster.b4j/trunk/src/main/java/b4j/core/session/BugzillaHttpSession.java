@@ -275,8 +275,8 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 	 * @return iterator on all bugs fulfilling the criteria expressed by search parameters.
 	 */
 	@Override
-	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
-		if (!isLoggedIn()) return null;
+	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
+		checkLoggedIn();
 
 		// Perform the search
 		try {
@@ -394,7 +394,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 	 * @author Ralph Schuster
 	 *
 	 */
-	protected class BugzillaBugIterator implements Iterator<Issue> {
+	protected class BugzillaBugIterator implements Iterable<Issue>, Iterator<Issue> {
 
 		private List<String> bugList;
 		private int delivered;
@@ -516,6 +516,16 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 			}
 		}
+
+		/**
+		 * {@inheritDoc}
+		 */
+		@Override
+		public Iterator<Issue> iterator() {
+			return this;
+		}
+		
+		
 	}
 
 	/**
