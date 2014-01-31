@@ -106,22 +106,13 @@ public class BugzillaComponent extends AbstractBugzillaObject implements Compone
 	}
 
 	/**
-	 * Returns the best attribute for using in {@link #hashCode()} and {@link #equals(Object)} methods.
-	 * @return {@link #id} or {@link #name}
-	 */
-	private Object getHashAttribute() {
-		if (getId() != null) return getId();
-		return getName();
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((getHashAttribute() == null) ? 0 : getHashAttribute().hashCode());
+		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
 		return result;
 	}
 
@@ -134,9 +125,9 @@ public class BugzillaComponent extends AbstractBugzillaObject implements Compone
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		BugzillaComponent other = (BugzillaComponent) obj;
-		if (getHashAttribute() == null) {
-			if (other.getHashAttribute() != null) return false;
-		} else if (!getHashAttribute().equals(other.getHashAttribute())) return false;
+		if (getName() == null) {
+			if (other.getName() != null) return false;
+		} else if (!getName().equals(other.getName())) return false;
 		return true;
 	}
 

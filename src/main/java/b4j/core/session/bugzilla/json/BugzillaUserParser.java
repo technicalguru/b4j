@@ -61,9 +61,11 @@ public class BugzillaUserParser extends AbstractJsonParser implements JsonObject
 		JSONArray users = getResult(json).getJSONArray("users");
 		for (int i=0; i<users.length(); i++) {
 			JSONObject obj = users.getJSONObject(i);
+			System.out.println(obj.toString());
 			BugzillaUser u = new BugzillaUser();
 			u.setId(obj.getString("id"));
 			u.setName(obj.getString("name"));
+			u.setRealName(obj.getString("real_name"));
 			rc.add(u);
 		}
 		

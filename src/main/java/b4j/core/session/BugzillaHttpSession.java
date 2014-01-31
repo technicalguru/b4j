@@ -604,6 +604,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				currentIssue = createIssue();
 				currentIssue.setServerUri(bugzillaUri);
 				currentIssue.setServerVersion(bugzillaVersion);
+				currentIssue.setType(issueTypes.get("bug"));
 			} else if (name.equals("bug_id")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("creation_ts")) { // 2008-07-23 12:28
@@ -647,14 +648,14 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				currentContent = new StringBuffer();
 				String userName = attributes.getValue("name");
 				if (userName != null) {
-					currentUser.setName(userName);
+					currentUser.setRealName(userName);
 				}
 			} else if (name.equals("assigned_to")) {
 				currentUser = new BugzillaUser();
 				currentContent = new StringBuffer();
 				String userName = attributes.getValue("name");
 				if (userName != null) {
-					currentUser.setName(userName);
+					currentUser.setRealName(userName);
 				}
 			} else if (name.equals("qa_contact")) {
 				currentContent = new StringBuffer();
@@ -667,7 +668,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				currentContent = new StringBuffer();
 				String userName = attributes.getValue("name");
 				if (userName != null) {
-					currentUser.setName(userName);
+					currentUser.setRealName(userName);
 				}
 			} else if (name.equals("bug_when")) { // 2008-07-23 12:28:22
 				currentContent = new StringBuffer();
@@ -717,10 +718,10 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 		public void endElement(String uri, String localName, String name) throws SAXException {
 			if (name.equals("bug")) {
 				iterator.addBug(currentIssue);
-				currentIssue.setType(issueTypes.get("Issue"));
 				currentIssue = null;
 			} else if (name.equals("bug_id")) {
 				currentIssue.setId(currentContent.toString());
+				currentIssue.setUri(getBaseUrl()+PAGES[BUGZILLA_SHOW_BUG]+"?id="+currentIssue.getId());
 				currentContent = null;
 			} else if (name.equals("creation_ts")) { // 2008-07-23 12:28
 				try {

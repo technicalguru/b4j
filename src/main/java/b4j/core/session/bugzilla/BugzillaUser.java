@@ -31,6 +31,7 @@ public class BugzillaUser extends AbstractBugzillaObject implements User {
 
 	private String id;
 	private String name;
+	private String realName;
 	private Team team;
 	
 	/**
@@ -85,6 +86,22 @@ public class BugzillaUser extends AbstractBugzillaObject implements User {
 	@Override
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+
+	/**
+	 * Returns the realName.
+	 * @return the realName
+	 */
+	public String getRealName() {
+		return realName;
+	}
+
+	/**
+	 * Sets the realName.
+	 * @param realName the realName to set
+	 */
+	public void setRealName(String realName) {
+		this.realName = realName;
 	}
 
 	/**

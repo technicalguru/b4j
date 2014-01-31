@@ -173,7 +173,7 @@ public class BugzillaProject extends AbstractBugzillaObject implements Project {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
-		BugzillaComponent other = (BugzillaComponent) obj;
+		BugzillaProject other = (BugzillaProject) obj;
 		if (getName() == null) {
 			if (other.getName() != null) return false;
 		} else if (!getName().equals(other.getName())) return false;
