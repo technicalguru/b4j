@@ -72,5 +72,13 @@ public class JiraUser extends AbstractBugzillaObject implements User {
 		this.team = team;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getRealName() {
+		return user.getDisplayName();
+	}
+
 	
 }

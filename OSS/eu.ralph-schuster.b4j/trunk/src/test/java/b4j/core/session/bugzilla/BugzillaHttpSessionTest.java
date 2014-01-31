@@ -27,7 +27,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.junit.Test;
@@ -37,6 +36,7 @@ import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.session.BugzillaHttpSession;
+import b4j.core.util.IssueTest;
 
 /**
  * Bugzilla Session test
@@ -46,27 +46,10 @@ import b4j.core.session.BugzillaHttpSession;
 @SuppressWarnings("deprecation")
 public class BugzillaHttpSessionTest {
 
-	private static Map<String, Map<String,String>> expectedProperties = new HashMap<String, Map<String,String>>();
 	private static Map<String, Map<String,String>> expectedCommentAttachments = new HashMap<String, Map<String,String>>();
 	
 	static {
-		addBug("3", "Create abstract class for BugzillaReportGenerator", "CLOSED", "FIXED", "P3", "enhancement");
-		addBug("5", "java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)", "CLOSED", "FIXED", "P3", "normal");
-		addBug("6", "Add abstract Email Report class", "CLOSED", "FIXED", "P3", "enhancement");
-		addBug("13", "JIRA session", "ASSIGNED", null, "P3", "normal");
-		addBug("14", "Writing # as first column does not escape it", "CLOSED", "FIXED", "P3", "normal");
-		addBug("18", "Filter searches on HttpJiraSession does not return when no issue was found", "CLOSED", "FIXED", "P3", "normal");
 		addCommentAttachment("30", "49", "3");
-	}
-	
-	private static void addBug(String id, String shortDescription, String status, String resolution, String priority, String severity) {
-		Map<String,String> props = new HashMap<String, String>();
-		props.put("summary", shortDescription);
-		if (status != null) props.put("status.name", status);
-		if (resolution != null) props.put("resolution.name", resolution);
-		if (priority != null) props.put("priority.name", priority);
-		if (severity != null) props.put("severity.name", severity);
-		expectedProperties.put(id, props);
 	}
 	
 	private static void addCommentAttachment(String id, String commentId, String attachmentId) {
@@ -100,12 +83,11 @@ public class BugzillaHttpSessionTest {
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterator returned", i);
+		IssueTest issueTest = new IssueTest();
 		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
-			if (expectedProperties.containsKey(id)) {
-				testIssue(id, issue);
-			}
+			issueTest.test(issue);
 			if (expectedCommentAttachments.containsKey(id)) {
 				Map<String,String> commentMap = expectedCommentAttachments.get(id);
 				for (Map.Entry<String, String> entry : commentMap.entrySet()) {
@@ -130,14 +112,6 @@ public class BugzillaHttpSessionTest {
 		session.close();
 	}
 
-	private void testIssue(String id, Issue issue) throws Exception {
-		Map<String,String> props = expectedProperties.get(id);
-		assertNotNull("No expected properties found", props);
-		for (String key : props.keySet()) {
-			assertEquals(key+" does not match:", props.get(key), PropertyUtils.getProperty(issue, key));
-		}		
-	}
-	
 	/**
 	 * Does special tests.
 	 * @param issue

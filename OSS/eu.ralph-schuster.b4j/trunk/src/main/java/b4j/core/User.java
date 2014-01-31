@@ -35,6 +35,11 @@ public interface User extends BugzillaObject {
 	public String getName();
 
 	/**
+	 * Returns the real name.
+	 */
+	public String getRealName();
+
+	/**
 	 * Returns the team.
 	 * @return the team
 	 */
