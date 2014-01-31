@@ -17,8 +17,6 @@
  */
 package b4j.core;
 
-import java.util.Iterator;
-
 import org.slf4j.Logger;
 
 import b4j.report.BugzillaReportGenerator;
@@ -47,7 +45,7 @@ public interface MetaInformation extends BugzillaObject {
 	 * Returns all report generators.
 	 * @return iterator on all BugzillaReportGenerator objects to be used
 	 */
-	public Iterator<BugzillaReportGenerator> getReports();
+	public Iterable<BugzillaReportGenerator> getReports();
 	
 	/**
 	 * Debug information into log.

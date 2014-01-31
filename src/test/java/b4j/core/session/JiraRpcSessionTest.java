@@ -25,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -120,10 +119,9 @@ public class JiraRpcSessionTest {
 		searchData.add("jql", "project=BFJ");
 
 		// Perform the search
-		Iterator<Issue> i = session.searchBugs(searchData, null);
-		assertNotNull("No iterator returned", i);
-		while (i.hasNext()) {
-			Issue issue = i.next();
+		Iterable<Issue> i = session.searchBugs(searchData, null);
+		assertNotNull("No iterable returned", i);
+		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
 			if (expectedProperties.containsKey(id)) {
@@ -144,10 +142,9 @@ public class JiraRpcSessionTest {
 		}
 
 		// Perform the search
-		Iterator<Issue> i = session.searchBugs(searchData, null);
+		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterator returned", i);
-		while (i.hasNext()) {
-			Issue issue = i.next();
+		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
 			String attachementId = expectedCommentAttachments.get(id);

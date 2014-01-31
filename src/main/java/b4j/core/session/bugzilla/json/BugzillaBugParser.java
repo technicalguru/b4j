@@ -127,9 +127,10 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set("project_name", json.getString("product")); if (retriever != null) retriever.registerProject(json.getString("product"));
 		rc.set(Issue.MILESTONE, json.getString("target_milestone"));
 		rc.set(Issue.CONFIRMED, json.getBoolean("is_confirmed"));
-		rc.set(Issue.ACTUAL_TIME, json.getInt("actual_time"));
-		rc.set(Issue.ESTIMATED_TIME, json.getInt("estimated_time"));
-		rc.set(Issue.REMAINING_TIME, json.getInt("remaining_time"));
+		
+		if (json.has("actual_time")) rc.set(Issue.ACTUAL_TIME, json.getInt("actual_time"));
+		if (json.has("estimated_time")) rc.set(Issue.ESTIMATED_TIME, json.getInt("estimated_time"));
+		if (json.has("remaining_time")) rc.set(Issue.REMAINING_TIME, json.getInt("remaining_time"));
 		if (retriever != null) {
 			retriever.registerComment(rc.getId());
 			retriever.registerAttachment(rc.getId());

@@ -65,6 +65,7 @@ public abstract class AbstractRestClientTest {
 		
 		httpClient = HttpClients.createAtlassianClient(serverUri, params);
 		client = factory.create(serverUri, httpClient);
+		
 	}
 
 }

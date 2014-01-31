@@ -46,7 +46,7 @@ public class AsyncBugzillaBugRestClientTest extends AbstractRestClientTest {
 	public static void setup() throws Exception {
 		AbstractRestClientTest.setup(); // Our own server has no classifications
 		myClient = client.getBugClient();
-		client.getUserClient().login("test", "testuser");
+		client.getUserClient().login("test", "password");
 	}
 
 	@AfterClass

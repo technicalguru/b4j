@@ -112,16 +112,16 @@ public class DefaultSearchData implements SearchData {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Iterator<String> getParameterNames() {
-		return parameters.keySet().iterator();
+	public Iterable<String> getParameterNames() {
+		return parameters.keySet();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Iterator<String> get(String parameter) {
-		return parameters.get(parameter).iterator();
+	public Iterable<String> get(String parameter) {
+		return parameters.get(parameter);
 	}
 
 	/**
@@ -133,9 +133,9 @@ public class DefaultSearchData implements SearchData {
 		Iterator<String> keys = parameters.keySet().iterator();
 		while (keys.hasNext()) {
 			String key = keys.next();
-			Iterator<String> i = get(key);
-			while (i.hasNext()) log.debug("search-"+key.toLowerCase()+"="+i.next());
-			
+			for (String v : get(key)) {
+				log.debug("search-"+key.toLowerCase()+"="+v);
+			}
 		}
 	}
 

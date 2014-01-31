@@ -17,22 +17,51 @@
  */
 package b4j.core.session;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
 
 import b4j.core.Attachment;
+import b4j.core.DefaultAttachment;
 import b4j.core.Issue;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
+import b4j.core.ServerInfo;
+import b4j.core.session.bugzilla.BugzillaClient;
+import b4j.core.session.bugzilla.BugzillaRestClientFactory;
+import b4j.core.session.bugzilla.async.AsyncBugzillaRestClientFactory;
+import b4j.util.HttpClients;
+import b4j.util.HttpSessionParams;
+
+import com.atlassian.httpclient.api.HttpClient;
 
 /**
  * Accesses Bugzilla via REST.
+ * <p>Please read carefully documentation at 
+ * <a href="http://www.bugzilla.org/docs/4.4/en/html/api/Bugzilla/WebService/Bug.html#search">Bugzilla::WebService:Bug</a> interface
+ * in order to understand what parameters are valid for searching (e.g. "classification" is not allowed as of 4.4).</p>
  * @author ralph
  * @since 2.0
  *
  */
 public class BugzillaRpcSession extends AbstractHttpSession {
+
+	public static final String BUGZILLA_MINIMUM_VERSION = "4.4.0";
+
+	private BugzillaClient client = null;
+	private ServerInfo serverInfo = null;
+	private URL baseUrl;
 
 	/**
 	 * Constructor.
@@ -41,12 +70,44 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	}
 
 	/**
+	 * Configuration allows:<br/>
+	 * &lt;bugzilla-home&gt;URL&lt;/bugzilla-home&gt; - the Bugzilla base URL<br/>
+	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br/>
+	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)<br/>
+	 */
+	@Override
+	public void configure(Configuration config) throws ConfigurationException {
+		super.configure(config);
+		try {
+			String home = config.getString("bugzilla-home");
+			setBaseUrl(new URL(home));
+		} catch (MalformedURLException e) {
+			throw new ConfigurationException("Malformed JIRA URL: ", e);
+		}
+	}
+
+	/**
+	 * Returns the baseUrl.
+	 * @return the baseUrl
+	 */
+	public URL getBaseUrl() {
+		return baseUrl;
+	}
+
+	/**
+	 * Sets the baseUrl.
+	 * @param baseUrl the baseUrl to set
+	 */
+	public void setBaseUrl(URL baseUrl) {
+		this.baseUrl = baseUrl;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean isLoggedIn() {
-		// TODO Auto-generated method stub
-		return false;
+		return client != null;
 	}
 
 	/**
@@ -54,8 +115,39 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	 */
 	@Override
 	public boolean open() {
-		// TODO Auto-generated method stub
-		return false;
+		if (isLoggedIn()) return true;
+		if (client == null) {
+			client = createClient();
+		}
+		checkBugzillaVersion();
+
+		HttpSessionParams sessionParams = getHttpSessionParams();
+		if (sessionParams == null) sessionParams = new HttpSessionParams();
+
+		if (sessionParams.hasAuthorization()) {
+			client.login(sessionParams.getLogin(), sessionParams.getPassword());
+		}
+
+		return isLoggedIn();
+	}
+
+	/**
+	 * Creates the {@link BugzillaClient}.
+	 * @return the client created
+	 */
+	protected BugzillaClient createClient() {
+		BugzillaRestClientFactory factory = new AsyncBugzillaRestClientFactory();
+		URI uri;
+		try {
+			uri = getBaseUrl().toURI();
+		} catch (URISyntaxException e) {
+			throw new RuntimeException("Cannot create URI", e);
+		}
+		HttpSessionParams sessionParams = getHttpSessionParams();
+		if (sessionParams == null) sessionParams = new HttpSessionParams();
+
+		HttpClient httpClient = HttpClients.createAtlassianClient(uri, sessionParams);
+		return factory.create(uri, httpClient);
 	}
 
 	/**
@@ -63,17 +155,33 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	 */
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		
+		if (client == null) return;
+		if (client.getUser() != null) {
+			client.logout();
+		}
+		client = null;
+		serverInfo = null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Iterator<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
+		checkLoggedIn();
+		try {
+			Map<String,Object> criteria = new HashMap<String, Object>();
+			for (String key : searchData.getParameterNames()) {
+				List<String> values = new ArrayList<String>();
+				for (String value : searchData.get(key)) {
+					values.add(value);
+				}
+				criteria.put(key, values);
+			}
+			return client.getBugClient().findBugs(criteria).get();
+		} catch (Exception e) {
+			throw new RuntimeException("Cannot search issues", e);
+		}
 	}
 
 	/**
@@ -81,7 +189,15 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	 */
 	@Override
 	public Issue getIssue(String id) {
-		// TODO Auto-generated method stub
+		checkLoggedIn();
+		try {
+			Iterable<Issue> i = client.getBugClient().getBugs(Long.parseLong(id)).get();
+			for (Issue rc : i) {
+				return rc;
+			}
+		} catch (Exception e) {
+			throw new RuntimeException("Cannot retrieve issue: "+id, e);
+		}
 		return null;
 	}
 
@@ -90,7 +206,10 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	 */
 	@Override
 	public InputStream getAttachment(Attachment attachment) throws IOException {
-		// TODO Auto-generated method stub
+		checkLoggedIn();
+		if (attachment instanceof DefaultAttachment) {
+			return new ByteArrayInputStream(((DefaultAttachment)attachment).getContent());
+		}
 		return null;
 	}
 
@@ -99,8 +218,7 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	 */
 	@Override
 	public String getMinimumBugzillaVersion() {
-		// TODO Auto-generated method stub
-		return null;
+		return BUGZILLA_MINIMUM_VERSION;
 	}
 
 	/**
@@ -108,7 +226,6 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	 */
 	@Override
 	public String getMaximumBugzillaVersion() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -117,9 +234,17 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	 */
 	@Override
 	public String getBugzillaVersion() {
-		// TODO Auto-generated method stub
-		return null;
+		checkLoggedIn();
+		if (serverInfo == null) {
+			try {
+				serverInfo = client.getMetadataClient().getServerInfo().get();
+			} catch (Exception e) {
+				throw new RuntimeException("Cannot retrieve Server Information", e);
+			}
+		}
+		if (serverInfo == null) return null;
+		return serverInfo.getVersion();
 	}
 
-	
+
 }

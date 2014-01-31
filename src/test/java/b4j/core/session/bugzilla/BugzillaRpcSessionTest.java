@@ -36,15 +36,14 @@ import rs.baselib.io.FileFinder;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
-import b4j.core.session.BugzillaHttpSession;
+import b4j.core.session.BugzillaRpcSession;
 
 /**
  * Bugzilla Session test
  * @author ralph
  *
  */
-@SuppressWarnings("deprecation")
-public class BugzillaHttpSessionTest {
+public class BugzillaRpcSessionTest {
 
 	private static Map<String, Map<String,String>> expectedProperties = new HashMap<String, Map<String,String>>();
 	private static Map<String, Map<String,String>> expectedCommentAttachments = new HashMap<String, Map<String,String>>();
@@ -87,7 +86,7 @@ public class BugzillaHttpSessionTest {
 		if (url == null) url = FileFinder.find(getClass(), "test-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration myConfig = new XMLConfiguration(url);
-		BugzillaHttpSession session = new BugzillaHttpSession();
+		BugzillaRpcSession session = new BugzillaRpcSession();
 		session.configure(myConfig);
 
 		session.open();
@@ -95,11 +94,14 @@ public class BugzillaHttpSessionTest {
 
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
-		searchData.add("classification", "Java Projects");
+		searchData.add("product", "B4J ‑ Bugzilla for Java");
+		searchData.add("product", "CSV Utility Package");
+		searchData.add("product", "IceScrum Stylesheets");
+		searchData.add("product", "Templating");
 
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
-		assertNotNull("No iterator returned", i);
+		assertNotNull("No iterable returned", i);
 		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
@@ -143,7 +145,7 @@ public class BugzillaHttpSessionTest {
 	 * @param issue
 	 * @throws Exception
 	 */
-	private void testSpecials(BugzillaHttpSession session, Issue issue) throws Exception {
+	private void testSpecials(BugzillaRpcSession session, Issue issue) throws Exception {
 		// Special bug with timestamps
 		if (issue.getId().equals("3")) {
 			assertEquals("Timestamp parsed invalid", 1345485240000L, issue.getUpdateTimestamp().getTime());

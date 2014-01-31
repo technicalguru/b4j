@@ -18,7 +18,6 @@
 package b4j;
 
 import java.io.File;
-import java.util.Iterator;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -184,14 +183,13 @@ public class GenerateReports implements Runnable {
 		if (session.open()) {
 
 			// Make the search
-			Iterator<Issue> bugs = session.searchBugs(getMetaInformation().getBugzillaSearchData(), null);
+			Iterable<Issue> bugs = session.searchBugs(getMetaInformation().getBugzillaSearchData(), null);
 			if (bugs != null) {
 
 				// Prepare all reports
 				boolean hasReport = false;
-				Iterator<BugzillaReportGenerator> reports = getMetaInformation().getReports();
-				while (reports.hasNext()) {
-					BugzillaReportGenerator report = reports.next();
+				Iterable<BugzillaReportGenerator> reports = getMetaInformation().getReports();
+				for (BugzillaReportGenerator report : reports) {
 
 					// Check compatibility of reports
 					if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
@@ -208,25 +206,20 @@ public class GenerateReports implements Runnable {
 
 				// Iterate on all bugs
 				if (hasReport) {
-					while (bugs.hasNext()) {
-						Issue bug = bugs.next();
-						log.debug("issue found: "+bug.toString());
+					for (Issue issue : bugs) {
+						log.debug("issue found: "+issue.toString());
 
 						// call all reports to register the bug
-						reports = getMetaInformation().getReports();
-						while (reports.hasNext()) {
-							BugzillaReportGenerator report = reports.next();
+						for (BugzillaReportGenerator report : reports) {
 							if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
-								report.registerBug(bug);
+								report.registerBug(issue);
 							}
 						}
 					}
 				}
 
 				// Ask all reports to finish their work
-				reports = getMetaInformation().getReports();
-				while (reports.hasNext()) {
-					BugzillaReportGenerator report = reports.next();
+				for (BugzillaReportGenerator report : reports) {
 					if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
 						log.info("Generating "+report.getClass().getSimpleName()+"...");
 						report.closeReport();

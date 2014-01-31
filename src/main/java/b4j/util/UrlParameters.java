@@ -161,11 +161,10 @@ public class UrlParameters {
 	 */
 	public static UrlParameters createUrlParameters(SearchData searchData) {
 		UrlParameters rc = new UrlParameters();
-		Iterator<String> keys = searchData.getParameterNames();
-		while (keys.hasNext()){
-			String key = keys.next();
-			Iterator<String> values = searchData.get(key);
-			while (values.hasNext()) rc.setParameter(key, values.next());
+		for (String key : searchData.getParameterNames()) {
+			for (String value : searchData.get(key)) {
+				rc.setParameter(key, value);
+			}
 		}
 		return rc;
 	}

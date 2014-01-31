@@ -121,8 +121,8 @@ public class DefaultMetaInformation extends AbstractBugzillaObject implements Me
 	 * Returns all report generators.
 	 * @return iterator on all report generators.
 	 */
-	public Iterator<BugzillaReportGenerator> getReports() {
-		return reports.iterator();
+	public Iterable<BugzillaReportGenerator> getReports() {
+		return reports;
 	}
 	
 	/**
@@ -213,7 +213,8 @@ public class DefaultMetaInformation extends AbstractBugzillaObject implements Me
 		if (!log.isDebugEnabled()) return;
 		getBugzillaSession().dump();
 		getBugzillaSearchData().dump(log);
-		Iterator<BugzillaReportGenerator> j = getReports();
-		while (j.hasNext()) log.info("report="+j.next().getClass().getName());
+		for (BugzillaReportGenerator gen : getReports()) {
+			log.info("report="+gen.getClass().getName());
+		}
 	}
 }

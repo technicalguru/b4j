@@ -17,7 +17,6 @@
  */
 package b4j.core;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -42,7 +41,7 @@ public interface SearchData extends IConfigurable {
 	 * Returns an iterator of all parameter names.
 	 * @return iterator on parameter names
 	 */
-	public Iterator<String> getParameterNames();
+	public Iterable<String> getParameterNames();
 	
 	/**
 	 * Returns true if parameter name is set.
@@ -57,7 +56,7 @@ public interface SearchData extends IConfigurable {
 	 * @param parameter - name of parameter.
 	 * @return iterator on values of parameter
 	 */
-	public Iterator<String> get(String parameter);
+	public Iterable<String> get(String parameter);
 
 	/**
 	 * Adds a search parameter with specified values.

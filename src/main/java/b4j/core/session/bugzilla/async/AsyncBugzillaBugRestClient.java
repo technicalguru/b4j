@@ -30,6 +30,7 @@ import b4j.core.session.bugzilla.BugzillaBugRestClient;
 import b4j.core.session.bugzilla.json.BugzillaAttachmentParser;
 import b4j.core.session.bugzilla.json.BugzillaBugParser;
 import b4j.core.session.bugzilla.json.BugzillaCommentParser;
+import b4j.core.session.bugzilla.json.JSONUtils;
 
 import com.atlassian.util.concurrent.Promise;
 
@@ -81,6 +82,7 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	 */
 	@Override
 	public Promise<Iterable<Issue>> findBugs(Map<String, Object> criteria) {
+		try { System.out.println(JSONUtils.convert(criteria).toString()); } catch (Exception e) {}
 		return postAndParse("search", criteria, bugParser);
 	}
 
