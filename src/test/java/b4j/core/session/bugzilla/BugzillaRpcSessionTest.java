@@ -121,12 +121,6 @@ public class BugzillaRpcSessionTest {
 	 * @throws Exception
 	 */
 	private void testSpecials(BugzillaRpcSession session, Issue issue) throws Exception {
-		// Special bug with timestamps
-		if (issue.getId().equals("3")) {
-			assertEquals("Timestamp parsed invalid", 1345485240000L, issue.getUpdateTimestamp().getTime());
-			assertEquals("Comment timestamp parsed invalid", 1244567618000L, issue.getComment("4").getWhen().getTime());
-		}
-		
 		// Check attachment retrieval
 		if (issue.getId().equals("30")) {
 			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3"))));

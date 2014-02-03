@@ -73,6 +73,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 
 	private boolean loggedIn;
 	private URL baseUrl;
+	private URI jiraServerUri;
 	private String jiraVersion;
 	private JiraRestClient jiraClient;
 	private AsynchronousFilterRestClient filterClient;
@@ -123,7 +124,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		
 		try {
 			JiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
-			URI jiraServerUri = getBaseUrl().toURI();
+			jiraServerUri = getBaseUrl().toURI();
 			
 			HttpClient httpClient = getHttpClient(jiraServerUri);
 			jiraClient = factory.create(jiraServerUri, httpClient);
@@ -221,7 +222,9 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		rc.addComponents(components.get(issue.getComponents(), rc.getProject()));
 		rc.setAssignee(users.get(issue.getAssignee()));
 		rc.setCreationTimestamp(issue.getCreationDate().toDate());
-		rc.setServerUri(issue.getSelf().toString());
+		rc.setUri(issue.getSelf().toString());
+		rc.setServerUri(jiraServerUri.toString());
+		rc.setServerVersion(getBugzillaVersion());
 		rc.setPriority(priorities.get(issue.getPriority()));
 		rc.setReporter(users.get(issue.getReporter()));
 		rc.setResolution(resolutions.get(issue.getResolution()));
@@ -306,7 +309,8 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		if (searchData.hasParameter("filterId")) {
 			result = filterClient.search(searchData.get("filterId").iterator().next());
 		} else if (searchData.hasParameter("jql")) {
-			result = jiraClient.getSearchClient().searchJql(searchData.get("jql").iterator().next());
+			String jql = searchData.get("jql").iterator().next();
+			result = jiraClient.getSearchClient().searchJql(jql);
 		} else if (searchData.hasParameter("key")) {
 			result = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")");
 		} else {

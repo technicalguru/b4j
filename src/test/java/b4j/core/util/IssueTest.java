@@ -96,7 +96,7 @@ public class IssueTest extends AbstractObjectTest<Issue> {
 	 * @return the string representation
 	 */
 	protected static String joinLinks(Collection<IssueLink> links) {
-		if (links == null) return null;
+		if ((links == null) || (links.size() == 0)) return "null";
 		StringBuilder rc = new StringBuilder();
 		for (IssueLink link : links) {
 			if (rc.length() > 0) rc.append(',');

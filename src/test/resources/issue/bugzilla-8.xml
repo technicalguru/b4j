@@ -3,7 +3,7 @@
 <properties>
 <comment>Saved Fri Jan 31 15:47:47 CET 2014: bugzilla-8</comment>
 <entry key="classification">Java Projects</entry>
-<entry key="links"/>
+<entry key="links">null</entry>
 <entry key="project">CSV Utility Package</entry>
 <entry key="type">bug</entry>
 <entry key="children">list:null</entry>
@@ -19,7 +19,7 @@
 <entry key="description">Row and column count was added (column count is maximum number of columns).</entry>
 <entry key="plannedVersions">list:null</entry>
 <entry key="affectedVersions">list:null</entry>
-<entry key="parentId"/>
+<entry key="parentId">null</entry>
 <entry key="reporter">admin</entry>
 <entry key="updateTimestamp">1254142523000</entry>
 <entry key="assignee">admin</entry>

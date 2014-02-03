@@ -3,7 +3,7 @@
 <properties>
 <comment>Saved Fri Jan 31 15:48:07 CET 2014: bugzilla-20</comment>
 <entry key="classification">Java Projects</entry>
-<entry key="links"/>
+<entry key="links">null</entry>
 <entry key="project">CSV Utility Package</entry>
 <entry key="type">bug</entry>
 <entry key="children">list:null</entry>
@@ -31,7 +31,7 @@ if (checkComments &amp;&amp; !isIgnoreComments() &amp;&amp; (s.length() &gt; 0))
 in order to handle comments if NOT ignored?</entry>
 <entry key="plannedVersions">list:null</entry>
 <entry key="affectedVersions">list:null</entry>
-<entry key="parentId"/>
+<entry key="parentId">null</entry>
 <entry key="reporter">eldn</entry>
 <entry key="updateTimestamp">1285146436000</entry>
 <entry key="assignee">admin</entry>
