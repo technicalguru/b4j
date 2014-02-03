@@ -255,7 +255,7 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 	 * @return the string representation 
 	 */
 	protected static String toString(Object o) {
-		if (o == null) return "";
+		if (o == null) return "null";
 		return o.toString();
 	}
 

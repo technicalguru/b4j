@@ -19,7 +19,7 @@
 <entry key="description">Add a reader implementation for JDBC.</entry>
 <entry key="plannedVersions">list:null</entry>
 <entry key="affectedVersions">list:null</entry>
-<entry key="parentId"/>
+<entry key="parentId">null</entry>
 <entry key="reporter">admin</entry>
 <entry key="updateTimestamp">1323117181000</entry>
 <entry key="assignee">admin</entry>

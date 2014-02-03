@@ -21,7 +21,7 @@
 Furthermore, AbstractTableReader and AbstractTableWriter shall be stripped down to general, common methods that most implementation will use. Two new abstract classes shall be created, AbstractStreamTableReader and AbstractStreamTableWriter, that deal with stream-based implementations.</entry>
 <entry key="plannedVersions">list:null</entry>
 <entry key="affectedVersions">list:null</entry>
-<entry key="parentId"/>
+<entry key="parentId">null</entry>
 <entry key="reporter">admin</entry>
 <entry key="updateTimestamp">1323117113000</entry>
 <entry key="assignee">admin</entry>

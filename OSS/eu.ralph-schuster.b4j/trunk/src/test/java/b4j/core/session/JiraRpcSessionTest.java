@@ -27,11 +27,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +39,7 @@ import rs.baselib.io.FileFinder;
 import b4j.core.Attachment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
+import b4j.core.util.IssueTest;
 
 /**
  * Jira Session test ({@link JiraRpcSession}).
@@ -53,31 +53,19 @@ public class JiraRpcSessionTest {
 	private static Logger log = LoggerFactory.getLogger(JiraRpcSessionTest.class);
 
 	static {
-		addBug("BFJ-1", "Create abstract class for BugzillaReportGenerator");
-		addBug("BFJ-2", "java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)");
-		addBug("BFJ-3", "Add abstract Email Report class");
-		addBug("BFJ-4", "JIRA session");
-		addBug("BFJ-5", "Writing # as first column does not escape it");
-		addBug("BFJ-6", "Filter searches on HttpJiraSession does not return when no issue was found");
 		addCommentAttachment("CSV-28", "http://jira.ralph-schuster.eu/rest/api/2/attachment/10100");
-	}
-
-	private static void addBug(String id, String shortDescription) {
-		Map<String,String> props = new HashMap<String, String>();
-		props.put("summary", shortDescription);
-		expectedProperties.put(id, props);
 	}
 
 	private static void addCommentAttachment(String id, String attachmentId) {
 		expectedCommentAttachments.put(id, attachmentId);
 	}
 
-	private JiraRpcSession session;
+	private static JiraRpcSession session;
 
-	@Before
-	public void setup() throws Exception {
-		URL url = FileFinder.find(getClass(), "local-test-jira-config.xml");
-		if (url == null) url = FileFinder.find(getClass(), "test-jira-config.xml");
+	@BeforeClass
+	public static void setup() throws Exception {
+		URL url = FileFinder.find(JiraRpcSessionTest.class, "local-test-jira-config.xml");
+		if (url == null) url = FileFinder.find(JiraRpcSessionTest.class, "test-jira-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration myConfig = new XMLConfiguration(url);
 		session = new JiraRpcSession();
@@ -86,8 +74,8 @@ public class JiraRpcSessionTest {
 	}
 
 
-	@After
-	public void cleanup() throws Exception {
+	@AfterClass
+	public static void cleanup() throws Exception {
 		session.close();
 	}
 
@@ -106,7 +94,9 @@ public class JiraRpcSessionTest {
 	public void testGetIssue() throws Exception {
 		// Search a simple bug
 		Issue issue = session.getIssue("BFJ-1");
+		IssueTest issueTest = new IssueTest();
 		assertNotNull(issue);
+		issueTest.test(issue);
 	}
 
 	/**
@@ -116,16 +106,19 @@ public class JiraRpcSessionTest {
 	public void testJql() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
-		searchData.add("jql", "project=BFJ");
+		searchData.add("jql", "project=BFJ and status = Closed");
 
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterable returned", i);
+		IssueTest issueTest = new IssueTest();
 		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
+			//issueTest.save("src/test/resources", issue);
+			issueTest.test(issue);
 			if (expectedProperties.containsKey(id)) {
-				testIssue(id, issue);
+				//testIssue(id, issue);
 			}
 		}
 	}
@@ -177,25 +170,4 @@ public class JiraRpcSessionTest {
 		assertEquals("Attachment cannot be read", s, " * This file is part of CSV package.");
 	}
 	
-	private void testIssue(String id, Issue issue) throws Exception {
-		Map<String,String> props = expectedProperties.get(id);
-		assertNotNull("No expected properties found", props);
-		for (String key : props.keySet()) {
-			assertEquals(key+" does ot match:", PropertyUtils.getProperty(issue, key), props.get(key));
-		}
-		testSpecials(issue);
-	}
-
-	/**
-	 * Does special tests.
-	 * @param issue
-	 * @throws Exception
-	 */
-	private void testSpecials(Issue issue) throws Exception {
-		// Special bug with timestamps
-		if (issue.getId().equals("BFJ-1")) {
-			assertEquals("Timestamp parsed invalid", 1371672696000L, issue.getUpdateTimestamp().getTime() );
-			assertEquals("Comment timestamp parsed invalid", 1354567418000L, issue.getComment("10043").getWhen().getTime());
-		}
-	}
 }
