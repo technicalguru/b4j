@@ -52,7 +52,9 @@ import b4j.core.Component;
 import b4j.core.DefaultAttachment;
 import b4j.core.DefaultClassification;
 import b4j.core.DefaultComment;
+import b4j.core.DefaultLink;
 import b4j.core.Issue;
+import b4j.core.IssueLink.Type;
 import b4j.core.IssueType;
 import b4j.core.Priority;
 import b4j.core.Project;
@@ -153,7 +155,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 		HttpSessionParams httpParams = getHttpSessionParams();
 		if (httpParams == null) httpParams = new HttpSessionParams();
-		
+
 		// Exception: No login required
 		if (httpParams.getLogin() == null) {
 			getLog().debug("No Auth required");
@@ -524,8 +526,8 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 		public Iterator<Issue> iterator() {
 			return this;
 		}
-		
-		
+
+
 	}
 
 	/**
@@ -548,7 +550,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 		private String bugzillaVersion;
 		private String bugzillaUri;
 		private BugzillaUser currentUser;
-		
+
 		/**
 		 * Constructor.
 		 * @param xmlStream - input stream with XML response from Bugzilla
@@ -692,6 +694,8 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				currentContent = new StringBuffer();
 			} else if (name.equals("blocked")) {
 				currentContent = new StringBuffer();
+			} else if (name.equals("dependson")) {
+				currentContent = new StringBuffer();
 			} else if (name.equals("alias")) {
 				currentContent = new StringBuffer();
 			} else if (name.equals("status_whiteboard")) {
@@ -735,7 +739,11 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				currentContent = null;
 			} else if (name.equals("delta_ts")) { // 2008-07-23 12:28:22
 				try {
-					currentIssue.setUpdateTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
+					if (currentAttachment != null) {
+						currentAttachment.set(Attachment.UPDATE_TIMESTAMP, BugzillaUtils.parseDate(currentContent.toString()));
+					} else {
+						currentIssue.setUpdateTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
+					}
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}
@@ -799,6 +807,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 			} else if (name.equals("reporter")) {
 				if (currentUser != null) {
 					currentUser.setId(currentContent.toString());
+					currentUser.setName(currentContent.toString());
 					currentIssue.setReporter(currentUser);
 				}
 				currentUser = null;
@@ -806,6 +815,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 			} else if (name.equals("assigned_to")) {
 				if (currentUser != null) {
 					currentUser.setId(currentContent.toString());
+					currentUser.setName(currentContent.toString());
 					currentIssue.setAssignee(currentUser);
 				}
 				currentUser = null;
@@ -815,12 +825,14 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				currentContent = null;
 			} else if (name.equals("long_desc")) { // multiple
 				currentIssue.addComments(currentComment);
+				if (currentIssue.getDescription() == null) currentIssue.setDescription(currentComment.getTheText());
 				currentComment = null;
 			} else if (name.equals("commentid")) {
 				currentComment.setId(currentContent.toString());
 			} else if (name.equals("who")) {
 				if (currentUser != null) {
 					currentUser.setId(currentContent.toString());
+					currentUser.setName(currentContent.toString());
 					currentComment.setAuthor(currentUser);
 				}
 				currentUser = null;
@@ -870,7 +882,10 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				cc.add(currentContent.toString());
 				currentContent = null;
 			} else if (name.equals("blocked")) {
-				currentIssue.set(Issue.BLOCKED, LangUtils.getLong(currentContent.toString()));
+				currentIssue.addLinks(new DefaultLink(Type.DEPENDS_ON, Issue.BLOCKED_NAME, true, "Blocks", currentContent.toString()));
+				currentContent = null;
+			} else if (name.equals("dependson")) {
+				currentIssue.addLinks(new DefaultLink(Type.DEPENDS_ON, Issue.DEPENDS_ON_NAME, true, "Depends on", currentContent.toString()));
 				currentContent = null;
 			} else if (name.equals("alias")) {
 				currentIssue.set(Issue.ALIAS, currentContent.toString());
