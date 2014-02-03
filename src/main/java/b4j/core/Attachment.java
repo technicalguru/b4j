@@ -28,6 +28,9 @@ import java.util.Date;
  */
 public interface Attachment extends BugzillaObject {
 
+	/** Custom field name */
+	public static final String UPDATE_TIMESTAMP = "updateTimestamp";
+	
 	/**
 	 * Returns the ID of this attachment.
 	 * @return the ID

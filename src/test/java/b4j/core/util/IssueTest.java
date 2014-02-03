@@ -87,8 +87,6 @@ public class IssueTest extends AbstractObjectTest<Issue> {
 	@Override
 	protected Properties getExpected(Issue object) {
 		Properties rc = super.getExpected(object);
-		// TODO
-		rc.remove("description");
 		return rc;
 	}
 

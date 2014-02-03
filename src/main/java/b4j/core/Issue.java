@@ -44,8 +44,6 @@ public interface Issue extends BugzillaObject {
 	public static final String BUG_FILE_LOCATION = "bug_file_loc";
 	/** Custom field name for Bugzilla field cc */
 	public static final String CC = "cc";
-	/** Custom field name for Bugzilla field blocked */
-	public static final String BLOCKED = "blocked";
 	/** Custom field name for Bugzilla field alias */
 	public static final String ALIAS = "alias";
 	/** Custom field name for Bugzilla field whiteboard */
@@ -60,6 +58,11 @@ public interface Issue extends BugzillaObject {
 	public static final String DEADLINE = "deadline";
 	/** Custom field name for Bugzilla field target_milestone */
 	public static final String MILESTONE = "target_milestone";
+	
+	/** Link type name for Bugzilla field blocked */
+	public static final String BLOCKED_NAME = "Blocks";
+	/** Link type name for Bugzilla field blocked */
+	public static final String DEPENDS_ON_NAME = "Depends on";
 	
 	/**
 	 * Returns the version of server this issue was retrieved from.
