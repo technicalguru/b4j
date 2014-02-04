@@ -24,11 +24,13 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import rs.baselib.io.FileFinder;
@@ -36,6 +38,7 @@ import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.session.BugzillaHttpSession;
+import b4j.core.util.CommentTest;
 import b4j.core.util.IssueTest;
 
 /**
@@ -43,73 +46,61 @@ import b4j.core.util.IssueTest;
  * @author ralph
  *
  */
-@SuppressWarnings("deprecation")
 public class BugzillaHttpSessionTest {
 
-	private static Map<String, Map<String,String>> expectedCommentAttachments = new HashMap<String, Map<String,String>>();
+	private static BugzillaHttpSession session;
 	
-	static {
-		addCommentAttachment("30", "49", "3");
+	@BeforeClass
+	public static void setup() throws Exception {
+		URL url = FileFinder.find(BugzillaHttpSessionTest.class, "local-test-config.xml");
+		if (url == null) url = FileFinder.find(BugzillaHttpSessionTest.class, "test-config.xml");
+		assertNotNull("Cannot find test-config.xml", url);
+		Configuration myConfig = new XMLConfiguration(url);
+		session = new BugzillaHttpSession();
+		session.configure(myConfig);
+
+		session.open();
+		assertTrue("Session was not opened", session.isLoggedIn());
 	}
 	
-	private static void addCommentAttachment(String id, String commentId, String attachmentId) {
-		Map<String,String> commentMap = expectedCommentAttachments.get(id);
-		if (commentMap == null) {
-			commentMap = new HashMap<String, String>();
-			expectedCommentAttachments.put(id, commentMap);
-		}
-		commentMap.put(commentId, attachmentId);
+	@AfterClass
+	public static void cleanup() throws Exception {
+		// Close the session again
+		session.close();
 	}
+	
 	
 	/**
 	 * Test search cycle with B4J Bugzilla.
 	 */
 	@Test
 	public void testSession() throws Exception {
-		URL url = FileFinder.find(getClass(), "local-test-config.xml");
-		if (url == null) url = FileFinder.find(getClass(), "test-config.xml");
-		assertNotNull("Cannot find test-config.xml", url);
-		Configuration myConfig = new XMLConfiguration(url);
-		BugzillaHttpSession session = new BugzillaHttpSession();
-		session.configure(myConfig);
-
-		session.open();
-		assertTrue("Session was not opened", session.isLoggedIn());
 
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
 		searchData.add("classification", "Java Projects");
+		Collection<String> expectedBugs = new ArrayList<String>();
+		for (int i=2; i<36; i++) expectedBugs.add(Integer.toString(i));
 
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterator returned", i);
 		IssueTest issueTest = new IssueTest();
+		CommentTest commentTest = new CommentTest();
 		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
+			assertTrue("Issue "+id+" is not expected", expectedBugs.contains(id));
+			expectedBugs.remove(id);
+			
 			issueTest.test(issue);
-			if (expectedCommentAttachments.containsKey(id)) {
-				Map<String,String> commentMap = expectedCommentAttachments.get(id);
-				for (Map.Entry<String, String> entry : commentMap.entrySet()) {
-					Comment desc = issue.getComment(entry.getKey());
-					assertNotNull("Expected comment not found", desc);
-					boolean found = false;
-					for (String attachment : desc.getAttachments()) {
-						if (entry.getValue().equals(""+attachment)) {
-							found = true;
-							break;
-						}
-					}
-					assertTrue("Expected attachment not found", found);
-				}
-				expectedCommentAttachments.remove(id);
+			for (Comment c : issue.getComments()) {
+				commentTest.test(c);
 			}
 			testSpecials(session, issue);
 		}
-		assertTrue("Comments not found", expectedCommentAttachments.isEmpty());
+		assertTrue("Some issues were not found "+expectedBugs.toArray().toString(), expectedBugs.isEmpty());
 		
-		// Close the session again
-		session.close();
 	}
 
 	/**
@@ -117,13 +108,7 @@ public class BugzillaHttpSessionTest {
 	 * @param issue
 	 * @throws Exception
 	 */
-	private void testSpecials(BugzillaHttpSession session, Issue issue) throws Exception {
-		// Special bug with timestamps
-		if (issue.getId().equals("3")) {
-			assertEquals("Timestamp parsed invalid", 1345485240000L, issue.getUpdateTimestamp().getTime());
-			assertEquals("Comment timestamp parsed invalid", 1244567618000L, issue.getComment("4").getWhen().getTime());
-		}
-		
+	private void testSpecials(BugzillaHttpSession session, Issue issue) throws Exception {		
 		// Check attachment retrieval
 		if (issue.getId().equals("30")) {
 			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3"))));

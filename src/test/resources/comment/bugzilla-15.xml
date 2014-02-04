@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:00 CET 2014: bugzilla-15</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1255956109000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1255956109000</entry>
+<entry key="text">The user of a CSVReader should be informed about comment lines. Introduce a CommentCallback interface to be notified.</entry>
+<entry key="issueId">10</entry>
+<entry key="id">15</entry>
+</properties>

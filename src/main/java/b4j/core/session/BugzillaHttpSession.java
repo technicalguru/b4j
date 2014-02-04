@@ -78,11 +78,9 @@ import b4j.util.UrlParameters;
  * Implements Bugzilla access via HTTP.
  * <p>There is no additional configuration required. See
  * {@link AbstractPlainHttpSession} for configuration description.</p>
- * @deprecated Use {@link BugzillaRpcSession}
  * @author Ralph Schuster
  *
  */
-@Deprecated
 public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 	/** Constant for requesting URL connection to login page */
@@ -834,12 +832,14 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 					currentUser.setId(currentContent.toString());
 					currentUser.setName(currentContent.toString());
 					currentComment.setAuthor(currentUser);
+					currentComment.setUpdateAuthor(currentUser);
 				}
 				currentUser = null;
 				currentContent = null;
 			} else if (name.equals("bug_when")) { // 2008-07-23 12:28:22
 				try {
-					currentComment.setWhen(BugzillaUtils.parseDate(currentContent.toString()));
+					currentComment.setCreationTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
+					currentComment.setUpdateTimestamp(BugzillaUtils.parseDate(currentContent.toString()));
 				} catch (ParseException e) {
 					getLog().error("Cannot parse this time: "+currentContent.toString());
 				}

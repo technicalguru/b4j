@@ -64,13 +64,13 @@ public interface Comment extends BugzillaObject {
 	 * Returns the time of creation of this entry.
 	 * @return the time of creation
 	 */
-	public Date getWhen();
+	public Date getCreationTimestamp();
 
 	/**
 	 * Sets the time of creation.
 	 * @param when - the timestamp to set
 	 */
-	public void setWhen(Date when);
+	public void setCreationTimestamp(Date when);
 
 	/**
 	 * Returns the actual text.
@@ -88,13 +88,13 @@ public interface Comment extends BugzillaObject {
 	 * Returns the date of last update.
 	 * @return date of last update.
 	 */
-	public Date getLastUpdate();
+	public Date getUpdateTimestamp();
 	
 	/**
 	 * Sets the date of last update.
 	 * @param lastUpdate date to be set
 	 */
-	public void setLastUpdate(Date lastUpdate);
+	public void setUpdateTimestamp(Date lastUpdate);
 	
 	/**
 	 * Returns the author of the last update.

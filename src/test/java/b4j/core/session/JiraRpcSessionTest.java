@@ -24,6 +24,8 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +39,10 @@ import org.slf4j.LoggerFactory;
 
 import rs.baselib.io.FileFinder;
 import b4j.core.Attachment;
+import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
+import b4j.core.util.CommentTest;
 import b4j.core.util.IssueTest;
 
 /**
@@ -48,7 +52,6 @@ import b4j.core.util.IssueTest;
  */
 public class JiraRpcSessionTest {
 
-	private static Map<String, Map<String,String>> expectedProperties = new HashMap<String, Map<String,String>>();
 	private static Map<String, String> expectedCommentAttachments = new HashMap<String, String>();
 	private static Logger log = LoggerFactory.getLogger(JiraRpcSessionTest.class);
 
@@ -106,21 +109,29 @@ public class JiraRpcSessionTest {
 	public void testJql() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
-		searchData.add("jql", "project=BFJ and status = Closed");
-
+		searchData.add("jql", "project=BFJ and status = Closed and created < \"2014-01-21\"");
+		Collection<String> expectedBugs = new ArrayList<String>();
+		for (int i=1; i<33; i++) expectedBugs.add("BFJ-"+i);
+		expectedBugs.remove("BFJ-25");
+		expectedBugs.remove("BFJ-26");
+		
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterable returned", i);
 		IssueTest issueTest = new IssueTest();
+		CommentTest commentTest = new CommentTest();
 		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
-			//issueTest.save("src/test/resources", issue);
+			assertTrue("Issue "+id+" is not expected", expectedBugs.contains(id));
+			expectedBugs.remove(id);
+
 			issueTest.test(issue);
-			if (expectedProperties.containsKey(id)) {
-				//testIssue(id, issue);
+			for (Comment c : issue.getComments()) {
+				commentTest.test(c);
 			}
 		}
+		assertTrue("Some issues were not found: "+expectedBugs.toArray().toString(), expectedBugs.isEmpty());
 	}
 
 

@@ -324,7 +324,7 @@ public class BugzillaUtils {
 		log.debug("   Duplicate="+issue.isDuplicate());
 		log.debug("   Open="+issue.isOpen());
 		for (Comment c : issue.getComments()) {
-			debug("   comment "+c.getId()+" by "+c.getAuthor().getName()+" ("+c.getWhen()+"): ", c.getTheText());
+			debug("   comment "+c.getId()+" by "+c.getAuthor().getName()+" ("+c.getCreationTimestamp()+"): ", c.getTheText());
 		}
 		for (Attachment a : issue.getAttachments()) {
 			log.debug("   attachment="+a.getFilename()+ "("+a.getType()+"): "+a.getDescription());
@@ -368,9 +368,9 @@ public class BugzillaUtils {
 		log.debug("Comment:Id="+comment.getId());
 		log.debug("   issue="+comment.getIssueId());
 		log.debug("   author="+comment.getAuthor());
-		log.debug("   creationTime="+comment.getWhen());
+		log.debug("   creationTime="+comment.getCreationTimestamp());
 		log.debug("   updateAuthor="+comment.getUpdateAuthor());
-		log.debug("   updateTime="+comment.getLastUpdate());
+		log.debug("   updateTime="+comment.getUpdateTimestamp());
 		debug("   text=", comment.getTheText());
 		log.debug("   attachments="+comment.getAttachmentCount());
 	}

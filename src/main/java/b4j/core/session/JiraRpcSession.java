@@ -247,10 +247,10 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			DefaultComment desc = new DefaultComment(rc.getId());
 			desc.setId(""+comment.getId());
 			desc.setTheText(comment.getBody());
-			desc.setWhen(comment.getCreationDate().toDate());
+			desc.setCreationTimestamp(comment.getCreationDate().toDate());
 			desc.setAuthor(users.get(comment.getAuthor()));
 			desc.setUpdateAuthor(users.get(comment.getAuthor()));
-			desc.setLastUpdate(comment.getUpdateDate().toDate());
+			desc.setUpdateTimestamp(comment.getUpdateDate().toDate());
 			rc.addComments(desc);
 		}
 		rc.setUpdateTimestamp(issue.getUpdateDate().toDate());

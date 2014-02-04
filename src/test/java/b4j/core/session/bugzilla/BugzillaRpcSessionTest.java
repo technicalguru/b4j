@@ -24,11 +24,13 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import rs.baselib.io.FileFinder;
@@ -36,6 +38,7 @@ import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.session.BugzillaRpcSession;
+import b4j.core.util.CommentTest;
 import b4j.core.util.IssueTest;
 
 /**
@@ -45,19 +48,25 @@ import b4j.core.util.IssueTest;
  */
 public class BugzillaRpcSessionTest {
 
-	private static Map<String, Map<String,String>> expectedCommentAttachments = new HashMap<String, Map<String,String>>();
-	
-	static {
-		addCommentAttachment("30", "49", "3");
+	private static BugzillaRpcSession session;
+
+	@BeforeClass
+	public static void setup() throws Exception {
+		URL url = FileFinder.find(BugzillaRpcSessionTest.class, "local-test-config.xml");
+		if (url == null) url = FileFinder.find(BugzillaRpcSessionTest.class, "test-config.xml");
+		assertNotNull("Cannot find test-config.xml", url);
+		Configuration myConfig = new XMLConfiguration(url);
+		session = new BugzillaRpcSession();
+		session.configure(myConfig);
+
+		session.open();
+		assertTrue("Session was not opened", session.isLoggedIn());
 	}
 	
-	private static void addCommentAttachment(String id, String commentId, String attachmentId) {
-		Map<String,String> commentMap = expectedCommentAttachments.get(id);
-		if (commentMap == null) {
-			commentMap = new HashMap<String, String>();
-			expectedCommentAttachments.put(id, commentMap);
-		}
-		commentMap.put(commentId, attachmentId);
+	@AfterClass
+	public static void cleanup() throws Exception {
+		// Close the session again
+		session.close();
 	}
 	
 	/**
@@ -65,15 +74,6 @@ public class BugzillaRpcSessionTest {
 	 */
 	@Test
 	public void testSession() throws Exception {
-		URL url = FileFinder.find(getClass(), "local-test-config.xml");
-		if (url == null) url = FileFinder.find(getClass(), "test-config.xml");
-		assertNotNull("Cannot find test-config.xml", url);
-		Configuration myConfig = new XMLConfiguration(url);
-		BugzillaRpcSession session = new BugzillaRpcSession();
-		session.configure(myConfig);
-
-		session.open();
-		assertTrue("Session was not opened", session.isLoggedIn());
 
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
@@ -81,38 +81,29 @@ public class BugzillaRpcSessionTest {
 		searchData.add("product", "CSV Utility Package");
 		searchData.add("product", "IceScrum Stylesheets");
 		searchData.add("product", "Templating");
+		Collection<String> expectedBugs = new ArrayList<String>();
+		for (int i=2; i<36; i++) expectedBugs.add(Integer.toString(i));
 
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterable returned", i);
 		IssueTest issueTest = new IssueTest();
+		CommentTest commentTest = new CommentTest();
 		for (Issue issue : i) {
 			String id = issue.getId();
 			assertNotNull("No ID for issue record", id);
-			//issueTest.save("src/test/resources", issue);
+			assertTrue("Issue "+id+" is not expected", expectedBugs.contains(id));
+			expectedBugs.remove(id);
+			
 			issueTest.test(issue);
-			if (expectedCommentAttachments.containsKey(id)) {
-				Map<String,String> commentMap = expectedCommentAttachments.get(id);
-				for (Map.Entry<String, String> entry : commentMap.entrySet()) {
-					Comment desc = issue.getComment(entry.getKey());
-					assertNotNull("Expected comment not found", desc);
-					boolean found = false;
-					for (String attachment : desc.getAttachments()) {
-						if (entry.getValue().equals(""+attachment)) {
-							found = true;
-							break;
-						}
-					}
-					assertTrue("Expected attachment not found", found);
-				}
-				expectedCommentAttachments.remove(id);
+			for (Comment c : issue.getComments()) {
+				//{"is_private":false,"count":0,"creator":"admin","attachment_id":null,"time":"2009-10-19T12:41:49Z","bug_id":10,"author":"admin","text":"The user of a CSVReader should be informed about comment lines. Introduce a CommentCallback interface to be notified.","creation_time":"2009-10-19T12:41:49Z","id":15}
+				commentTest.test(c);
 			}
+			
 			testSpecials(session, issue);
 		}
-		assertTrue("Comments not found", expectedCommentAttachments.isEmpty());
-		
-		// Close the session again
-		session.close();
+		assertTrue("Some issues were not found: "+expectedBugs.toArray().toString(), expectedBugs.isEmpty());
 	}
 
 	/**
