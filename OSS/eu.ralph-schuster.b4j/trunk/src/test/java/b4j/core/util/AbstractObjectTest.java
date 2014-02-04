@@ -58,10 +58,17 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 	}
 
 	/**
-	 * Checks whether the test object is identical to what have been expected.
+	 * Saves the properties in an XML file in <code>src/test/resources</code>.
 	 * @param testObject object to be tested
-	 * @return <code>true</code> when object was tested
-	 * @throws exception when the object is not equal to expected values
+	 */
+	public void save(T testObject) {
+		save("src/test/resources", testObject);
+	}
+	
+	/**
+	 * Saves the properties in an XML file.
+	 * @param pathPrefix the path where to store
+	 * @param testObject object to be stored
 	 */
 	public void save(String pathPrefix, T testObject) {
 		Properties actual = createComparable(testObject);
@@ -89,10 +96,10 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		Properties actual = createComparable(testObject);
 		if (actual != null) {
 			Properties expected = getExpected(testObject);
-
-			test(testObject, expected, actual);
-
-			return true;
+			if (expected != null) {
+				test(testObject, expected, actual);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -223,11 +230,11 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		for (Object o : coll) {
 			if (rc.length() > 5) rc.append(',');
 			try {
-				Object value = PropertyUtils.getProperty(o, property);
+				Object value = property != null ? PropertyUtils.getProperty(o, property) : o.toString();
 				if (value != null) rc.append(value.toString());
 				else rc.append("null");
 			} catch (Exception e) {
-				throw new IllegalArgumentException("No such property:" +property, e);
+				throw new IllegalArgumentException("No such property: " +property, e);
 			}
 		}
 		return rc.toString();

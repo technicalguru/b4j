@@ -825,7 +825,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 		String s = null;
 		Date minDate = null;
 		for (Comment c : comments) {
-			Date d = c.getWhen();
+			Date d = c.getCreationTimestamp();
 			if (d == null) continue; // Weird! Unknown comment date
 			if ((minDate == null) || minDate.after(d)) {
 				minDate = d;

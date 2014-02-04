@@ -79,17 +79,6 @@ public class IssueTest extends AbstractObjectTest<Issue> {
 		return "jira-"+object.getId();
 	}
 
-	
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Properties getExpected(Issue object) {
-		Properties rc = super.getExpected(object);
-		return rc;
-	}
-
 	/**
 	 * Creates the string for issue links.
 	 * @param links collection of links

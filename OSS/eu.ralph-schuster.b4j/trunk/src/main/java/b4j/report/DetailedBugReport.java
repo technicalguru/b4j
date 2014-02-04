@@ -191,7 +191,7 @@ public class DetailedBugReport extends AbstractFileReport {
 		String s = "";
 		for (Comment c : bug.getComments()) {
 			String t = BugzillaUtils.join("\n   ", c.getTheText().split("\\n"));
-			s += "\n\n"+c.getAuthor() + " ("+c.getWhen()+"):\n   "+t.trim();
+			s += "\n\n"+c.getAuthor() + " ("+c.getCreationTimestamp()+"):\n   "+t.trim();
 		}
 		markers.put("DESCRIPTIONS", s.trim());
 		template = Templating.replace(template, markers);

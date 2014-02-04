@@ -98,7 +98,7 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getWhen() {
+	public Date getCreationTimestamp() {
 		return when;
 	}
 
@@ -106,7 +106,7 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setWhen(Date when) {
+	public void setCreationTimestamp(Date when) {
 		this.when.setTime(when.getTime());
 	}
 
@@ -130,16 +130,16 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getLastUpdate() {
+	public Date getUpdateTimestamp() {
 		if (lastUpdate != null) return lastUpdate;
-		return getWhen();
+		return getCreationTimestamp();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setLastUpdate(Date lastUpdate) {
+	public void setUpdateTimestamp(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

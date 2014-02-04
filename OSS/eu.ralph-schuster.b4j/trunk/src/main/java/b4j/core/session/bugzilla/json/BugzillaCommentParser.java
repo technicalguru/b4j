@@ -59,7 +59,8 @@ public class BugzillaCommentParser extends AbstractJsonParser implements JsonObj
 			String issueId = keys.next();
 			JSONArray comments = bugs.getJSONObject(issueId).getJSONArray("comments");
 			for (int i=0; i<comments.length(); i++) {
-				rc.add(parseSingleComment(comments.getJSONObject(i)));
+				JSONObject c = comments.getJSONObject(i);
+				rc.add(parseSingleComment(c));
 			}
 		}
 		return rc;
@@ -71,8 +72,8 @@ public class BugzillaCommentParser extends AbstractJsonParser implements JsonObj
 		rc.setAuthor(getLazyRetriever().getUser(json.getString("creator")));
 		rc.setUpdateAuthor(getLazyRetriever().getUser(json.getString("author")));
 		try {
-			rc.setLastUpdate(BugzillaUtils.parseDate(json.getString("time")));
-			rc.setWhen(BugzillaUtils.parseDate(json.getString("creation_time")));
+			rc.setUpdateTimestamp(BugzillaUtils.parseDate(json.getString("time")));
+			rc.setCreationTimestamp(BugzillaUtils.parseDate(json.getString("creation_time")));
 		} catch (ParseException e) {
 			throw new JSONException(e);
 		}
