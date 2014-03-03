@@ -47,7 +47,7 @@ public class AsyncBugzillaBugRestClient extends AbstractAsyncRestClient implemen
 	
 	/**
 	 * Constructor.
-	 * @param client
+	 * @param mainClient main rest client reference
 	 */
 	public AsyncBugzillaBugRestClient(AsyncBugzillaRestClient mainClient) {
 		super(mainClient, "Bug");

@@ -49,7 +49,8 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 	
 	/**
 	 * Constructor.
-	 * @param client
+	 * @param mainClient reference to main client
+	 * @param webService the web service to be addressed
 	 */
 	public AbstractAsyncRestClient(AsyncBugzillaRestClient mainClient, String webService) {
 		super(mainClient.getHttpClient());

@@ -88,7 +88,6 @@ public abstract class AbstractAtlassianHttpClientSession extends AbstractHttpSes
 	/**
 	 * Returns a read-to-use asynchronous HTTP client based on Atlassian's {@link HttpClient}.
 	 * <p>The method will return <code>null</code> when no {@link HttpClient} was created yet.</p>
-	 * @param uri URI base URI to be used
 	 * @return the client already configured with authentication.
 	 * @see #getHttpClient(URI)
 	 */

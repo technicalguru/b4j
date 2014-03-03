@@ -361,8 +361,8 @@ public class BugzillaUtils {
 	}
 
 	/**
-	 * Debugs an issue in log file.
-	 * @param issue issue to be debugged
+	 * Debugs an comment in log file.
+	 * @param comment to be debugged
 	 */
 	public static void debug(Comment comment) {
 		log.debug("Comment:Id="+comment.getId());
