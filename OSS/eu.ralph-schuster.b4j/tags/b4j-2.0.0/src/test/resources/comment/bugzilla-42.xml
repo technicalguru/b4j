@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:29 CET 2014: bugzilla-42</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1286371646000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1286371646000</entry>
+<entry key="text">Add a writer implementation to write an HTML table to a stream</entry>
+<entry key="issueId">26</entry>
+<entry key="id">42</entry>
+</properties>

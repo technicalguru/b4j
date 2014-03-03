@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:37 CET 2014: bugzilla-51</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1344358934000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1344358934000</entry>
+<entry key="text">Bugzilla 4.2 assigns attachments within comments. Therefor the xml tag attachid is without the enclosing attachment tag but with longdescription.</entry>
+<entry key="issueId">31</entry>
+<entry key="id">51</entry>
+</properties>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:17 CET 2014: bugzilla-29</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1284729788000</entry>
+<entry key="updateAuthor">eldn</entry>
+<entry key="author">eldn</entry>
+<entry key="updateTimestamp">1284729788000</entry>
+<entry key="text">The code inside the statement
+
+if (checkComments &amp;&amp; isIgnoreComments() &amp;&amp; (s.length() &gt; 0)) {
+..
+}
+
+is bit executed, if "ignoreComments" is set to false. Shouldn the isIgnoreComments() check be inverted to
+
+if (checkComments &amp;&amp; !isIgnoreComments() &amp;&amp; (s.length() &gt; 0)) {
+..
+}
+
+in order to handle comments if NOT ignored?</entry>
+<entry key="issueId">20</entry>
+<entry key="id">29</entry>
+</properties>
