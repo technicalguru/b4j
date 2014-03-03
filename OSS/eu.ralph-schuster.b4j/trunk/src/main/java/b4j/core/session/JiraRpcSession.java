@@ -128,6 +128,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			
 			HttpClient httpClient = getHttpClient(jiraServerUri);
 			jiraClient = factory.create(jiraServerUri, httpClient);
+			
 			jiraVersion = jiraClient.getMetadataClient().getServerInfo().get().getVersion();
 			filterClient = new AsynchronousFilterRestClient(jiraServerUri, httpClient, jiraClient.getSearchClient());
 			setLoggedIn(true);

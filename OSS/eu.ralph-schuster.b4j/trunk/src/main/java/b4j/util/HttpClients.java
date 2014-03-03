@@ -27,10 +27,11 @@ import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.slf4j.Logger;
 
+import b4j.core.session.jira.AsyncHttpClientFactory;
+
 import com.atlassian.jira.rest.client.AuthenticationHandler;
 import com.atlassian.jira.rest.client.auth.AnonymousAuthenticationHandler;
 import com.atlassian.jira.rest.client.auth.BasicHttpAuthenticationHandler;
-import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFactory;
 
 /**
  * Creates and configures Atlassian's and Apache's HttpClient.
@@ -39,6 +40,8 @@ import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFacto
  */
 public class HttpClients {
 
+	private static AsyncHttpClientFactory httpClientFactory = new AsyncHttpClientFactory();
+	
 	/**
 	 * Creates a {@link com.atlassian.httpclient.api.HttpClient} from the session params.
 	 * @param uri the base URI to be used
@@ -68,9 +71,14 @@ public class HttpClients {
 	 */
 	public static com.atlassian.httpclient.api.HttpClient createAtlassianClient(URI uri, AuthenticationHandler authenticationHandler) {
 		if (authenticationHandler == null) authenticationHandler = new AnonymousAuthenticationHandler();
-		return new AsynchronousHttpClientFactory().createClient(uri, authenticationHandler);
+		AsyncHttpClientFactory factory = getHttpClientFactory();
+		return factory.createClient(uri, authenticationHandler);
 	}
 
+	public static synchronized AsyncHttpClientFactory getHttpClientFactory() {
+		return httpClientFactory;
+	}
+	
 	/**
 	 * Creates a {@link org.apache.http.client.HttpClient} from the session params.
 	 * @param params the parameters to be used

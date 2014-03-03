@@ -123,8 +123,14 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 
 		HttpSessionParams sessionParams = getHttpSessionParams();
 		if (sessionParams == null) sessionParams = new HttpSessionParams();
-
+		if (sessionParams.hasProxy()) {
+			if ((getLog() != null) && getLog().isDebugEnabled()) {
+				getLog().debug("Using HTTP Proxy: "+sessionParams.getProxyHost()+":"+sessionParams.getProxyPort());
+			}
+		}
+		
 		if (sessionParams.hasAuthorization()) {
+			getLog().debug("Authenticate with: "+sessionParams.getLogin());
 			client.login(sessionParams.getLogin(), sessionParams.getPassword());
 		}
 
