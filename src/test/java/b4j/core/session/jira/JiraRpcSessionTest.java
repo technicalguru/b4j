@@ -15,7 +15,7 @@
  *  License along with Bugzilla for Java.  If not, see 
  *  <http://www.gnu.org/licenses/lgpl-3.0.html>.
  */
-package b4j.core.session;
+package b4j.core.session.jira;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -42,8 +43,8 @@ import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
+import b4j.core.session.JiraRpcSession;
 import b4j.core.util.CommentTest;
-import b4j.core.util.IssueTest;
 
 /**
  * Jira Session test ({@link JiraRpcSession}).
@@ -72,6 +73,7 @@ public class JiraRpcSessionTest {
 		assertNotNull("Cannot find test-config.xml", url);
 		Configuration myConfig = new XMLConfiguration(url);
 		session = new JiraRpcSession();
+		session.setTimeout(120, TimeUnit.SECONDS);
 		session.configure(myConfig);
 		session.open();
 	}
@@ -91,18 +93,6 @@ public class JiraRpcSessionTest {
 	}
 
 	/**
-	 * Test single issue.
-	 */
-	@Test
-	public void testGetIssue() throws Exception {
-		// Search a simple bug
-		Issue issue = session.getIssue("BFJ-1");
-		IssueTest issueTest = new IssueTest();
-		assertNotNull(issue);
-		issueTest.test(issue);
-	}
-
-	/**
 	 * Test JQL query.
 	 */
 	@Test
@@ -118,7 +108,6 @@ public class JiraRpcSessionTest {
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterable returned", i);
-		IssueTest issueTest = new IssueTest();
 		CommentTest commentTest = new CommentTest();
 		for (Issue issue : i) {
 			String id = issue.getId();
@@ -126,7 +115,6 @@ public class JiraRpcSessionTest {
 			assertTrue("Issue "+id+" is not expected", expectedBugs.contains(id));
 			expectedBugs.remove(id);
 
-			issueTest.test(issue);
 			for (Comment c : issue.getComments()) {
 				commentTest.test(c);
 			}

@@ -23,10 +23,15 @@ import static junit.framework.Assert.fail;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -104,6 +109,23 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		return false;
 	}
 
+	/**
+	 * Returns all IDs that can be tested.
+	 * @param filter a filter to be used (optional)
+	 * @return the IDs
+	 * @throws URISyntaxException
+	 */
+	public Iterable<String> getTestables(FilenameFilter filter) throws URISyntaxException {
+		List<String> rc = new ArrayList<String>();
+		URI uri = FileFinder.find(getCategoryPath(testClass)).toURI();
+		File f = new File(uri);
+		for (File child : f.listFiles(filter)) {
+			String name = child.getName();
+			if (name.endsWith(".xml") && child.canRead()) rc.add(name.substring(0, name.length()-4));
+		}
+		return rc;
+	}
+	
 	/**
 	 * Will convert the test object into a list of property-value pairs
 	 * which must be identical when later comparing the object to

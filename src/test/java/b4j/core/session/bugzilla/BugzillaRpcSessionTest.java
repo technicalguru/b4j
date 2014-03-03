@@ -39,7 +39,6 @@ import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.session.BugzillaRpcSession;
 import b4j.core.util.CommentTest;
-import b4j.core.util.IssueTest;
 
 /**
  * Bugzilla Session test
@@ -87,7 +86,6 @@ public class BugzillaRpcSessionTest {
 		// Perform the search
 		Iterable<Issue> i = session.searchBugs(searchData, null);
 		assertNotNull("No iterable returned", i);
-		IssueTest issueTest = new IssueTest();
 		CommentTest commentTest = new CommentTest();
 		for (Issue issue : i) {
 			String id = issue.getId();
@@ -95,7 +93,6 @@ public class BugzillaRpcSessionTest {
 			assertTrue("Issue "+id+" is not expected", expectedBugs.contains(id));
 			expectedBugs.remove(id);
 			
-			issueTest.test(issue);
 			for (Comment c : issue.getComments()) {
 				//{"is_private":false,"count":0,"creator":"admin","attachment_id":null,"time":"2009-10-19T12:41:49Z","bug_id":10,"author":"admin","text":"The user of a CSVReader should be informed about comment lines. Introduce a CommentCallback interface to be notified.","creation_time":"2009-10-19T12:41:49Z","id":15}
 				commentTest.test(c);

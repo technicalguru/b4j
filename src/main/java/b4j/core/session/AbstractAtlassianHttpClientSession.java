@@ -19,10 +19,12 @@
 package b4j.core.session;
 
 import java.net.URI;
+import java.util.concurrent.TimeUnit;
 
 import b4j.util.HttpClients;
 
 import com.atlassian.httpclient.api.HttpClient;
+import com.atlassian.httpclient.api.factory.HttpClientOptions;
 import com.atlassian.jira.rest.client.AuthenticationHandler;
 
 
@@ -62,6 +64,27 @@ public abstract class AbstractAtlassianHttpClientSession extends AbstractHttpSes
 		return httpClient;
 	}
 
+	/**
+	 * Returns the client options.
+	 * @return options options to be configured
+	 */
+	public HttpClientOptions getHttpClientOptions() {
+		return HttpClients.getHttpClientFactory().getHttpClientOptions();
+	}
+	
+	/**
+	 * Sets the timeout value for connections.
+	 * This method must be called before calling {@link #open()}.
+	 * @param timeout timeout value
+	 * @param timeUnit timeout unit
+	 */
+	public void setTimeout(int timeout, TimeUnit timeUnit) {
+		HttpClientOptions options = getHttpClientOptions();
+		options.setConnectionTimeout(timeout, timeUnit);
+		options.setRequestTimeout(timeout, timeUnit);
+		options.setSocketTimeout(timeout, timeUnit);
+	}
+	
 	/**
 	 * Returns a read-to-use asynchronous HTTP client based on Atlassian's {@link HttpClient}.
 	 * <p>The method will return <code>null</code> when no {@link HttpClient} was created yet.</p>
