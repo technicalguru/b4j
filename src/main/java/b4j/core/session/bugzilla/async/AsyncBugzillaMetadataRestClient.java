@@ -37,7 +37,7 @@ public class AsyncBugzillaMetadataRestClient extends AbstractAsyncRestClient imp
 
 	/**
 	 * Constructor.
-	 * @param client
+	 * @param mainClient reference to main REST client
 	 */
 	public AsyncBugzillaMetadataRestClient(AsyncBugzillaRestClient mainClient) {
 		super(mainClient, "Bugzilla");

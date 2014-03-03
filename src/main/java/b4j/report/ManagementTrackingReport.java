@@ -192,7 +192,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 	 * Configures the report.
 	 * @param config - the configuration object
 	 * @throws ConfigurationException - when a configuration problem occurs
-	 * @see b4j.report.AbstractFileReport#init(org.apache.commons.configuration.Configuration)
+	 * @see b4j.report.AbstractFileReport#configure(Configuration)
 	 */
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {

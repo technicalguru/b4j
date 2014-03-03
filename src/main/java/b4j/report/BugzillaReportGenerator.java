@@ -26,7 +26,7 @@ import b4j.core.Session;
  * Generates a report from bug data and writes its results to some
  * place. The place is defined by the implementation of this class.
  * <p>
- * A report instance is usually created first, then {@link #init(Configuration)}
+ * A report instance is usually created first, then {@link IConfigurable#configure(Configuration)}
  * will be called to give the object a chance to configure itself from
  * some configuration object (usually XML based).
  * </p>
