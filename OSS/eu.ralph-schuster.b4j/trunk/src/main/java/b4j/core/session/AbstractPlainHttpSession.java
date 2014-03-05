@@ -23,9 +23,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
-import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashSet;
@@ -37,11 +35,8 @@ import java.util.Set;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.HierarchicalConfiguration;
 
-import rs.baselib.configuration.ConfigurationUtils;
 import rs.baselib.security.AuthorizationCallback;
-import rs.baselib.security.DefaultAuthorizationCallback;
 import b4j.util.BugzillaUtils;
 
 /**
@@ -59,7 +54,7 @@ import b4j.util.BugzillaUtils;
  *    &lt;/AuthorizationCallback&gt;
  *    
  *    &lt;!-- Issue implementation class --&gt;
- *    &lt;BugzillaBug class="b4j.core.DefaultIssue"/&gt;
+ *    &lt;Issue class="b4j.core.DefaultIssue"/&gt;
  *    
  *    &lt;!-- Optional: Proxy definition --&gt;
  *    &lt;proxy-host&gt;10.10.10.250:8080&lt;/proxy-host&gt;
@@ -82,8 +77,6 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 	private Set<HttpCookie> cookies;
 	private URL baseUrl;
 	private String bugzillaVersion;
-	private Proxy proxy;
-	private AuthorizationCallback proxyAuthorizationCallback;
 	
 	/**
 	 * Constructor.
@@ -112,7 +105,6 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {
 		super.configure(config);
-		String className = null;
 		try {
 			baseUrl = new URL(config.getString("bugzilla-home"));
 			
@@ -120,42 +112,6 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 				getLog().debug("Bugzilla URL: "+baseUrl);
 			}
 			
-			// proxy configuration
-			String s = config.getString("proxy-host");
-			if (s != null) {
-				if (getLog().isDebugEnabled()) {
-					getLog().debug("Using HTTP Proxy: "+s);
-				}
-				
-				int pos = -1;
-				int port = 80;
-				pos = s.indexOf(':');
-				if (pos > 0) {
-					port = Integer.parseInt(s.substring(pos+1));
-					s = s.substring(0, pos);
-				}
-				setProxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress(s, port)));
-				
-				// Proxy authorization
-				try {
-					Configuration authCfg = ((HierarchicalConfiguration)config).configurationAt("ProxyAuthorizationCallback(0)");
-					if (authCfg != null) {
-						className = authCfg.getString("[@class]");
-						AuthorizationCallback callback = null;
-						if ((className == null) 
-								|| (className.trim().length() == 0) 
-								|| className.toLowerCase().trim().equals("null")
-								|| className.toLowerCase().trim().equals("nil")) {
-							className = DefaultAuthorizationCallback.class.getName();
-						}
-						callback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
-						setProxyAuthorizationCallback(callback);
-					}
-				} catch (IllegalArgumentException e) {
-					// No auth config for proxy
-				}
-
-			}
 		} catch (MalformedURLException e) {
 			throw new ConfigurationException("Malformed Bugzilla URL: ", e);
 		}
@@ -184,34 +140,6 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 	 */
 	public void setBaseUrl(URL baseUrl) {
 		this.baseUrl = baseUrl;
-	}
-
-	/**
-	 * @return the proxy
-	 */
-	public Proxy getProxy() {
-		return proxy;
-	}
-
-	/**
-	 * @param proxy the proxy to set
-	 */
-	public void setProxy(Proxy proxy) {
-		this.proxy = proxy;
-	}
-
-	/**
-	 * @return the proxyAuthorizationCallback
-	 */
-	public AuthorizationCallback getProxyAuthorizationCallback() {
-		return proxyAuthorizationCallback;
-	}
-
-	/**
-	 * @param proxyAuthorizationCallback the proxyAuthorizationCallback to set
-	 */
-	public void setProxyAuthorizationCallback(AuthorizationCallback proxyAuthorizationCallback) {
-		this.proxyAuthorizationCallback = proxyAuthorizationCallback;
 	}
 
 	/**
@@ -316,10 +244,10 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 			
 			// apply proxy
 			HttpURLConnection con = null;
-			if (proxy != null) {
-				getLog().debug("Using proxy: "+getProxy());
-				con = (HttpURLConnection)url.openConnection(getProxy());
-				AuthorizationCallback callback = getProxyAuthorizationCallback();
+			if (getHttpSessionParams().hasProxy()) {
+				getLog().debug("Using proxy: "+getHttpSessionParams().getProxy());
+				con = (HttpURLConnection)url.openConnection(getHttpSessionParams().getProxy());
+				AuthorizationCallback callback = getHttpSessionParams().getProxyAuthorizationCallback();
 				if (callback != null) {
 					// apply proxy authorization
 					// "Proxy-Authorization: Basic "<base64(user:password)>"

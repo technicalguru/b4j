@@ -18,6 +18,9 @@
 
 package b4j.util;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
@@ -35,6 +38,7 @@ import rs.baselib.security.DefaultAuthorizationCallback;
 public class HttpSessionParams implements IConfigurable {
 
 	private AuthorizationCallback authorizationCallback;
+	private Proxy proxy = null;
 	private String proxyHost = null;
 	private int proxyPort = -1;
 	private AuthorizationCallback proxyAuthorizationCallback = null;
@@ -190,6 +194,7 @@ public class HttpSessionParams implements IConfigurable {
 	 */
 	public void setProxyHost(String proxyHost) {
 		this.proxyHost = proxyHost;
+		this.proxy = null;
 	}
 
 	/**
@@ -198,6 +203,7 @@ public class HttpSessionParams implements IConfigurable {
 	 */
 	public void setProxyPort(int proxyPort) {
 		this.proxyPort = proxyPort;
+		this.proxy = null;
 	}
 
 	
@@ -233,5 +239,17 @@ public class HttpSessionParams implements IConfigurable {
 		this.basicAuthentication = basicAuthentication;
 	}
 
-
+	/**
+	 * Returns the proxy object or <code>null</code> if no proxy is present.
+	 * @return the proxy object
+	 */
+	public Proxy getProxy() {
+		if (hasProxy()) {
+			if (proxy == null) {
+				proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(getProxyHost(), getProxyPort()));
+			}
+			return proxy;
+		}
+		return null;
+	}
 }
