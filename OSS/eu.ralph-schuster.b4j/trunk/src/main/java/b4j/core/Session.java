@@ -61,14 +61,14 @@ public interface Session extends IConfigurable {
 	
 	/**
 	 * Performs a search for Bugzilla bugs.
-	 * This method returns an iterator over all bug records found. Implementations
-	 * should not make a query for all actual record data here as callers might not
-	 * want to retrieve this data. Instead the iterator's next() function should
-	 * retrieve these details.
+	 * This method returns an iterable over all bug records found. Implementations
+	 * should not perform a query for all actual record data here as callers might not
+	 * want to retrieve this data. Instead the iterator's next() method of the
+	 * {@link Iterable} should retrieve these details.
 	 * @param searchData - all search parameters
 	 * @param callback - a callback object that will retrieve the number of bugs 
 	 * found for this search
-	 * @return iterator on all bugs fulfilling the criteria expressed by search parameters.
+	 * @return iterable on all bugs fulfilling the criteria expressed by search parameters.
 	 */
 	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback);
 	
