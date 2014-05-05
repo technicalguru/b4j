@@ -78,6 +78,7 @@
 		<product>Your Product 1</product>
 		<product>Your Product 2</product>
 		<!-- component/ -->
+		
 		<!--  more examples
 		<bug_status>NEW</bug_status>
 		<bug_status>ASSIGNED</bug_status>
@@ -85,6 +86,16 @@
 		<bug_severity>blocker</bug_severity>
 		<bug_severity>critical</bug_severity>
 		<bug_severity>major</bug_severity>
+		-->
+		
+		<!-- Advanced query with custom fields 
+		<query_format>advanced</query_format>
+		<f1>creation_ts</f1>
+		<o1>greaterthan</o1>
+		<v1>1980-01-01</v1>
+		<f2>creation_ts</f2>
+		<o2>lessthan</o2>
+		<v2>2014-01-01</v2>
 		 -->
 	</search>
 	
