@@ -260,7 +260,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 	@Override
 	public InputStream getAttachment(Attachment attachment) throws IOException {
 		HttpURLConnection con = getConnection(BUGZILLA_GET_ATTACHMENT, "id="+attachment.getId());
-		return con.getInputStream();
+		return con != null ? con.getInputStream() : null;
 	}
 
 	/**
