@@ -81,17 +81,14 @@ public class BugzillaProductParser extends AbstractJsonParser implements JsonObj
 //		}
 		for (Component c : componentParser.parse(json)) {
 			((BugzillaComponent)c).setProject(rc);
-			if (retriever != null) {
-				retriever.registerComponent(c);
-				System.out.println("Registered "+rc.getName()+":"+c.getName());
-			}
+			if (retriever != null) retriever.registerComponent(c);
 			rc.addComponents(c);
 		}
 		rc.setDescription(json.getString("description"));
 		rc.setId(json.getString("id"));
 		versionParser.setProject(rc);
 		for (Version version : versionParser.parse(json)) { 
-			retriever.registerVersion(version);
+			if (retriever != null) retriever.registerVersion(version);
 			rc.addVersions(version);
 		}
 		return rc;
