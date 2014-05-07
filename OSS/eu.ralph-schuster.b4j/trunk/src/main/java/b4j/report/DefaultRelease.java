@@ -19,6 +19,8 @@ package b4j.report;
 
 import java.util.Date;
 
+import rs.baselib.lang.HashCodeUtil;
+
 /**
  * Default implementation of a release.
  * @author Ralph Schuster
@@ -95,6 +97,14 @@ public class DefaultRelease implements Release {
 			return getReleaseName().equals(((Release)obj).getReleaseName());
 		}
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return HashCodeUtil.hash(HashCodeUtil.SEED, getReleaseName());
 	}
 	
 	
