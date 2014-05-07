@@ -174,6 +174,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 			// make a connection
 			HttpURLConnection con = getConnection(BUGZILLA_LOGIN);
+			if (con == null) throw new IOException("Cannot open connection for login");
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
 			con.setRequestProperty("Content-Length", "" + paramString.length());
