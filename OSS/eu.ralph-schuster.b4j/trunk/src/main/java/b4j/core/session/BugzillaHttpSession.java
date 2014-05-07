@@ -583,7 +583,8 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 			} catch (ParserConfigurationException e) {
 				getLog().error("SAXParser not configured:", e);
 			} catch (SAXException e) {
-				if (e.getMessage().indexOf("invalid XML character") >= 0) {
+				String msg = e.getMessage();
+				if ((msg != null) && (msg.indexOf("invalid XML character") >= 0)) {
 					getLog().error("The XML file received contains illegal characters. This is not a B4J error but a Bugzilla problem. Sorry", e);
 				} else {
 					getLog().error("Error while parsing Bugzilla XML response:", e);
