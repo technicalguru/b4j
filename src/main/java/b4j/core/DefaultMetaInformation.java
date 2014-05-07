@@ -18,7 +18,8 @@
 package b4j.core;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +29,7 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,7 +70,7 @@ public class DefaultMetaInformation extends AbstractBugzillaObject implements Me
 	 * @throws Exception - if an error occurs
 	 */
 	public void read(File metaFile) throws Exception {
-			read(new FileReader(metaFile));
+			read(new InputStreamReader(new FileInputStream(metaFile), Charsets.UTF_8));
 	}
 
 	/**

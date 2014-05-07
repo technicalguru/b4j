@@ -35,6 +35,7 @@ import java.util.Set;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.io.Charsets;
 
 import rs.baselib.security.AuthorizationCallback;
 import b4j.util.BugzillaUtils;
@@ -256,7 +257,7 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 					String authPass = callback.getPassword();
 					if (authPass == null) authPass = "";
 					String auth = authName + ':' + authPass;
-					auth = new String(Base64.encodeBase64(auth.getBytes()));
+					auth = new String(Base64.encodeBase64(auth.getBytes(Charsets.UTF_8)));
 					con.setRequestProperty("Proxy-Authorization", "Basic "+auth+"");
 				}
 			} else {
@@ -361,7 +362,7 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 				Iterator<String> j = headerFields.get(key).iterator();
 				while (j.hasNext()) getLog().debug(key+": "+j.next());
 			}
-			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
 			String line;
 			while ((line = r.readLine()) != null) {
 				getLog().debug(line);

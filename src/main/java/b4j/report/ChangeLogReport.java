@@ -17,6 +17,7 @@
  */
 package b4j.report;
 
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,12 +30,12 @@ import java.util.Map;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.io.Charsets;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import rs.baselib.configuration.ConfigurationUtils;
-
 import b4j.core.Issue;
 
 /**
@@ -218,7 +219,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	 */
 	@Override
 	public void closeReport() {
-		PrintWriter out = new PrintWriter(getOutputStream());
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(getOutputStream(), Charsets.UTF_8));
 
 		Iterator<Release> ri = releases.iterator();
 		while (ri.hasNext()) {

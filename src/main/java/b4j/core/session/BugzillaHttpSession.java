@@ -37,6 +37,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.commons.io.Charsets;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -296,7 +297,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				List<String> idList = new ArrayList<String>();
 
 				// Parse the data for all bugs found
-				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
 				Pattern p = Pattern.compile(".*href=\"show_bug\\.cgi\\?id=(\\d+)\">\\d+</a>.*");
 
 				String line;
@@ -577,7 +578,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 				// This class itself will take care of the elements
 				xmlReader.setContentHandler(this);
-				xmlReader.parse(new InputSource(new XmlReaderFilter(new InputStreamReader(xmlStream))));
+				xmlReader.parse(new InputSource(new XmlReaderFilter(new InputStreamReader(xmlStream, Charsets.UTF_8))));
 				if (getLog().isTraceEnabled()) getLog().trace("XML file completed");
 			} catch (IOException e) {
 				getLog().error("Error while retrieving Bugzilla XML response:", e);
