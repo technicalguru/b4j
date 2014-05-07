@@ -495,6 +495,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 				// make a connection
 				HttpURLConnection con = getConnection(BUGZILLA_SHOW_BUG);
+				if (con == null) throw new RuntimeException("Cannot open connection");
 				con.setRequestMethod("POST");
 				con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
 				con.setRequestProperty("Content-Length", "" + paramString.length());
