@@ -64,7 +64,7 @@ public class HttpSessionParams implements IConfigurable {
 		if (authCfg != null) {
 			AuthorizationCallback authorizationCallback = null;
 			className = authCfg.getString("[@class]");
-			if ((className.trim().length() == 0) 
+			if ((className == null) || (className.trim().length() == 0) 
 					|| className.toLowerCase().trim().equals("null")
 					|| className.toLowerCase().trim().equals("nil")) {
 				className = DefaultAuthorizationCallback.class.getName();
@@ -87,7 +87,16 @@ public class HttpSessionParams implements IConfigurable {
 				
 				authCfg = ((HierarchicalConfiguration)config).configurationAt("ProxyAuthorizationCallback(0)");
 				if (authCfg != null) {
-					setProxyAuthorizationCallback((AuthorizationCallback)ConfigurationUtils.load(authCfg, true));
+					AuthorizationCallback authorizationCallback = null;
+					className = authCfg.getString("[@class]");
+					if ((className == null) || (className.trim().length() == 0) 
+							|| className.toLowerCase().trim().equals("null")
+							|| className.toLowerCase().trim().equals("nil")) {
+						className = DefaultAuthorizationCallback.class.getName();
+						authorizationCallback = new DefaultAuthorizationCallback();
+					}
+					authorizationCallback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
+					setProxyAuthorizationCallback(authorizationCallback);
 				}
 			}
 		} catch (Exception e) {
