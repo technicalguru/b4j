@@ -22,6 +22,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.Charsets;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcSun15HttpTransport;
 
@@ -62,7 +63,7 @@ public class XmlRpcSun15ProxyAuthTransport extends XmlRpcSun15HttpTransport {
 		URLConnection rc = super.newURLConnection(pURL);
 		if ((getProxy() != null) && (getProxyUser() != null) && (getProxyPassword() != null)) {
 			String base64 = getProxyUser()+":"+getProxyPassword();
-			rc.setRequestProperty("Proxy-Authorization", "Basic "+Base64.encodeBase64(base64.getBytes()));
+			rc.setRequestProperty("Proxy-Authorization", "Basic "+Base64.encodeBase64(base64.getBytes(Charsets.UTF_8)));
 		}
 		return rc;
 	}

@@ -17,11 +17,13 @@
  */
 package b4j.report;
 
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +61,7 @@ public class AssigneeTrackingReport extends AbstractFileReport {
 	 */
 	@Override
 	public void closeReport() {
-		PrintWriter out = new PrintWriter(getOutputStream());
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(getOutputStream(), Charsets.UTF_8));
 
 		// Header line
 		out.println("ASSIGNEE;OPEN BUG COUNT");

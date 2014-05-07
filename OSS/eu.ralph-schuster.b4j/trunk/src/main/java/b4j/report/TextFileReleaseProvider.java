@@ -19,13 +19,15 @@ package b4j.report;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.io.Charsets;
 
 import b4j.core.DefaultIssue;
 
@@ -59,7 +61,7 @@ public class TextFileReleaseProvider extends AbstractFileReleaseProvider {
 		String line = null;
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
 			while ((line = reader.readLine()) != null) {
 				line = line.trim();
 				if (line.startsWith("#")) continue;

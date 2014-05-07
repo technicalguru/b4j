@@ -144,7 +144,6 @@ public class AsyncHttpClientFactory {
 			return new File(".");
 		}
 
-		@SuppressWarnings("deprecation")
 		@Override
 		public String getPropertyValue(final String s) {
 			throw new UnsupportedOperationException("Not implemented");

@@ -19,6 +19,7 @@
 package b4j.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.Charsets;
 
 import com.atlassian.httpclient.api.Request;
 import com.atlassian.jira.rest.client.AuthenticationHandler;
@@ -50,7 +51,7 @@ public class ProxyAuthenticationHandler implements AuthenticationHandler {
 	}
 
 	private String encodeCredentials() {
-		byte[] credentials = (username + ':' + password).getBytes();
+		byte[] credentials = (username + ':' + password).getBytes(Charsets.UTF_8);
 		return new String(Base64.encodeBase64(credentials));
 	}
 
