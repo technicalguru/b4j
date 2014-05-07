@@ -73,7 +73,8 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		for (int i=0; i<arr.length(); i++) {
 			JSONObject obj = arr.getJSONObject(i);
 			try {
-				rc.add(parseSingleBug(obj));
+				Issue issue = parseSingleBug(obj); 
+				if (issue != null) rc.add(issue);
 			} catch (ParseException e) {
 				throw new JSONException(e);
 			}
