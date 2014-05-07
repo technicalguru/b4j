@@ -9,13 +9,13 @@
 <entry key="children">list:null</entry>
 <entry key="summary">NullPointerException in CSVReader class</entry>
 <entry key="comments">list:10,2,3</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">2</entry>
 <entry key="creationTimestamp">1244094960000</entry>
 <entry key="status">CLOSED</entry>
 <entry key="resolution">FIXED</entry>
 <entry key="severity">critical</entry>
-<entry key="fixVersions">list:null</entry>
+<entry key="fixVersions">list:1.0</entry>
 <entry key="description">When reading CSV file, following exception occurs:
 
 java.lang.NullPointerException

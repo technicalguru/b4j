@@ -9,7 +9,7 @@
 <entry key="children">list:null</entry>
 <entry key="summary">ExcelReader skips empty cells in a row</entry>
 <entry key="comments">list:23,24</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">17</entry>
 <entry key="creationTimestamp">1270126560000</entry>
 <entry key="status">CLOSED</entry>

@@ -19,6 +19,7 @@ package b4j.core.session.bugzilla;
 
 import java.util.Date;
 
+import rs.baselib.lang.HashCodeUtil;
 import b4j.core.AbstractBugzillaObject;
 import b4j.core.Project;
 import b4j.core.Version;
@@ -120,9 +121,10 @@ public class BugzillaVersion extends AbstractBugzillaObject implements Version {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+		int result = HashCodeUtil.SEED;
+		result = HashCodeUtil.hash(result, getClass());
+		result = HashCodeUtil.hash(result, getProject());
+		result = HashCodeUtil.hash(result, getName());
 		return result;
 	}
 
@@ -135,6 +137,11 @@ public class BugzillaVersion extends AbstractBugzillaObject implements Version {
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		BugzillaVersion other = (BugzillaVersion) obj;
+		
+		if (getProject() == null) {
+			if (other.getProject() != null) return false;
+		} else if (!getProject().equals(other.getProject())) return false;
+
 		if (getName() == null) {
 			if (other.getName() != null) return false;
 		} else if (!getName().equals(other.getName())) return false;

@@ -207,6 +207,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	public void registerProject(Project project) {
 		if (!projects.contains(project)) projects.add(project);
 		projectIdQueue.remove(Long.getLong(project.getId()));
+		projectNameQueue.remove(project.getName());
+		for (Component c : project.getComponents()) {
+			registerComponent(c);
+		}
 	}
 
 	/** Returns the projects */

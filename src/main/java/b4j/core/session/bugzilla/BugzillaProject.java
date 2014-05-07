@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import rs.baselib.lang.HashCodeUtil;
 import b4j.core.AbstractBugzillaObject;
 import b4j.core.Component;
 import b4j.core.Project;
@@ -159,9 +160,9 @@ public class BugzillaProject extends AbstractBugzillaObject implements Project {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+		int result = HashCodeUtil.SEED;
+		result = HashCodeUtil.hash(result, getClass());
+		result = HashCodeUtil.hash(result, getName());
 		return result;
 	}
 

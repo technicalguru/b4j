@@ -9,13 +9,13 @@
 <entry key="children">list:null</entry>
 <entry key="summary">Excel Fix: first column of first row must not start with "ID"</entry>
 <entry key="comments">list:8,12</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">7</entry>
 <entry key="creationTimestamp">1254141960000</entry>
 <entry key="status">CLOSED</entry>
 <entry key="resolution">FIXED</entry>
 <entry key="severity">enhancement</entry>
-<entry key="fixVersions">list:null</entry>
+<entry key="fixVersions">list:1.0</entry>
 <entry key="description">Excel will fail to import a CSV if the file starts with "ID" (without quotes). Therefore, quotes must be added.</entry>
 <entry key="plannedVersions">list:null</entry>
 <entry key="affectedVersions">list:null</entry>
