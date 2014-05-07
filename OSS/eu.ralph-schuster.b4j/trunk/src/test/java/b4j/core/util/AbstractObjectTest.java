@@ -176,7 +176,7 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 					fail(testClass.getSimpleName()+"["+getId(testObject)+"]["+entry.getKey()+"] does not match. expected="+expectedValue+", actual="+actualValue);
 				} else {
 					for (String e : expList) {
-						boolean found = true;
+						boolean found = false;
 						for (String a : actList) {
 							if (e.equals(a)) {
 								found = true;

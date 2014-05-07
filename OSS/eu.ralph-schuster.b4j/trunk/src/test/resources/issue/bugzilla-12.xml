@@ -9,7 +9,7 @@
 <entry key="children">list:null</entry>
 <entry key="summary">CSVUtils should offer copy methods from CSVReader to CSVWriter</entry>
 <entry key="comments">list:17</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">12</entry>
 <entry key="creationTimestamp">1256030340000</entry>
 <entry key="status">CLOSED</entry>

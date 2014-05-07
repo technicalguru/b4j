@@ -83,6 +83,7 @@ public class BugzillaProductParser extends AbstractJsonParser implements JsonObj
 			((BugzillaComponent)c).setProject(rc);
 			if (retriever != null) {
 				retriever.registerComponent(c);
+				System.out.println("Registered "+rc.getName()+":"+c.getName());
 			}
 			rc.addComponents(c);
 		}

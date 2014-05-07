@@ -9,7 +9,7 @@
 <entry key="children">list:null</entry>
 <entry key="summary">Add TableReader implementation for JDBC</entry>
 <entry key="comments">list:39,38</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">24</entry>
 <entry key="creationTimestamp">1285661820000</entry>
 <entry key="status">CLOSED</entry>

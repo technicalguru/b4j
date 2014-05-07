@@ -82,6 +82,7 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 	}
 
 	public Issue parseSingleBug(JSONObject json) throws JSONException, ParseException {
+		System.out.println(json.toString());
 		DefaultIssue rc = new DefaultIssue();
 		LazyRetriever retriever = getLazyRetriever();
 		rc.setId(json.getString("id"));
@@ -122,7 +123,7 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.set(Issue.REP_PLATFORM, json.getString("platform"));
 		rc.set("severity_name", json.getString("severity")); if (retriever != null) retriever.registerSeverity(json.getString("severity"));
 		rc.set("fixVersion_name", json.getString("version"));  if (retriever != null) retriever.registerVersion(json.getString("product"), json.getString("version"));
-		rc.set("component_name", json.getString("component")); if (retriever != null) retriever.registerVersion(json.getString("product"), json.getString("component"));
+		rc.set("component_name", json.getString("component")); if (retriever != null) retriever.registerComponent(json.getString("product"), json.getString("component"));
 		rc.set(Issue.REPORTER_ACCESSIBLE, json.getBoolean("is_creator_accessible"));
 		rc.set("project_name", json.getString("product")); if (retriever != null) retriever.registerProject(json.getString("product"));
 		rc.set(Issue.MILESTONE, json.getString("target_milestone"));

@@ -9,7 +9,7 @@
 <entry key="children">list:null</entry>
 <entry key="summary">Allow access to Excel files</entry>
 <entry key="comments">list:20,21</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">15</entry>
 <entry key="creationTimestamp">1259012640000</entry>
 <entry key="status">CLOSED</entry>

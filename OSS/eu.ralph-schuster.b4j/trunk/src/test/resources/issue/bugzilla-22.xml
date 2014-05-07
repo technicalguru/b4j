@@ -9,7 +9,7 @@
 <entry key="children">list:null</entry>
 <entry key="summary">Reader removes empty lines within column values</entry>
 <entry key="comments">list:33</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">22</entry>
 <entry key="creationTimestamp">1285078500000</entry>
 <entry key="status">CLOSED</entry>

@@ -9,7 +9,7 @@
 <entry key="children">list:null</entry>
 <entry key="summary">Adding JUnit Test for CSVReader and CSVWriter</entry>
 <entry key="comments">list:34,32,30</entry>
-<entry key="components">list:null</entry>
+<entry key="components">list:Java Classes</entry>
 <entry key="id">21</entry>
 <entry key="creationTimestamp">1284730140000</entry>
 <entry key="status">CLOSED</entry>
