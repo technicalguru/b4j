@@ -24,6 +24,7 @@ import java.net.URL;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.slf4j.LoggerFactory;
 
 import rs.baselib.io.FileFinder;
 import b4j.core.session.bugzilla.async.AsyncBugzillaRestClientFactory;
@@ -53,6 +54,7 @@ public abstract class AbstractRestClientTest {
 		URL url = FileFinder.find(AbstractRestClientTest.class, "local-test-config.xml");
 		if (url == null) url = FileFinder.find(AbstractRestClientTest.class, "test-config.xml");
 		assertNotNull("Cannot find test-config.xml", url);
+		LoggerFactory.getLogger("b4j.core.session.bugzilla.BugzillaRestClient").debug("Using config: "+url.toString());
 		XMLConfiguration config = new XMLConfiguration(url);
 		if (bugzillaHome == null) bugzillaHome = config.getString("bugzilla-home");
 		HttpSessionParams params = new HttpSessionParams();
