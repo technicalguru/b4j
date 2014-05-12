@@ -62,16 +62,13 @@ public class HttpSessionParams implements IConfigurable {
 		} catch (IllegalArgumentException e) {}
 
 		if (authCfg != null) {
-			AuthorizationCallback authorizationCallback = null;
 			className = authCfg.getString("[@class]");
 			if ((className == null) || (className.trim().length() == 0) 
 					|| className.toLowerCase().trim().equals("null")
 					|| className.toLowerCase().trim().equals("nil")) {
 				className = DefaultAuthorizationCallback.class.getName();
-				authorizationCallback = new DefaultAuthorizationCallback();
 			}
-			authorizationCallback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
-			setAuthorizationCallback(authorizationCallback);
+			setAuthorizationCallback((AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true));
 		}
 
 		// Proxy Authentication
@@ -87,16 +84,13 @@ public class HttpSessionParams implements IConfigurable {
 				
 				authCfg = ((HierarchicalConfiguration)config).configurationAt("ProxyAuthorizationCallback(0)");
 				if (authCfg != null) {
-					AuthorizationCallback authorizationCallback = null;
 					className = authCfg.getString("[@class]");
 					if ((className == null) || (className.trim().length() == 0) 
 							|| className.toLowerCase().trim().equals("null")
 							|| className.toLowerCase().trim().equals("nil")) {
 						className = DefaultAuthorizationCallback.class.getName();
-						authorizationCallback = new DefaultAuthorizationCallback();
 					}
-					authorizationCallback = (AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true);
-					setProxyAuthorizationCallback(authorizationCallback);
+					setProxyAuthorizationCallback((AuthorizationCallback)ConfigurationUtils.load(className, authCfg, true));
 				}
 			}
 		} catch (Exception e) {
