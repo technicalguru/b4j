@@ -23,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -62,11 +63,12 @@ public class TextFileReleaseProvider extends AbstractFileReleaseProvider {
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
+			DateFormat parser = DefaultIssue.DATETIME_WITHOUT_SEC();
 			while ((line = reader.readLine()) != null) {
 				line = line.trim();
 				if (line.startsWith("#")) continue;
 				if (line.length() < 16) throw new ConfigurationException("Invalid release information: "+line);
-				Date releaseDate = DefaultIssue.DATETIME_WITHOUT_SEC.parse(line.substring(0, 16));
+				Date releaseDate = parser.parse(line.substring(0, 16));
 				String releaseName = line.substring(16).trim();
 				addRelease(new DefaultRelease(releaseName, releaseDate));
 			}

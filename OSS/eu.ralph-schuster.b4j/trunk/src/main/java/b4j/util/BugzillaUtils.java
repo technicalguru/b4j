@@ -171,16 +171,16 @@ public class BugzillaUtils {
 			s = date + " " + time + " UTC";
 		}
 		try {
-			return DefaultIssue.DATETIME_WITH_SEC_TZ.parse(s);
+			return DefaultIssue.DATETIME_WITH_SEC_TZ().parse(s);
 		} catch (ParseException e) { }
 		try {
-			return DefaultIssue.DATETIME_WITH_SEC.parse(s);
+			return DefaultIssue.DATETIME_WITH_SEC().parse(s);
 		} catch (ParseException e) { }
 		try {
-			return DefaultIssue.DATETIME_WITHOUT_SEC.parse(s);
+			return DefaultIssue.DATETIME_WITHOUT_SEC().parse(s);
 		} catch (ParseException e) { }
 		try {
-			return DefaultIssue.DATE.parse(s);
+			return DefaultIssue.DATE().parse(s);
 		} catch (ParseException e) { }
 		throw new ParseException("Cannot parse date: "+s, 0);
 	}
