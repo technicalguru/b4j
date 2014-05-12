@@ -20,7 +20,8 @@ package b4j.core.session;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.HttpCookie;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -282,8 +283,8 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 				con.setRequestProperty("Content-Length", "" + params.length());
 
 				con.setDoOutput(true);
-				PrintWriter out = new PrintWriter(con.getOutputStream());
-				out.print(params);
+				Writer out = new OutputStreamWriter(con.getOutputStream(), Charsets.UTF_8);
+				out.write(params);
 				out.flush();
 				out.close();
 			}
