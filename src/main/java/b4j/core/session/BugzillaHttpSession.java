@@ -350,39 +350,43 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 	 */
 	public static UrlParameters getDefaultSearchParameters() {
 		if (DEFAULT_SEARCH_PARAMETERS == null) {
-			DEFAULT_SEARCH_PARAMETERS = new UrlParameters();
-			DEFAULT_SEARCH_PARAMETERS.setParameter("query_format", "advanced");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("short_desc_type", "allwordssubstr");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("short_desc", "");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("classification", "");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("product", "");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("component", "");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("long_desc_type", "");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("long_desc", "");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("bug_file_loc_type", "allwordssubstr");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("bug_file_loc", "");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("keywords_type", "allwords");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("keywords", "");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("bug_status", "");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("emailassigned_to1", "1");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("emailtype1", "substring");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("email1", "");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("emailassigned_to2", "1");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("emailreporter2", "1");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("emailqa_contact2", "1");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("emailcc2", "1");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("emailtype2", "substring");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("email2", "");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("bugidtype", "include");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("bug_id", "");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("chfieldfrom", "");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("chfieldto", "Now");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("chfieldvalue", "");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("cmdtype", "doit");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("order", "Bug Number");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("field0-0-0", "noop");
-			DEFAULT_SEARCH_PARAMETERS.setParameter("type0-0-0", "noop");
-			//DEFAULT_SEARCH_PARAMETERS.setParameter("value0-0-0", "");
+			synchronized(PAGES) {
+				if (DEFAULT_SEARCH_PARAMETERS == null) {
+					DEFAULT_SEARCH_PARAMETERS = new UrlParameters();
+					DEFAULT_SEARCH_PARAMETERS.setParameter("query_format", "advanced");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("short_desc_type", "allwordssubstr");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("short_desc", "");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("classification", "");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("product", "");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("component", "");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("long_desc_type", "");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("long_desc", "");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("bug_file_loc_type", "allwordssubstr");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("bug_file_loc", "");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("keywords_type", "allwords");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("keywords", "");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("bug_status", "");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("emailassigned_to1", "1");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("emailtype1", "substring");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("email1", "");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("emailassigned_to2", "1");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("emailreporter2", "1");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("emailqa_contact2", "1");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("emailcc2", "1");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("emailtype2", "substring");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("email2", "");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("bugidtype", "include");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("bug_id", "");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("chfieldfrom", "");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("chfieldto", "Now");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("chfieldvalue", "");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("cmdtype", "doit");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("order", "Bug Number");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("field0-0-0", "noop");
+					DEFAULT_SEARCH_PARAMETERS.setParameter("type0-0-0", "noop");
+					//DEFAULT_SEARCH_PARAMETERS.setParameter("value0-0-0", "");
+				}
+			}
 		}
 		return DEFAULT_SEARCH_PARAMETERS;
 	}
