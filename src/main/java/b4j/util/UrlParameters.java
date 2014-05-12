@@ -100,10 +100,8 @@ public class UrlParameters {
 	 * @param p - list of parameters
 	 */
 	public void addAll(Map<String, List<String>> p) {
-		Iterator<String> keys = p.keySet().iterator();
-		while (keys.hasNext()) {
-			String key = keys.next();
-			addAll(key, p.get(key));
+		for (Map.Entry<String, List<String>> entry : p.entrySet()) {
+			addAll(entry.getKey(), entry.getValue());
 		}
 	}
 	
