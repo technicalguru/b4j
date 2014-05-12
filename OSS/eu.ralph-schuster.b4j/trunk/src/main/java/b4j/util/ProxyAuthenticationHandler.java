@@ -52,7 +52,7 @@ public class ProxyAuthenticationHandler implements AuthenticationHandler {
 
 	private String encodeCredentials() {
 		byte[] credentials = (username + ':' + password).getBytes(Charsets.UTF_8);
-		return new String(Base64.encodeBase64(credentials));
+		return Base64.encodeBase64String(credentials);
 	}
 
 
