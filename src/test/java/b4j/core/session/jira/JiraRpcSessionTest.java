@@ -161,7 +161,9 @@ public class JiraRpcSessionTest {
 		Issue issue = session.getIssue("CSV-23");
 		assertNotNull("Cannot load issue: CSV-23", issue);
 		
-		BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("http://jira.ralph-schuster.eu/rest/api/2/attachment/10002"))));
+		Attachment attchmt = issue.getAttachment("http://jira.ralph-schuster.eu/rest/api/2/attachment/10002");
+		assertNotNull("No attachment found", attchmt);
+		BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt)));
 		String s = null;
 		s = r.readLine();
 		s = r.readLine();
