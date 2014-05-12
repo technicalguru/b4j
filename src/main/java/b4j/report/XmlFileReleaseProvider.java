@@ -18,6 +18,7 @@
 package b4j.report;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Iterator;
@@ -70,9 +71,10 @@ public class XmlFileReleaseProvider extends AbstractFileReleaseProvider {
 			List<?> timestamps = config.getList("Release[@timestamp]");
 			Iterator<?> i = timestamps.iterator();
 			int idx = 0;
+			DateFormat parser = DefaultIssue.DATETIME_WITHOUT_SEC();
 			while (i.hasNext()) {
 				timestamp = (String)i.next();
-				Date releaseDate = DefaultIssue.DATETIME_WITHOUT_SEC.parse(timestamp);
+				Date releaseDate = parser.parse(timestamp);
 				String releaseName = config.getString("Release("+idx+").Name");
 				if (releaseName == null) throw new ConfigurationException("No release name found for timestamp: "+timestamp);
 				

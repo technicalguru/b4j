@@ -17,6 +17,7 @@
  */
 package b4j.report;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,12 +70,13 @@ public class DefaultReleaseProvider implements ReleaseProvider {
 	public void configure(Configuration config) throws ConfigurationException {
 		Iterator<?> versions = config.getList("Release[@timestamp]").iterator();
 		int vno = 0;
+		DateFormat parser = DefaultIssue.DATETIME_WITHOUT_SEC();
 		while (versions.hasNext()) {
 			String timestamp = (String)versions.next();
 			Configuration vConfig = ((HierarchicalConfiguration)config).configurationAt("Release("+vno+")");
 			String vName = vConfig.getString("Name");
 			try {
-				Date ts = DefaultIssue.DATETIME_WITHOUT_SEC.parse(timestamp);
+				Date ts = parser.parse(timestamp);
 				Release r = new DefaultRelease(vName, ts);
 				addRelease(r);
 			} catch (ParseException e) {

@@ -18,6 +18,7 @@
 package b4j.core;
 
 import java.lang.reflect.Method;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,27 +43,37 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm:ss Z
 	 */
-	public static final SimpleDateFormat DATETIME_WITH_SEC_TZ = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+	public static DateFormat DATETIME_WITH_SEC_TZ() {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+	}
 	/**
 	 * Formatter and Parser for JSON-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd'T'HH:mm:ssZ
 	 */
-	public static final SimpleDateFormat JSON_DATETIME_WITH_SEC_TZ = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	public static DateFormat JSON_DATETIME_WITH_SEC_TZ() {
+		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	}
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm:ss
 	 */
-	public static final SimpleDateFormat DATETIME_WITH_SEC = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	public static DateFormat DATETIME_WITH_SEC() {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	}
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm
 	 */
-	public static final SimpleDateFormat DATETIME_WITHOUT_SEC = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static DateFormat DATETIME_WITHOUT_SEC() {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	}
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd
 	 */
-	public static final SimpleDateFormat DATE = new SimpleDateFormat("yyyy-MM-dd");
+	public static DateFormat DATE() {
+		return new SimpleDateFormat("yyyy-MM-dd");
+	}
 
 	/** Key for {@link LazyRetriever} object */
 	public static final String LAZY_RETRIEVER = "lazyRetriever";
