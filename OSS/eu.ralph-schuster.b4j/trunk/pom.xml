@@ -12,16 +12,16 @@
 	
 	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>b4j</artifactId>
-	<version>2.0.1-SNAPSHOT</version>
+	<version>2.0.1</version>
 	<packaging>bundle</packaging>
 	<url>http://techblog.ralph-schuster.eu/b4j-bugzilla-for-java/</url>
 	<name>Bugzilla for Java</name>
 	<description>A Java library for accessing Bugzilla instances</description>
 
 	<scm>
-		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</connection>
-		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</developerConnection>
-		<url>https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</url>
+		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/tags/b4j-2.0.1</connection>
+		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/tags/b4j-2.0.1</developerConnection>
+		<url>https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/tags/b4j-2.0.1</url>
 	</scm>
 
 	<distributionManagement>
