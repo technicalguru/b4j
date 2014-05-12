@@ -34,6 +34,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import rs.baselib.io.FileFinder;
+import rs.baselib.util.CommonUtils;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
@@ -99,7 +100,7 @@ public class BugzillaHttpSessionTest {
 			}
 			testSpecials(session, issue);
 		}
-		assertTrue("Some issues were not found "+expectedBugs.toArray().toString(), expectedBugs.isEmpty());
+		assertTrue("Some issues were not found "+CommonUtils.join(", ", expectedBugs.toArray(new String[0])), expectedBugs.isEmpty());
 		
 	}
 
