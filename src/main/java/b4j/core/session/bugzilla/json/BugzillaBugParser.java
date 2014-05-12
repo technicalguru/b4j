@@ -88,7 +88,7 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 		rc.setId(json.getString("id"));
 		rc.set(DefaultIssue.LAZY_RETRIEVER, retriever);
 		rc.setServerUri(mainClient.getServerUri().toString());
-		rc.setServerVersion(serverInfo.getVersion());
+		if (serverInfo != null) rc.setServerVersion(serverInfo.getVersion());
 		rc.setUri(mainClient.getServerUri()+"show_bug.cgi?id="+rc.getId());
 		//debug(json);
 		rc.setType(getLazyRetriever().getIssueType("bug"));
