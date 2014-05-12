@@ -192,7 +192,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				boolean rc = retrieveCookies(con);
 
 				// Get Bugzilla version and test for compatibility
-				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream()));
+				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
 				Pattern p = Pattern.compile(".*version\\s+([\\d\\.]+).*", Pattern.CASE_INSENSITIVE);
 
 				String line;
