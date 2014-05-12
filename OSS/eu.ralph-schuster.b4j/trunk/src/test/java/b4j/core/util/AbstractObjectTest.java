@@ -79,14 +79,20 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		Properties actual = createComparable(testObject);
 		String filename = getFilename(testObject);
 		if (filename != null) {
+			FileOutputStream out = null;
 			try {
 				File f = new File(pathPrefix, filename);
-				FileOutputStream out = new FileOutputStream(f);
+				out = new FileOutputStream(f);
 				actual.storeToXML(out, "Saved "+(new Date().toString())+": "+getId(testObject));
 				out.flush();
-				out.close();
 			} catch (Exception e) {
 				throw new RuntimeException(e);
+			} finally {
+				if (out != null) try {
+					out.close();
+				} catch (IOException e) {
+					throw new RuntimeException("Cannot close stream", e);
+				}
 			}
 		}
 	}
