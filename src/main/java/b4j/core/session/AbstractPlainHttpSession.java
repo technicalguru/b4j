@@ -257,7 +257,7 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 					String authPass = callback.getPassword();
 					if (authPass == null) authPass = "";
 					String auth = authName + ':' + authPass;
-					auth = new String(Base64.encodeBase64(auth.getBytes(Charsets.UTF_8)));
+					auth = Base64.encodeBase64String(auth.getBytes(Charsets.UTF_8));
 					con.setRequestProperty("Proxy-Authorization", "Basic "+auth+"");
 				}
 			} else {
@@ -269,8 +269,8 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 			
 			// Apply request properties
 			if (requestProperties != null) {
-				for (String key : requestProperties.keySet()) {
-					con.setRequestProperty(key, requestProperties.get(key));
+				for (Map.Entry<String,String> entry : requestProperties.entrySet()) {
+					con.setRequestProperty(entry.getKey(), entry.getValue());
 				}
 			}
 			
