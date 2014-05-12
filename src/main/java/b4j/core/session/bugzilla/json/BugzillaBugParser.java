@@ -83,7 +83,6 @@ public class BugzillaBugParser extends AbstractJsonParser implements JsonObjectP
 	}
 
 	public Issue parseSingleBug(JSONObject json) throws JSONException, ParseException {
-		System.out.println(json.toString());
 		DefaultIssue rc = new DefaultIssue();
 		LazyRetriever retriever = getLazyRetriever();
 		rc.setId(json.getString("id"));

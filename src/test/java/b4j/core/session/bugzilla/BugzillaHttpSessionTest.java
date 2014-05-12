@@ -29,6 +29,7 @@ import java.util.Collection;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.io.Charsets;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -112,7 +113,7 @@ public class BugzillaHttpSessionTest {
 	private void testSpecials(BugzillaHttpSession session, Issue issue) throws Exception {		
 		// Check attachment retrieval
 		if (issue.getId().equals("30")) {
-			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3"))));
+			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3")), Charsets.UTF_8));
 			String s = null;
 			s = r.readLine();
 			s = r.readLine();
