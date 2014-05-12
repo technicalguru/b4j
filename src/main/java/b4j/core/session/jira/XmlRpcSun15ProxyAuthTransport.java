@@ -63,7 +63,7 @@ public class XmlRpcSun15ProxyAuthTransport extends XmlRpcSun15HttpTransport {
 		URLConnection rc = super.newURLConnection(pURL);
 		if ((getProxy() != null) && (getProxyUser() != null) && (getProxyPassword() != null)) {
 			String base64 = getProxyUser()+":"+getProxyPassword();
-			rc.setRequestProperty("Proxy-Authorization", "Basic "+Base64.encodeBase64(base64.getBytes(Charsets.UTF_8)));
+			rc.setRequestProperty("Proxy-Authorization", "Basic "+Base64.encodeBase64String(base64.getBytes(Charsets.UTF_8)));
 		}
 		return rc;
 	}
