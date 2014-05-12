@@ -37,8 +37,8 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.io.Charsets;
 
+import rs.baselib.lang.LangUtils;
 import rs.baselib.security.AuthorizationCallback;
-import b4j.util.BugzillaUtils;
 
 /**
  * Implements an abstract HTTP session including usage with proxies.
@@ -311,7 +311,7 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 			while (cookieHeader.hasNext()) {
 				String header = cookieHeader.next();
 				// Fix #31 : Java 6 cannot understand HttpOnly attribute
-				if (BugzillaUtils.isJava6()) {
+				if (LangUtils.isJava6()) {
 					header = header.replaceAll("(?i);?\\s*httponly", "");
 				}
 				List<HttpCookie> cookies = HttpCookie.parse("Set-Cookie: "+header);

@@ -23,11 +23,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import rs.baselib.lang.LangUtils;
+import rs.baselib.util.CommonUtils;
 import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.Session;
 import b4j.core.UnsupportedVersionException;
-import b4j.util.BugzillaUtils;
 import b4j.util.HttpSessionParams;
 
 /**
@@ -147,7 +147,7 @@ public abstract class AbstractHttpSession implements Session {
 	 * The method will throw an {@link UnsupportedVersionException} if the version does not match.
 	 */
 	protected void checkBugzillaVersion() {
-		if (!BugzillaUtils.isCompatibleVersion(getMinimumBugzillaVersion(), getMaximumBugzillaVersion(), getBugzillaVersion())) {
+		if (!CommonUtils.isCompatibleVersion(getMinimumBugzillaVersion(), getMaximumBugzillaVersion(), getBugzillaVersion())) {
 			String req = "required:";
 			if (getMinimumBugzillaVersion() != null) req += " min. "+getMinimumBugzillaVersion(); 
 			if (getMaximumBugzillaVersion() != null) req += " max. "+getMaximumBugzillaVersion(); 

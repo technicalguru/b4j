@@ -29,10 +29,10 @@ import org.apache.commons.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import rs.baselib.util.CommonUtils;
 import templating.Templating;
 import b4j.core.Comment;
 import b4j.core.Issue;
-import b4j.util.BugzillaUtils;
 
 /**
  * Reports some details about bug records into a file.
@@ -192,7 +192,7 @@ public class DetailedBugReport extends AbstractFileReport {
 		markers.put("VERSION", bug.getFixVersions());
 		String s = "";
 		for (Comment c : bug.getComments()) {
-			String t = BugzillaUtils.join("\n   ", c.getTheText().split("\\n"));
+			String t = CommonUtils.join("\n   ", c.getTheText().split("\\n"));
 			s += "\n\n"+c.getAuthor() + " ("+c.getCreationTimestamp()+"):\n   "+t.trim();
 		}
 		markers.put("DESCRIPTIONS", s.trim());

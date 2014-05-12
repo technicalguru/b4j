@@ -29,12 +29,12 @@ import org.apache.commons.cli.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import rs.baselib.util.CommonUtils;
 import b4j.core.DefaultMetaInformation;
 import b4j.core.Issue;
 import b4j.core.MetaInformation;
 import b4j.core.Session;
 import b4j.report.BugzillaReportGenerator;
-import b4j.util.BugzillaUtils;
 
 /**
  * Main task object that creates a report from Bugzilla.
@@ -192,7 +192,7 @@ public class GenerateReports implements Runnable {
 				for (BugzillaReportGenerator report : reports) {
 
 					// Check compatibility of reports
-					if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
+					if (CommonUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
 						report.prepareReport();
 						hasReport = true;
 					} else {
@@ -211,7 +211,7 @@ public class GenerateReports implements Runnable {
 
 						// call all reports to register the bug
 						for (BugzillaReportGenerator report : reports) {
-							if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
+							if (CommonUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
 								report.registerBug(issue);
 							}
 						}
@@ -220,7 +220,7 @@ public class GenerateReports implements Runnable {
 
 				// Ask all reports to finish their work
 				for (BugzillaReportGenerator report : reports) {
-					if (BugzillaUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
+					if (CommonUtils.isCompatibleVersion(report.getMinimumBugzillaVersion(), report.getMaximumBugzillaVersion(), session.getBugzillaVersion())) {
 						log.info("Generating "+report.getClass().getSimpleName()+"...");
 						report.closeReport();
 					}
