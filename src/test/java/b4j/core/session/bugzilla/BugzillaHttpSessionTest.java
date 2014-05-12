@@ -36,6 +36,7 @@ import org.junit.Test;
 
 import rs.baselib.io.FileFinder;
 import rs.baselib.util.CommonUtils;
+import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
@@ -113,7 +114,9 @@ public class BugzillaHttpSessionTest {
 	private void testSpecials(BugzillaHttpSession session, Issue issue) throws Exception {		
 		// Check attachment retrieval
 		if (issue.getId().equals("30")) {
-			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3")), Charsets.UTF_8));
+			Attachment attchmt = issue.getAttachment("3");
+			assertNotNull("No attachment found", attchmt);
+			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt), Charsets.UTF_8));
 			String s = null;
 			s = r.readLine();
 			s = r.readLine();
