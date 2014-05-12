@@ -173,7 +173,7 @@ public class UrlParameters {
 	 * @return URL encoded string
 	 */
 	public static String getUrlEncodedString(Map<String, List<String>> parameters) {
-		StringBuffer rc = new StringBuffer();
+		StringBuilder rc = new StringBuilder();
 		try {
 			for (Map.Entry<String, List<String>> entry : parameters.entrySet()) {
 				String key = entry.getKey();
@@ -187,7 +187,6 @@ public class UrlParameters {
 		} catch (UnsupportedEncodingException e) {
 			log.error("Encoding Error:", e);
 		}
-		if (rc.length() > 0) return rc.toString();
-		return null;
+		return rc.toString();
 	}
 }
