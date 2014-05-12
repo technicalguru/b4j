@@ -356,11 +356,11 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 		if (!getLog().isDebugEnabled()) return;
 		try {
 			Map<String,List<String>> headerFields = con.getHeaderFields();
-			Iterator<String> i = headerFields.keySet().iterator();
-			while (i.hasNext()) {
-				String key = i.next();
-				Iterator<String> j = headerFields.get(key).iterator();
-				while (j.hasNext()) getLog().debug(key+": "+j.next());
+			for (Map.Entry<String, List<String>> entry : headerFields.entrySet()) {
+				String key = entry.getKey();
+				for (String value : entry.getValue()) {
+					getLog().debug(key+": "+value);
+				}
 			}
 			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
 			String line;
