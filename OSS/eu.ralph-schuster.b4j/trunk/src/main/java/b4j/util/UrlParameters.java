@@ -177,15 +177,13 @@ public class UrlParameters {
 	public static String getUrlEncodedString(Map<String, List<String>> parameters) {
 		StringBuffer rc = new StringBuffer();
 		try {
-			Iterator<String> keys = parameters.keySet().iterator();
-			while (keys.hasNext()) {
-				String key = keys.next();
-				Iterator<String> values = parameters.get(key).iterator();
-				while (values.hasNext()) {
+			for (Map.Entry<String, List<String>> entry : parameters.entrySet()) {
+				String key = entry.getKey();
+				for (String value : entry.getValue()) {
 					if (rc.length() != 0) rc.append('&');
 					rc.append(URLEncoder.encode(key, "UTF-8"));
 					rc.append("=");
-					rc.append(URLEncoder.encode(values.next(), "UTF-8"));
+					rc.append(URLEncoder.encode(value, "UTF-8"));
 				}
 			}
 		} catch (UnsupportedEncodingException e) {
