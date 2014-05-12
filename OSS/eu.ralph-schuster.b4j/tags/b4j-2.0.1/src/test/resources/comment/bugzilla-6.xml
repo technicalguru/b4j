@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:08:48 CET 2014: bugzilla-6</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1246276876000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1246276876000</entry>
+<entry key="text">HttpBugzillaSession throws IllegalArgumentException when using proxies without authorization:
+
+java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)
+        at org.apache.commons.configuration.HierarchicalConfiguration.configurationAt(HierarchicalConfiguration.java:472)
+        at b4j.core.session.HttpBugzillaSession.configure(HttpBugzillaSession.java:150)
+        at b4j.core.DefaultMetaInformation.configure(DefaultMetaInformation.java:99)
+        at b4j.core.DefaultMetaInformation.read(DefaultMetaInformation.java:82)
+        at b4j.core.DefaultMetaInformation.read(DefaultMetaInformation.java:71)
+        at b4j.GenerateReports.main(GenerateReports.java:136)</entry>
+<entry key="issueId">5</entry>
+<entry key="id">6</entry>
+</properties>
