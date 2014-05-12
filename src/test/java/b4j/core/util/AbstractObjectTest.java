@@ -69,7 +69,7 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 	public void save(T testObject) {
 		save("src/test/resources", testObject);
 	}
-	
+
 	/**
 	 * Saves the properties in an XML file.
 	 * @param pathPrefix the path where to store
@@ -119,13 +119,16 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		List<String> rc = new ArrayList<String>();
 		URI uri = FileFinder.find(getCategoryPath(testClass)).toURI();
 		File f = new File(uri);
-		for (File child : f.listFiles(filter)) {
-			String name = child.getName();
-			if (name.endsWith(".xml") && child.canRead()) rc.add(name.substring(0, name.length()-4));
+		File files[] = f.listFiles(filter);
+		if (files != null) {
+			for (File child : files) {
+				String name = child.getName();
+				if (name.endsWith(".xml") && child.canRead()) rc.add(name.substring(0, name.length()-4));
+			}
 		}
 		return rc;
 	}
-	
+
 	/**
 	 * Will convert the test object into a list of property-value pairs
 	 * which must be identical when later comparing the object to
@@ -154,8 +157,8 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		}
 		return rc;
 	}
-	
-	
+
+
 	/**
 	 * Tests the object according to expected and actual values.
 	 * @param testObject object that is being tested
