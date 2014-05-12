@@ -190,12 +190,17 @@ public class DetailedBugReport extends AbstractFileReport {
 		markers.put("SUMMARY", bug.getSummary());
 		markers.put("STATUS", bug.getStatus());
 		markers.put("VERSION", bug.getFixVersions());
-		String s = "";
+		StringBuilder s = new StringBuilder();
 		for (Comment c : bug.getComments()) {
 			String t = CommonUtils.join("\n   ", c.getTheText().split("\\n"));
-			s += "\n\n"+c.getAuthor() + " ("+c.getCreationTimestamp()+"):\n   "+t.trim();
+			s.append("\n\n");
+			s.append(c.getAuthor());
+			s.append(" (");
+			s.append(c.getCreationTimestamp());
+			s.append("):\n   ");
+			s.append(t.trim());
 		}
-		markers.put("DESCRIPTIONS", s.trim());
+		markers.put("DESCRIPTIONS", s.toString().trim());
 		template = Templating.replace(template, markers);
 		return template.trim();
 	}
