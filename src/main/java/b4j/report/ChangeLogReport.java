@@ -275,7 +275,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	 * @author Ralph Schuster
 	 *
 	 */
-	protected class ReleaseComparator implements Comparator<Release> {
+	protected static class ReleaseComparator implements Comparator<Release> {
 
 		/**
 		 * Compares two releases.
