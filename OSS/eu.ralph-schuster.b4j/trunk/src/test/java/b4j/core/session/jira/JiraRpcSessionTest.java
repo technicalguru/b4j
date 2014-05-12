@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.io.Charsets;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -164,7 +165,7 @@ public class JiraRpcSessionTest {
 		
 		Attachment attchmt = issue.getAttachment("http://jira.ralph-schuster.eu/rest/api/2/attachment/10002");
 		assertNotNull("No attachment found", attchmt);
-		BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt)));
+		BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt), Charsets.UTF_8));
 		String s = null;
 		s = r.readLine();
 		s = r.readLine();

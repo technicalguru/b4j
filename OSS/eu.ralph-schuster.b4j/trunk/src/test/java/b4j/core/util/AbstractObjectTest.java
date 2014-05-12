@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.io.Charsets;
 import org.slf4j.LoggerFactory;
 
 import rs.baselib.io.FileFinder;
@@ -305,7 +306,7 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 			props.storeToXML(out, "Expected values");
-			System.out.println(out.toString());
+			System.out.println(out.toString(Charsets.UTF_8.name()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
