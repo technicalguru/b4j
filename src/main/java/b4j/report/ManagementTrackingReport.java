@@ -348,7 +348,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 	 * @author Ralph Schuster
 	 *
 	 */
-	protected class SeverityStats {
+	protected static class SeverityStats {
 
 		private int openCount = 0;
 		private int closedCount = 0;
