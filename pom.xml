@@ -10,7 +10,6 @@
 		<rsbaselib.version>1.2.5</rsbaselib.version>
 	</properties>
 	
-	<groupId>eu.ralph-schuster</groupId>
 	<artifactId>b4j</artifactId>
 	<version>2.0.2-SNAPSHOT</version>
 	<packaging>bundle</packaging>
@@ -19,15 +18,15 @@
 	<description>A Java library for accessing Bugzilla instances</description>
 
 	<scm>
-		<connection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</connection>
-		<developerConnection>scm:svn:https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</developerConnection>
-		<url>https://h2031995.stratoserver.net/svn/OSS/eu.ralph-schuster.b4j/trunk</url>
+		<connection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.b4j/trunk</connection>
+		<developerConnection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.b4j/trunk</developerConnection>
+		<url>https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.b4j/trunk</url>
 	</scm>
 
 	<distributionManagement>
 		<site>
 			<id>strato-server</id>
-			<url>scp://h2031995.stratoserver.net/var/www/vhosts/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
+			<url>scp://download.ralph-schuster.eu/var/www/vhosts/ralph-schuster.eu/download/${project.groupId}.${project.artifactId}/${project.version}</url>
 		</site>
 	</distributionManagement>
 
@@ -144,6 +143,13 @@
 					<instructions>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<header><![CDATA[<a href="${project.url}" target="_new">Visit the ${project.name} Homepage</a>]]></header>
 				</configuration>
 			</plugin>
 		</plugins>
