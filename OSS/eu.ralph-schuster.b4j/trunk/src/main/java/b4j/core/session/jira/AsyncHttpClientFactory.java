@@ -36,7 +36,6 @@ import com.atlassian.httpclient.api.Request;
 import com.atlassian.httpclient.api.factory.HttpClientOptions;
 import com.atlassian.httpclient.spi.ThreadLocalContextManagers;
 import com.atlassian.jira.rest.client.AuthenticationHandler;
-import com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFactory;
 import com.atlassian.sal.api.ApplicationProperties;
 import com.atlassian.util.concurrent.Effect;
 
@@ -145,6 +144,7 @@ public class AsyncHttpClientFactory {
 			return new File(".");
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public String getPropertyValue(final String s) {
 			throw new UnsupportedOperationException("Not implemented");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Mon Feb 03 14:58:53 CET 2014: jira-BFJ-19</comment>
+<comment>Saved Sun Jul 06 17:10:35 CEST 2014: jira-BFJ-19</comment>
 <entry key="classification">null</entry>
 <entry key="links">null</entry>
 <entry key="project">Bugzilla for Java</entry>
@@ -11,7 +11,7 @@
 <entry key="comments">list:null</entry>
 <entry key="components">list:null</entry>
 <entry key="id">BFJ-19</entry>
-<entry key="creationTimestamp">1359566319000</entry>
+<entry key="creationTimestamp">1359569919000</entry>
 <entry key="status">Closed</entry>
 <entry key="resolution">Fixed</entry>
 <entry key="severity">Normal</entry>
@@ -79,7 +79,7 @@ HttpBugzillaSession, lines 579 and following should change to:&#13;
 <entry key="affectedVersions">list:1.4.0</entry>
 <entry key="parentId">null</entry>
 <entry key="reporter">Ralph Schuster</entry>
-<entry key="updateTimestamp">1380268268000</entry>
+<entry key="updateTimestamp">1380275468000</entry>
 <entry key="assignee">Ralph Schuster</entry>
 <entry key="priority">Normal</entry>
 <entry key="attachments">list:null</entry>
