@@ -7,7 +7,7 @@
 	</parent>
 
 	<properties>
-		<rsbaselib.version>1.2.5</rsbaselib.version>
+		<rsbaselib.version>1.2.7</rsbaselib.version>
 	</properties>
 	
 	<artifactId>b4j</artifactId>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Mon Feb 03 14:58:52 CET 2014: jira-BFJ-23</comment>
+<comment>Saved Sun Jul 06 17:10:38 CEST 2014: jira-BFJ-23</comment>
 <entry key="classification">null</entry>
 <entry key="links">null</entry>
 <entry key="project">Bugzilla for Java</entry>
@@ -11,7 +11,7 @@
 <entry key="comments">list:null</entry>
 <entry key="components">list:null</entry>
 <entry key="id">BFJ-23</entry>
-<entry key="creationTimestamp">1372651958000</entry>
+<entry key="creationTimestamp">1372659158000</entry>
 <entry key="status">Closed</entry>
 <entry key="resolution">Fixed</entry>
 <entry key="severity">Normal</entry>
@@ -21,7 +21,7 @@
 <entry key="affectedVersions">list:null</entry>
 <entry key="parentId">null</entry>
 <entry key="reporter">Ralph Schuster</entry>
-<entry key="updateTimestamp">1372784061000</entry>
+<entry key="updateTimestamp">1372791261000</entry>
 <entry key="assignee">Ralph Schuster</entry>
 <entry key="priority">Normal</entry>
 <entry key="attachments">list:null</entry>

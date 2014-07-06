@@ -93,6 +93,7 @@ public class JiraRpcIssueTest {
 		// Search a simple bug
 		Issue issue = session.getIssue(id);
 		assertNotNull(issue);
+		//issueTest.save(issue);
 		issueTest.test(issue);
 	}
 
