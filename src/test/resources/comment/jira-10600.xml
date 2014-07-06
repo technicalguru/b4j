@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:29:08 CET 2014: jira-10600</comment>
+<comment>Saved Sun Jul 06 17:22:33 CEST 2014: jira-10600</comment>
 <entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1385760078000</entry>
+<entry key="creationTimestamp">1385763678000</entry>
 <entry key="updateAuthor">Ralph Schuster</entry>
 <entry key="author">Ralph Schuster</entry>
-<entry key="updateTimestamp">1385760078000</entry>
+<entry key="updateTimestamp">1385763678000</entry>
 <entry key="text">Default value will be DefaultIssue.class</entry>
 <entry key="issueId">BFJ-27</entry>
 <entry key="id">10600</entry>

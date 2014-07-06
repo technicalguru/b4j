@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:29:14 CET 2014: jira-10036</comment>
+<comment>Saved Sun Jul 06 17:22:37 CEST 2014: jira-10036</comment>
 <entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1354567417000</entry>
+<entry key="creationTimestamp">1354571017000</entry>
 <entry key="updateAuthor">Ralph Schuster</entry>
 <entry key="author">Ralph Schuster</entry>
-<entry key="updateTimestamp">1354567417000</entry>
+<entry key="updateTimestamp">1354571017000</entry>
 <entry key="text">Reassigned due to JIRA</entry>
 <entry key="issueId">BFJ-9</entry>
 <entry key="id">10036</entry>
