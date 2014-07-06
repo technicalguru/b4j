@@ -118,6 +118,7 @@ public class JiraRpcSessionTest {
 			expectedBugs.remove(id);
 
 			for (Comment c : issue.getComments()) {
+				//commentTest.save(c);
 				commentTest.test(c);
 			}
 		}
