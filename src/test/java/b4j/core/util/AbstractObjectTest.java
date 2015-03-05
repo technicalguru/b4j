@@ -198,12 +198,23 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 						}
 					}
 				}
-			} else if (!CommonUtils.equals(actualValue, expectedValue)) {
-				fail(testClass.getSimpleName()+"["+getId(testObject)+"]["+entry.getKey()+"] does not match. expected="+expectedValue+", actual="+actualValue);
+			} else {
+				actualValue = cleanString(actualValue);
+				expectedValue = cleanString(expectedValue);
+				
+				if (!CommonUtils.equals(actualValue, expectedValue)) {		
+					fail(testClass.getSimpleName()+"["+getId(testObject)+"]["+entry.getKey()+"] does not match. expected="+expectedValue+", actual="+actualValue);
+				}
 			}
 		}
 	}
 
+	protected String cleanString(String s) {
+		if (s == null) return null;
+		s = s.replaceAll("[\\n\\r]+", " ");
+		return s;
+	}
+	
 	/**
 	 * Returns the filename to be used to store expected values.
 	 * @param object object that need to be evaluated
