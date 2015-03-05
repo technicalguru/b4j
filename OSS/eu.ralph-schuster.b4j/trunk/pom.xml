@@ -4,11 +4,11 @@
 	<parent>
 		<groupId>eu.ralph-schuster</groupId>
 		<artifactId>pom-oss</artifactId>
-		<version>1.4.3</version>
+		<version>1.4.4</version>
 	</parent>
 
 	<properties>
-		<rsbaselib.version>1.2.9-SNAPSHOT</rsbaselib.version>
+		<rsbaselib.version>1.2.9</rsbaselib.version>
 	</properties>
 
 	<artifactId>b4j</artifactId>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.32</version>
+			<version>5.1.34</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlrpc</groupId>
