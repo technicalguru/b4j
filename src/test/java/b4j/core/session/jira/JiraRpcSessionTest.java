@@ -49,7 +49,7 @@ import b4j.core.session.JiraRpcSession;
 import b4j.core.util.CommentTest;
 
 /**
- * Jira Session test ({@link JiraRpcSession}).
+ * Jira session test for {@link b4j.core.session.JiraRpcSession JiraRpcSession}.
  * @author ralph
  *
  */
