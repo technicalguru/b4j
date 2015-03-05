@@ -86,7 +86,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	private MetaData<BasicProject, JiraProject> projects = new MetaData<BasicProject, JiraProject>(new JiraTransformer.Project());
 	private MetaData<BasicComponent, JiraComponent> components = new MetaData<BasicComponent, JiraComponent>(new JiraTransformer.Component());
 	private MetaData<Version, JiraVersion> versions = new MetaData<Version, JiraVersion>(new JiraTransformer.Version());
-	
+
 	/**
 	 * Default constructor
 	 */
@@ -107,12 +107,12 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			String home = config.getString("jira-home");
 			if (home == null) home = config.getString("bugzilla-home");
 			setBaseUrl(new URL(home));
-			
+
 		} catch (MalformedURLException e) {
 			throw new ConfigurationException("Malformed JIRA URL: ", e);
 		}
 	}
-	
+
 	/**
 	 * Opens the JIRA session (login).
 	 * @see b4j.core.Session#open()
@@ -121,14 +121,14 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	public boolean open() {
 		if (isLoggedIn()) return true;
 		jiraVersion = null;
-		
+
 		try {
 			JiraRestClientFactory factory = new AsynchronousJiraRestClientFactory();
 			jiraServerUri = getBaseUrl().toURI();
-			
+
 			HttpClient httpClient = getHttpClient(jiraServerUri);
 			jiraClient = factory.create(jiraServerUri, httpClient);
-			
+
 			jiraVersion = jiraClient.getMetadataClient().getServerInfo().get().getVersion();
 			filterClient = new AsynchronousFilterRestClient(jiraServerUri, httpClient, jiraClient.getSearchClient());
 			setLoggedIn(true);
@@ -185,7 +185,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	protected void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
-	
+
 	/**
 	 * Returns true if connection to JIRA was established.
 	 * @see b4j.core.Session#isLoggedIn()
@@ -234,32 +234,38 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		rc.setType(issueTypes.get(issue.getIssueType()));
 		rc.addFixVersions(versions.get(issue.getFixVersions(), rc.getProject()));
 		rc.addAffectedVersions(versions.get(issue.getAffectedVersions(), rc.getProject()));
-		for (com.atlassian.jira.rest.client.domain.Attachment attachment : issue.getAttachments()) {
-			Attachment a = new DefaultAttachment(rc.getId());
-			a.setId(attachment.getSelf().toString());
-			a.setFilename(attachment.getFilename());
-			a.setDescription(attachment.getFilename());
-			a.setDate(attachment.getCreationDate().toDate());
-			a.setType(attachment.getMimeType());
-			a.setUri(attachment.getContentUri());
-			rc.addAttachments(a);
+		Iterable<com.atlassian.jira.rest.client.domain.Attachment> attachments = issue.getAttachments();
+		if (attachments != null) {
+			for (com.atlassian.jira.rest.client.domain.Attachment attachment : attachments) {
+				Attachment a = new DefaultAttachment(rc.getId());
+				a.setId(attachment.getSelf().toString());
+				a.setFilename(attachment.getFilename());
+				a.setDescription(attachment.getFilename());
+				a.setDate(attachment.getCreationDate().toDate());
+				a.setType(attachment.getMimeType());
+				a.setUri(attachment.getContentUri());
+				rc.addAttachments(a);
+			}
 		}
-		for (com.atlassian.jira.rest.client.domain.Comment comment : issue.getComments()) {
-			DefaultComment desc = new DefaultComment(rc.getId());
-			desc.setId(""+comment.getId());
-			desc.setTheText(comment.getBody());
-			desc.setCreationTimestamp(comment.getCreationDate().toDate());
-			desc.setAuthor(users.get(comment.getAuthor()));
-			desc.setUpdateAuthor(users.get(comment.getAuthor()));
-			desc.setUpdateTimestamp(comment.getUpdateDate().toDate());
-			rc.addComments(desc);
+		Iterable<com.atlassian.jira.rest.client.domain.Comment> comments = issue.getComments();
+		if (comments != null) {
+			for (com.atlassian.jira.rest.client.domain.Comment comment : comments) {
+				DefaultComment desc = new DefaultComment(rc.getId());
+				desc.setId(""+comment.getId());
+				desc.setTheText(comment.getBody());
+				desc.setCreationTimestamp(comment.getCreationDate().toDate());
+				desc.setAuthor(users.get(comment.getAuthor()));
+				desc.setUpdateAuthor(users.get(comment.getAuthor()));
+				desc.setUpdateTimestamp(comment.getUpdateDate().toDate());
+				rc.addComments(desc);
+			}
 		}
 		rc.setUpdateTimestamp(issue.getUpdateDate().toDate());
 		DateTime d = issue.getDueDate();
 		if (d != null) rc.set(Issue.DEADLINE, d.toDate());
 		return rc;
 	}
-	
+
 	protected String join(Iterable<?> i) {
 		StringBuffer rc = new StringBuffer();
 		for (Object o : i) {
@@ -268,7 +274,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		}
 		return rc.length() > 0 ? rc.toString() : null;
 	}
-	
+
 	protected String join(Iterator<?> i) {
 		StringBuffer rc = new StringBuffer();
 		while (i.hasNext()) {
@@ -278,7 +284,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		}
 		return rc.length() > 0 ? rc.toString() : null;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -292,7 +298,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			throw new IOException("Request could not be processed", e);
 		}
 	}
-	
+
 	/**
 	 * Searches for JIRA issues.
 	 * Search data can contain:
@@ -305,7 +311,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	@Override
 	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
 		checkLoggedIn();
-		
+
 		Promise<SearchResult> result = null;
 		if (searchData.hasParameter("filterId")) {
 			result = filterClient.search(searchData.get("filterId").iterator().next());
@@ -346,12 +352,12 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 
 		private SearchResult result;
 		private Iterator<BasicIssue> issues;
-		
+
 		public SearchIterator(Promise<SearchResult> result) throws InterruptedException, ExecutionException {
 			this.result = result.get();
 			issues = this.result.getIssues().iterator();
 		}
-		
+
 		/**
 		 * {@inheritDoc}
 		 */
@@ -380,6 +386,6 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		public Iterator<Issue> iterator() {
 			return this;
 		}
-		
+
 	}
 }
