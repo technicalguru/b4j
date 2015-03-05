@@ -39,7 +39,7 @@ import b4j.core.session.JiraRpcSession;
 import b4j.core.util.IssueTest;
 
 /**
- * Test ({@link JiraRpcSession}) for known issues.
+ * Test {@link b4j.core.session.JiraRpcSession JiraRpcSession} for known issues.
  * @author ralph
  *
  */

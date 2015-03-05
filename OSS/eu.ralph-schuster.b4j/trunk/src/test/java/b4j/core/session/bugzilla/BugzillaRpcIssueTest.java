@@ -39,7 +39,7 @@ import b4j.core.session.BugzillaRpcSession;
 import b4j.core.util.IssueTest;
 
 /**
- * Test ({@link BugzillaRpcSession}) for known issues.
+ * Test {@link b4j.core.session.BugzillaRpcSession BugzillaRpcSession} for known issues.
  * Due to nature of the RPC implementation, the test takes around 3.5 secs per issue, currently 
  * ~ 120 seconds in total.
  * @author ralph

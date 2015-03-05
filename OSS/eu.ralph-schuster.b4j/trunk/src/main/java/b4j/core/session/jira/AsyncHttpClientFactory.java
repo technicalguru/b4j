@@ -40,8 +40,8 @@ import com.atlassian.sal.api.ApplicationProperties;
 import com.atlassian.util.concurrent.Effect;
 
 /**
- * Class is copied from Atlassian's {@link AsynchronousHttpClientFactory} class due to
- * inability of configuring socket timeouts.
+ * Class is copied from Atlassian's {@link com.atlassian.jira.rest.client.internal.async.AsynchronousHttpClientFactory AsynchronousHttpClientFactory} 
+ * class due to inability of configuring socket timeouts.
  * @author ralph
  *
  */
