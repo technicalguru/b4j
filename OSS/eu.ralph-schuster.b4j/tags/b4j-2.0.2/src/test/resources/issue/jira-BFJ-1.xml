@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Sun Jul 06 17:10:38 CEST 2014: jira-BFJ-1</comment>
+<entry key="classification">null</entry>
+<entry key="links">null</entry>
+<entry key="project">Bugzilla for Java</entry>
+<entry key="type">Improvement</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Create abstract class for BugzillaReportGenerator</entry>
+<entry key="comments">list:10043</entry>
+<entry key="components">list:null</entry>
+<entry key="id">BFJ-1</entry>
+<entry key="creationTimestamp">1244574818000</entry>
+<entry key="status">Closed</entry>
+<entry key="resolution">Fixed</entry>
+<entry key="severity">Normal</entry>
+<entry key="fixVersions">list:1.1</entry>
+<entry key="description">Create a default implementation for most methods of BugzillaReportGenerator. This would improve development of new reports.</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:1.0</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">Ralph Schuster</entry>
+<entry key="updateTimestamp">1371679896000</entry>
+<entry key="assignee">Ralph Schuster</entry>
+<entry key="priority">Normal</entry>
+<entry key="attachments">list:null</entry>
+</properties>

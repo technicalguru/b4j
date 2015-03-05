@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:47:38 CET 2014: bugzilla-4</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Multiline values fail when a line looks like a comment</entry>
+<entry key="comments">list:11,5</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">4</entry>
+<entry key="creationTimestamp">1245668160000</entry>
+<entry key="status">CLOSED</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="severity">normal</entry>
+<entry key="fixVersions">list:1.0</entry>
+<entry key="description">When a multiline value looks in one line like a comment, the parsing fails when this specific line also ends the multiline value, e.g.
+
+"Line1
+Line2
+#Line3"
+Last line was the problem</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">admin</entry>
+<entry key="updateTimestamp">1254142523000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:null</entry>
+</properties>

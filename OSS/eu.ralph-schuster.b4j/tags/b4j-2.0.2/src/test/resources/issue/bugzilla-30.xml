@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:48:26 CET 2014: bugzilla-30</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Provide support for String separators</entry>
+<entry key="comments">list:49,50</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">30</entry>
+<entry key="creationTimestamp">1312060980000</entry>
+<entry key="status">ASSIGNED</entry>
+<entry key="resolution"/>
+<entry key="severity">enhancement</entry>
+<entry key="fixVersions">list:2.1</entry>
+<entry key="description">Created attachment 3
+CSVReader with Separator string
+
+My company provides a facility for uploading data in CSV formats using multi-character separators (specifically, || and ##).  I have implemented this feature into the CSVReader class for my own use and offer it here if you'd like to offer it to others</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">J5</entry>
+<entry key="updateTimestamp">1312103242000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:3</entry>
+</properties>

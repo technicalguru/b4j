@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:48:10 CET 2014: bugzilla-22</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Reader removes empty lines within column values</entry>
+<entry key="comments">list:33</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">22</entry>
+<entry key="creationTimestamp">1285078500000</entry>
+<entry key="status">CLOSED</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="severity">normal</entry>
+<entry key="fixVersions">list:2.0.1</entry>
+<entry key="description">The CSV Reader removes empty lines in columns, e.g. from this file
+
+------------------
+"1:1","1st line
+
+3rd line","1:3"
+------------------
+
+the second column shall contain an empty line. However, CSVReader returns
+
+------------------
+1st line
+3rd line
+------------------</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">admin</entry>
+<entry key="updateTimestamp">1285146481000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:null</entry>
+</properties>

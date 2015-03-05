@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:47:34 CET 2014: bugzilla-2</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">NullPointerException in CSVReader class</entry>
+<entry key="comments">list:10,2,3</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">2</entry>
+<entry key="creationTimestamp">1244094960000</entry>
+<entry key="status">CLOSED</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="severity">critical</entry>
+<entry key="fixVersions">list:1.0</entry>
+<entry key="description">When reading CSV file, following exception occurs:
+
+java.lang.NullPointerException
+
+	at csv.CSVReader$CSVRowIterator.hasNext(CSVReader.java:414)
+	at csv.CSVReader$CSVRowIterator.next(CSVReader.java:441)
+	at csv.CSVReader$CSVRowIterator.next(CSVReader.java:370)
+	at csv.CSVReader.next(CSVReader.java:288)
+	at reqpro.BaselineHistory.load(BaselineHistory.java:71)
+	at reqpro.ReqProTracing.loadBaselineHistory(ReqProTracing.java:348)
+	at reqpro.ReqProTracing.doBaselineCsv(ReqProTracing.java:293)
+	at reqpro.ReqProTracing.main(ReqProTracing.java:94)</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">admin</entry>
+<entry key="updateTimestamp">1254142522000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:null</entry>
+</properties>

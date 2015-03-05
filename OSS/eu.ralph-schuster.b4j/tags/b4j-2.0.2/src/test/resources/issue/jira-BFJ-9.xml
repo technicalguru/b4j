@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Sun Jul 06 17:10:38 CEST 2014: jira-BFJ-9</comment>
+<entry key="classification">null</entry>
+<entry key="links">null</entry>
+<entry key="project">Bugzilla for Java</entry>
+<entry key="type">Bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Attachment filename not set</entry>
+<entry key="comments">list:10036</entry>
+<entry key="components">list:null</entry>
+<entry key="id">BFJ-9</entry>
+<entry key="creationTimestamp">1348868562000</entry>
+<entry key="status">Closed</entry>
+<entry key="resolution">Fixed</entry>
+<entry key="severity">Normal</entry>
+<entry key="fixVersions">list:1.3</entry>
+<entry key="description">The filename for an attachment is not set correctly. It contains the description</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:1.2</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">Ralph Schuster</entry>
+<entry key="updateTimestamp">1371679855000</entry>
+<entry key="assignee">Ralph Schuster</entry>
+<entry key="priority">Normal</entry>
+<entry key="attachments">list:null</entry>
+</properties>

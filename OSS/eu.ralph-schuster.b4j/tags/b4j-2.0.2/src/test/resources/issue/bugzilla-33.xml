@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:48:29 CET 2014: bugzilla-33</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">B4J - Bugzilla for Java</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Attachment filename not set</entry>
+<entry key="comments">list:53</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">33</entry>
+<entry key="creationTimestamp">1348861320000</entry>
+<entry key="status">CLOSED</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="severity">major</entry>
+<entry key="fixVersions">list:1.2</entry>
+<entry key="description">The filename for an attachment is not set correctly. It contains the description</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">admin</entry>
+<entry key="updateTimestamp">1348938045000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:null</entry>
+</properties>
