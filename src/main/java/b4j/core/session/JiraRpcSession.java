@@ -29,6 +29,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.joda.time.DateTime;
 
+import rs.baselib.lang.LangUtils;
 import b4j.core.Attachment;
 import b4j.core.DefaultAttachment;
 import b4j.core.DefaultComment;
@@ -311,15 +312,17 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	@Override
 	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
 		checkLoggedIn();
-
+		int maxResults = searchData.hasParameter("maxResults") ? LangUtils.getInt(searchData.get("maxResults").iterator().next()) : 50;
+		int startAt = searchData.hasParameter("startAt") ? LangUtils.getInt(searchData.get("startAt").iterator().next()) : 0;
+		
 		Promise<SearchResult> result = null;
 		if (searchData.hasParameter("filterId")) {
-			result = filterClient.search(searchData.get("filterId").iterator().next());
+			result = filterClient.search(searchData.get("filterId").iterator().next(), maxResults, startAt);
 		} else if (searchData.hasParameter("jql")) {
 			String jql = searchData.get("jql").iterator().next();
-			result = jiraClient.getSearchClient().searchJql(jql);
+			result = jiraClient.getSearchClient().searchJql(jql, maxResults, startAt);
 		} else if (searchData.hasParameter("key")) {
-			result = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")");
+			result = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")", maxResults, startAt);
 		} else {
 			getLog().error("no search data given");
 		}
