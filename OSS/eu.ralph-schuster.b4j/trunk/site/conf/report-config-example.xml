@@ -42,37 +42,6 @@
 		-->
 	</bugzilla-session>
 	
-	<!--
-	<bugzilla-session class="b4j.core.session.MySQLBugzillaSession">
-		<mysql-host>localhost</mysql-host>
-		<mysql-port>3306</mysql-port>
-		<mysql-database>bugzilla</mysql-database>
-		<AuthorizationCallback class="null">
-			<login>your-name</login>
-			<password>your-password</password>
-		</AuthorizationCallback>
-		
-		<BugzillaBug class="b4j.core.DefaultIssue"/>
-	</bugzilla-session>
-	-->
-	
-	<!--
-	<bugzilla-session class="b4j.core.session.MylynBugzillaSession">
-		<bugzilla-home>http://your-bugzilla.your-domain.com/</bugzilla-home>
-		<proxy-host>10.10.10.250:8080</proxy-host>
-		<ProxyAuthorizationCallback>
-			<login>your-proxy-name</login>
-			<password>your-proxy-password</password>
-		</ProxyAuthorizationCallback>
-		<AuthorizationCallback class="null">
-			<login>your-name</login>
-			<password>your-password</password>
-		</AuthorizationCallback>
-		
-		<BugzillaBug class="b4j.core.DefaultIssue"/>
-	</bugzilla-session>
-	-->
-	
 	<search>
 		<classification>Your Classification</classification>
 		<product>Your Product 1</product>
