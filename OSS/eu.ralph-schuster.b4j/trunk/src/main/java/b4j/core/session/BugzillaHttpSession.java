@@ -246,6 +246,78 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 	}
 
 	/**
+	 * Returns the {@link IssueType} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, IssueType> getIssueTypes() {
+		return issueTypes;
+	}
+
+	/**
+	 * Returns the {@link Status} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, Status> getStatus() {
+		return status;
+	}
+
+	/**
+	 * Returns the {@link Priority} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, Priority> getPriorities() {
+		return priorities;
+	}
+
+	/**
+	 * Returns the {@link Severity} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, Severity> getSeverities() {
+		return severities;
+	}
+
+	/**
+	 * Returns the {@link Resolution} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, Resolution> getResolutions() {
+		return resolutions;
+	}
+
+	/**
+	 * Returns the {@link Project} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, Project> getProjects() {
+		return projects;
+	}
+
+	/**
+	 * Returns the {@link Component} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, Component> getComponents() {
+		return components;
+	}
+
+	/**
+	 * Returns the {@link Classification} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<String, Classification> getClassifications() {
+		return classifications;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
