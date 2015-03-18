@@ -31,11 +31,19 @@ import org.joda.time.DateTime;
 
 import rs.baselib.lang.LangUtils;
 import b4j.core.Attachment;
+import b4j.core.Component;
 import b4j.core.DefaultAttachment;
 import b4j.core.DefaultComment;
 import b4j.core.Issue;
+import b4j.core.IssueType;
+import b4j.core.Priority;
+import b4j.core.Project;
+import b4j.core.Resolution;
 import b4j.core.SearchData;
 import b4j.core.SearchResultCountCallback;
+import b4j.core.Severity;
+import b4j.core.Status;
+import b4j.core.User;
 import b4j.core.session.jira.AsynchronousFilterRestClient;
 import b4j.core.session.jira.JiraComponent;
 import b4j.core.session.jira.JiraIssueType;
@@ -137,6 +145,114 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			getLog().error("Cannot connect to JIRA:", e);
 		}
 		return isLoggedIn();
+	}
+
+	/**
+	 * Returns Atlassian's REST filter client.
+	 * @return the REST filter client
+	 * @since 2.0.3
+	 */
+	protected AsynchronousFilterRestClient getFilterClient() {
+		return filterClient;
+	}
+	
+	/**
+	 * Returns Atlassian's Jira client.
+	 * @return the Jira client
+	 * @since 2.0.3
+	 */
+	protected JiraRestClient getJiraClient() {
+		return jiraClient;
+	}
+
+	/**
+	 * Returns the Jira's server URI.
+	 * @return the server URI
+	 * @since 2.0.3
+	 */
+	protected URI getJiraServerUri() {
+		return jiraServerUri;
+	}
+
+	/**
+	 * Returns the {@link IssueType}  mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicIssueType, JiraIssueType> getIssueTypes() {
+		return issueTypes;
+	}
+
+	/**
+	 * Returns the {@link Status} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicStatus, JiraStatus> getStatus() {
+		return status;
+	}
+
+	/**
+	 * Returns the {@link Priority} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicPriority, JiraPriority> getPriorities() {
+		return priorities;
+	}
+
+	/**
+	 * Returns the {@link Severity} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicPriority, JiraSeverity> getSeverities() {
+		return severities;
+	}
+
+	/**
+	 * Returns the {@link Resolution} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicResolution, JiraResolution> getResolutions() {
+		return resolutions;
+	}
+
+	/**
+	 * Returns the {@link User} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicUser, JiraUser> getUsers() {
+		return users;
+	}
+
+	/**
+	 * Returns the {@link Project} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicProject, JiraProject> getProjects() {
+		return projects;
+	}
+
+	/**
+	 * Returns the {@link Component} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<BasicComponent, JiraComponent> getComponents() {
+		return components;
+	}
+
+	/**
+	 * Returns the {@link b4j.core.Version} mappings.
+	 * @return the mappings
+	 * @since 2.0.3
+	 */
+	protected MetaData<Version, JiraVersion> getVersions() {
+		return versions;
 	}
 
 	/**
