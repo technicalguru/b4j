@@ -18,7 +18,7 @@
 
 package b4j.core.util;
 
-import static junit.framework.Assert.fail;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -40,7 +40,7 @@ import org.apache.commons.io.Charsets;
 import org.slf4j.LoggerFactory;
 
 import rs.baselib.io.FileFinder;
-import rs.baselib.lang.LangUtils;
+import rs.baselib.lang.ReflectionUtils;
 import rs.baselib.util.CommonUtils;
 import b4j.core.BugzillaObject;
 
@@ -60,7 +60,7 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 	 */
 	@SuppressWarnings("unchecked")
 	public AbstractObjectTest() {
-		testClass = (Class<T>)LangUtils.getTypeArguments(AbstractObjectTest.class, getClass()).get(0);
+		testClass = (Class<T>)ReflectionUtils.getTypeArguments(AbstractObjectTest.class, getClass()).get(0);
 	}
 
 	/**

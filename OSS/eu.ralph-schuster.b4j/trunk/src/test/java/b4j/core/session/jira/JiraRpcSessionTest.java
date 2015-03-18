@@ -19,6 +19,7 @@ package b4j.core.session.jira;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -125,7 +126,102 @@ public class JiraRpcSessionTest {
 		assertTrue("Some issues were not found: "+CommonUtils.join(",", expectedBugs.toArray(new String[0])), expectedBugs.isEmpty());
 	}
 
+	/**
+	 * Test JQL query with more than 50 results.
+	 */
+	@Test
+	public void testBasicIssues() throws Exception {
+		// Create search criteria
+		DefaultSearchData searchData = new DefaultSearchData();
+		searchData.add("jql", "project=BFJ");
+		searchData.add("basicIssueOnly", "true");
+		
+		// Perform the search
+		Iterable<Issue> i = session.searchBugs(searchData, null);
+		
+		for (Issue issue : i) {
+			assertNotNull("No issue ID", issue.getId());
+			assertNull("Summary in issue is set", issue.getSummary());
+		}
+	}
+	
 
+	/**
+	 * Test JQL query with more than 50 results.
+	 */
+	@Test
+	public void testMultipleJql() throws Exception {
+		// Create search criteria
+		DefaultSearchData searchData = new DefaultSearchData();
+		searchData.add("jql", "project=BFJ");
+		
+		// Perform the search
+		Iterable<Issue> i = session.searchBugs(searchData, null);
+		int cnt = 0;
+		for (@SuppressWarnings("unused") Issue issue : i) {
+			cnt++;
+		}
+		assertTrue("Not enough issues: "+cnt, cnt > 50);
+	}
+	
+	/**
+	 * Test JQL query with result limitation.
+	 */
+	@Test
+	public void testLimitedResult1() throws Exception {
+		// Create search criteria
+		DefaultSearchData searchData = new DefaultSearchData();
+		searchData.add("jql", "project=BFJ");
+		searchData.add("maxResults", "60");
+		
+		// Perform the search
+		Iterable<Issue> i = session.searchBugs(searchData, null);
+		int cnt = 0;
+		for (@SuppressWarnings("unused") Issue issue : i) {
+			cnt++;
+		}
+		assertEquals("Not correct number of issues", 60, cnt);
+	}
+	
+	/**
+	 * Test JQL query with result limitation.
+	 */
+	@Test
+	public void testLimitedResult2() throws Exception {
+		// Create search criteria
+		DefaultSearchData searchData = new DefaultSearchData();
+		searchData.add("jql", "project=BFJ");
+		searchData.add("startAt", "10");
+		searchData.add("maxResults", "60");
+		
+		// Perform the search
+		Iterable<Issue> i = session.searchBugs(searchData, null);
+		int cnt = 0;
+		for (@SuppressWarnings("unused") Issue issue : i) {
+			cnt++;
+		}
+		assertEquals("Not correct number of issues", 60, cnt);
+	}
+	
+	/**
+	 * Test JQL query with result limitation.
+	 */
+	@Test
+	public void testLimitedResult3() throws Exception {
+		// Create search criteria
+		DefaultSearchData searchData = new DefaultSearchData();
+		searchData.add("jql", "project=BFJ");
+		searchData.add("maxResults", "50");
+		
+		// Perform the search
+		Iterable<Issue> i = session.searchBugs(searchData, null);
+		int cnt = 0;
+		for (@SuppressWarnings("unused") Issue issue : i) {
+			cnt++;
+		}
+		assertEquals("Not correct number of issues", 50, cnt);
+	}
+	
 	/**
 	 * Test comments.
 	 */
