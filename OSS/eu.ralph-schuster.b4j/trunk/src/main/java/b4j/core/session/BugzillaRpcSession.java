@@ -252,5 +252,23 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 		return serverInfo.getVersion();
 	}
 
+	/**
+	 * Returns the client.
+	 * @return the client
+	 * @since 2.0.3
+	 */
+	protected BugzillaClient getClient() {
+		return client;
+	}
+
+	/**
+	 * Returns the serverInfo.
+	 * @return the serverInfo
+	 * @since 2.0.3
+	 */
+	protected ServerInfo getServerInfo() {
+		return serverInfo;
+	}
+
 
 }
