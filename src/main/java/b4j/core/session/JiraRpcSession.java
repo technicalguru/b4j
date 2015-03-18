@@ -155,7 +155,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	protected AsynchronousFilterRestClient getFilterClient() {
 		return filterClient;
 	}
-	
+
 	/**
 	 * Returns Atlassian's Jira client.
 	 * @return the Jira client
@@ -327,6 +327,21 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
+	 * Creates a issue from the Jira {@link BasicIssue}.
+	 * @param issue the JIRA issue
+	 * @return the B4J issue 
+	 * @since 3.0.2
+	 */
+	protected Issue createIssue(BasicIssue issue) {
+		Issue rc = createIssue();
+		rc.setId(issue.getKey());
+		rc.setUri(issue.getSelf().toString());
+		rc.setServerUri(jiraServerUri.toString());
+		rc.setServerVersion(getBugzillaVersion());
+		return rc;
+	}
+
+	/**
 	 * Creates a issue from the Jira issue.
 	 * @param issue the JIRA issue
 	 * @return the B4J issue 
@@ -424,30 +439,29 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	 * <li><code>jql</code> - to query with JQL</li>
 	 * <li><code>key</code>'s - to query multiple, defined issues</li>
 	 * </ul>
+	 * Following parameters were added in V3.0.2:
+	 * <ul>
+	 * <li><code>startAt</code> - start at the given index when retrieving issues</li>
+	 * <li><code>maxResults</code> - return at most that number of issues</li>
+	 * <li><code>basicIssueOnly</code> - when present, returns issues that have Key and URI set only (for performance reasons)</li>
+	 * </ul>
+	 * Search queries take quite some time when used in default configuration. Jira returns key and URI in a search result which
+	 * requires B4J to make separate calls for each individual issue found. You can control this by parameter {@code basicIssueOnly}
+	 * which boosts performance a lot in case you are only interested in Issue keys.
 	 */
 	@Override
 	public Iterable<Issue> searchBugs(SearchData searchData, SearchResultCountCallback callback) {
 		checkLoggedIn();
-		int maxResults = searchData.hasParameter("maxResults") ? LangUtils.getInt(searchData.get("maxResults").iterator().next()) : 50;
-		int startAt = searchData.hasParameter("startAt") ? LangUtils.getInt(searchData.get("startAt").iterator().next()) : 0;
-		
-		Promise<SearchResult> result = null;
-		if (searchData.hasParameter("filterId")) {
-			result = filterClient.search(searchData.get("filterId").iterator().next(), maxResults, startAt);
-		} else if (searchData.hasParameter("jql")) {
-			String jql = searchData.get("jql").iterator().next();
-			result = jiraClient.getSearchClient().searchJql(jql, maxResults, startAt);
-		} else if (searchData.hasParameter("key")) {
-			result = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")", maxResults, startAt);
-		} else {
+
+		if (!searchData.hasParameter("filterId") && !searchData.hasParameter("jql") && !searchData.hasParameter("key")) {
 			getLog().error("no search data given");
-		}
-		if (result != null)
+		} else {
 			try {
-				return new SearchIterator(result);
+				return new SearchIterator(searchData, callback);
 			} catch (Exception e) {
 				throw new RuntimeException("Cannot retrieve issues", e);
 			}
+		}
 		return null;
 	}
 
@@ -469,20 +483,107 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 
 	protected class SearchIterator implements Iterable<Issue>, Iterator<Issue> {
 
+		private SearchData searchData;
+		private SearchResultCountCallback callback;
+
 		private SearchResult result;
 		private Iterator<BasicIssue> issues;
-
-		public SearchIterator(Promise<SearchResult> result) throws InterruptedException, ExecutionException {
-			this.result = result.get();
-			issues = this.result.getIssues().iterator();
+		private int resultCount = 0;
+		private int maxResults = -1;
+		private int startAt = 0;
+		private int total = 0;
+		private boolean basicOnly = false;
+		
+		public SearchIterator(SearchData searchData, SearchResultCountCallback callback) throws InterruptedException, ExecutionException {
+			this.searchData = searchData;
+			this.callback = callback;
+			this.basicOnly = searchData.hasParameter("basicIssueOnly");
 		}
 
+		protected void retrieveNext() {
+			try {
+				if (result == null) {
+					// First search call
+
+					// Remind maximum number of records
+					maxResults = -1;
+					if (searchData.hasParameter("maxResults")) {
+						maxResults = LangUtils.getInt(searchData.get("maxResults").iterator().next());
+					}
+					int max = maxResults > 0 ? maxResults : 50;
+					startAt = 0;
+					if (searchData.hasParameter("startAt")) {
+						startAt = LangUtils.getInt(searchData.get("startAt").iterator().next());
+					}
+
+					// Create the promise
+					result = getResult(startAt, max);
+
+					// Callback for total results
+					total = result.getTotal();
+					if (callback != null) {
+						callback.setResultCount(total);
+					}
+
+					// Get issues
+					issues = result.getIssues().iterator();
+					resultCount = 0;
+				} else if (issues != null) {
+					// Make the next call when no more issues in the current batch result
+					if (!issues.hasNext()) {
+						if (((maxResults < 0) || (resultCount < maxResults)) && (resultCount+startAt < total)) {
+							int start = resultCount + startAt;
+							int max   = maxResults < 0 ? 50 : maxResults - resultCount;
+
+							if (max > 0) {
+								// Create the promise
+								result = getResult(start, max);
+
+								// Get issues
+								issues = result.getIssues().iterator();
+							} else {
+								// No more results
+								issues = null;
+							}
+						} else {
+							// No more results
+							issues = null;
+						}
+					} else {
+						// Just check we didn't exceed a maxCount
+						if ((maxResults > 0) && (resultCount >= maxResults)) {
+							// No more results
+							issues = null;
+						}
+					}
+				} // else: No more search results
+			} catch (Exception e) {
+				throw new RuntimeException("Cannot retrieve issues", e);
+			}
+		}
+		
+		protected SearchResult getResult(int startAt, int maxResults) throws Exception {
+			// Create the promise
+			Promise<SearchResult> promise = null;
+			if (searchData.hasParameter("filterId")) {
+				promise = filterClient.search(searchData.get("filterId").iterator().next(), maxResults, startAt);
+			} else if (searchData.hasParameter("jql")) {
+				String jql = searchData.get("jql").iterator().next();
+				promise = jiraClient.getSearchClient().searchJql(jql, maxResults, startAt);
+			} else if (searchData.hasParameter("key")) {
+				promise = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")", maxResults, startAt);
+			}
+			return promise.get();
+		}
+		
 		/**
 		 * {@inheritDoc}
 		 */
 		@Override
 		public boolean hasNext() {
-			return issues.hasNext();
+			retrieveNext();
+			if (issues != null) return issues.hasNext();
+			return false;
 		}
 
 		/**
@@ -490,7 +591,13 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		 */
 		@Override
 		public Issue next() {
-			return getIssue(issues.next().getKey());
+			resultCount++;
+			BasicIssue issue = issues.next();
+			if (!basicOnly) {
+				String rc = issue.getKey();
+				return getIssue(rc);
+			}
+			return createIssue(issue);
 		}
 
 		/**
