@@ -330,7 +330,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	 * Creates a issue from the Jira {@link BasicIssue}.
 	 * @param issue the JIRA issue
 	 * @return the B4J issue 
-	 * @since 3.0.2
+	 * @since 2.0.3
 	 */
 	protected Issue createIssue(BasicIssue issue) {
 		Issue rc = createIssue();
@@ -439,7 +439,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	 * <li><code>jql</code> - to query with JQL</li>
 	 * <li><code>key</code>'s - to query multiple, defined issues</li>
 	 * </ul>
-	 * Following parameters were added in V3.0.2:
+	 * Following parameters were added in V2.0.3:
 	 * <ul>
 	 * <li><code>startAt</code> - start at the given index when retrieving issues</li>
 	 * <li><code>maxResults</code> - return at most that number of issues</li>
@@ -481,6 +481,12 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		this.baseUrl = baseUrl;
 	}
 
+	/** 
+	 * Return class for search operations.
+	 * The class will issue several REST calls if required due to Jira's automatic search limitation.
+	 * @author ralph
+	 *
+	 */
 	protected class SearchIterator implements Iterable<Issue>, Iterator<Issue> {
 
 		private SearchData searchData;
@@ -562,6 +568,14 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			}
 		}
 		
+		/**
+		 * Create the Jira REST call and get the result.
+		 * @param startAt parameter for search
+		 * @param maxResults parameter for search
+		 * @return the search result
+		 * @throws Exception when REST call fails
+		 * @since 2.0.3
+		 */
 		protected SearchResult getResult(int startAt, int maxResults) throws Exception {
 			// Create the promise
 			Promise<SearchResult> promise = null;
