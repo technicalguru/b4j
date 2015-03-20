@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import rs.baselib.lang.LangUtils;
 import b4j.core.Attachment;
 import b4j.core.Classification;
 import b4j.core.Comment;
@@ -132,7 +133,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	public void registerClassification(Classification classification) {
 		if (!classifications.contains(classification)) classifications.add(classification);
 		classificationNameQueue.remove(classification.getName());
-		classificationIdQueue.remove(Long.getLong(classification.getId()));
+		classificationIdQueue.remove(LangUtils.getLong(classification.getId()));
 	}
 
 	/** Searches the classification whether it is already loaded */
@@ -206,7 +207,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	@Override
 	public void registerProject(Project project) {
 		if (!projects.contains(project)) projects.add(project);
-		projectIdQueue.remove(Long.getLong(project.getId()));
+		projectIdQueue.remove(LangUtils.getLong(project.getId()));
 		projectNameQueue.remove(project.getName());
 		for (Component c : project.getComponents()) {
 			registerComponent(c);
@@ -316,7 +317,7 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 	public void registerUser(User user) {
 		if (!users.contains(user)) users.add(user);
 		userNameQueue.remove(user.getName());
-		userIdQueue.remove(Long.getLong(user.getId()));
+		userIdQueue.remove(LangUtils.getLong(user.getId()));
 	}
 
 	/**
