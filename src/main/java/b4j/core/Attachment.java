@@ -39,6 +39,7 @@ public interface Attachment extends BugzillaObject {
 
 	/**
 	 * Sets the ID of the attachment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param id - the ID to set
 	 */
 	public void setId(String id);
@@ -57,6 +58,7 @@ public interface Attachment extends BugzillaObject {
 
 	/**
 	 * Sets the date of the attachment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param date - the date to set
 	 */
 	public void setDate(Date date);
@@ -69,6 +71,7 @@ public interface Attachment extends BugzillaObject {
 
 	/**
 	 * Sets the description of the attachment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param description - the description to set
 	 */
 	public void setDescription(String description);
@@ -81,6 +84,7 @@ public interface Attachment extends BugzillaObject {
 
 	/**
 	 * Sets the filename.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param filename - the filename to set
 	 */
 	public void setFilename(String filename);
@@ -93,6 +97,7 @@ public interface Attachment extends BugzillaObject {
 
 	/**
 	 * Sets the type of the attachment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param type - the type to set
 	 */
 	public void setType(String type);
@@ -105,6 +110,7 @@ public interface Attachment extends BugzillaObject {
 	
 	/**
 	 * Sets the URI where to retrieve the attachment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param uri the content URI
 	 */
 	public void setUri(URI uri);

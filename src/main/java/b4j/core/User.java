@@ -47,6 +47,7 @@ public interface User extends BugzillaObject {
 	
 	/**
 	 * Sets the team
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void setTeam(Team team);
 }

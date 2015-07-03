@@ -29,6 +29,7 @@ public interface BugzillaObject {
 	/**
 	 * Sets a custom field value.
 	 * Setting a value to <code>null</code> effectively deletes the field.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param key - name of field
 	 * @param value - value of field
 	 */

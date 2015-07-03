@@ -38,6 +38,7 @@ public interface Comment extends BugzillaObject {
 
 	/**
 	 * Sets the description ID
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param id - the ID to set
 	 */
 	public void setId(String id);
@@ -56,6 +57,7 @@ public interface Comment extends BugzillaObject {
 
 	/**
 	 * Sets the author of this text
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param author - the author to set
 	 */
 	public void setAuthor(User author);
@@ -68,6 +70,7 @@ public interface Comment extends BugzillaObject {
 
 	/**
 	 * Sets the time of creation.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param when - the timestamp to set
 	 */
 	public void setCreationTimestamp(Date when);
@@ -80,6 +83,7 @@ public interface Comment extends BugzillaObject {
 
 	/**
 	 * Sets the text of the description.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param theText - the text to set
 	 */
 	public void setTheText(String theText);
@@ -92,6 +96,7 @@ public interface Comment extends BugzillaObject {
 	
 	/**
 	 * Sets the date of last update.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param lastUpdate date to be set
 	 */
 	public void setUpdateTimestamp(Date lastUpdate);
@@ -104,6 +109,7 @@ public interface Comment extends BugzillaObject {
 	
 	/**
 	 * Sets the last update's author.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param updateAuthor author to be set
 	 * @since 2.0
 	 */
@@ -117,48 +123,56 @@ public interface Comment extends BugzillaObject {
 
 	/**
 	 * Sets the attachment IDs for this comment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to set
 	 */
 	public void setAttachments(Collection<String> attachments);
 
 	/**
 	 * Sets the attachment IDs for this comment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachment IDs to set
 	 */
 	public void setAttachments(String... attachments);
 
 	/**
 	 * Sets the attachments IDs for this comment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param ids - the ids to set
 	 */
 	public void setAttachmentIds(Collection<String> ids);
 
 	/**
 	 * Adds the attachment IDs for this comment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to add
 	 */
 	public void addAttachments(Collection<String> attachments);
 
 	/**
 	 * Adds the attachment IDs for this comment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to add
 	 */
 	public void addAttachments(String... attachments);
 
 	/**
 	 * Removes the attachment IDs for this comment.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to remove
 	 */
 	public void removeAttachments(Collection<String> attachments);
 
 	/**
 	 * Removes the attachment IDs for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to remove
 	 */
 	public void removeAttachments(String... attachments);
 
 	/**
 	 * Removes the attachments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllAttachments();
 
