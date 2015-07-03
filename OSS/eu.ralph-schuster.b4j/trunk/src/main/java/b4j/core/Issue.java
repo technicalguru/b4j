@@ -72,6 +72,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the server version.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param version - version to be set
 	 */
 	public void setServerVersion(String version);
@@ -85,6 +86,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the server instance URI
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param uri - the URI to set
 	 */
 	public void setServerUri(String uri);
@@ -97,6 +99,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the issue URI.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param uri - the URI to set
 	 */
 	public void setUri(String uri);
@@ -109,6 +112,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the issue ID
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param id - the ID to set
 	 */
 	public void setId(String id);
@@ -120,6 +124,8 @@ public interface Issue extends BugzillaObject {
 	public String getParentId();
 
 	/**
+	 * Sets the parent ID.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param parentId the parentId to set
 	 */
 	public void setParentId(String parentId);
@@ -132,6 +138,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the time of issue creation.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param creationTimestamp - the timestamp to set
 	 */
 	public void setCreationTimestamp(Date creationTimestamp);
@@ -144,6 +151,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the summary or short description of this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param summary - the summary to set
 	 */
 	public void setSummary(String summary);
@@ -156,6 +164,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the description of this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param description - the description to set
 	 */
 	public void setDescription(String description);
@@ -168,6 +177,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the timestamp of last change.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param updateTimestamp - the timestamp to set
 	 */
 	public void setUpdateTimestamp(Date updateTimestamp);
@@ -180,6 +190,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the type.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param type - the type to set
 	 */
 	public void setType(IssueType type);
@@ -192,6 +203,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the classification for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param classification - the classification to set
 	 */
 	public void setClassification(Classification classification);
@@ -204,6 +216,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the project/product for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param project - the project/product to set
 	 */
 	public void setProject(Project project);
@@ -216,36 +229,42 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the components for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param components - the components to set
 	 */
 	public void setComponents(Collection<? extends Component> components);
 
 	/**
 	 * Adds the components for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param components - the components to add
 	 */
 	public void addComponents(Collection<? extends Component> components);
 
 	/**
 	 * Adds the components for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param components - the components to add
 	 */
 	public void addComponents(Component... components);
 
 	/**
 	 * Removes the components for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param components - the components to remove
 	 */
 	public void removeComponents(Collection<? extends Component> components);
 
 	/**
 	 * Removes the components for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param components - the components to remove
 	 */
 	public void removeComponents(Component... components);
 
 	/**
 	 * Removes the components for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllComponents();
 
@@ -267,6 +286,7 @@ public interface Issue extends BugzillaObject {
 	 * Sets the product (fix) versions for this issue.
 	 * Fix versions are versions where the resolution of this issue will be
 	 * delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product fix versions to set
 	 */
 	public void setFixVersions(Collection<? extends Version> versions);
@@ -275,6 +295,7 @@ public interface Issue extends BugzillaObject {
 	 * Adds the product (fix) versions for this issue.
 	 * Fix versions are versions where the resolution of this issue will be
 	 * delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product fix versions to add
 	 */
 	public void addFixVersions(Collection<? extends Version> versions);
@@ -283,6 +304,7 @@ public interface Issue extends BugzillaObject {
 	 * Adds the product (fix) versions for this issue.
 	 * Fix versions are versions where the resolution of this issue will be
 	 * delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product fix versions to add
 	 */
 	public void addFixVersions(Version... versions);
@@ -291,6 +313,7 @@ public interface Issue extends BugzillaObject {
 	 * Removes the product (fix) versions for this issue.
 	 * Fix versions are versions where the resolution of this issue will be
 	 * delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product fix versions to remove
 	 */
 	public void removeFixVersions(Collection<? extends Version> versions);
@@ -299,12 +322,14 @@ public interface Issue extends BugzillaObject {
 	 * Removes the product (fix) versions for this issue.
 	 * Fix versions are versions where the resolution of this issue will be
 	 * delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product fix versions to remove
 	 */
 	public void removeFixVersions(Version... versions);
 
 	/**
 	 * Removes the fix versions for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllFixVersions();
 
@@ -326,6 +351,7 @@ public interface Issue extends BugzillaObject {
 	 * Sets the product (affected) versions for this issue.
 	 * Affected versions are versions where the issue was reported to.
 	 * Usually this is set for issue reports only.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product affected versions to set
 	 */
 	public void setAffectedVersions(Collection<? extends Version> versions);
@@ -334,6 +360,7 @@ public interface Issue extends BugzillaObject {
 	 * Adds the product (affected) versions for this issue.
 	 * Affected versions are versions where the issue was reported to.
 	 * Usually this is set for issue reports only.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product affected versions to add
 	 */
 	public void addAffectedVersions(Collection<? extends Version> versions);
@@ -342,6 +369,7 @@ public interface Issue extends BugzillaObject {
 	 * Adds the product (affected) versions for this issue.
 	 * Affected versions are versions where the issue was reported to.
 	 * Usually this is set for issue reports only.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product affected versions to add
 	 */
 	public void addAffectedVersions(Version... versions);
@@ -350,6 +378,7 @@ public interface Issue extends BugzillaObject {
 	 * Removes the product (affected) versions for this issue.
 	 * Affected versions are versions where the issue was reported to.
 	 * Usually this is set for issue reports only.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product affected versions to remove
 	 */
 	public void removeAffectedVersions(Collection<? extends Version> versions);
@@ -358,12 +387,14 @@ public interface Issue extends BugzillaObject {
 	 * Removes the product (affected) versions for this issue.
 	 * Affected versions are versions where the issue was reported to.
 	 * Usually this is set for issue reports only.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product affected versions to remove
 	 */
 	public void removeAffectedVersions(Version... versions);
 
 	/**
 	 * Removes the affected versions for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllAffectedVersions();
 
@@ -381,6 +412,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the status of this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param status - the status to set
 	 */
 	public void setStatus(Status status);
@@ -393,6 +425,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the resolution status.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param resolution - the resolution to set
 	 */
 	public void setResolution(Resolution resolution);
@@ -405,6 +438,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the priority for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param priority - the priority to set
 	 */
 	public void setPriority(Priority priority);
@@ -417,6 +451,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the severity for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param severity - the severity to set
 	 */
 	public void setSeverity(Severity severity);
@@ -433,6 +468,7 @@ public interface Issue extends BugzillaObject {
 	 * Sets the product (planned) versions for this issue.
 	 * Planned versions are versions where the resolution of this issue 
 	 * is planned to be delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product planned versions to set
 	 */
 	public void setPlannedVersions(Collection<? extends Version> versions);
@@ -441,6 +477,7 @@ public interface Issue extends BugzillaObject {
 	 * Adds the product (planned) versions for this issue.
 	 * Planned versions are versions where the resolution of this issue 
 	 * is planned to be delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product planned versions to add
 	 */
 	public void addPlannedVersions(Collection<? extends Version> versions);
@@ -449,6 +486,7 @@ public interface Issue extends BugzillaObject {
 	 * Adds the product (planned) versions for this issue.
 	 * Planned versions are versions where the resolution of this issue 
 	 * is planned to be delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product planned versions to add
 	 */
 	public void addPlannedVersions(Version... versions);
@@ -457,6 +495,7 @@ public interface Issue extends BugzillaObject {
 	 * Removes the product (planned) versions for this issue.
 	 * Planned versions are versions where the resolution of this issue 
 	 * is planned to be delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product planned versions to remove
 	 */
 	public void removePlannedVersions(Collection<? extends Version> versions);
@@ -465,12 +504,14 @@ public interface Issue extends BugzillaObject {
 	 * Removes the product (planned) versions for this issue.
 	 * Planned versions are versions where the resolution of this issue 
 	 * is planned to be delivered to.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param versions - the product planned versions to remove
 	 */
 	public void removePlannedVersions(Version... versions);
 
 	/**
 	 * Removes the planned versions for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllPlannedVersions();
 
@@ -488,6 +529,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the reporter's ID of this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param reporter - the reporter ID to set
 	 */
 	public void setReporter(User reporter);
@@ -500,6 +542,7 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the assignee's ID for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param assignee - the assignee ID to set
 	 */
 	public void setAssignee(User assignee);
@@ -519,36 +562,42 @@ public interface Issue extends BugzillaObject {
 	
 	/**
 	 * Sets the comments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param comments - the components to set
 	 */
 	public void setComments(Collection<? extends Comment> comments);
 
 	/**
 	 * Adds the comments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param comments - the components to add
 	 */
 	public void addComments(Collection<? extends Comment> comments);
 
 	/**
 	 * Adds the comments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param comments - the components to add
 	 */
 	public void addComments(Comment... comments);
 
 	/**
 	 * Removes the comments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param comments - the comments to remove
 	 */
 	public void removeComments(Collection<? extends Comment> comments);
 
 	/**
 	 * Removes the comments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param comments - the comments to remove
 	 */
 	public void removeComments(Comment... comments);
 
 	/**
 	 * Removes the comments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllComments();
 
@@ -573,36 +622,42 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the attachments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to set
 	 */
 	public void setAttachments(Collection<? extends Attachment> attachments);
 
 	/**
 	 * Adds the attachments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to add
 	 */
 	public void addAttachments(Collection<? extends Attachment> attachments);
 
 	/**
 	 * Adds the attachments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to add
 	 */
 	public void addAttachments(Attachment... attachments);
 
 	/**
 	 * Removes the attachments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to remove
 	 */
 	public void removeAttachments(Collection<? extends Attachment> attachments);
 
 	/**
 	 * Removes the attachments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param attachments - the attachments to remove
 	 */
 	public void removeAttachments(Attachment... attachments);
 
 	/**
 	 * Removes the attachments for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllAttachments();
 
@@ -662,30 +717,35 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Adds the links for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param links - the links to add
 	 */
 	public void addLinks(Collection<? extends IssueLink> links);
 
 	/**
 	 * Adds the links for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param links - the links to add
 	 */
 	public void addLinks(IssueLink... links);
 
 	/**
 	 * Removes the links for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param links - the links to remove
 	 */
 	public void removeLinks(Collection<? extends IssueLink> links);
 
 	/**
 	 * Removes the links for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param links - the links to remove
 	 */
 	public void removeLinks(IssueLink... links);
 
 	/**
 	 * Removes the links for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllLinks();
 
@@ -703,36 +763,42 @@ public interface Issue extends BugzillaObject {
 
 	/**
 	 * Sets the children for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param children - the children to set
 	 */
 	public void setChildren(Collection<? extends Issue> children);
 
 	/**
 	 * Adds the children for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param children - the children to add
 	 */
 	public void addChildren(Collection<? extends Issue> children);
 
 	/**
 	 * Adds the children for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param children - the attachments to add
 	 */
 	public void addChildren(Issue... children);
 
 	/**
 	 * Removes the children for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param children - the attachments to remove
 	 */
 	public void removeChildren(Collection<? extends Issue> children);
 
 	/**
 	 * Removes the children for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param children - the children to remove
 	 */
 	public void removeChildren(Issue... children);
 
 	/**
 	 * Removes the children for this issue.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 */
 	public void removeAllChildren();
 

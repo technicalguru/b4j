@@ -47,6 +47,7 @@ public interface IssueLink extends BugzillaObject {
 
 	/**
 	 * Sets the lnk type.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param linkType the linkType to set
 	 */
 	public void setLinkType(Type linkType);
@@ -59,6 +60,7 @@ public interface IssueLink extends BugzillaObject {
 
 	/**
 	 * Sets the link type name.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param linkTypeName the linkTypeName to set
 	 */
 	public void setLinkTypeName(String linkTypeName);
@@ -71,6 +73,7 @@ public interface IssueLink extends BugzillaObject {
 
 	/**
 	 * Sets whether the link is incoming.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param inward the inward to set
 	 */
 	public void setInward(boolean inward);
@@ -83,6 +86,7 @@ public interface IssueLink extends BugzillaObject {
 
 	/**
 	 * Sets the description.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param linkTypeDescription the linkTypeDescription to set
 	 */
 	public void setLinkTypeDescription(String linkTypeDescription);
@@ -95,6 +99,7 @@ public interface IssueLink extends BugzillaObject {
 
 	/**
 	 * Sets the linked issue ID.
+	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param issueId the issueId to set
 	 */
 	public void setIssueId(String issueId);
