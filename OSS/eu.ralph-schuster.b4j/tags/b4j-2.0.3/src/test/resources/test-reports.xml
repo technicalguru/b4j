@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<bugzilla-report>
+	<bugzilla-session class="b4j.core.session.BugzillaHttpSession">
+		<bugzilla-home>http://bugzilla.ralph-schuster.eu/bugzilla/</bugzilla-home>
+		<BugzillaBug class="b4j.core.DefaultIssue" />
+	</bugzilla-session>
+
+	<search>
+		<product>B4J - Bugzilla for Java</product>
+	</search>
+	
+	<!-- Change Log 1: Releases come from a manual XML definition -->
+	<report class="b4j.report.ChangeLogReport">
+		<outputFile>target/test-ChangeLog1.txt</outputFile>
+	
+		<!-- 
+			Bugzilla does not manage fix releases and dates: We define then by XML.
+			The timestamp is used to assign a bug record with its closure date to a release.
+		-->
+		<ReleaseProvider class="b4j.report.DefaultReleaseProvider">
+			<Release timestamp="2008-12-08 00:00">
+				<Name>Release 1.0</Name>
+			</Release>
+			<Release timestamp="2012-06-07 00:00">
+					<Name>Release 1.1</Name>
+			</Release>
+			<Release timestamp="2012-08-15 00:00">
+				<Name>Release 1.2</Name>
+			</Release>
+			<Release timestamp="2012-09-29 00:00">
+				<Name>Release 1.3</Name>
+			</Release>
+			<Release timestamp="2012-12-25 00:00">
+				<Name>Release 1.4.0</Name>
+			</Release>
+		</ReleaseProvider>
+		
+		<!-- We want to add more entries for a release (section is optional) -->
+		<ChangeLogEntryProvider class="b4j.report.DefaultChangeLogEntryProvider">
+			<Release name="Release 1.0">
+				This is an additional entry defined in the report configuration for 1.0
+				And this is the 2nd entry defined in the report configuration
+			</Release>
+		</ChangeLogEntryProvider>
+	</report>
+	
+	<!-- Change Log 2: Releases come from Bugzilla (version field) -->
+	
+	<!-- Detailed Bug Report -->
+	<report class="b4j.report.DetailedBugReport">
+		<outputFile>target/test-DetailedBugReport.txt</outputFile>	
+		<templateFile>src/test/resources/detailedBugReport.tmpl</templateFile>
+	</report>
+	
+	<!-- Management Tracking Report -->
+	<report class="b4j.report.ManagementTrackingReport">
+		<outputFile>target/test-ManagementTrackingReport.txt</outputFile>	
+		
+		<!-- Sev groups are optional. All sevs not listed in a group will be tracked individually -->
+		<severityGroup name="URGENT">
+			<severity>blocker</severity>
+			<severity>critical</severity>
+			<severity>major</severity>
+		</severityGroup>
+		<severityGroup name="MINORS">
+			<severity>minor</severity>
+			<severity>trivial</severity>
+		</severityGroup>
+	</report>
+</bugzilla-report>

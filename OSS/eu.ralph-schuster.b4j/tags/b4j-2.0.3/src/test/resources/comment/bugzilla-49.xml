@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:36 CET 2014: bugzilla-49</comment>
+<entry key="attachments">list:3</entry>
+<entry key="creationTimestamp">1312060990000</entry>
+<entry key="updateAuthor">J5</entry>
+<entry key="author">J5</entry>
+<entry key="updateTimestamp">1312060990000</entry>
+<entry key="text">Created attachment 3
+CSVReader with Separator string
+
+My company provides a facility for uploading data in CSV formats using multi-character separators (specifically, || and ##).  I have implemented this feature into the CSVReader class for my own use and offer it here if you'd like to offer it to others</entry>
+<entry key="issueId">30</entry>
+<entry key="id">49</entry>
+</properties>

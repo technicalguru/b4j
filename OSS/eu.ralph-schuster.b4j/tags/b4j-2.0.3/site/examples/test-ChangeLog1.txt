@@ -1,0 +1,38 @@
+Change Log Release 1.4.0
+========================
+
+  * Fixed Bug #33 - Attachment filename not set
+  * Fixed Bug #34 - Timestamps are not parse correctly
+  * Fixed Bug #35 - Add saving of attachments
+
+
+Change Log Release 1.3
+======================
+
+  * Fixed Bug #3 - Create abstract class for BugzillaReportGenerator
+  * Fixed Bug #5 - java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)
+  * Fixed Bug #6 - Add abstract Email Report class
+  * Fixed Bug #18 - Filter searches on HttpJiraSession does not return when no issue was found
+  * Fixed Bug #31 - Bugzilla 4.2 uses attachments in long descriptions
+  * Fixed Bug #32 - Java 6 doesn't know HttpOnly Cookie attribute
+
+
+Change Log Release 1.2
+======================
+
+  No changes.
+
+
+Change Log Release 1.1
+======================
+
+  * Fixed Bug #14 - Writing # as first column does not escape it
+
+
+Change Log Release 1.0
+======================
+
+  * This is an additional entry defined in the report configuration for 1.0
+  * And this is the 2nd entry defined in the report configuration
+
+

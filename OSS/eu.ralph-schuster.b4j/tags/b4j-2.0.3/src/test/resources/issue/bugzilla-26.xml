@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:48:18 CET 2014: bugzilla-26</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Add TableWriter implementation for HTML</entry>
+<entry key="comments">list:42</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">26</entry>
+<entry key="creationTimestamp">1286371620000</entry>
+<entry key="status">CLOSED</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="severity">enhancement</entry>
+<entry key="fixVersions">list:2.1</entry>
+<entry key="description">Add a writer implementation to write an HTML table to a stream</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">admin</entry>
+<entry key="updateTimestamp">1323117224000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:null</entry>
+</properties>

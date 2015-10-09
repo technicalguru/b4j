@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:35 CET 2014: bugzilla-45</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1287147060000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1287147060000</entry>
+<entry key="text">Add row filter and column filter implementations so that filtering happens regardless of underlying reader implementation.</entry>
+<entry key="issueId">29</entry>
+<entry key="id">45</entry>
+</properties>

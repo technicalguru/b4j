@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:47:54 CET 2014: bugzilla-12</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">CSVUtils should offer copy methods from CSVReader to CSVWriter</entry>
+<entry key="comments">list:17</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">12</entry>
+<entry key="creationTimestamp">1256030340000</entry>
+<entry key="status">CLOSED</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="severity">enhancement</entry>
+<entry key="fixVersions">list:1.0.1</entry>
+<entry key="description">It might be necessary to convert CSV files. Copying from CSVReader to CSVWriter would be of great help.</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">admin</entry>
+<entry key="updateTimestamp">1264518761000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:null</entry>
+</properties>

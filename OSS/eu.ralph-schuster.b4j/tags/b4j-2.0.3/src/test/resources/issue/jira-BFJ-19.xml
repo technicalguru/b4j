@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Sun Jul 06 17:10:35 CEST 2014: jira-BFJ-19</comment>
+<entry key="classification">null</entry>
+<entry key="links">null</entry>
+<entry key="project">Bugzilla for Java</entry>
+<entry key="type">Improvement</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">UTF-8 Cleanup of XML response</entry>
+<entry key="comments">list:null</entry>
+<entry key="components">list:null</entry>
+<entry key="id">BFJ-19</entry>
+<entry key="creationTimestamp">1359569919000</entry>
+<entry key="status">Closed</entry>
+<entry key="resolution">Fixed</entry>
+<entry key="severity">Normal</entry>
+<entry key="fixVersions">list:2.0.0</entry>
+<entry key="description">Reported by Deepak:&#13;
+&#13;
+HttpBugzillaSession, lines 579 and following should change to:&#13;
+{code:title=HttpBugzillaSession.java|borderStyle=solid}&#13;
+// This class itself will take care of the elements&#13;
+                                xmlReader.setContentHandler(this);&#13;
+ &#13;
+                                StringWriter writer = new StringWriter();&#13;
+                                IOUtils.copy(xmlStream, writer, "UTF-8");&#13;
+                                String xmlString = writer.toString();&#13;
+                                String escapedXML = stripNonValidXMLCharacters(xmlString);&#13;
+ &#13;
+                                xmlReader.parse(new InputSource(new StringReader(escapedXML)));&#13;
+                                if (getLog().isTraceEnabled())&#13;
+                                        getLog().trace("XML file completed");&#13;
+                        } catch (IOException e) {&#13;
+                                getLog().error("Error while retrieving Bugzilla XML response:",&#13;
+                                                e);&#13;
+                        } catch (ParserConfigurationException e) {&#13;
+                                getLog().error("SAXParser not configured:", e);&#13;
+                        } catch (SAXException e) {&#13;
+                                if (e.getMessage().indexOf("invalid XML character") &gt;= 0) {&#13;
+                                        getLog().error(&#13;
+                                                        "The XML file received contains illegal characters. This is not a B4J error but a Bugzilla problem. Sorry",&#13;
+                                                        e);&#13;
+                                } else {&#13;
+                                        getLog().error(&#13;
+                                                        "Error while parsing Bugzilla XML response:", e);&#13;
+                                }&#13;
+                        }&#13;
+                }&#13;
+ &#13;
+                /**&#13;
+                 * This method cleans all the invalid characters in the XML and makes it&#13;
+                 * conform to XML 1.0 standard&#13;
+                 *&#13;
+                 * @param in&#13;
+                 *            The XML as String whose in-valid characters we want to&#13;
+                 *            remove.&#13;
+                 * @return The XML as String, stripped of all invalid characters&#13;
+                 */&#13;
+                private String stripNonValidXMLCharacters(String in) {&#13;
+                        StringBuffer out = new StringBuffer(); // Used to hold the output.&#13;
+                        char current; // Used to reference the current character.&#13;
+ &#13;
+                        if (in == null || ("".equals(in)))&#13;
+                                return ""; // vacancy test.&#13;
+                        for (int i = 0; i &lt; in.length(); i++) {&#13;
+                                current = in.charAt(i); // NOTE: No IndexOutOfBoundsException&#13;
+                                                                                // caught here; it should not happen.&#13;
+                                if ((current == 0x9) || (current == 0xA) || (current == 0xD)&#13;
+                                                || ((current &gt;= 0x20) &amp;&amp; (current &lt;= 0xD7FF))&#13;
+                                                || ((current &gt;= 0xE000) &amp;&amp; (current &lt;= 0xFFFD))&#13;
+                                                || ((current &gt;= 0x10000) &amp;&amp; (current &lt;= 0x10FFFF)))&#13;
+                                        out.append(current);&#13;
+                        }&#13;
+                        return out.toString();&#13;
+                }&#13;
+{code}</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:1.4.0</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">Ralph Schuster</entry>
+<entry key="updateTimestamp">1380275468000</entry>
+<entry key="assignee">Ralph Schuster</entry>
+<entry key="priority">Normal</entry>
+<entry key="attachments">list:null</entry>
+</properties>

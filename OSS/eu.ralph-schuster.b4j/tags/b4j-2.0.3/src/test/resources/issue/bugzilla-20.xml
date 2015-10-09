@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Fri Jan 31 15:48:07 CET 2014: bugzilla-20</comment>
+<entry key="classification">Java Projects</entry>
+<entry key="links">null</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="type">bug</entry>
+<entry key="children">list:null</entry>
+<entry key="summary">Interpreting comments in CSVReader</entry>
+<entry key="comments">list:35,31,29</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="id">20</entry>
+<entry key="creationTimestamp">1284729780000</entry>
+<entry key="status">CLOSED</entry>
+<entry key="resolution">WORKSFORME</entry>
+<entry key="severity">normal</entry>
+<entry key="fixVersions">list:2.0.1</entry>
+<entry key="description">The code inside the statement
+
+if (checkComments &amp;&amp; isIgnoreComments() &amp;&amp; (s.length() &gt; 0)) {
+..
+}
+
+is bit executed, if "ignoreComments" is set to false. Shouldn the isIgnoreComments() check be inverted to
+
+if (checkComments &amp;&amp; !isIgnoreComments() &amp;&amp; (s.length() &gt; 0)) {
+..
+}
+
+in order to handle comments if NOT ignored?</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="parentId">null</entry>
+<entry key="reporter">eldn</entry>
+<entry key="updateTimestamp">1285146436000</entry>
+<entry key="assignee">admin</entry>
+<entry key="priority">P3</entry>
+<entry key="attachments">list:null</entry>
+</properties>

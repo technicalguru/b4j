@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:08:43 CET 2014: bugzilla-2</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1244094982000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1244094982000</entry>
+<entry key="text">When reading CSV file, following exception occurs:
+
+java.lang.NullPointerException
+
+	at csv.CSVReader$CSVRowIterator.hasNext(CSVReader.java:414)
+	at csv.CSVReader$CSVRowIterator.next(CSVReader.java:441)
+	at csv.CSVReader$CSVRowIterator.next(CSVReader.java:370)
+	at csv.CSVReader.next(CSVReader.java:288)
+	at reqpro.BaselineHistory.load(BaselineHistory.java:71)
+	at reqpro.ReqProTracing.loadBaselineHistory(ReqProTracing.java:348)
+	at reqpro.ReqProTracing.doBaselineCsv(ReqProTracing.java:293)
+	at reqpro.ReqProTracing.main(ReqProTracing.java:94)</entry>
+<entry key="issueId">2</entry>
+<entry key="id">2</entry>
+</properties>

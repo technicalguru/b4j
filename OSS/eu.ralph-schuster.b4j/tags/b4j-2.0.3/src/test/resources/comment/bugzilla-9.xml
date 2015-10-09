@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:08:56 CET 2014: bugzilla-9</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1254142066000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1254142066000</entry>
+<entry key="text">Row and column count was added (column count is maximum number of columns).</entry>
+<entry key="issueId">8</entry>
+<entry key="id">9</entry>
+</properties>

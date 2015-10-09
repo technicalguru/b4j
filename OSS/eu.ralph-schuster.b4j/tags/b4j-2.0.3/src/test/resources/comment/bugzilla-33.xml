@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:21 CET 2014: bugzilla-33</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1285078544000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1285078544000</entry>
+<entry key="text">The CSV Reader removes empty lines in columns, e.g. from this file
+
+------------------
+"1:1","1st line
+
+3rd line","1:3"
+------------------
+
+the second column shall contain an empty line. However, CSVReader returns
+
+------------------
+1st line
+3rd line
+------------------</entry>
+<entry key="issueId">22</entry>
+<entry key="id">33</entry>
+</properties>

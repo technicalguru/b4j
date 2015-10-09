@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:01 CET 2014: bugzilla-16</comment>
+<entry key="attachments">list:1</entry>
+<entry key="creationTimestamp">1255956198000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1255956198000</entry>
+<entry key="text">Created attachment 1
+Various CSV feature tests
+
+Add a test script so most CSV features can be tested (see attached file)</entry>
+<entry key="issueId">11</entry>
+<entry key="id">16</entry>
+</properties>

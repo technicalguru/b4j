@@ -1,0 +1,54 @@
+Version 2.0.0
+-------------
+
+	- BFJ-24 Re-implement BugzillaSession for XML-RPC (JSON) usage
+	- BFJ-32 Allow local test configuration
+	- BFJ-28 Add fields for author name, assignee name and reporter name
+	- BFJ-27 NPE in AbstractAuthorizedSession#createIssue
+	- BFJ-19 UTF-8 Cleanup of XML response
+	- BFJ-4  JIRA session
+	- BFJ-22 Use CSV/Excel Utility
+	- BFJ-23 Use Configurable interface
+	- BFJ-21 Provide as OSGI bundle
+	- BFJ-20 Support build date in build.properties
+
+Version 1.4.0:
+--------------
+
+	- Change Issue Management
+	- BFJ-12 Update POM for JIRA 
+	- BFJ-13 Add useful comments in BugzillaUtils
+	- BFJ-14 Check occurance of SubnodeConfiguration
+	- BFJ-15 Remove Non-Javadoc
+	- BFJ-16 No error when Bugzilla version does not match
+	- BFJ-17 Base on baselib
+	- BFJ-18 ClassCastException: XMLConfiguration cannot be casted to SubnodeConfiguration
+
+Version 1.3:
+------------
+
+	- Bug #33: Attachment filename not set
+	- Bug #34: Timestamps are not parsed correctly 
+	- CR  #35: Add saving of attachments
+
+Version 1.2:
+--------------
+
+	- Bug #31: Bugzilla 4.2 uses attachments in long descriptions
+	- Bug #32: Java 6 doesn't know HttpOnly Cookie attribute
+	- Bug #18: Filter searches on HttpJiraSession does not return when no issue was found
+	
+Version 1.1:
+--------------
+
+	- CR #3: AbstractReportGenerator added
+	- Build system migrated to Maven
+	- Added unit test for HttpBugzillaSession
+	- Migrated to SLF4J for logging
+	- Dependencies upgraded
+	- Mylyn support removed
+	
+Version 1.0:
+------------
+
+	- Initial Version

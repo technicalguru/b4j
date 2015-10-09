@@ -1,0 +1,17 @@
+This is a detailed report created from a template.
+
+We simply list all bugs reported.
+----------
+Bug 3: CLOSED - Create abstract class for BugzillaReportGenerator (1.0)
+Bug 5: CLOSED - java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0) (1.0)
+Bug 6: CLOSED - Add abstract Email Report class (1.0)
+Bug 13: ASSIGNED - JIRA session (1.0)
+Bug 14: CLOSED - Writing # as first column does not escape it (1.0)
+Bug 18: CLOSED - Filter searches on HttpJiraSession does not return when no issue was found (1.2)
+Bug 31: CLOSED - Bugzilla 4.2 uses attachments in long descriptions (1.0)
+Bug 32: CLOSED - Java 6 doesn't know HttpOnly Cookie attribute (1.0)
+Bug 33: CLOSED - Attachment filename not set (1.2)
+Bug 34: CLOSED - Timestamps are not parse correctly (1.2)
+Bug 35: CLOSED - Add saving of attachments (1.2)
+----------
+That's it. End of report.

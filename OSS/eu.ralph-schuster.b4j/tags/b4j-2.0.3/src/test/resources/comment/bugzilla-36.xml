@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:23 CET 2014: bugzilla-36</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1285661686000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1285661686000</entry>
+<entry key="text">Currently, TableReader and TableWriter assume reading from and to a file. In fact, they must not assume anything about underlying data store and functions dealing with streams shall be removed.
+
+Furthermore, AbstractTableReader and AbstractTableWriter shall be stripped down to general, common methods that most implementation will use. Two new abstract classes shall be created, AbstractStreamTableReader and AbstractStreamTableWriter, that deal with stream-based implementations.</entry>
+<entry key="issueId">23</entry>
+<entry key="id">36</entry>
+</properties>

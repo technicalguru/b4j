@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:19 CET 2014: bugzilla-30</comment>
+<entry key="attachments">list:2</entry>
+<entry key="creationTimestamp">1284730174000</entry>
+<entry key="updateAuthor">eldn</entry>
+<entry key="author">eldn</entry>
+<entry key="updateTimestamp">1284730174000</entry>
+<entry key="text">Created attachment 2
+JUnit 4 Testclass for the CSVReader and CSVWriter functionality
+
+I've created a simple JUnit Test for the CSV functionality. May be you can use it...
+
+(see attached file)</entry>
+<entry key="issueId">21</entry>
+<entry key="id">30</entry>
+</properties>

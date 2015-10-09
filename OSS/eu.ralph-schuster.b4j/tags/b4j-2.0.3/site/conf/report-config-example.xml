@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<bugzilla-report>
+	<bugzilla-session class="b4j.core.session.BugzillaHttpSession">
+		<bugzilla-home>http://your-bugzilla.your-domain.com/</bugzilla-home>
+		<proxy-host>10.10.10.250:8080</proxy-host>
+		<ProxyAuthorizationCallback>
+			<login>your-proxy-name</login>
+			<password>your-proxy-password</password>
+		</ProxyAuthorizationCallback>
+		<AuthorizationCallback class="null">
+			<login>your-name</login>
+			<password>your-password</password>
+		</AuthorizationCallback>
+		
+		<BugzillaBug class="b4j.core.DefaultIssue"/>
+		
+		<!-- 
+			Some examples. Please have a look at the API documentation 
+			for configuration description of these callbacks.
+			
+		<AuthorizationCallback class="null">
+			<login>your-name</login>
+			<password>your-password</password>
+		</AuthorizationCallback>
+		
+		<AuthorizationCallback class="rs.baselib.security.CommandLineAuthorizationCallback"/>
+
+		<AuthorizationCallback class="rs.baselib.security.GuiAuthorizationCallback"/>
+		
+		<AuthorizationCallback class="rs.baselib.security.PropertiesFileAuthorizationCallback">
+			<File>your-properties-file.properties</File>
+		</AuthorizationCallback>
+		
+		<AuthorizationCallback class="rs.baselib.security.TextFileAuthorizationCallback">
+			<File>your-text-file.txt</File>
+		</AuthorizationCallback>
+		
+		<AuthorizationCallback class="rs.baselib.security.XmlFileAuthorizationCallback">
+			<File>your-xml-file.xml</File>
+		</AuthorizationCallback>
+		
+		-->
+	</bugzilla-session>
+	
+	<search>
+		<classification>Your Classification</classification>
+		<product>Your Product 1</product>
+		<product>Your Product 2</product>
+		<!-- component/ -->
+		
+		<!--  more examples
+		<bug_status>NEW</bug_status>
+		<bug_status>ASSIGNED</bug_status>
+		<bug_status>REOPENED</bug_status>
+		<bug_severity>blocker</bug_severity>
+		<bug_severity>critical</bug_severity>
+		<bug_severity>major</bug_severity>
+		-->
+		
+		<!-- Advanced query with custom fields 
+		<query_format>advanced</query_format>
+		<f1>creation_ts</f1>
+		<o1>greaterthan</o1>
+		<v1>1980-01-01</v1>
+		<f2>creation_ts</f2>
+		<o2>lessthan</o2>
+		<v2>2014-01-01</v2>
+		 -->
+	</search>
+	
+	<report class="b4j.report.ManagementTrackingReport">
+		<outputFile>D:/bugs.csv</outputFile>
+		<severityGroup name="CRITICAL">
+			<severity>blocker</severity>
+			<severity>critical</severity>
+			<severity>major</severity>
+		</severityGroup>
+		<severityGroup name="OTHERS">
+			<severity>normal</severity>
+			<severity>minor</severity>
+			<severity>trivial</severity>
+			<severity>enhancement</severity>
+		</severityGroup>
+	</report>
+	
+	<report class="b4j.report.ChangeLogReport">
+		<outputFile>D:/ChangeLog.txt</outputFile>
+		<ReleaseProvider class="b4j.report.DefaultReleaseProvider">
+			<Release timestamp="2008-06-10 00:00">
+				<Name>Release 20080610</Name>
+			</Release>
+			<Release timestamp="2008-07-16 00:00">
+				<Name>Release 20080716</Name>
+			</Release>
+			<Release timestamp="2008-07-25 00:00">
+				<Name>Release 20080725</Name>
+			</Release>
+		</ReleaseProvider>
+		
+		<ChangeLogEntryProvider class="b4j.report.DefaultChangeLogEntryProvider">
+			<Release name="Release 20080610">
+				New actor : Management Administrator
+				UC Descriptions reworked\, amended and created
+			</Release>
+			<Release name="Release 20080717">
+				UC57 Description added
+			</Release>
+			<Release name="Release 20080725">
+				UC57 - Description updated
+			</Release>
+		</ChangeLogEntryProvider>
+	</report>
+</bugzilla-report>

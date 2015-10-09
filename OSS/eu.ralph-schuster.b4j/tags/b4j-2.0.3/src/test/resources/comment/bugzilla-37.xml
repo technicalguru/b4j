@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Saved Tue Feb 04 15:09:23 CET 2014: bugzilla-37</comment>
+<entry key="attachments">list:null</entry>
+<entry key="creationTimestamp">1285661710000</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="author">admin</entry>
+<entry key="updateTimestamp">1285661710000</entry>
+<entry key="text">Change implemented for 2.1</entry>
+<entry key="issueId">23</entry>
+<entry key="id">37</entry>
+</properties>
