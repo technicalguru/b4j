@@ -28,7 +28,7 @@ import org.codehaus.jettison.json.JSONObject;
 
 import b4j.core.User;
 import b4j.core.session.bugzilla.BugzillaUserRestClient;
-import b4j.core.session.bugzilla.json.BugzillaIdParser;
+import b4j.core.session.bugzilla.json.BugzillaLoginParser;
 import b4j.core.session.bugzilla.json.BugzillaUserParser;
 
 import com.atlassian.jira.rest.client.RestClientException;
@@ -43,7 +43,7 @@ import com.atlassian.util.concurrent.Promise;
 public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient implements BugzillaUserRestClient {
 
 	private BugzillaUserParser userParser;
-	private BugzillaIdParser idParser;
+	private BugzillaLoginParser idParser;
 
 	/**
 	 * Constructor.
@@ -51,7 +51,7 @@ public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient impleme
 	public AsyncBugzillaUserRestClient(AsyncBugzillaRestClient mainClient) {
 		super(mainClient, "User");
 		userParser = new BugzillaUserParser(getLazyRetriever());
-		idParser = new BugzillaIdParser(getLazyRetriever());
+		idParser = new BugzillaLoginParser(getLazyRetriever());
 	}
 
 	/**
@@ -64,8 +64,9 @@ public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient impleme
 		params.put("password", password);
 		params.put("remember", "False");
 		try {
-			Long id = postAndParse("login", params, idParser).get();
-			return getUsers(id).get().iterator().next();
+			LoginToken response = postAndParse("login", params, idParser).get();
+			getMainClient().setLoginToken(response);
+			return getUsers(response.getId()).get().iterator().next();
 		} catch (InterruptedException e) {
 			throw new RestClientException("Cannot login", e);
 		} catch (ExecutionException e) {
@@ -80,6 +81,7 @@ public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient impleme
 	@Override
 	public void logout() {
 		postAndParse("logout", (JSONObject)null, null);
+		getMainClient().setLoginToken(null);
 	}
 
 	/**
@@ -122,4 +124,56 @@ public class AsyncBugzillaUserRestClient extends AbstractAsyncRestClient impleme
 		return postAndParse("get", params, userParser);
 	}
 
+	/**
+	 * Required for parsing the login response.
+	 * @author ralph
+	 * @since 2.0.3
+	 */
+	public static class LoginToken {
+		
+		private Long id;
+		private String token;
+		
+		
+		/**
+		 * Constructor.
+		 * @param id
+		 * @param token
+		 */
+		public LoginToken(Long id, String token) {
+			setId(id);
+			setToken(token);
+		}
+		
+		/**
+		 * Returns the id.
+		 * @return the id
+		 */
+		public Long getId() {
+			return id;
+		}
+		/**
+		 * Sets the id.
+		 * @param id the id to set
+		 */
+		public void setId(Long id) {
+			this.id = id;
+		}
+		/**
+		 * Returns the token.
+		 * @return the token
+		 */
+		public String getToken() {
+			return token;
+		}
+		/**
+		 * Sets the token.
+		 * @param token the token to set
+		 */
+		public void setToken(String token) {
+			this.token = token;
+		}
+		
+		
+	}
 }
