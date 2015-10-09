@@ -20,36 +20,38 @@ package b4j.core.session.bugzilla.json;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import b4j.core.session.bugzilla.async.AsyncBugzillaUserRestClient.LoginToken;
 import b4j.util.LazyRetriever;
 
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
 /**
- * Parses an ID for Bugzilla REST API.
+ * Parses a login response from Bugzilla REST API.
  * @author ralph
  * @since 2.0
  *
  */
-public class BugzillaIdParser extends AbstractJsonParser implements JsonObjectParser<Long> {
+public class BugzillaLoginParser extends AbstractJsonParser implements JsonObjectParser<LoginToken> {
 
 	/**
 	 * Constructor.
 	 */
-	public BugzillaIdParser() {
+	public BugzillaLoginParser() {
 		this(null);
 	}
 
 	/**
 	 * Constructor.
 	 */
-	public BugzillaIdParser(LazyRetriever lazyRetriever) {
+	public BugzillaLoginParser(LazyRetriever lazyRetriever) {
 		super(lazyRetriever);
 	}
 
 	@Override
-	public Long parse(JSONObject json) throws JSONException {
+	public LoginToken parse(JSONObject json) throws JSONException {
 		checkError(json); // Throws exception when error occurred
-		return getResult(json).getLong("id");
+		JSONObject obj = getResult(json);
+		return new LoginToken(obj.getLong("id"), obj.getString("token"));
 	}
 
 }
