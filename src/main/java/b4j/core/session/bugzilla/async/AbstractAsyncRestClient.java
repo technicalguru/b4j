@@ -26,7 +26,6 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import b4j.core.session.bugzilla.async.AsyncBugzillaUserRestClient.LoginToken;
 import b4j.core.session.bugzilla.json.JSONUtils;
 import b4j.util.LazyRetriever;
 
@@ -88,32 +87,14 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 			entity.put("method", webService+"."+method);
 			entity.put("id", 1);
 			JSONArray pArray = new JSONArray();
-			String loginToken = getLoginToken();
-			if (loginToken != null) {
-				if (params == null) params = new JSONObject();
-				params.put("token", loginToken);
-				pArray.put(params);
-			} else {
-				if ((params != null) && (params.length() > 0)) pArray.put(params);
-			}
+			if ((params != null) && (params.length() > 0)) pArray.put(params);
 			entity.put("params", pArray);
-			URI uri = UriBuilder.fromUri(getBaseUri()).build();
-			return postAndParse(uri, entity, parser);
+			return postAndParse(UriBuilder.fromUri(getBaseUri()).build(), entity, parser);
 		} catch (JSONException e) {
 			throw new RestClientException("Cannot post", e);
 		}
 	}
 
-	/**
-	 * Retrieves the current login token.
-	 * @return the token or {@code null} if not present
-	 * @since 2.0.3
-	 */
-	protected String getLoginToken() {
-		LoginToken token = getMainClient().getLoginToken();
-		if (token != null) return token.getToken();
-		return null;
-	}
 	/**
 	 * Returns the baseUri.
 	 * @return the baseUri
