@@ -167,7 +167,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link IssueType}  mappings.
+	 * Returns the {@link b4j.core.IssueType}  mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -176,7 +176,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link Status} mappings.
+	 * Returns the {@link b4j.core.Status} mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -185,7 +185,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link Priority} mappings.
+	 * Returns the {@link b4j.core.Priority} mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -194,7 +194,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link Severity} mappings.
+	 * Returns the {@link b4j.core.Severity} mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -203,7 +203,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link Resolution} mappings.
+	 * Returns the {@link b4j.core.Resolution} mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -212,7 +212,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link User} mappings.
+	 * Returns the {@link b4j.core.User} mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -221,7 +221,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link Project} mappings.
+	 * Returns the {@link b4j.core.Project} mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -230,7 +230,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Returns the {@link Component} mappings.
+	 * Returns the {@link b4j.core.Component} mappings.
 	 * @return the mappings
 	 * @since 2.0.3
 	 */
@@ -319,7 +319,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Creates a issue from the Jira {@link BasicIssue}.
+	 * Creates a issue from the Jira {@link b4j.core.BasicIssue}.
 	 * @param issue the JIRA issue
 	 * @return the B4J issue 
 	 * @since 2.0.3

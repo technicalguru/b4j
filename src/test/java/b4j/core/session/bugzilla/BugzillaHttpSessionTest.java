@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -41,7 +40,6 @@ import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
-import b4j.core.SearchData;
 import b4j.core.session.BugzillaHttpSession;
 import b4j.core.util.CommentTest;
 import b4j.core.util.IssueTest;
@@ -54,7 +52,7 @@ import b4j.core.util.IssueTest;
 public class BugzillaHttpSessionTest {
 
 	private static BugzillaHttpSession session;
-
+	
 	@BeforeClass
 	public static void setup() throws Exception {
 		URL url = FileFinder.find(BugzillaHttpSessionTest.class, "local-test-config.xml");
@@ -67,14 +65,14 @@ public class BugzillaHttpSessionTest {
 		session.open();
 		assertTrue("Session was not opened", session.isLoggedIn());
 	}
-
+	
 	@AfterClass
 	public static void cleanup() throws Exception {
 		// Close the session again
 		session.close();
 	}
-
-
+	
+	
 	/**
 	 * Test search cycle with B4J Bugzilla.
 	 */
@@ -97,7 +95,7 @@ public class BugzillaHttpSessionTest {
 			assertNotNull("No ID for issue record", id);
 			assertTrue("Issue "+id+" is not expected", expectedBugs.contains(id));
 			expectedBugs.remove(id);
-
+			
 			issueTest.test(issue);
 			for (Comment c : issue.getComments()) {
 				commentTest.test(c);
@@ -105,7 +103,7 @@ public class BugzillaHttpSessionTest {
 			testSpecials(session, issue);
 		}
 		assertTrue("Some issues were not found "+CommonUtils.join(", ", expectedBugs.toArray(new String[0])), expectedBugs.isEmpty());
-
+		
 	}
 
 	/**
@@ -125,18 +123,6 @@ public class BugzillaHttpSessionTest {
 			r.close();
 			assertEquals("Attachment cannot be read", " * This file is part of CSV package.", s);
 		}
-
-	}
-
-	@Test
-	public void testSpecial() {
-		SearchData searchData = new DefaultSearchData();
-		searchData.add("bug_status", "NEW");
-		Iterable<Issue> issues = session.searchBugs(searchData, null);
-		Iterator<Issue> issuesIter = issues.iterator();
-		for (; issuesIter.hasNext();) {
-			Issue issue = issuesIter.next();
-			System.out.println(""+issue.getId()+"\t"+issue.getAssignee()+"\t"+issue.getSummary());
-		}
+		
 	}
 }

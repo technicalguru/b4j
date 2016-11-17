@@ -29,6 +29,7 @@ import b4j.core.session.bugzilla.BugzillaLazyRetriever;
 import b4j.core.session.bugzilla.BugzillaMetadataRestClient;
 import b4j.core.session.bugzilla.BugzillaProductRestClient;
 import b4j.core.session.bugzilla.BugzillaUserRestClient;
+import b4j.core.session.bugzilla.async.AsyncBugzillaUserRestClient.LoginToken;
 import b4j.util.LazyRetriever;
 
 import com.atlassian.httpclient.api.HttpClient;
@@ -50,6 +51,7 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	private AsyncBugzillaBugRestClient bugClient;
 	private LazyRetriever lazyRetriever;
 	private User user;
+	private LoginToken loginToken;
 	private HttpClient httpClient;
 	private URI serverUri;
 	private URI baseUri;
@@ -170,6 +172,22 @@ public class AsyncBugzillaRestClient implements BugzillaClient {
 	 */
 	public HttpClient getHttpClient() {
 		return httpClient;
+	}
+
+	/**
+	 * Returns the loginToken.
+	 * @return the loginToken
+	 */
+	public LoginToken getLoginToken() {
+		return loginToken;
+	}
+
+	/**
+	 * Sets the loginToken.
+	 * @param loginToken the loginToken to set
+	 */
+	public void setLoginToken(LoginToken loginToken) {
+		this.loginToken = loginToken;
 	}
 
 	

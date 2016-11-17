@@ -27,9 +27,11 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -208,7 +210,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				setLoggedIn(rc);
 				if (getLog().isInfoEnabled()) {
 					if (rc) {
-						getLog().info("Session opened:   "+httpParams.getLogin()+'@'+getBaseUrl());
+						getLog().info("Session opened:   "+getBaseUrl());
 						if (getLog().isDebugEnabled()) getLog().debug("Bugzilla-Version: "+getBugzillaVersion());
 					} else getLog().info("Bugzilla did not sent Cookie");
 				}
@@ -413,9 +415,20 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 	 * @return HTTP connection object
 	 */
 	protected HttpURLConnection getConnection(int bugzillaPage, String getParams) {
-		return getConnection(getBaseUrl()+PAGES[bugzillaPage], getParams);
+		return getConnection(getBaseUrl()+PAGES[bugzillaPage], getParams, createRequestProperties(bugzillaPage));
 	}
 
+	/**
+	 * Returns HTTP headers (request properties) that need to be set on each request.
+	 * <p>The default implementation sets the Referer property as some installations require this header.</p>
+	 * @param bugzillaPage the page to be requested
+	 * @return the request properties to be set on HTTP connection
+	 */
+	protected Map<String,String> createRequestProperties(int bugzillaPage) {
+		Map<String,String> rc = new HashMap<String, String>();
+		rc.put("Referer", getBaseUrl()+PAGES[BUGZILLA_LOGIN]);
+		return rc;
+	}
 	/**
 	 * Returns default search parameters.
 	 * DO NOT modify these defaults!
