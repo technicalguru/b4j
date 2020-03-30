@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,15 +41,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.commons.io.Charsets;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.ext.DefaultHandler2;
 
-import rs.baselib.io.XmlReaderFilter;
-import rs.baselib.lang.LangUtils;
 import b4j.core.Attachment;
 import b4j.core.Classification;
 import b4j.core.Comment;
@@ -76,6 +74,8 @@ import b4j.util.BugzillaUtils;
 import b4j.util.HttpSessionParams;
 import b4j.util.MetaData;
 import b4j.util.UrlParameters;
+import rs.baselib.io.XmlReaderFilter;
+import rs.baselib.lang.LangUtils;
 
 
 /**
@@ -183,7 +183,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 			con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
 			con.setRequestProperty("Content-Length", "" + paramString.length());
 			con.setDoOutput(true);
-			Writer out = new OutputStreamWriter(con.getOutputStream(), Charsets.UTF_8);
+			Writer out = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
 			out.write(paramString);
 			out.flush();
 			out.close();
@@ -194,7 +194,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				boolean rc = retrieveCookies(con);
 
 				// Get Bugzilla version and test for compatibility
-				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
+				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 				Pattern p = Pattern.compile(".*version\\s+([\\d\\.]+).*", Pattern.CASE_INSENSITIVE);
 
 				String line;
@@ -372,7 +372,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				List<String> idList = new ArrayList<String>();
 
 				// Parse the data for all bugs found
-				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
+				BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 				Pattern p = Pattern.compile(".*href=\"show_bug\\.cgi\\?id=(\\d+)\">\\d+</a>.*");
 
 				String line;
@@ -592,7 +592,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 				con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
 				con.setRequestProperty("Content-Length", "" + paramString.length());
 				con.setDoOutput(true);
-				Writer out = new OutputStreamWriter(con.getOutputStream(), Charsets.UTF_8);
+				Writer out = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
 				out.write(paramString);
 				out.flush();
 				out.close();
@@ -668,7 +668,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 
 				// This class itself will take care of the elements
 				xmlReader.setContentHandler(this);
-				xmlReader.parse(new InputSource(new XmlReaderFilter(new InputStreamReader(xmlStream, Charsets.UTF_8))));
+				xmlReader.parse(new InputSource(new XmlReaderFilter(new InputStreamReader(xmlStream, StandardCharsets.UTF_8))));
 				if (getLog().isTraceEnabled()) getLog().trace("XML file completed");
 			} catch (IOException e) {
 				getLog().error("Error while retrieving Bugzilla XML response:", e);

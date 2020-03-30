@@ -17,6 +17,8 @@
  */
 package b4j.core.session;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.slf4j.Logger;
@@ -115,9 +117,13 @@ public abstract class AbstractHttpSession implements Session {
 	 */
 	public Issue createIssue() {
 		try {
-			return (Issue)getBugzillaBugClass().newInstance();
+			return (Issue)getBugzillaBugClass().getConstructor().newInstance();
 		} catch (IllegalAccessException e) {
 			throw new IllegalStateException("Cannot access constructor: "+getBugzillaBugClass().getName(), e);
+		} catch (NoSuchMethodException e) {
+			throw new IllegalStateException("Cannot find default constructor: "+getBugzillaBugClass().getName(), e);
+		} catch (InvocationTargetException e) {
+			throw new IllegalStateException("Cannot invocate constructor: "+getBugzillaBugClass().getName(), e);
 		} catch (InstantiationException e) {
 			throw new IllegalStateException("Cannot instantiate class: "+getBugzillaBugClass().getName(), e);
 		}

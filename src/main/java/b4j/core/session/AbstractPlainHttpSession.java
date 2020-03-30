@@ -27,6 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -258,7 +259,7 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 					String authPass = callback.getPassword();
 					if (authPass == null) authPass = "";
 					String auth = authName + ':' + authPass;
-					auth = Base64.encodeBase64String(auth.getBytes(Charsets.UTF_8));
+					auth = Base64.encodeBase64String(auth.getBytes(StandardCharsets.UTF_8));
 					con.setRequestProperty("Proxy-Authorization", "Basic "+auth+"");
 				}
 			} else {
@@ -283,7 +284,7 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 				con.setRequestProperty("Content-Length", "" + params.length());
 
 				con.setDoOutput(true);
-				Writer out = new OutputStreamWriter(con.getOutputStream(), Charsets.UTF_8);
+				Writer out = new OutputStreamWriter(con.getOutputStream(), StandardCharsets.UTF_8);
 				out.write(params);
 				out.flush();
 				out.close();
@@ -363,7 +364,7 @@ public abstract class AbstractPlainHttpSession extends AbstractHttpSession {
 					getLog().debug(key+": "+value);
 				}
 			}
-			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), Charsets.UTF_8));
+			BufferedReader r = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8));
 			String line;
 			while ((line = r.readLine()) != null) {
 				getLog().debug(line);
