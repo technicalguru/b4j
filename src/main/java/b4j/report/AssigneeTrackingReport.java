@@ -19,11 +19,11 @@ package b4j.report;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,7 +61,7 @@ public class AssigneeTrackingReport extends AbstractFileReport {
 	 */
 	@Override
 	public void closeReport() {
-		PrintWriter out = new PrintWriter(new OutputStreamWriter(getOutputStream(), Charsets.UTF_8));
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(getOutputStream(), StandardCharsets.UTF_8));
 
 		// Header line
 		out.println("ASSIGNEE;OPEN BUG COUNT");
@@ -110,7 +110,7 @@ public class AssigneeTrackingReport extends AbstractFileReport {
 			openCount++;
 			String assignee = bug.getAssignee().getId();
 			Long cnt = count.get(assignee);
-			if (cnt == null) cnt = new Long(0);
+			if (cnt == null) cnt = 0L;
 			cnt = cnt+1;
 			count.put(assignee, cnt);
 		}

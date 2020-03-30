@@ -19,6 +19,7 @@ package b4j.report;
 
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,13 +31,12 @@ import java.util.Map;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.io.Charsets;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.configuration.ConfigurationUtils;
 import b4j.core.Issue;
+import rs.baselib.configuration.ConfigurationUtils;
 
 /**
  * Creates a Change Log from all closed bugs (see {@link Issue#isClosed()}).
@@ -192,7 +192,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	 * @return release for that bug
 	 */
 	protected Release getRelease(Issue bug) {
-		long closeDate = bug.getUpdateTimestamp().getTime();
+		long closeDate = bug.getUpdateTimestamp().getTimeInMillis();
 		Iterator<Release> ri = releases.iterator();
 		Release lastRelease = null;
 		long lastTimestamp = 0;
@@ -219,7 +219,7 @@ public class ChangeLogReport extends AbstractFileReport {
 	 */
 	@Override
 	public void closeReport() {
-		PrintWriter out = new PrintWriter(new OutputStreamWriter(getOutputStream(), Charsets.UTF_8));
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(getOutputStream(), StandardCharsets.UTF_8));
 
 		Iterator<Release> ri = releases.iterator();
 		while (ri.hasNext()) {

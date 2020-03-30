@@ -20,19 +20,19 @@ package b4j.report;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.util.CommonUtils;
-import templating.Templating;
 import b4j.core.Comment;
 import b4j.core.Issue;
+import rs.baselib.util.CommonUtils;
+import templating.Templating;
 
 /**
  * Reports some details about bug records into a file.
@@ -128,7 +128,7 @@ public class DetailedBugReport extends AbstractFileReport {
 	 * @return the writer object
 	 */
 	private PrintWriter getWriter() {
-		if (writer == null) writer = new PrintWriter(new OutputStreamWriter(getOutputStream(), Charsets.UTF_8));
+		if (writer == null) writer = new PrintWriter(new OutputStreamWriter(getOutputStream(), StandardCharsets.UTF_8));
 		return writer;
 	}
 	
