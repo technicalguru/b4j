@@ -24,23 +24,23 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.io.Charsets;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import rs.baselib.io.FileFinder;
-import rs.baselib.util.CommonUtils;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.session.BugzillaRpcSession;
 import b4j.core.util.CommentTest;
+import rs.baselib.io.FileFinder;
+import rs.baselib.util.CommonUtils;
 
 /**
  * Bugzilla Session test
@@ -113,7 +113,7 @@ public class BugzillaRpcSessionTest {
 	private void testSpecials(BugzillaRpcSession session, Issue issue) throws Exception {
 		// Check attachment retrieval
 		if (issue.getId().equals("30")) {
-			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3")), Charsets.UTF_8));
+			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(issue.getAttachment("3")), StandardCharsets.UTF_8));
 			String s = null;
 			s = r.readLine();
 			s = r.readLine();

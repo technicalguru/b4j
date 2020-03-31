@@ -37,7 +37,6 @@ import java.util.Set;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.io.Charsets;
 
 import rs.baselib.lang.LangUtils;
 import rs.baselib.security.AuthorizationCallback;

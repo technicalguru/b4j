@@ -69,8 +69,13 @@ public class BugzillaCommentParser extends AbstractJsonParser implements JsonObj
 	public Comment parseSingleComment(JSONObject json) throws JSONException {
 		DefaultComment rc = new DefaultComment(json.getString("bug_id"));
 		rc.setId(json.getString("id"));
-		rc.setAuthor(getLazyRetriever().getUser(json.getString("creator")));
-		rc.setUpdateAuthor(getLazyRetriever().getUser(json.getString("author")));
+		String creator = json.getString("creator");
+		rc.setAuthor(getLazyRetriever().getUser(creator));
+		String author = creator;
+		if (json.has("author")) {
+			author = json.getString("author");
+		}
+		rc.setUpdateAuthor(getLazyRetriever().getUser(author));
 		try {
 			rc.setUpdateTimestamp(BugzillaUtils.parseDate(json.getString("time")));
 			rc.setCreationTimestamp(BugzillaUtils.parseDate(json.getString("creation_time")));

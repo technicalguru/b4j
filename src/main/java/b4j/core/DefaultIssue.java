@@ -23,13 +23,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import rs.baselib.util.CommonUtils;
 import b4j.util.LazyRetriever;
+import rs.baselib.util.CommonUtils;
+import rs.baselib.util.RsDate;
 
 /**
  * Class that represents a Bugzilla bug record.
@@ -98,10 +98,10 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	private String uri;
 	private String id;
 	private String parentId;
-	private Date creationTimestamp;
+	private RsDate creationTimestamp;
 	private String summary;
 	private String description;
-	private Date updateTimestamp;
+	private RsDate updateTimestamp;
 	private IssueType type;
 	private Classification classification;
 	private Project project;
@@ -133,8 +133,8 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 		comments = new ArrayList<Comment>();
 		//cc = new ArrayList<String>();
 		attachments = new ArrayList<Attachment>();
-		creationTimestamp = new Date(0);
-		updateTimestamp = new Date(0);
+		creationTimestamp = new RsDate(0);
+		updateTimestamp = new RsDate(0);
 		//deadline = new Date(0);
 		links = new ArrayList<IssueLink>();
 		children = new ArrayList<Issue>();
@@ -224,7 +224,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getCreationTimestamp() {
+	public RsDate getCreationTimestamp() {
 		return creationTimestamp;
 	}
 
@@ -232,18 +232,18 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCreationTimestamp(Date creationTimestamp) {
+	public void setCreationTimestamp(RsDate creationTimestamp) {
 		if (creationTimestamp != null)
-			this.creationTimestamp.setTime(creationTimestamp.getTime());
+			this.creationTimestamp = creationTimestamp;
 		else
-			this.creationTimestamp.setTime(0);
+			this.creationTimestamp = new RsDate(0);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getUpdateTimestamp() {
+	public RsDate getUpdateTimestamp() {
 		return updateTimestamp;
 	}
 
@@ -286,11 +286,11 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setUpdateTimestamp(Date updateTimestamp) {
+	public void setUpdateTimestamp(RsDate updateTimestamp) {
 		if (updateTimestamp != null)
-			this.updateTimestamp.setTime(updateTimestamp.getTime());
+			this.updateTimestamp = updateTimestamp;
 		else
-			this.updateTimestamp.setTime(getCreationTimestamp().getTime());
+			this.updateTimestamp = new RsDate(getCreationTimestamp());
 	}
 
 	/**
@@ -834,9 +834,9 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	/** Return the first comment */
 	private String getFirstComment() {
 		String s = null;
-		Date minDate = null;
+		RsDate minDate = null;
 		for (Comment c : comments) {
-			Date d = c.getCreationTimestamp();
+			RsDate d = c.getCreationTimestamp();
 			if (d == null) continue; // Weird! Unknown comment date
 			if ((minDate == null) || minDate.after(d)) {
 				minDate = d;

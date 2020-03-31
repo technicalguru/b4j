@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import b4j.core.IssueLink;
 import b4j.core.Version;
+import rs.baselib.util.RsDate;
 
 /**
  * Provides some useful methods for all classes.
@@ -163,7 +165,8 @@ public class BugzillaUtils {
 	 * @return date parsed
 	 * @throws ParseException when the date could not be parsed
 	 */
-	public static Date parseDate(String s) throws ParseException {
+	public static RsDate parseDate(String s) throws ParseException {
+
 		// JSON format
 		if (s.matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z")) {
 			String date = s.substring(0,10);
@@ -171,16 +174,20 @@ public class BugzillaUtils {
 			s = date + " " + time + " UTC";
 		}
 		try {
-			return DefaultIssue.DATETIME_WITH_SEC_TZ().parse(s);
+			Date d = DefaultIssue.DATETIME_WITH_SEC_TZ().parse(s);
+			return new RsDate(TimeZone.getTimeZone("UTC"), d.getTime());
 		} catch (ParseException e) { }
 		try {
-			return DefaultIssue.DATETIME_WITH_SEC().parse(s);
+			Date d = DefaultIssue.DATETIME_WITH_SEC().parse(s);
+			return new RsDate(TimeZone.getTimeZone("UTC"), d.getTime());
 		} catch (ParseException e) { }
 		try {
-			return DefaultIssue.DATETIME_WITHOUT_SEC().parse(s);
+			Date d = DefaultIssue.DATETIME_WITHOUT_SEC().parse(s);
+			return new RsDate(TimeZone.getTimeZone("UTC"), d.getTime());
 		} catch (ParseException e) { }
 		try {
-			return DefaultIssue.DATE().parse(s);
+			Date d = DefaultIssue.DATE().parse(s);
+			return new RsDate(TimeZone.getTimeZone("UTC"), d.getTime());
 		} catch (ParseException e) { }
 		throw new ParseException("Cannot parse date: "+s, 0);
 	}

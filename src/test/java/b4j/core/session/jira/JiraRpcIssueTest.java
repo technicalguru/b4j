@@ -32,11 +32,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import rs.baselib.io.FileFinder;
 import b4j.core.Issue;
 import b4j.core.session.JiraRpcSession;
 import b4j.core.util.IssueTest;
+import rs.baselib.io.FileFinder;
 
 /**
  * Test {@link b4j.core.session.JiraRpcSession JiraRpcSession} for known issues.
@@ -48,6 +50,9 @@ public class JiraRpcIssueTest {
 
 	private static JiraRpcSession session;
 	private static IssueTest issueTest = new IssueTest();
+	private static int dataCount = 0;
+	private static int dataIndex = 0;
+	private static Logger log = LoggerFactory.getLogger(JiraRpcIssueTest.class);
 
 	@BeforeClass
 	public static void setup() throws Exception {
@@ -70,9 +75,18 @@ public class JiraRpcIssueTest {
 	@Parameters
 	public static Collection<Object[]> data() throws Exception {
 		Collection<Object[]> data = new ArrayList<Object[]>();
+		// For debugging only to shorten tests
+		int count = 5;
 		for (String s : issueTest.getTestables(null)) {
-			if (s.startsWith("jira-")) data.add(new Object[] { s.substring(5) });
+			if (s.startsWith("jira-")) {
+				data.add(new Object[] { s.substring(5) });
+				count++;
+			}
+			if (count <= 0) break;
 		}
+		dataCount = data.size();
+		dataIndex = 0;
+		log.info(dataCount+" subtests found");
 		return data;
 	}
 	
@@ -92,6 +106,9 @@ public class JiraRpcIssueTest {
 	public void test() throws Exception {
 		// Search a simple bug
 		Issue issue = session.getIssue(id);
+		//LoggerFactory.getLogger(getClass()).debug("New Test: "+id);
+		dataIndex++;
+		log.info(dataIndex+"/"+dataCount+" (jira-"+id+")");
 		assertNotNull(issue);
 		//issueTest.save(issue);
 		issueTest.test(issue);

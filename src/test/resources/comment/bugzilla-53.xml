@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:09:39 CET 2014: bugzilla-53</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1348861362000</entry>
-<entry key="updateAuthor">admin</entry>
-<entry key="author">admin</entry>
-<entry key="updateTimestamp">1348861362000</entry>
-<entry key="text">The filename for an attachment is not set correctly. It contains the description</entry>
+<comment>Saved Mon Mar 30 22:31:43 CEST 2020: bugzilla-53</comment>
 <entry key="issueId">33</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">admin</entry>
+<entry key="creationTimestamp">Fri Sep 28 21:42:42 CEST 2012</entry>
+<entry key="updateAuthor">admin</entry>
 <entry key="id">53</entry>
+<entry key="text">The filename for an attachment is not set correctly. It contains the description</entry>
+<entry key="updateTimestamp">Fri Sep 28 21:42:42 CEST 2012</entry>
 </properties>

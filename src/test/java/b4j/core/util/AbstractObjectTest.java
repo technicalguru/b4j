@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -36,13 +37,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.io.Charsets;
 import org.slf4j.LoggerFactory;
 
+import b4j.core.BugzillaObject;
 import rs.baselib.io.FileFinder;
 import rs.baselib.lang.ReflectionUtils;
 import rs.baselib.util.CommonUtils;
-import b4j.core.BugzillaObject;
 
 /**
  * Abstract implementation of correctness tests.
@@ -317,7 +317,7 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 			props.storeToXML(out, "Expected values");
-			System.out.println(out.toString(Charsets.UTF_8.name()));
+			System.out.println(out.toString(StandardCharsets.UTF_8.name()));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

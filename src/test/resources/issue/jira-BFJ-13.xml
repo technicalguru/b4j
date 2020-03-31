@@ -11,7 +11,7 @@
 <entry key="comments">list:null</entry>
 <entry key="components">list:null</entry>
 <entry key="id">BFJ-13</entry>
-<entry key="creationTimestamp">1355914072000</entry>
+<entry key="creationTimestamp">Wed Dec 19 10:47:52 CET 2012</entry>
 <entry key="status">Closed</entry>
 <entry key="resolution">Fixed</entry>
 <entry key="severity">Normal</entry>
@@ -21,7 +21,7 @@
 <entry key="affectedVersions">list:1.3</entry>
 <entry key="parentId">null</entry>
 <entry key="reporter">Ralph Schuster</entry>
-<entry key="updateTimestamp">1356009944000</entry>
+<entry key="updateTimestamp">Thu Dec 20 13:25:44 CET 2012</entry>
 <entry key="assignee">Ralph Schuster</entry>
 <entry key="priority">Normal</entry>
 <entry key="attachments">list:null</entry>

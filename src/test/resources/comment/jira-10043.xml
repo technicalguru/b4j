@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Sun Jul 06 17:22:39 CEST 2014: jira-10043</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1354571018000</entry>
-<entry key="updateAuthor">Ralph Schuster</entry>
-<entry key="author">Ralph Schuster</entry>
-<entry key="updateTimestamp">1354571018000</entry>
-<entry key="text">Reassigned due to JIRA</entry>
+<comment>Saved Mon Mar 30 22:15:43 CEST 2020: jira-10043</comment>
 <entry key="issueId">BFJ-1</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">Ralph Schuster</entry>
+<entry key="creationTimestamp">Mon Dec 03 21:43:38 CET 2012</entry>
+<entry key="updateAuthor">Ralph Schuster</entry>
 <entry key="id">10043</entry>
+<entry key="text">Reassigned due to JIRA</entry>
+<entry key="updateTimestamp">Mon Dec 03 21:43:38 CET 2012</entry>
 </properties>

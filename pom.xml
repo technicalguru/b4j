@@ -11,16 +11,16 @@
 	</properties>
 
 	<artifactId>b4j</artifactId>
-	<version>2.0.3-SNAPSHOT</version>
+	<version>3.0.0-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 	<url>http://techblog.ralph-schuster.eu/b4j-bugzilla-for-java/</url>
 	<name>Bugzilla for Java</name>
 	<description>A Java library for accessing Bugzilla instances</description>
 
 	<scm>
-		<connection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.b4j/trunk</connection>
-		<developerConnection>scm:svn:https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.b4j/trunk</developerConnection>
-		<url>https://svn.ralph-schuster.eu/svn/OSS/eu.ralph-schuster.b4j/trunk</url>
+		<connection>scm:git:https://github.com/technicalguru/b4j.git</connection>
+		<developerConnection>scm:git:https://github.com/technicalguru/b4j.git</developerConnection>
+		<url>https://github.com/technicalguru/b4j</url>
 	</scm>
 
 	<distributionManagement>

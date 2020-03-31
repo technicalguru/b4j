@@ -18,7 +18,8 @@
 package b4j.core;
 
 import java.net.URI;
-import java.util.Date;
+
+import rs.baselib.util.RsDate;
 
 /**
  * Interface for an attachment within a issue.
@@ -54,14 +55,14 @@ public interface Attachment extends BugzillaObject {
 	 * Returns the date of the attachment.
 	 * @return the date
 	 */
-	public Date getDate();
+	public RsDate getDate();
 
 	/**
 	 * Sets the date of the attachment.
 	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param date - the date to set
 	 */
-	public void setDate(Date date);
+	public void setDate(RsDate date);
 
 	/**
 	 * Returns the description of the attachment.

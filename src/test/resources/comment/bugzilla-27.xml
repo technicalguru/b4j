@@ -1,12 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:09:15 CET 2014: bugzilla-27</comment>
+<comment>Saved Mon Mar 30 22:31:42 CEST 2020: bugzilla-27</comment>
+<entry key="issueId">19</entry>
 <entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1274354431000</entry>
-<entry key="updateAuthor">admin</entry>
 <entry key="author">admin</entry>
-<entry key="updateTimestamp">1274354431000</entry>
+<entry key="creationTimestamp">Thu May 20 13:20:31 CEST 2010</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="id">27</entry>
 <entry key="text">Following exception is thrown when DefaultExcelFormatter (e.g. INSTANCE) is reused for a different workbook:
 
 SEVERE: This Style does not belong to the supplied Workbook. Are you trying to assign a style from one workbook to the cell of a differnt workbook?
@@ -20,6 +21,5 @@ java.lang.IllegalArgumentException: This Style does not belong to the supplied W
         at csv.impl.ExcelWriter.setValue(ExcelWriter.java:219)
         at csv.impl.ExcelWriter.printRow(ExcelWriter.java:156)
         at csv.impl.ExcelWriter.printRow(ExcelWriter.java:140)</entry>
-<entry key="issueId">19</entry>
-<entry key="id">27</entry>
+<entry key="updateTimestamp">Thu May 20 13:20:31 CEST 2010</entry>
 </properties>

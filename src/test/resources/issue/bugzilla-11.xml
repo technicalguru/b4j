@@ -1,31 +1,31 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:47:52 CET 2014: bugzilla-11</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">CSV Utility Package</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-11</comment>
 <entry key="summary">Add some test script for most CSV related issues</entry>
-<entry key="comments">list:16</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">11</entry>
-<entry key="creationTimestamp">1255956180000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">enhancement</entry>
-<entry key="fixVersions">list:1.0.1</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:16</entry>
+<entry key="attachments">list:1</entry>
 <entry key="description">Created attachment 1
 Various CSV feature tests
 
 Add a test script so most CSV features can be tested (see attached file)</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
+<entry key="project">CSV Utility Package</entry>
 <entry key="reporter">admin</entry>
-<entry key="updateTimestamp">1256030093000</entry>
-<entry key="assignee">admin</entry>
+<entry key="fixVersions">list:1.0.1</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
 <entry key="priority">P3</entry>
-<entry key="attachments">list:1</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Tue Oct 20 11:14:53 CEST 2009</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Mon Oct 19 14:43:18 CEST 2009</entry>
+<entry key="links">null</entry>
+<entry key="id">11</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

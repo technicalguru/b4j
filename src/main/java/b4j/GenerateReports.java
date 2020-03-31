@@ -29,12 +29,12 @@ import org.apache.commons.cli.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.util.CommonUtils;
 import b4j.core.DefaultMetaInformation;
 import b4j.core.Issue;
 import b4j.core.MetaInformation;
 import b4j.core.Session;
 import b4j.report.BugzillaReportGenerator;
+import rs.baselib.util.CommonUtils;
 
 /**
  * Main task object that creates a report from Bugzilla.

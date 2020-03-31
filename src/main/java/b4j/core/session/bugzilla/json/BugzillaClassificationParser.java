@@ -55,11 +55,16 @@ public class BugzillaClassificationParser extends AbstractJsonParser implements 
 	@Override
 	public Iterable<Classification> parse(JSONObject json) throws JSONException {
 		List<Classification> rc = new ArrayList<Classification>();
-		checkError(json); // Throws exception when error occurred
-		JSONArray arr = getResult(json).getJSONArray("classifications");
-		for (int i=0; i<arr.length(); i++) {
-			JSONObject obj = arr.getJSONObject(i);
-			rc.add(parseSingle(obj));
+		// Error 900 (no classification will be ignored)
+		BugzillaJsonError error = getError(json);
+		if (error == null) {
+			JSONArray arr = getResult(json).getJSONArray("classifications");
+			for (int i=0; i<arr.length(); i++) {
+				JSONObject obj = arr.getJSONObject(i);
+				rc.add(parseSingle(obj));
+			}
+		} else if (!error.getCode().equals("900")) {
+			throw new JSONException("Error: "+error);
 		}
 		return rc;
 	}

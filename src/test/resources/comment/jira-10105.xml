@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Sun Jul 06 17:22:38 CEST 2014: jira-10105</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1372456001000</entry>
-<entry key="updateAuthor">Ralph Schuster</entry>
-<entry key="author">Ralph Schuster</entry>
-<entry key="updateTimestamp">1372456001000</entry>
-<entry key="text">Jira instances will be support with REST API V2.&#13;
-&#13;
-e.g. here http://jira.ralph-schuster.eu/rest/api/2/</entry>
+<comment>Saved Mon Mar 30 22:15:43 CEST 2020: jira-10105</comment>
 <entry key="issueId">BFJ-4</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">Ralph Schuster</entry>
+<entry key="creationTimestamp">Fri Jun 28 21:46:41 CEST 2013</entry>
+<entry key="updateAuthor">Ralph Schuster</entry>
 <entry key="id">10105</entry>
+<entry key="text">Jira instances will be support with REST API V2.
+
+e.g. here http://jira.ralph-schuster.eu/rest/api/2/</entry>
+<entry key="updateTimestamp">Fri Jun 28 21:46:41 CEST 2013</entry>
 </properties>

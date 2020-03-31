@@ -1,9 +1,10 @@
 package b4j.core;
 
 import java.net.URI;
-import java.util.Date;
 
 import com.sun.jersey.core.util.Base64;
+
+import rs.baselib.util.RsDate;
 
 /**
  * An attachment definition.
@@ -18,7 +19,7 @@ public class DefaultAttachment extends AbstractBugzillaObject implements Attachm
 	 */
 	private String issueId;
 	private String id;
-	private Date date;
+	private RsDate date;
 	private String description;
 	private String filename;
 	private String type;
@@ -31,7 +32,7 @@ public class DefaultAttachment extends AbstractBugzillaObject implements Attachm
 	 */
 	public DefaultAttachment(String issueId) {
 		this.issueId = issueId;
-		date = new Date(0);
+		date = new RsDate(0);
 	}
 
 	/**
@@ -62,7 +63,7 @@ public class DefaultAttachment extends AbstractBugzillaObject implements Attachm
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getDate() {
+	public RsDate getDate() {
 		return date;
 	}
 
@@ -70,8 +71,9 @@ public class DefaultAttachment extends AbstractBugzillaObject implements Attachm
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setDate(Date date) {
-		this.date.setTime(date.getTime());
+	public void setDate(RsDate date) {
+		this.date = new RsDate(date);
+		
 	}
 
 	/**

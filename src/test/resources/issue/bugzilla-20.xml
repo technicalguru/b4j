@@ -1,21 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:48:07 CET 2014: bugzilla-20</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">CSV Utility Package</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-20</comment>
 <entry key="summary">Interpreting comments in CSVReader</entry>
-<entry key="comments">list:35,31,29</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">20</entry>
-<entry key="creationTimestamp">1284729780000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">WORKSFORME</entry>
 <entry key="severity">normal</entry>
-<entry key="fixVersions">list:2.0.1</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:29,31,35</entry>
+<entry key="attachments">list:null</entry>
 <entry key="description">The code inside the statement
 
 if (checkComments &amp;&amp; isIgnoreComments() &amp;&amp; (s.length() &gt; 0)) {
@@ -29,12 +20,21 @@ if (checkComments &amp;&amp; !isIgnoreComments() &amp;&amp; (s.length() &gt; 0))
 }
 
 in order to handle comments if NOT ignored?</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
+<entry key="project">CSV Utility Package</entry>
 <entry key="reporter">eldn</entry>
-<entry key="updateTimestamp">1285146436000</entry>
-<entry key="assignee">admin</entry>
+<entry key="fixVersions">list:2.0.1</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
 <entry key="priority">P3</entry>
-<entry key="attachments">list:null</entry>
+<entry key="resolution">WORKSFORME</entry>
+<entry key="updateTimestamp">Wed Sep 22 11:07:16 CEST 2010</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Fri Sep 17 15:23:08 CEST 2010</entry>
+<entry key="links">null</entry>
+<entry key="id">20</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

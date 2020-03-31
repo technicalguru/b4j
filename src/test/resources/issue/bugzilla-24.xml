@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:48:14 CET 2014: bugzilla-24</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">Depends on:true:23</entry>
-<entry key="project">CSV Utility Package</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-24</comment>
 <entry key="summary">Add TableReader implementation for JDBC</entry>
-<entry key="comments">list:39,38</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">24</entry>
-<entry key="creationTimestamp">1285661820000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">enhancement</entry>
-<entry key="fixVersions">list:2.1</entry>
-<entry key="description">Add a reader implementation for JDBC.</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
-<entry key="reporter">admin</entry>
-<entry key="updateTimestamp">1323117181000</entry>
-<entry key="assignee">admin</entry>
-<entry key="priority">P3</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:38,39</entry>
 <entry key="attachments">list:null</entry>
+<entry key="description">Add a reader implementation for JDBC.</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="reporter">admin</entry>
+<entry key="fixVersions">list:2.1</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
+<entry key="priority">P3</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Mon Dec 05 21:33:01 CET 2011</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Tue Sep 28 10:17:38 CEST 2010</entry>
+<entry key="links">Depends on:true:23</entry>
+<entry key="id">24</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

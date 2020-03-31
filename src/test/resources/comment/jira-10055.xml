@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Sun Jul 06 17:22:35 CEST 2014: jira-10055</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1356007397000</entry>
-<entry key="updateAuthor">Ralph Schuster</entry>
-<entry key="author">Ralph Schuster</entry>
-<entry key="updateTimestamp">1356007397000</entry>
-<entry key="text">Flag will watch if any report was available</entry>
+<comment>Saved Mon Mar 30 22:15:42 CEST 2020: jira-10055</comment>
 <entry key="issueId">BFJ-16</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">Ralph Schuster</entry>
+<entry key="creationTimestamp">Thu Dec 20 12:43:17 CET 2012</entry>
+<entry key="updateAuthor">Ralph Schuster</entry>
 <entry key="id">10055</entry>
+<entry key="text">Flag will watch if any report was available</entry>
+<entry key="updateTimestamp">Thu Dec 20 12:43:17 CET 2012</entry>
 </properties>

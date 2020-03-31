@@ -18,7 +18,8 @@
 package b4j.core;
 
 import java.util.Collection;
-import java.util.Date;
+
+import rs.baselib.util.RsDate;
 
 /**
  * Interface representing an issue record.
@@ -134,14 +135,14 @@ public interface Issue extends BugzillaObject {
 	 * Returns the timestamp when this issue was created.
 	 * @return the timestamp of creation
 	 */
-	public Date getCreationTimestamp();
+	public RsDate getCreationTimestamp();
 
 	/**
 	 * Sets the time of issue creation.
 	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param creationTimestamp - the timestamp to set
 	 */
-	public void setCreationTimestamp(Date creationTimestamp);
+	public void setCreationTimestamp(RsDate creationTimestamp);
 
 	/**
 	 * Returns the summary of the issue.
@@ -173,14 +174,14 @@ public interface Issue extends BugzillaObject {
 	 * Returns the timestamp when this issue was last changed.
 	 * @return timestamp of last change
 	 */
-	public Date getUpdateTimestamp();
+	public RsDate getUpdateTimestamp();
 
 	/**
 	 * Sets the timestamp of last change.
 	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param updateTimestamp - the timestamp to set
 	 */
-	public void setUpdateTimestamp(Date updateTimestamp);
+	public void setUpdateTimestamp(RsDate updateTimestamp);
 
 	/**
 	 * Returns the type. 

@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:09:13 CET 2014: bugzilla-25</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1270673503000</entry>
-<entry key="updateAuthor">admin</entry>
-<entry key="author">admin</entry>
-<entry key="updateTimestamp">1270673503000</entry>
-<entry key="text">Filter searches on HttpJiraSession does not return when no issue was found. The "hasNext()" method hangs.</entry>
+<comment>Saved Mon Mar 30 22:31:42 CEST 2020: bugzilla-25</comment>
 <entry key="issueId">18</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">admin</entry>
+<entry key="creationTimestamp">Wed Apr 07 22:51:43 CEST 2010</entry>
+<entry key="updateAuthor">admin</entry>
 <entry key="id">25</entry>
+<entry key="text">Filter searches on HttpJiraSession does not return when no issue was found. The "hasNext()" method hangs.</entry>
+<entry key="updateTimestamp">Wed Apr 07 22:51:43 CEST 2010</entry>
 </properties>
