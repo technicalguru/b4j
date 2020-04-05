@@ -34,16 +34,19 @@ public interface Version extends BugzillaObject {
 	
 	/**
 	 * Returns the ID.
+	 * @return the ID of the version
 	 */
 	public Long getId();
 	
 	/**
 	 * Returns the name.
+	 * @return the name of the version
 	 */
 	public String getName();
 
 	/**
 	 * Returns the release date.
+	 * @return the release date of the version
 	 */
 	public Date getReleaseDate();
 

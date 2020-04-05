@@ -81,8 +81,9 @@ public interface Session extends IConfigurable {
 	
 	/**
 	 * Returns an input stream that will contain the attachment's content.
-	 * A calle is responsible to close the stream again.
+	 * A caller is responsible to close the stream again.
 	 * @param attachment attachment to retrieve.
+	 * @return the input stream for the attachment itself
 	 * @throws IOException when the IO stream cannot be created
 	 * @since 1.3
 	 */

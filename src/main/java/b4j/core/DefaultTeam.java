@@ -31,6 +31,7 @@ public class DefaultTeam extends AbstractBugzillaObject implements Team {
 	
 	/**
 	 * Constructor.
+	 * @param name - the name of the team
 	 */
 	public DefaultTeam(String name) {
 		this.name = name;

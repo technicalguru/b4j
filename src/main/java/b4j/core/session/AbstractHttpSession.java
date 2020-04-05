@@ -63,7 +63,7 @@ public abstract class AbstractHttpSession implements Session {
 	 * This implementation looks for an element &lt;AuthorizationCallback&gt;. It
 	 * defines the implementation class that will deliver login name and password.
 	 * If no class was given or class is "null" then the content of the tag
-	 * must contain two elements &lt:login&gt; and &lt;password&gt;.
+	 * must contain two elements &lt;login&gt; and &lt;password&gt;.
 	 * <P>
 	 * The default {@link Issue} implementation class to be used can also
 	 * be configured using the &lt;Issue&gt; tag, e.g.

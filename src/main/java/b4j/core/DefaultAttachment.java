@@ -29,6 +29,8 @@ public class DefaultAttachment extends AbstractBugzillaObject implements Attachm
 	
 	/**
 	 * Default constructor.
+	 * 
+	 * @param issueID - the ID of the issue this attachment belongs to.
 	 */
 	public DefaultAttachment(String issueId) {
 		this.issueId = issueId;

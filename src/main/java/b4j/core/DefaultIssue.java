@@ -42,6 +42,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm:ss Z
+	 * @return {@link SimpleDateFormat} for parsing and formatting
 	 */
 	public static DateFormat DATETIME_WITH_SEC_TZ() {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
@@ -49,6 +50,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	/**
 	 * Formatter and Parser for JSON-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd'T'HH:mm:ssZ
+	 * @return {@link SimpleDateFormat} for parsing and formatting
 	 */
 	public static DateFormat JSON_DATETIME_WITH_SEC_TZ() {
 		return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
@@ -56,6 +58,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm:ss
+	 * @return {@link SimpleDateFormat} for parsing and formatting
 	 */
 	public static DateFormat DATETIME_WITH_SEC() {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -63,6 +66,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd HH:mm
+	 * @return {@link SimpleDateFormat} for parsing and formatting
 	 */
 	public static DateFormat DATETIME_WITHOUT_SEC() {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -70,6 +74,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	/**
 	 * Formatter and Parser for XML-retrieved dates from Bugzilla.
 	 * Format is yyyy-MM-dd
+	 * @return {@link SimpleDateFormat} for parsing and formatting
 	 */
 	public static DateFormat DATE() {
 		return new SimpleDateFormat("yyyy-MM-dd");
@@ -1145,6 +1150,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * it will check for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
 	 * <code>${propertyPrefix}_id</code> custom fields. If either of them is set, the {@link LazyRetriever}
 	 * is asked for an actual value to be returned.</p>
+	 * @param <T> The class type of the original value 
 	 * @param originalValue the value currently stored
 	 * @param propertyPrefix the property to be checked
 	 * @return the value (either originalValue or the lazily retrieved value or <code>null</code>)
@@ -1159,6 +1165,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * it will check for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
 	 * <code>${propertyPrefix}_id</code> custom fields. If either of them is set, the {@link LazyRetriever}
 	 * is asked for an actual value to be returned.</p>
+	 * @param <T> The class type of the original value 
 	 * @param originalValue the value currently stored
 	 * @param propertyPrefix the property to be checked
 	 * @param typeProperty name of property at {@link LazyRetriever}
@@ -1186,6 +1193,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
 	 * <code>${propertyPrefix}_id</code> custom fields (can be collections or single values. If either of them is set, 
 	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * @param <T> The class type of the collection 
 	 * @param collection the value currently stored and enhanced with found values.
 	 * @param propertyPrefix the property to be checked
 	 * @return <code>true</code> when lazy loading took place
@@ -1199,6 +1207,7 @@ public class DefaultIssue extends AbstractBugzillaObject implements Issue {
 	 * <p>The method checks for a {@link LazyRetriever} instance and the <code>${propertyPrefix}_name</code> and
 	 * <code>${propertyPrefix}_id</code> custom fields (can be collections or single values. If either of them is set, 
 	 * the {@link LazyRetriever} is asked for actual values to be returned.</p>
+	 * @param <T> The class type of the collection 
 	 * @param collection the value currently stored and enhanced with found values.
 	 * @param propertyPrefix the property to be checked
 	 * @param typeProperty name of property at {@link LazyRetriever}

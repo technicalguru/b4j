@@ -47,6 +47,7 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 
 	/**
 	 * Default Constructor.
+	 * @param issueId - ID of issue this comment belongs to
 	 */
 	public DefaultComment(String issueId) {
 		this.issueId = issueId;

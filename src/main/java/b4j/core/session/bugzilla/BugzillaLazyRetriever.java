@@ -40,6 +40,7 @@ public class BugzillaLazyRetriever extends AbstractLazyRetriever {
 	
 	/**
 	 * Constructor.
+	 * @param client - the client to be used for retrieval
 	 */
 	public BugzillaLazyRetriever(BugzillaClient client) {
 		this.client = client;

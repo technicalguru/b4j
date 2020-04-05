@@ -59,6 +59,8 @@ public class DefaultMetaInformation extends AbstractBugzillaObject implements Me
 	
 	/**
 	 * Constructor with XML configuration file.
+	 * @param metaFile - the XML file to read
+	 * @throws Exception - if an error occurs
 	 */
 	public DefaultMetaInformation(File metaFile) throws Exception {
 		read(metaFile);

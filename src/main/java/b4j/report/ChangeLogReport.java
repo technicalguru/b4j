@@ -51,15 +51,15 @@ import rs.baselib.configuration.ConfigurationUtils;
  *    &lt;report class="b4j.report.ChangeLogReport"&gt;
  *       &lt;outputFile&gt;test-ChangeLog1.txt&lt;/outputFile&gt;
  *	
- *       &lt;!-- ReleaseProvider Implementation --> 
+ *       &lt;!-- ReleaseProvider Implementation --&gt;
  *       &lt;ReleaseProvider class="..."&gt;
  *          ...
  *       &lt;/ReleaseProvider&gt;
  *
- *       &lt;!-- Optional: Additional change log entries --> 
+ *       &lt;!-- Optional: Additional change log entries -->&gt;
  *       &lt;ChangeLogEntryProvider class="..."&gt;
  *          ...
- *       &lt;/ChangeLogEntryProvider>
+ *       &lt;/ChangeLogEntryProvider&gt;
  *
  *    &lt;/report&gt;
  * </pre>

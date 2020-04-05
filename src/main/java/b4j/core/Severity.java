@@ -27,6 +27,7 @@ public interface Severity extends BugzillaObject {
 
 	/**
 	 * Returns the name.
+	 * @return the name of the severity
 	 */
 	public String getName();
 

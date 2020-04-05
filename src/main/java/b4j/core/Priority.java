@@ -27,6 +27,7 @@ public interface Priority extends BugzillaObject {
 
 	/**
 	 * Returns the name.
+	 * @return the name of the priority
 	 */
 	public String getName();
 

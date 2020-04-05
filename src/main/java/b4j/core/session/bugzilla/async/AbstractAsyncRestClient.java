@@ -151,7 +151,7 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 	/**
 	 * Issues a simple GET request.
 	 * @param uri URI to be called
-	 * @throws Exception when a problem occurred
+	 * @return the Promise (can be ignored)
 	 */
 	protected Promise<Void> get(URI uri) {
 		ResponsePromise responsePromise = client().newRequest(uri).get();

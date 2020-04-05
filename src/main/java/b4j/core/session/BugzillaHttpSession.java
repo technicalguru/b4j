@@ -412,6 +412,7 @@ public class BugzillaHttpSession extends AbstractPlainHttpSession {
 	 * The method applies all cookies registered previously to allow
 	 * a successful session connection.
 	 * @param bugzillaPage - ID of page to make the request to
+	 * @param getParams - the parameters to be used for the call
 	 * @return HTTP connection object
 	 */
 	protected HttpURLConnection getConnection(int bugzillaPage, String getParams) {

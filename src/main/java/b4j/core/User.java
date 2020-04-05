@@ -26,16 +26,19 @@ public interface User extends BugzillaObject {
 
 	/**
 	 * Returns the user ID.
+	 * @return the ID of the user
 	 */
 	public String getId();
 
 	/**
 	 * Returns the name (readable user name).
+	 * @return the name of the user
 	 */
 	public String getName();
 
 	/**
 	 * Returns the real name.
+	 * @return the real name of the user
 	 */
 	public String getRealName();
 

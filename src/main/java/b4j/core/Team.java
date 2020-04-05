@@ -26,6 +26,7 @@ public interface Team extends BugzillaObject {
 
 	/**
 	 * Returns the name.
+	 * @return the name of the team
 	 */
 	public String getName();
 }

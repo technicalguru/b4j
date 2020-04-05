@@ -39,6 +39,8 @@ public class DefaultServerInfo extends AbstractBugzillaObject implements ServerI
 
 	/**
 	 * Constructor.
+	 * @param baseUri - URI of server
+	 * @param version - version of server
 	 */
 	public DefaultServerInfo(URI baseUri, String version) {
 		setBaseUri(baseUri);

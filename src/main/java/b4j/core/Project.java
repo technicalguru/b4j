@@ -28,26 +28,31 @@ public interface Project extends BugzillaObject {
 
 	/**
 	 * Returns the name.
+	 * @return the name of the project
 	 */
 	public String getName();
 
 	/**
 	 * Returns the ID.
+	 * @return the ID of the project
 	 */
 	public String getId();
 
 	/**
 	 * Returns the description.
+	 * @return the description of the project
 	 */
 	public String getDescription();
 
 	/**
 	 * Returns the versions.
+	 * @return the versions available of the project
 	 */
 	public Collection<Version> getVersions();
 	
 	/**
 	 * Returns the components.
+	 * @return the components of the project
 	 */
 	public Collection<Component> getComponents();
 	

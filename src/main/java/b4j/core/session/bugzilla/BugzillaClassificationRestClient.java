@@ -37,7 +37,6 @@ public interface BugzillaClassificationRestClient {
 	 *
 	 * @param id ID of classification
 	 * @return information about a classification
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Classification getClassification(long id);
@@ -47,7 +46,6 @@ public interface BugzillaClassificationRestClient {
 	 *
 	 * @param ids IDs of classification
 	 * @return information about a classification
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Classification>> getClassifications(long... ids);
@@ -57,7 +55,6 @@ public interface BugzillaClassificationRestClient {
 	 *
 	 * @param ids IDs of classification
 	 * @return information about a classification
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Classification>> getClassifications(Collection<Long> ids);
@@ -67,7 +64,6 @@ public interface BugzillaClassificationRestClient {
 	 *
 	 * @param name name of classification
 	 * @return information about a classification
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Classification getClassificationByName(String name);
@@ -77,7 +73,6 @@ public interface BugzillaClassificationRestClient {
 	 *
 	 * @param names names of classification
 	 * @return information about a classification
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Classification>> getClassificationsByName(String... names);
@@ -87,7 +82,6 @@ public interface BugzillaClassificationRestClient {
 	 *
 	 * @param names names of classification
 	 * @return information about a classification
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Classification>> getClassificationsByName(Collection<String> names);

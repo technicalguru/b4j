@@ -70,10 +70,10 @@ public class BugzillaRpcSession extends AbstractHttpSession {
 	}
 
 	/**
-	 * Configuration allows:<br/>
-	 * &lt;bugzilla-home&gt;URL&lt;/bugzilla-home&gt; - the Bugzilla base URL<br/>
-	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br/>
-	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)<br/>
+	 * Configuration allows:<br>
+	 * &lt;bugzilla-home&gt;URL&lt;/bugzilla-home&gt; - the Bugzilla base URL<br>
+	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br>
+	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)
 	 */
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {

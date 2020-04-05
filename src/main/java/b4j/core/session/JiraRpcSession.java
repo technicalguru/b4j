@@ -97,10 +97,10 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Configuration allows:<br/>
-	 * &lt;jira-home&gt;URL&lt;/jira-home&gt; - the JIRA base URL<br/>
-	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br/>
-	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)<br/>
+	 * Configuration allows:<br>
+	 * &lt;jira-home&gt;URL&lt;/jira-home&gt; - the JIRA base URL<br>
+	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br>
+	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)
 	 */
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {
@@ -320,7 +320,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Creates a issue from the Jira {@link b4j.core.BasicIssue}.
+	 * Creates an issue from the Jira issue.
 	 * @param issue the JIRA issue
 	 * @return the B4J issue 
 	 * @since 2.0.3

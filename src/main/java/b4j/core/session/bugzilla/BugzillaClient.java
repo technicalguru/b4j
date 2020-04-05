@@ -35,8 +35,6 @@ public interface BugzillaClient {
 	 * @param password password
 	 *  
 	 * @return user logged in
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
-	 * @throws javax.security.auth.login.LoginException when login failed
 	 * @since 2.0
 	 */
 	public User login(String user, String password);
@@ -50,7 +48,6 @@ public interface BugzillaClient {
 	/**
 	 * Logs out.
 	 *
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public void logout();
