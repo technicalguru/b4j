@@ -7,7 +7,7 @@
 	</parent>
 
 	<properties>
-		<rsbaselib.version>1.3.2-SNAPSHOT</rsbaselib.version>
+		<rsbaselib.version>1.4.0</rsbaselib.version>
 	</properties>
 
 	<artifactId>b4j</artifactId>
@@ -93,13 +93,7 @@
 		<dependency>
 			<groupId>eu.ralph-schuster</groupId>
 			<artifactId>csv</artifactId>
-			<version>2.7.1</version>
-      		<exclusions>
-        		<exclusion>  <!-- Java 9 exclusion -->
-   					<groupId>xml-apis</groupId>
-  					<artifactId>xml-apis</artifactId>
-        		</exclusion>
-      		</exclusions> 
+			<version>3.0.0</version>
 		</dependency>
 <!-- 
 		<dependency>
