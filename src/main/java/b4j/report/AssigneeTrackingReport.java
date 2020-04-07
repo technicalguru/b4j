@@ -66,10 +66,9 @@ public class AssigneeTrackingReport extends AbstractFileReport {
 		// Header line
 		out.println("ASSIGNEE;OPEN BUG COUNT");
 
-		Iterator<String> si = count.keySet().iterator();
-		while (si.hasNext()) {
-			String assignee = si.next();
-			Long l = count.get(assignee);
+		for (Map.Entry<String,Long> entry : count.entrySet()) {
+			String assignee = entry.getKey();
+			Long l          = entry.getValue();
 
 			StringBuffer line = new StringBuffer();
 			line.append("\"");

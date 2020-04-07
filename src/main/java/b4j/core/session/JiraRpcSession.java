@@ -580,7 +580,8 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			} else if (searchData.hasParameter("key")) {
 				promise = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")", maxResults, startAt);
 			}
-			return promise.get();
+			if (promise != null) return promise.get();
+			throw new Exception("No JQL parameters given in searchData (key, filzterId or jql");
 		}
 		
 		/**
