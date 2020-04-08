@@ -6,6 +6,8 @@
     * [BFJ-94](https://jira.ralph-schuster.eu/browse/BFJ-94) - Fix CoverityScan findings
 * New Features
     * [BFJ-92](https://jira.ralph-schuster.eu/browse/BFJ-92) - Upgrade all date and times to RsDate instances
+* Improvements
+    * [BFJ-95](https://jira.ralph-schuster.eu/browse/BFJ-95) - Upgrade RS Library / CSV dependency
 * Other
     * [BFJ-93](https://jira.ralph-schuster.eu/browse/BFJ-93) - Remove warnings due to Java update
 
