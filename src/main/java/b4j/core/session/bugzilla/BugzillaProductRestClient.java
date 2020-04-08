@@ -37,7 +37,6 @@ public interface BugzillaProductRestClient {
 	 *
 	 * @param id ID of product
 	 * @return information about a product
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Project getProduct(long id);
@@ -47,7 +46,6 @@ public interface BugzillaProductRestClient {
 	 *
 	 * @param name name of product
 	 * @return information about a product
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Project getProduct(String name);
@@ -57,7 +55,6 @@ public interface BugzillaProductRestClient {
 	 *
 	 * @param ids IDs of products
 	 * @return information about a products
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Project>> getProducts(long... ids);
@@ -67,7 +64,6 @@ public interface BugzillaProductRestClient {
 	 *
 	 * @param ids IDs of products
 	 * @return information about products
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Project>> getProducts(Collection<Long> ids);
@@ -77,7 +73,6 @@ public interface BugzillaProductRestClient {
 	 *
 	 * @param names names of products
 	 * @return information about a products
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Project>> getProductsByName(String... names);
@@ -87,7 +82,6 @@ public interface BugzillaProductRestClient {
 	 *
 	 * @param names names of products
 	 * @return information about a products
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Project>> getProductsByName(Collection<String> names);
@@ -96,7 +90,6 @@ public interface BugzillaProductRestClient {
 	 * Retrieves information about selectable product.
 	 *
 	 * @return information about products
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Project>> getSelectableProducts();
@@ -105,7 +98,6 @@ public interface BugzillaProductRestClient {
 	 * Retrieves information about enterable product.
 	 *
 	 * @return information about products
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Project>> getEnterableProducts();
@@ -115,7 +107,6 @@ public interface BugzillaProductRestClient {
 	 * Retrieves information about accessible product.
 	 *
 	 * @return information about products
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Project>> getAccessibleProducts();

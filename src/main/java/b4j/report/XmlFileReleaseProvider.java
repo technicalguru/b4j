@@ -31,12 +31,13 @@ import b4j.core.DefaultIssue;
 
 /**
  * Loads release information from a XML file.
+ * <p>
  * The XML file contains &lt;Release&gt; tags.
  * Each release is configured with name and timestamp of the release:
- * <p>
+ * </p>
 <pre>
 &lt;Release timestamp="2008-06-10 00:00"&gt;
-	&lt;Name>Release 20080610&lt;/Name&gt;
+	&lt;Name&gt;Release 20080610&lt;/Name&gt;
 &lt;/Release&gt;
 </pre>
  * @author Ralph Schuster
@@ -57,7 +58,7 @@ public class XmlFileReleaseProvider extends AbstractFileReleaseProvider {
  * <p>
 <pre>
 &lt;Release timestamp="2008-06-10 00:00"&gt;
-	&lt;Name>Release 20080610&lt;/Name&gt;
+	&lt;Name&gt;Release 20080610&lt;/Name&gt;
 &lt;/Release&gt;
 </pre>
 	 * @param file - file to load releases from

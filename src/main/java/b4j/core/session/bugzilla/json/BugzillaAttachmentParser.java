@@ -26,12 +26,12 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
+
 import b4j.core.Attachment;
 import b4j.core.DefaultAttachment;
 import b4j.core.session.bugzilla.async.AsyncBugzillaRestClient;
 import b4j.util.BugzillaUtils;
-
-import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 
 /**
  * Parses the product for Bugzilla REST API.
@@ -69,7 +69,13 @@ public class BugzillaAttachmentParser extends AbstractJsonParser implements Json
 	public Attachment parseSingleAttachment(JSONObject json) throws JSONException {
 		DefaultAttachment rc = new DefaultAttachment(json.getString("bug_id"));
 		rc.setId(json.getString("id"));
-		rc.setDescription(json.getString("description"));
+		String description = "(none)";
+		if (json.has("description")) {
+			description = json.getString("description");
+		} else if (json.has("summary")) {
+			description = json.getString("summary");
+		}
+		rc.setDescription(description);
 		rc.setFilename(json.getString("file_name"));
 		rc.setContent(json.getInt("size"), json.getString("data"));
 		rc.setType(json.getString("content_type"));

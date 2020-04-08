@@ -35,7 +35,7 @@ import org.apache.commons.configuration.ConfigurationException;
  *             This is an additional entry defined in the report configuration for 1.0
  *             And this is the 2nd entry defined in the report configuration
  *          &lt;/Release&gt;
- *       &lt;/ChangeLogEntryProvider>
+ *       &lt;/ChangeLogEntryProvider&gt;
  * </pre>
  * @author Ralph Schuster
  *

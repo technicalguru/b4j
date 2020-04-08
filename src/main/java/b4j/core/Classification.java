@@ -27,16 +27,22 @@ public interface Classification extends BugzillaObject {
 
 	/**
 	 * Returns the ID.
+	 * 
+	 * @return ID of classification
 	 */
 	public String getId();
 
 	/**
 	 * Returns the name.
+	 * 
+	 * @return name of classification
 	 */
 	public String getName();
 
 	/**
 	 * Returns the description.
+	 * 
+	 * @return description of classification
 	 */
 	public String getDescription();
 

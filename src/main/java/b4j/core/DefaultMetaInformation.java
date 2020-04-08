@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,12 +30,11 @@ import java.util.List;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.io.Charsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.configuration.ConfigurationUtils;
 import b4j.report.BugzillaReportGenerator;
+import rs.baselib.configuration.ConfigurationUtils;
 
 
 /**
@@ -59,6 +59,8 @@ public class DefaultMetaInformation extends AbstractBugzillaObject implements Me
 	
 	/**
 	 * Constructor with XML configuration file.
+	 * @param metaFile - the XML file to read
+	 * @throws Exception - if an error occurs
 	 */
 	public DefaultMetaInformation(File metaFile) throws Exception {
 		read(metaFile);
@@ -70,7 +72,7 @@ public class DefaultMetaInformation extends AbstractBugzillaObject implements Me
 	 * @throws Exception - if an error occurs
 	 */
 	public void read(File metaFile) throws Exception {
-			read(new InputStreamReader(new FileInputStream(metaFile), Charsets.UTF_8));
+			read(new InputStreamReader(new FileInputStream(metaFile), StandardCharsets.UTF_8));
 	}
 
 	/**

@@ -1,33 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:48:08 CET 2014: bugzilla-21</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">CSV Utility Package</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-21</comment>
 <entry key="summary">Adding JUnit Test for CSVReader and CSVWriter</entry>
-<entry key="comments">list:34,32,30</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">21</entry>
-<entry key="creationTimestamp">1284730140000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">enhancement</entry>
-<entry key="fixVersions">list:2.0.1</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:30,32,34</entry>
+<entry key="attachments">list:2</entry>
 <entry key="description">Created attachment 2
 JUnit 4 Testclass for the CSVReader and CSVWriter functionality
 
 I've created a simple JUnit Test for the CSV functionality. May be you can use it...
 
 (see attached file)</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
+<entry key="project">CSV Utility Package</entry>
 <entry key="reporter">eldn</entry>
-<entry key="updateTimestamp">1285146470000</entry>
-<entry key="assignee">admin</entry>
+<entry key="fixVersions">list:2.0.1</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
 <entry key="priority">P3</entry>
-<entry key="attachments">list:2</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Wed Sep 22 11:07:50 CEST 2010</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Fri Sep 17 15:29:34 CEST 2010</entry>
+<entry key="links">null</entry>
+<entry key="id">21</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

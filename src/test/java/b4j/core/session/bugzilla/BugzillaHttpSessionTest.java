@@ -24,18 +24,16 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.io.Charsets;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import rs.baselib.io.FileFinder;
-import rs.baselib.util.CommonUtils;
 import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
@@ -43,6 +41,8 @@ import b4j.core.Issue;
 import b4j.core.session.BugzillaHttpSession;
 import b4j.core.util.CommentTest;
 import b4j.core.util.IssueTest;
+import rs.baselib.io.FileFinder;
+import rs.baselib.util.CommonUtils;
 
 /**
  * Bugzilla Session test
@@ -96,8 +96,10 @@ public class BugzillaHttpSessionTest {
 			assertTrue("Issue "+id+" is not expected", expectedBugs.contains(id));
 			expectedBugs.remove(id);
 			
+			//issueTest.save(issue);
 			issueTest.test(issue);
 			for (Comment c : issue.getComments()) {
+				//commentTest.save(c);
 				commentTest.test(c);
 			}
 			testSpecials(session, issue);
@@ -116,7 +118,7 @@ public class BugzillaHttpSessionTest {
 		if (issue.getId().equals("30")) {
 			Attachment attchmt = issue.getAttachment("3");
 			assertNotNull("No attachment found", attchmt);
-			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt), Charsets.UTF_8));
+			BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt), StandardCharsets.UTF_8));
 			String s = null;
 			s = r.readLine();
 			s = r.readLine();

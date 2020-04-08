@@ -1,21 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:48:05 CET 2014: bugzilla-19</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">CSV Utility Package</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-19</comment>
 <entry key="summary">DefaultExcelFormatter: This Style does not belong to the supplied Workbook.</entry>
-<entry key="comments">list:27,28</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">19</entry>
-<entry key="creationTimestamp">1274354400000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">normal</entry>
-<entry key="fixVersions">list:2.0</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:27,28</entry>
+<entry key="attachments">list:null</entry>
 <entry key="description">Following exception is thrown when DefaultExcelFormatter (e.g. INSTANCE) is reused for a different workbook:
 
 SEVERE: This Style does not belong to the supplied Workbook. Are you trying to assign a style from one workbook to the cell of a differnt workbook?
@@ -29,12 +20,21 @@ java.lang.IllegalArgumentException: This Style does not belong to the supplied W
         at csv.impl.ExcelWriter.setValue(ExcelWriter.java:219)
         at csv.impl.ExcelWriter.printRow(ExcelWriter.java:156)
         at csv.impl.ExcelWriter.printRow(ExcelWriter.java:140)</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
+<entry key="project">CSV Utility Package</entry>
 <entry key="reporter">admin</entry>
-<entry key="updateTimestamp">1276590472000</entry>
-<entry key="assignee">admin</entry>
+<entry key="fixVersions">list:2.0</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
 <entry key="priority">P3</entry>
-<entry key="attachments">list:null</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Tue Jun 15 10:27:52 CEST 2010</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Thu May 20 13:20:31 CEST 2010</entry>
+<entry key="links">null</entry>
+<entry key="id">19</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

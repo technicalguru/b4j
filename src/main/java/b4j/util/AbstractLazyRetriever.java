@@ -136,7 +136,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		classificationIdQueue.remove(LangUtils.getLong(classification.getId()));
 	}
 
-	/** Searches the classification whether it is already loaded */
+	/** 
+	 * Searches the classification whether it is already loaded.
+	 * @param name - name of classification
+	 * @return the classification found or {@code null}
+	 */
 	protected Classification searchClassification(String name) {
 		for (Classification o : classifications) {
 			if (name.equals(o.getName())) return o;
@@ -144,7 +148,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return null;
 	}
 
-	/** Searches the classification whether it is already loaded */
+	/** 
+	 * Searches the classification whether it is already loaded
+	 * @param name - ID of classification
+	 * @return the classification found or {@code null}
+	 */
 	protected Classification searchClassification(long id) {
 		for (Classification o : classifications) {
 			String oid = o.getId();
@@ -153,12 +161,18 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return null;
 	}
 
-	/** Returns the classifications */
+	/** 
+	 * Returns the classification names.
+	 * @return list of classification names
+	 */
 	protected Collection<String> getClassificationNames() {
 		return classificationNameQueue;
 	}
 
-	/** Returns the classifications */
+	/** 
+	 * Returns the classification IDs.
+	 * @return list of classification IDs
+	 */
 	protected Collection<Long> getClassificationIds() {
 		return classificationIdQueue;
 	}
@@ -183,7 +197,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the project whether it is already loaded */
+	/** 
+	 * Searches a project by ID.
+	 * @param id - ID of project
+	 * @return project if found or {@code null}
+	 */
 	protected Project searchProject(long id) {
 		for (Project o : projects) {
 			String oid = o.getId();
@@ -192,7 +210,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return null;
 	}
 
-	/** Searches the project whether it is already loaded */
+	/** 
+	 * Searches a project by name.
+	 * @param name - name of project
+	 * @return project if found or {@code null}
+	 */
 	protected Project searchProject(String name) {
 		for (Project o : projects) {
 			String oid = o.getName();
@@ -214,12 +236,18 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Returns the projects */
+	/** 
+	 * Returns the project IDs.
+	 * @return the project IDs
+	 */
 	protected Collection<Long> getProjectIds() {
 		return projectIdQueue;
 	}
 
-	/** Returns the projects */
+	/** 
+	 * Returns the project names.
+	 * @return names of projects
+	 */
 	protected Collection<String> getProjectNames() {
 		return projectNameQueue;
 	}
@@ -239,7 +267,12 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the component whether it is already loaded */
+	/** 
+	 * Searches the component whether it is already loaded.
+	 * @param projectName - name of project for component
+	 * @param name - name of component
+	 * @return the component if loaded, {@code null} otherwise
+	 */
 	protected Component searchComponent(String projectName, String name) {
 		for (Component o : components) {
 			if (name.equals(o.getName()) && projectName.equals(o.getProject().getName())) return o;
@@ -283,17 +316,27 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Returns the users */
+	/** 
+	 * Returns the user names.
+	 * @return list of user names
+	 */
 	protected Collection<String> getUserNames() {
 		return userNameQueue;
 	}
 
-	/** Returns the users */
+	/** 
+	 * Returns the user IDs.
+	 * @return list of user IDs
+	 */
 	protected Collection<Long> getUserIds() {
 		return userIdQueue;
 	}
 
-	/** Searches the user whether it is already loaded */
+	/** 
+	 * Searches a user by name whether he/she is already loaded.
+	 * @param name - name of user
+	 * @return user if found or {@code null}
+	 */
 	protected User searchUser(String name) {
 		for (User o : users) {
 			if (name.equals(o.getName())) return o;
@@ -301,7 +344,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return null;
 	}
 
-	/** Searches the user whether it is already loaded */
+	/** 
+	 * Searches a user by ID  whether he/she is already loaded.
+	 * @param id - ID of user
+	 * @return user if found or {@code null}
+	 */
 	protected User searchUser(long id) {
 		for (User o : users) {
 			String oid = o.getId();
@@ -330,7 +377,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the comment whether it is already loaded */
+	/** 
+	 * Searches comments whether they are already loaded.
+	 * @param issueId - ID of issue for comments
+	 * @return list of collections when loaded, {@code null} otherwise.
+	 */
 	protected Collection<Comment> searchComment(String issueId) {
 		if (comments.containsKey(issueId)) return comments.get(issueId);
 		return null;
@@ -345,7 +396,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		this.comments.put(issueId, comments);
 	}
 
-	/** Returns the comments */
+	/** 
+	 * Returns the comments.
+	 * @return list of comments loaded.
+	 */
 	protected Collection<String> getCommentIssues() {
 		return commentQueue;
 	}
@@ -360,7 +414,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the attachment whether it is already loaded */
+	/** 
+	 * Searches the attachments whether they are already loaded.
+	 * @param issueID - ID of issue
+	 * @return the attachments if loaded, {@code null} otherwise
+	 */
 	protected Set<Attachment> searchAttachment(String issueId) {
 		return attachments.get(issueId);
 	}
@@ -389,7 +447,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the priority whether it is already loaded */
+	/** 
+	 * Searches the priority whether it is already loaded.
+	 * @param name - name of priority
+	 * @return the priority if loaded, {@code null} otherwise
+	 */
 	protected Priority searchPriority(String name) {
 		for (Priority o : priorities) {
 			if (name.equals(o.getName())) return o;
@@ -406,7 +468,9 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		priorityNameQueue.remove(priority.getName());
 	}
 
-	/** Returns the priorities */
+	/** Returns the priority names.
+	 * @return list of priority names
+	 */
 	protected Collection<String> getPriorityNames() {
 		return priorityNameQueue;
 	}
@@ -421,7 +485,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the severity whether it is already loaded */
+	/** 
+	 * Searches the severity whether it is already loaded.
+	 * @param name - name of severity
+	 * @return the severity if loaded, {@code null} otherwise
+	 */
 	protected Severity searchSeverity(String name) {
 		for (Severity o : severities) {
 			if (name.equals(o.getName())) return o;
@@ -438,7 +506,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		severityNameQueue.remove(severity.getName());
 	}
 
-	/** Returns the severities */
+	/** 
+	 * Returns the severity names.
+	 * @return the {@link Severity} names.
+	 */
 	protected Collection<String> getSeverityNames() {
 		return severityNameQueue;
 	}
@@ -453,7 +524,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the status whether it is already loaded */
+	/** 
+	 * Searches the status whether it is already loaded.
+	 * @param name - status of priority
+	 * @return the status if loaded, {@code null} otherwise
+	 */
 	protected Status searchStatus(String name) {
 		for (Status o : status) {
 			if (name.equals(o.getName())) return o;
@@ -470,7 +545,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		statusNameQueue.remove(status.getName());
 	}
 
-	/** Returns the status */
+	/** 
+	 * Returns the status names.
+	 * @return list of status names.
+	 */
 	protected Collection<String> getStatusNames() {
 		return statusNameQueue;
 	}
@@ -485,7 +563,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the resolution whether it is already loaded */
+	/** 
+	 * Searches the resolution whether it is already loaded.
+	 * @param name - name of resolution
+	 * @return the resolution if loaded, {@code null} otherwise
+	 */
 	protected Resolution searchResolution(String name) {
 		for (Resolution o : resolutions) {
 			if (name.equals(o.getName())) return o;
@@ -502,7 +584,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		resolutionNameQueue.remove(resolution.getName());
 	}
 
-	/** Returns the resolutions */
+	/** 
+	 * Returns the resolution names.
+	 * @return list of resolution names
+	 */
 	protected Collection<String> getResolutionNames() {
 		return resolutionNameQueue;
 	}
@@ -517,7 +602,11 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the issue type whether it is already loaded */
+	/** 
+	 * Searches the issue type whether it is already loaded.
+	 * @param name - name of issue type
+	 * @return the issue type if loaded, {@code null} otherwise
+	 */
 	protected IssueType searchIssueType(String name) {
 		for (IssueType o : issueTypes) {
 			if (name.equals(o.getName())) return o;
@@ -534,7 +623,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		issueTypeNameQueue.remove(issueType.getName());
 	}
 
-	/** Returns the issue types */
+	/** 
+	 * Returns the issue type names.
+	 * @return list of issue type names
+	 */
 	protected Collection<String> getIssueTypeNames() {
 		return issueTypeNameQueue;
 	}
@@ -554,7 +646,12 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		}
 	}
 
-	/** Searches the issue type whether it is already loaded */
+	/** 
+	 * Searches the version whether it is already loaded.
+	 * @param projectName - name of project for version
+	 * @param name - name of version
+	 * @return the version if loaded, {@code null} otherwise
+	 */
 	protected Version searchVersion(String projectName, String name) {
 		for (Version o : versions) {
 			if (name.equals(o.getName()) && projectName.equals(o.getProject().getName())) return o;
@@ -612,7 +709,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the classifications */
+	/** 
+	 * Loads the classifications.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadClassifications() throws Exception;
 
 	/**
@@ -649,7 +749,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the projects */
+	/** 
+	 * Loads the projects.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadProjects() throws Exception;
 
 	/**
@@ -669,7 +772,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the components */
+	/** 
+	 * Loads the components.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadComponents() throws Exception;
 
 	/**
@@ -706,7 +812,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the users */
+	/** 
+	 * Loads the users.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadUsers() throws Exception;
 
 	/**
@@ -726,7 +835,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the comments */
+	/** 
+	 * Loads the comments.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadComments() throws Exception;
 
 	/**
@@ -747,7 +859,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the attachments */
+	/** 
+	 * Loads the attachments.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadAttachments() throws Exception;
 
 	/**
@@ -767,7 +882,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the priorities */
+	/** 
+	 * Loads the priorities.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadPriorities() throws Exception;
 
 	/**
@@ -787,7 +905,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the severities */
+	/** 
+	 * Loads the severities.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadSeverities() throws Exception;
 
 	/**
@@ -807,7 +928,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the status */
+	/** 
+	 * Loads the status.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadStatus() throws Exception;
 
 	/**
@@ -827,7 +951,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the resolutions */
+	/** 
+	 * Loads the resolutions.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadResolutions() throws Exception;
 
 	/**
@@ -847,7 +974,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the issue types */
+	/** 
+	 * Loads the issue types.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadIssueTypes() throws Exception;
 
 	/**
@@ -867,7 +997,10 @@ public abstract class AbstractLazyRetriever implements LazyRetriever {
 		return rc;
 	}
 
-	/** Loads the issue types */
+	/** 
+	 * Loads the versions.
+	 * @throws Exception when an error occurs
+	 */
 	protected abstract void loadVersions() throws Exception;
 
 }

@@ -39,8 +39,6 @@ public interface BugzillaUserRestClient {
 	 * @param password password
 	 *  
 	 * @return user logged in
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
-	 * @throws javax.security.auth.login.LoginException when login failed
 	 * @since 2.0
 	 */
 	public User login(String user, String password);
@@ -48,7 +46,6 @@ public interface BugzillaUserRestClient {
 	/**
 	 * Logs out.
 	 *
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public void logout();
@@ -58,7 +55,6 @@ public interface BugzillaUserRestClient {
 	 *
 	 * @param ids IDs of users
 	 * @return information about users
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<User>> getUsers(long... ids);
@@ -68,7 +64,6 @@ public interface BugzillaUserRestClient {
 	 *
 	 * @param names names of users
 	 * @return information about users
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<User>> getUsersByName(String... names);
@@ -78,7 +73,6 @@ public interface BugzillaUserRestClient {
 	 *
 	 * @param ids IDs of users
 	 * @return information about users
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<User>> getUsers(Collection<Long> ids);
@@ -88,7 +82,6 @@ public interface BugzillaUserRestClient {
 	 *
 	 * @param names names of users
 	 * @return information about users
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<User>> getUsersByName(Collection<String> names);

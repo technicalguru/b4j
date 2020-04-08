@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:48:03 CET 2014: bugzilla-18</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">B4J - Bugzilla for Java</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-18</comment>
 <entry key="summary">Filter searches on HttpJiraSession does not return when no issue was found</entry>
-<entry key="comments">list:25</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">18</entry>
-<entry key="creationTimestamp">1270673460000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">normal</entry>
-<entry key="fixVersions">list:1.2</entry>
-<entry key="description">Filter searches on HttpJiraSession does not return when no issue was found. The "hasNext()" method hangs.</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
-<entry key="reporter">admin</entry>
-<entry key="updateTimestamp">1345485265000</entry>
-<entry key="assignee">admin</entry>
-<entry key="priority">P3</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:25</entry>
 <entry key="attachments">list:null</entry>
+<entry key="description">Filter searches on HttpJiraSession does not return when no issue was found. The "hasNext()" method hangs.</entry>
+<entry key="project">B4J - Bugzilla for Java</entry>
+<entry key="reporter">admin</entry>
+<entry key="fixVersions">list:1.2</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
+<entry key="priority">P3</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Mon Aug 20 19:54:25 CEST 2012</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Wed Apr 07 22:51:43 CEST 2010</entry>
+<entry key="links">null</entry>
+<entry key="id">18</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

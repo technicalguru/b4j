@@ -18,7 +18,8 @@
 package b4j.core;
 
 import java.util.Collection;
-import java.util.Date;
+
+import rs.baselib.util.RsDate;
 
 /**
  * Interface for a long description entry within a issue record.
@@ -66,14 +67,14 @@ public interface Comment extends BugzillaObject {
 	 * Returns the time of creation of this entry.
 	 * @return the time of creation
 	 */
-	public Date getCreationTimestamp();
+	public RsDate getCreationTimestamp();
 
 	/**
 	 * Sets the time of creation.
 	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param when - the timestamp to set
 	 */
-	public void setCreationTimestamp(Date when);
+	public void setCreationTimestamp(RsDate when);
 
 	/**
 	 * Returns the actual text.
@@ -92,14 +93,14 @@ public interface Comment extends BugzillaObject {
 	 * Returns the date of last update.
 	 * @return date of last update.
 	 */
-	public Date getUpdateTimestamp();
+	public RsDate getUpdateTimestamp();
 	
 	/**
 	 * Sets the date of last update.
 	 * <p><b>Notice to implementors:</b> This method is for internal use only.</p>
 	 * @param lastUpdate date to be set
 	 */
-	public void setUpdateTimestamp(Date lastUpdate);
+	public void setUpdateTimestamp(RsDate lastUpdate);
 	
 	/**
 	 * Returns the author of the last update.

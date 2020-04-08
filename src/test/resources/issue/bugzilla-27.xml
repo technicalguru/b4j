@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:48:20 CET 2014: bugzilla-27</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">CSV Utility Package</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-27</comment>
 <entry key="summary">Add TableReader/TableWriter implementation for XML</entry>
-<entry key="comments">list:47,43</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">27</entry>
-<entry key="creationTimestamp">1286371680000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">enhancement</entry>
-<entry key="fixVersions">list:2.1</entry>
-<entry key="description">Please add a reader and writer implementation for XML files</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
-<entry key="reporter">admin</entry>
-<entry key="updateTimestamp">1297505908000</entry>
-<entry key="assignee">admin</entry>
-<entry key="priority">P3</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:43,47</entry>
 <entry key="attachments">list:null</entry>
+<entry key="description">Please add a reader and writer implementation for XML files</entry>
+<entry key="project">CSV Utility Package</entry>
+<entry key="reporter">admin</entry>
+<entry key="fixVersions">list:2.1</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
+<entry key="priority">P3</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Sat Feb 12 11:18:28 CET 2011</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Wed Oct 06 15:28:13 CEST 2010</entry>
+<entry key="links">null</entry>
+<entry key="id">27</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

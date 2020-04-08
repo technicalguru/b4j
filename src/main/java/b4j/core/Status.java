@@ -27,6 +27,7 @@ public interface Status extends BugzillaObject {
 
 	/**
 	 * Returns the name.
+	 * @return the name of the status
 	 */
 	public String getName();
 

@@ -32,6 +32,7 @@ public class BugzillaIssueType extends AbstractBugzillaObject implements IssueTy
 	
 	/**
 	 * Constructor.
+	 * @param issueType - issue type name
 	 */
 	public BugzillaIssueType(String issueType) {
 		this.issueType = issueType;

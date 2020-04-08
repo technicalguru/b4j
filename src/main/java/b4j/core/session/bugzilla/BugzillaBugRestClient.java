@@ -40,7 +40,6 @@ public interface BugzillaBugRestClient {
 	 *
 	 * @param ids IDs of bugs
 	 * @return information about bugs
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Issue>> getBugs(long... ids);
@@ -50,7 +49,6 @@ public interface BugzillaBugRestClient {
 	 *
 	 * @param ids IDs of bugs
 	 * @return information about bugs
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Issue>> getBugs(Collection<Long> ids);
@@ -61,7 +59,6 @@ public interface BugzillaBugRestClient {
 	 * @param criteria Map of field matching criteria according to 
 	 * <a href="http://www.bugzilla.org/docs/4.4/en/html/api/Bugzilla/WebService/Bug.html#search">Bugzilla Search API</a>.
 	 * @return information about bugs
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Issue>> findBugs(Map<String,Object> criteria);
@@ -71,7 +68,6 @@ public interface BugzillaBugRestClient {
 	 *
 	 * @param issueIds IDs of issues
 	 * @return information about attachments
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Attachment>> getAttachments(String... issueIds);
@@ -81,7 +77,6 @@ public interface BugzillaBugRestClient {
 	 *
 	 * @param issueIds IDs of issues
 	 * @return information about attachments
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Attachment>> getAttachments(Collection<String> issueIds);
@@ -91,7 +86,6 @@ public interface BugzillaBugRestClient {
 	 *
 	 * @param issueIds IDs of issues the comments shall be retrieved for
 	 * @return information about comments
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Comment>> getComments(String... issueIds);
@@ -101,7 +95,6 @@ public interface BugzillaBugRestClient {
 	 *
 	 * @param issueIds IDs of issues the comments shall be retrieved for
 	 * @return information about comments
-	 * @throws RestClientException in case of problems (connectivity, malformed messages, etc.)
 	 * @since 2.0
 	 */
 	public Promise<Iterable<Comment>> getComments(Collection<String> issueIds);

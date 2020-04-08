@@ -27,6 +27,7 @@ public interface Resolution extends BugzillaObject {
 
 	/**
 	 * Returns the name.
+	 * @return the name of the resolution code
 	 */
 	public String getName();
 

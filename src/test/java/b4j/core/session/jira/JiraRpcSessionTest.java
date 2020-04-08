@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,21 +34,20 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.io.Charsets;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.io.FileFinder;
-import rs.baselib.util.CommonUtils;
 import b4j.core.Attachment;
 import b4j.core.Comment;
 import b4j.core.DefaultSearchData;
 import b4j.core.Issue;
 import b4j.core.session.JiraRpcSession;
 import b4j.core.util.CommentTest;
+import rs.baselib.io.FileFinder;
+import rs.baselib.util.CommonUtils;
 
 /**
  * Jira session test for {@link b4j.core.session.JiraRpcSession JiraRpcSession}.
@@ -60,7 +60,7 @@ public class JiraRpcSessionTest {
 	private static Logger log = LoggerFactory.getLogger(JiraRpcSessionTest.class);
 
 	static {
-		addCommentAttachment("CSV-28", "http://jira.ralph-schuster.eu/rest/api/2/attachment/10100");
+		addCommentAttachment("CSV-28", "https://jira.ralph-schuster.eu/rest/api/2/attachment/10100");
 	}
 
 	private static void addCommentAttachment(String id, String attachmentId) {
@@ -260,9 +260,9 @@ public class JiraRpcSessionTest {
 		Issue issue = session.getIssue("CSV-23");
 		assertNotNull("Cannot load issue: CSV-23", issue);
 		
-		Attachment attchmt = issue.getAttachment("http://jira.ralph-schuster.eu/rest/api/2/attachment/10002");
+		Attachment attchmt = issue.getAttachment("https://jira.ralph-schuster.eu/rest/api/2/attachment/10002");
 		assertNotNull("No attachment found", attchmt);
-		BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt), Charsets.UTF_8));
+		BufferedReader r = new BufferedReader(new InputStreamReader(session.getAttachment(attchmt), StandardCharsets.UTF_8));
 		String s = null;
 		s = r.readLine();
 		s = r.readLine();

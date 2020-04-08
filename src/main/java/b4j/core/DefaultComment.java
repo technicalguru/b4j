@@ -19,9 +19,10 @@ package b4j.core;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import rs.baselib.util.RsDate;
 
 /**
  * A long description entry.
@@ -38,19 +39,20 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	private String issueId;
 	private String id;
 	private User author;
-	private Date when;
+	private RsDate when;
 	private String theText;
-	private Date lastUpdate;
+	private RsDate lastUpdate;
 	private User updateAuthor;
 	private Set<String> attachments;
 
 	/**
 	 * Default Constructor.
+	 * @param issueId - ID of issue this comment belongs to
 	 */
 	public DefaultComment(String issueId) {
 		this.issueId = issueId;
 		id = "unknown";
-		when = new Date(0);
+		when = new RsDate(0);
 		attachments = new HashSet<String>();
 	}
 
@@ -98,7 +100,7 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getCreationTimestamp() {
+	public RsDate getCreationTimestamp() {
 		return when;
 	}
 
@@ -106,8 +108,8 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCreationTimestamp(Date when) {
-		this.when.setTime(when.getTime());
+	public void setCreationTimestamp(RsDate when) {
+		this.when = when;
 	}
 
 	/**
@@ -130,7 +132,7 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Date getUpdateTimestamp() {
+	public RsDate getUpdateTimestamp() {
 		if (lastUpdate != null) return lastUpdate;
 		return getCreationTimestamp();
 	}
@@ -139,7 +141,7 @@ public class DefaultComment extends AbstractBugzillaObject implements Comment {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setUpdateTimestamp(Date lastUpdate) {
+	public void setUpdateTimestamp(RsDate lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

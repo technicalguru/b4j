@@ -27,6 +27,7 @@ public interface IssueType extends BugzillaObject {
 
 	/**
 	 * Returns the name.
+	 * @return the name of the issue type
 	 */
 	public String getName();
 

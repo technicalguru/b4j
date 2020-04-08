@@ -23,12 +23,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
 import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.io.Charsets;
 
 import b4j.core.DefaultIssue;
 
@@ -62,7 +62,7 @@ public class TextFileReleaseProvider extends AbstractFileReleaseProvider {
 		String line = null;
 		BufferedReader reader = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), Charsets.UTF_8));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
 			DateFormat parser = DefaultIssue.DATETIME_WITHOUT_SEC();
 			while ((line = reader.readLine()) != null) {
 				line = line.trim();

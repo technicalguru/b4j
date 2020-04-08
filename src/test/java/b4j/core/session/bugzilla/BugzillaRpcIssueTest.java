@@ -32,6 +32,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import rs.baselib.io.FileFinder;
 import b4j.core.Issue;
@@ -50,7 +52,10 @@ public class BugzillaRpcIssueTest {
 
 	private static BugzillaRpcSession session;
 	private static IssueTest issueTest = new IssueTest();
-
+	private static int dataCount = 0;
+	private static int dataIndex = 0;
+	private static Logger log = LoggerFactory.getLogger(BugzillaRpcIssueTest.class);
+	
 	@BeforeClass
 	public static void setup() throws Exception {
 		URL url = FileFinder.find(BugzillaRpcIssueTest.class, "local-test-config.xml");
@@ -73,9 +78,18 @@ public class BugzillaRpcIssueTest {
 	@Parameters
 	public static Collection<Object[]> data() throws Exception {
 		Collection<Object[]> data = new ArrayList<Object[]>();
+		// For debugging only to shorten tests
+		int count = 5;
 		for (String s : issueTest.getTestables(null)) {
-			if (s.startsWith("bugzilla-")) data.add(new Object[] { s.substring(9) });
+			if (s.startsWith("bugzilla-")) {
+				data.add(new Object[] { s.substring(9) });
+				count++;
+			}
+			if (count <= 0) break;
 		}
+		dataCount = data.size();
+		dataIndex = 0;
+		log.info(dataCount+" subtests found");
 		return data;
 	}
 	
@@ -95,7 +109,11 @@ public class BugzillaRpcIssueTest {
 	public void test() throws Exception {
 		// Search a simple bug
 		Issue issue = session.getIssue(id);
+		//LoggerFactory.getLogger(getClass()).debug("New Test: "+id);
+		dataIndex++;
+		log.info(dataIndex+"/"+dataCount+" (bugzilla-"+id+")");
 		assertNotNull(issue);
+		//issueTest.save(issue);
 		issueTest.test(issue);
 	}
 

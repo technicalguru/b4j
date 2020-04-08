@@ -20,21 +20,21 @@ package b4j;
 import java.io.File;
 
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.cli.Parser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import rs.baselib.util.CommonUtils;
 import b4j.core.DefaultMetaInformation;
 import b4j.core.Issue;
 import b4j.core.MetaInformation;
 import b4j.core.Session;
 import b4j.report.BugzillaReportGenerator;
+import rs.baselib.util.CommonUtils;
 
 /**
  * Main task object that creates a report from Bugzilla.
@@ -122,7 +122,7 @@ public class GenerateReports implements Runnable {
 			log.info("GenerateReports started");
 
 			// Parse the command line
-			Parser parser = new GnuParser();
+			CommandLineParser parser = new DefaultParser();
 			CommandLine cl = parser.parse(getCommandLineOptions(), args);
 
 			// Get the report data

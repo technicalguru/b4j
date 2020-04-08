@@ -1,28 +1,28 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:48:28 CET 2014: bugzilla-32</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">B4J - Bugzilla for Java</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-32</comment>
 <entry key="summary">Java 6 doesn't know HttpOnly Cookie attribute</entry>
-<entry key="comments">list:52</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">32</entry>
-<entry key="creationTimestamp">1344359040000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">major</entry>
-<entry key="fixVersions">list:1.0</entry>
-<entry key="description">Java 6 HttpCookie cannot parse cookies with HttpOnly attribute set. This causes login problems in B4J</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
-<entry key="reporter">admin</entry>
-<entry key="updateTimestamp">1345485279000</entry>
-<entry key="assignee">admin</entry>
-<entry key="priority">P3</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:52</entry>
 <entry key="attachments">list:null</entry>
+<entry key="description">Java 6 HttpCookie cannot parse cookies with HttpOnly attribute set. This causes login problems in B4J</entry>
+<entry key="project">B4J - Bugzilla for Java</entry>
+<entry key="reporter">admin</entry>
+<entry key="fixVersions">list:1.0</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
+<entry key="priority">P3</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Mon Aug 20 19:54:39 CEST 2012</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Tue Aug 07 19:04:27 CEST 2012</entry>
+<entry key="links">null</entry>
+<entry key="id">32</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

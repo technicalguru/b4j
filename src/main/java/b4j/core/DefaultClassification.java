@@ -38,6 +38,7 @@ public class DefaultClassification extends AbstractBugzillaObject implements Cla
 
 	/**
 	 * Constructor.
+	 * @param id - ID of classification
 	 */
 	public DefaultClassification(String id) {
 		this(id, null, null);
@@ -45,6 +46,9 @@ public class DefaultClassification extends AbstractBugzillaObject implements Cla
 
 	/**
 	 * Constructor.
+	 * @param id - ID of classification
+	 * @param name - name of classification
+	 * @param description - description of classification
 	 */
 	public DefaultClassification(String id, String name, String description) {
 		setId(id);

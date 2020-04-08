@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:09:17 CET 2014: bugzilla-31</comment>
+<comment>Saved Mon Mar 30 22:31:42 CEST 2020: bugzilla-31</comment>
+<entry key="issueId">20</entry>
 <entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1284829344000</entry>
-<entry key="updateAuthor">admin</entry>
 <entry key="author">admin</entry>
-<entry key="updateTimestamp">1284829344000</entry>
+<entry key="creationTimestamp">Sat Sep 18 19:02:24 CEST 2010</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="id">31</entry>
 <entry key="text">Code works as designed. "Ignoring comments" means that comment lines will not be delivered by next() method but notified to registered CommentCallback object.
 
 Therefore the given code block must be executed only when "ignoreComments" is set to true. Otherwise, the line to be processed will interpreted as data row.</entry>
-<entry key="issueId">20</entry>
-<entry key="id">31</entry>
+<entry key="updateTimestamp">Sat Sep 18 19:02:24 CEST 2010</entry>
 </properties>

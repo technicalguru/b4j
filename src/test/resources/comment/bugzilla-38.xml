@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:09:25 CET 2014: bugzilla-38</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1285661858000</entry>
-<entry key="updateAuthor">admin</entry>
-<entry key="author">admin</entry>
-<entry key="updateTimestamp">1285661858000</entry>
-<entry key="text">Add a reader implementation for JDBC.</entry>
+<comment>Saved Mon Mar 30 22:31:42 CEST 2020: bugzilla-38</comment>
 <entry key="issueId">24</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">admin</entry>
+<entry key="creationTimestamp">Tue Sep 28 10:17:38 CEST 2010</entry>
+<entry key="updateAuthor">admin</entry>
 <entry key="id">38</entry>
+<entry key="text">Add a reader implementation for JDBC.</entry>
+<entry key="updateTimestamp">Tue Sep 28 10:17:38 CEST 2010</entry>
 </properties>

@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Sun Jul 06 17:22:32 CEST 2014: jira-10702</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1390238726000</entry>
-<entry key="updateAuthor">Ralph Schuster</entry>
-<entry key="author">Ralph Schuster</entry>
-<entry key="updateTimestamp">1390238773000</entry>
-<entry key="text">test-config.xml and test-jira-config.xml can be overruled by local-test-config.xml and local-test-jira-config.xml files in the src/test/resources directory. The test classes will find them automatically.</entry>
+<comment>Saved Mon Mar 30 22:15:41 CEST 2020: jira-10702</comment>
 <entry key="issueId">BFJ-32</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">Ralph Schuster</entry>
+<entry key="creationTimestamp">Mon Jan 20 17:25:26 CET 2014</entry>
+<entry key="updateAuthor">Ralph Schuster</entry>
 <entry key="id">10702</entry>
+<entry key="text">test-config.xml and test-jira-config.xml can be overruled by local-test-config.xml and local-test-jira-config.xml files in the src/test/resources directory. The test classes will find them automatically.</entry>
+<entry key="updateTimestamp">Mon Jan 20 17:26:13 CET 2014</entry>
 </properties>

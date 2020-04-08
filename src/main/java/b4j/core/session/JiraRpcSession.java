@@ -29,7 +29,22 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.joda.time.DateTime;
 
-import rs.baselib.lang.LangUtils;
+import com.atlassian.httpclient.api.HttpClient;
+import com.atlassian.jira.rest.client.JiraRestClient;
+import com.atlassian.jira.rest.client.JiraRestClientFactory;
+import com.atlassian.jira.rest.client.domain.BasicComponent;
+import com.atlassian.jira.rest.client.domain.BasicIssue;
+import com.atlassian.jira.rest.client.domain.BasicIssueType;
+import com.atlassian.jira.rest.client.domain.BasicPriority;
+import com.atlassian.jira.rest.client.domain.BasicProject;
+import com.atlassian.jira.rest.client.domain.BasicResolution;
+import com.atlassian.jira.rest.client.domain.BasicStatus;
+import com.atlassian.jira.rest.client.domain.BasicUser;
+import com.atlassian.jira.rest.client.domain.SearchResult;
+import com.atlassian.jira.rest.client.domain.Version;
+import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
+import com.atlassian.util.concurrent.Promise;
+
 import b4j.core.Attachment;
 import b4j.core.DefaultAttachment;
 import b4j.core.DefaultComment;
@@ -46,24 +61,10 @@ import b4j.core.session.jira.JiraSeverity;
 import b4j.core.session.jira.JiraStatus;
 import b4j.core.session.jira.JiraTransformer;
 import b4j.core.session.jira.JiraUser;
+import b4j.core.session.jira.JiraUtils;
 import b4j.core.session.jira.JiraVersion;
 import b4j.util.MetaData;
-
-import com.atlassian.httpclient.api.HttpClient;
-import com.atlassian.jira.rest.client.JiraRestClient;
-import com.atlassian.jira.rest.client.JiraRestClientFactory;
-import com.atlassian.jira.rest.client.domain.BasicComponent;
-import com.atlassian.jira.rest.client.domain.BasicIssue;
-import com.atlassian.jira.rest.client.domain.BasicIssueType;
-import com.atlassian.jira.rest.client.domain.BasicPriority;
-import com.atlassian.jira.rest.client.domain.BasicProject;
-import com.atlassian.jira.rest.client.domain.BasicResolution;
-import com.atlassian.jira.rest.client.domain.BasicStatus;
-import com.atlassian.jira.rest.client.domain.BasicUser;
-import com.atlassian.jira.rest.client.domain.SearchResult;
-import com.atlassian.jira.rest.client.domain.Version;
-import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.atlassian.util.concurrent.Promise;
+import rs.baselib.lang.LangUtils;
 
 /**
  * Provides access to JIRA issues.
@@ -96,10 +97,10 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Configuration allows:<br/>
-	 * &lt;jira-home&gt;URL&lt;/jira-home&gt; - the JIRA base URL<br/>
-	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br/>
-	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)<br/>
+	 * Configuration allows:<br>
+	 * &lt;jira-home&gt;URL&lt;/jira-home&gt; - the JIRA base URL<br>
+	 * &lt;proxy-host&gt; - HTTP proxy (optional)<br>
+	 * &lt;ProxyAuthorization&gt; - HTTP proxy authentication (optional)
 	 */
 	@Override
 	public void configure(Configuration config) throws ConfigurationException {
@@ -319,7 +320,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 	}
 
 	/**
-	 * Creates a issue from the Jira {@link b4j.core.BasicIssue}.
+	 * Creates an issue from the Jira issue.
 	 * @param issue the JIRA issue
 	 * @return the B4J issue 
 	 * @since 2.0.3
@@ -346,7 +347,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 		rc.setProject(projects.get(issue.getProject()));
 		rc.addComponents(components.get(issue.getComponents(), rc.getProject()));
 		rc.setAssignee(users.get(issue.getAssignee()));
-		rc.setCreationTimestamp(issue.getCreationDate().toDate());
+		rc.setCreationTimestamp(JiraUtils.convertDate(issue.getCreationDate()));
 		rc.setUri(issue.getSelf().toString());
 		rc.setServerUri(jiraServerUri.toString());
 		rc.setServerVersion(getBugzillaVersion());
@@ -365,7 +366,7 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 				a.setId(attachment.getSelf().toString());
 				a.setFilename(attachment.getFilename());
 				a.setDescription(attachment.getFilename());
-				a.setDate(attachment.getCreationDate().toDate());
+				a.setDate(JiraUtils.convertDate(attachment.getCreationDate()));
 				a.setType(attachment.getMimeType());
 				a.setUri(attachment.getContentUri());
 				rc.addAttachments(a);
@@ -377,14 +378,14 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 				DefaultComment desc = new DefaultComment(rc.getId());
 				desc.setId(""+comment.getId());
 				desc.setTheText(comment.getBody());
-				desc.setCreationTimestamp(comment.getCreationDate().toDate());
+				desc.setCreationTimestamp(JiraUtils.convertDate(comment.getCreationDate()));
 				desc.setAuthor(users.get(comment.getAuthor()));
 				desc.setUpdateAuthor(users.get(comment.getAuthor()));
-				desc.setUpdateTimestamp(comment.getUpdateDate().toDate());
+				desc.setUpdateTimestamp(JiraUtils.convertDate(comment.getUpdateDate()));
 				rc.addComments(desc);
 			}
 		}
-		rc.setUpdateTimestamp(issue.getUpdateDate().toDate());
+		rc.setUpdateTimestamp(JiraUtils.convertDate(issue.getUpdateDate()));
 		DateTime d = issue.getDueDate();
 		if (d != null) rc.set(Issue.DEADLINE, d.toDate());
 		return rc;
@@ -579,7 +580,8 @@ public class JiraRpcSession extends AbstractAtlassianHttpClientSession {
 			} else if (searchData.hasParameter("key")) {
 				promise = jiraClient.getSearchClient().searchJql("key in ("+join(searchData.get("key"))+")", maxResults, startAt);
 			}
-			return promise.get();
+			if (promise != null) return promise.get();
+			throw new Exception("No JQL parameters given in searchData (key, filzterId or jql");
 		}
 		
 		/**

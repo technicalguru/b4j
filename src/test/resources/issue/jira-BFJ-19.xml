@@ -11,7 +11,7 @@
 <entry key="comments">list:null</entry>
 <entry key="components">list:null</entry>
 <entry key="id">BFJ-19</entry>
-<entry key="creationTimestamp">1359569919000</entry>
+<entry key="creationTimestamp">Wed Jan 30 18:18:39 CET 2013</entry>
 <entry key="status">Closed</entry>
 <entry key="resolution">Fixed</entry>
 <entry key="severity">Normal</entry>
@@ -79,7 +79,7 @@ HttpBugzillaSession, lines 579 and following should change to:&#13;
 <entry key="affectedVersions">list:1.4.0</entry>
 <entry key="parentId">null</entry>
 <entry key="reporter">Ralph Schuster</entry>
-<entry key="updateTimestamp">1380275468000</entry>
+<entry key="updateTimestamp">Fri Sep 27 09:51:08 CEST 2013</entry>
 <entry key="assignee">Ralph Schuster</entry>
 <entry key="priority">Normal</entry>
 <entry key="attachments">list:null</entry>

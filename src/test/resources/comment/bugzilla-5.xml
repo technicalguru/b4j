@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:08:47 CET 2014: bugzilla-5</comment>
+<comment>Saved Mon Mar 30 22:31:42 CEST 2020: bugzilla-5</comment>
+<entry key="issueId">4</entry>
 <entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1245668201000</entry>
-<entry key="updateAuthor">admin</entry>
 <entry key="author">admin</entry>
-<entry key="updateTimestamp">1245668201000</entry>
+<entry key="creationTimestamp">Mon Jun 22 12:56:41 CEST 2009</entry>
+<entry key="updateAuthor">admin</entry>
+<entry key="id">5</entry>
 <entry key="text">When a multiline value looks in one line like a comment, the parsing fails when this specific line also ends the multiline value, e.g.
 
 "Line1
 Line2
 #Line3"
 Last line was the problem</entry>
-<entry key="issueId">4</entry>
-<entry key="id">5</entry>
+<entry key="updateTimestamp">Mon Jun 22 12:56:41 CEST 2009</entry>
 </properties>

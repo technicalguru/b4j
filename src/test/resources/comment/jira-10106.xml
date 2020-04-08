@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Sun Jul 06 17:22:38 CEST 2014: jira-10106</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1373293388000</entry>
-<entry key="updateAuthor">Ralph Schuster</entry>
-<entry key="author">Ralph Schuster</entry>
-<entry key="updateTimestamp">1373293388000</entry>
-<entry key="text">HttpJiraSession has been abandoned&#13;
-HTTP Proxy Support is open</entry>
+<comment>Saved Mon Mar 30 22:15:43 CEST 2020: jira-10106</comment>
 <entry key="issueId">BFJ-4</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">Ralph Schuster</entry>
+<entry key="creationTimestamp">Mon Jul 08 14:23:08 CEST 2013</entry>
+<entry key="updateAuthor">Ralph Schuster</entry>
 <entry key="id">10106</entry>
+<entry key="text">HttpJiraSession has been abandoned
+HTTP Proxy Support is open</entry>
+<entry key="updateTimestamp">Mon Jul 08 14:23:08 CEST 2013</entry>
 </properties>

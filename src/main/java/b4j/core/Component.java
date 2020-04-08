@@ -27,21 +27,29 @@ public interface Component extends BugzillaObject {
 
 	/**
 	 * Returns the project for this component.
+	 * 
+	 * @return project of component
 	 */
 	public Project getProject();
 	
 	/**
-	 * Returns the name.
+	 * Returns the ID.
+	 * 
+	 * @return ID of component
 	 */
 	public String getId();
 
 	/**
 	 * Returns the name.
+	 * 
+	 * @return name of component
 	 */
 	public String getName();
 
 	/**
-	 * Returns the name.
+	 * Returns the description.
+	 * 
+	 * @return description of component
 	 */
 	public String getDescription();
 

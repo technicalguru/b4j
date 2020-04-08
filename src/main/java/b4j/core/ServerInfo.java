@@ -29,12 +29,14 @@ public interface ServerInfo extends BugzillaObject {
 
 	/**
 	 * Returns the Base URI.
+	 * @return the base URI of the server
 	 */
 	public URI getBaseUri();
 
 
 	/**
 	 * Returns the version.
+	 * @return the version of the server
 	 */
 	public String getVersion();
 

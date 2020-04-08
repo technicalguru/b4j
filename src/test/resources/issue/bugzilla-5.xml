@@ -1,21 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Fri Jan 31 15:47:39 CET 2014: bugzilla-5</comment>
-<entry key="classification">Java Projects</entry>
-<entry key="links">null</entry>
-<entry key="project">B4J - Bugzilla for Java</entry>
-<entry key="type">bug</entry>
-<entry key="children">list:null</entry>
+<comment>Saved Tue Mar 31 11:26:53 CEST 2020: bugzilla-5</comment>
 <entry key="summary">java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)</entry>
-<entry key="comments">list:6</entry>
-<entry key="components">list:Java Classes</entry>
-<entry key="id">5</entry>
-<entry key="creationTimestamp">1246276860000</entry>
-<entry key="status">CLOSED</entry>
-<entry key="resolution">FIXED</entry>
 <entry key="severity">normal</entry>
-<entry key="fixVersions">list:1.0</entry>
+<entry key="components">list:Java Classes</entry>
+<entry key="comments">list:6</entry>
+<entry key="attachments">list:null</entry>
 <entry key="description">HttpBugzillaSession throws IllegalArgumentException when using proxies without authorization:
 
 java.lang.IllegalArgumentException: Passed in key must select exactly one node: ProxyAuthorizationCallback(0)
@@ -25,12 +16,21 @@ java.lang.IllegalArgumentException: Passed in key must select exactly one node: 
         at b4j.core.DefaultMetaInformation.read(DefaultMetaInformation.java:82)
         at b4j.core.DefaultMetaInformation.read(DefaultMetaInformation.java:71)
         at b4j.GenerateReports.main(GenerateReports.java:136)</entry>
-<entry key="plannedVersions">list:null</entry>
-<entry key="affectedVersions">list:null</entry>
-<entry key="parentId">null</entry>
+<entry key="project">B4J - Bugzilla for Java</entry>
 <entry key="reporter">admin</entry>
-<entry key="updateTimestamp">1345485319000</entry>
-<entry key="assignee">admin</entry>
+<entry key="fixVersions">list:1.0</entry>
+<entry key="type">bug</entry>
+<entry key="classification">Java Projects</entry>
 <entry key="priority">P3</entry>
-<entry key="attachments">list:null</entry>
+<entry key="resolution">FIXED</entry>
+<entry key="updateTimestamp">Mon Aug 20 19:55:19 CEST 2012</entry>
+<entry key="parentId">null</entry>
+<entry key="plannedVersions">list:null</entry>
+<entry key="children">list:null</entry>
+<entry key="creationTimestamp">Mon Jun 29 14:01:16 CEST 2009</entry>
+<entry key="links">null</entry>
+<entry key="id">5</entry>
+<entry key="assignee">admin</entry>
+<entry key="affectedVersions">list:null</entry>
+<entry key="status">CLOSED</entry>
 </properties>

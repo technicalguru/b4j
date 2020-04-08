@@ -37,6 +37,7 @@ public class BugzillaComponent extends AbstractBugzillaObject implements Compone
 	
 	/**
 	 * Constructor.
+	 * @param name - name of component
 	 */
 	public BugzillaComponent(String name) {
 		this.name = name;

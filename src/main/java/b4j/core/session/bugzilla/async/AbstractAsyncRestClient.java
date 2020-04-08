@@ -26,16 +26,16 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import b4j.core.session.bugzilla.async.AsyncBugzillaUserRestClient.LoginToken;
-import b4j.core.session.bugzilla.json.JSONUtils;
-import b4j.util.LazyRetriever;
-
 import com.atlassian.httpclient.api.Response;
 import com.atlassian.httpclient.api.ResponsePromise;
 import com.atlassian.jira.rest.client.RestClientException;
 import com.atlassian.jira.rest.client.internal.async.AbstractAsynchronousRestClient;
 import com.atlassian.jira.rest.client.internal.json.JsonObjectParser;
 import com.atlassian.util.concurrent.Promise;
+
+import b4j.core.session.bugzilla.async.AsyncBugzillaUserRestClient.LoginToken;
+import b4j.core.session.bugzilla.json.JSONUtils;
+import b4j.util.LazyRetriever;
 
 /**
  * Abstract implementation for Bugzilla REST clients.
@@ -98,6 +98,7 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 			}
 			entity.put("params", pArray);
 			URI uri = UriBuilder.fromUri(getBaseUri()).build();
+			//LoggerFactory.getLogger(getClass()).debug("POST "+uri.toString()+" - "+params);
 			return postAndParse(uri, entity, parser);
 		} catch (JSONException e) {
 			throw new RestClientException("Cannot post", e);
@@ -150,7 +151,7 @@ public abstract class AbstractAsyncRestClient extends AbstractAsynchronousRestCl
 	/**
 	 * Issues a simple GET request.
 	 * @param uri URI to be called
-	 * @throws Exception when a problem occurred
+	 * @return the Promise (can be ignored)
 	 */
 	protected Promise<Void> get(URI uri) {
 		ResponsePromise responsePromise = client().newRequest(uri).get();

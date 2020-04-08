@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<comment>Saved Tue Feb 04 15:09:33 CET 2014: bugzilla-44</comment>
-<entry key="attachments">list:null</entry>
-<entry key="creationTimestamp">1286371754000</entry>
-<entry key="updateAuthor">admin</entry>
-<entry key="author">admin</entry>
-<entry key="updateTimestamp">1286371754000</entry>
-<entry key="text">Please create wrapper classes that enable reading and writing JavaBeans from/to table streams.</entry>
+<comment>Saved Mon Mar 30 22:31:42 CEST 2020: bugzilla-44</comment>
 <entry key="issueId">28</entry>
+<entry key="attachments">list:null</entry>
+<entry key="author">admin</entry>
+<entry key="creationTimestamp">Wed Oct 06 15:29:14 CEST 2010</entry>
+<entry key="updateAuthor">admin</entry>
 <entry key="id">44</entry>
+<entry key="text">Please create wrapper classes that enable reading and writing JavaBeans from/to table streams.</entry>
+<entry key="updateTimestamp">Wed Oct 06 15:29:14 CEST 2010</entry>
 </properties>

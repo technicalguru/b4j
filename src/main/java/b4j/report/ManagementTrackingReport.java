@@ -20,7 +20,6 @@ package b4j.report;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -37,6 +36,7 @@ import b4j.core.DefaultIssue;
 import b4j.core.Issue;
 import csv.CSVFactory;
 import csv.TableWriter;
+import rs.baselib.util.RsDate;
 
 /**
  * Creates a tracking report for management purposes. The CSV file produced
@@ -246,7 +246,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		if (bug.isOpen()) openCount++;
 		if (bug.isClosed()) {
 			closedCount++;
-			totalFixTime += bug.getUpdateTimestamp().getTime() - bug.getCreationTimestamp().getTime();
+			totalFixTime += bug.getUpdateTimestamp().getTimeInMillis() - bug.getCreationTimestamp().getTimeInMillis();
 		}
 
 		// forward to severity stats
@@ -261,8 +261,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 		stats.registerBug(bug);
 
 		// Forward to weekly status
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTime(bug.getCreationTimestamp());
+		RsDate cal = new RsDate(bug.getCreationTimestamp());
 		int week = cal.get(Calendar.YEAR)*100 + cal.get(Calendar.WEEK_OF_YEAR);
 		WeekStats wstats = weekStats.get(week);
 		if (wstats == null) {
@@ -373,7 +372,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			if (bug.isOpen()) openCount++;
 			if (bug.isClosed()) {
 				closedCount++;
-				totalFixTime += bug.getUpdateTimestamp().getTime() - bug.getCreationTimestamp().getTime();
+				totalFixTime += bug.getUpdateTimestamp().getTimeInMillis() - bug.getCreationTimestamp().getTimeInMillis();
 			}
 		}
 
@@ -454,7 +453,7 @@ public class ManagementTrackingReport extends AbstractFileReport {
 			if (bug.isOpen()) openCount++;
 			if (bug.isClosed()) {
 				closedCount++;
-				totalFixTime += bug.getUpdateTimestamp().getTime() - bug.getCreationTimestamp().getTime();
+				totalFixTime += bug.getUpdateTimestamp().getTimeInMillis() - bug.getCreationTimestamp().getTimeInMillis();
 			}
 
 			// Forward to proper stat

@@ -11,7 +11,7 @@
 <entry key="comments">list:null</entry>
 <entry key="components">list:null</entry>
 <entry key="id">BFJ-29</entry>
-<entry key="creationTimestamp">1388781662000</entry>
+<entry key="creationTimestamp">Fri Jan 03 20:41:02 CET 2014</entry>
 <entry key="status">Closed</entry>
 <entry key="resolution">Fixed</entry>
 <entry key="severity">Normal</entry>
@@ -22,7 +22,7 @@ Make custom fields better usable (sub-object?)</entry>
 <entry key="affectedVersions">list:null</entry>
 <entry key="parentId">null</entry>
 <entry key="reporter">Ralph Schuster</entry>
-<entry key="updateTimestamp">1388795068000</entry>
+<entry key="updateTimestamp">Sat Jan 04 00:24:28 CET 2014</entry>
 <entry key="assignee">Ralph Schuster</entry>
 <entry key="priority">Normal</entry>
 <entry key="attachments">list:null</entry>
