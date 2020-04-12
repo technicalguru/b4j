@@ -21,8 +21,7 @@
 		<connection>scm:git:https://github.com/technicalguru/b4j.git</connection>
 		<developerConnection>scm:git:https://github.com/technicalguru/b4j.git</developerConnection>
 		<url>https://github.com/technicalguru/b4j</url>
-	  <tag>HEAD</tag>
-  </scm>
+    </scm>
 
 	<distributionManagement>
 		<site>

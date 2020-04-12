@@ -19,7 +19,7 @@ More documentation is available here:
 * [Change Log](CHANGES.md)
 
 ## License
-Bugzilla for Java is licensed under [GNU LGPL 3.0](LICENSE.md).
+_Bugzilla for Java_ is licensed under [GNU LGPL 3.0](LICENSE.md).
 
 ## Usage
 ```
