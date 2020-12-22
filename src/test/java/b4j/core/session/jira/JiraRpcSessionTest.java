@@ -69,7 +69,7 @@ public class JiraRpcSessionTest {
 
 	private static JiraRpcSession session;
 
-	@BeforeClass
+	//@BeforeClass
 	public static void setup() throws Exception {
 		URL url = FileFinder.find(JiraRpcSessionTest.class, "local-test-jira-config.xml");
 		if (url == null) url = FileFinder.find(JiraRpcSessionTest.class, "test-jira-config.xml");
@@ -82,7 +82,7 @@ public class JiraRpcSessionTest {
 	}
 
 
-	@AfterClass
+	//@AfterClass
 	public static void cleanup() throws Exception {
 		session.close();
 	}
@@ -90,7 +90,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test single issue.
 	 */
-	@Test
+	//@Test
 	public void testOpen() throws Exception {
 		assertTrue("Session was not opened", session.isLoggedIn());
 	}
@@ -98,7 +98,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test JQL query.
 	 */
-	@Test
+	//@Test
 	public void testJql() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
@@ -129,7 +129,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test JQL query with more than 50 results.
 	 */
-	@Test
+	//@Test
 	public void testBasicIssues() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
@@ -149,7 +149,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test JQL query with more than 50 results.
 	 */
-	@Test
+	//@Test
 	public void testMultipleJql() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
@@ -167,7 +167,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test JQL query with result limitation.
 	 */
-	@Test
+	//@Test
 	public void testLimitedResult1() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
@@ -186,7 +186,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test JQL query with result limitation.
 	 */
-	@Test
+	//@Test
 	public void testLimitedResult2() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
@@ -206,7 +206,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test JQL query with result limitation.
 	 */
-	@Test
+	//@Test
 	public void testLimitedResult3() throws Exception {
 		// Create search criteria
 		DefaultSearchData searchData = new DefaultSearchData();
@@ -225,7 +225,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test comments.
 	 */
-	@Test
+	//@Test
 	public void testAttachments() throws Exception {
 		DefaultSearchData searchData = new DefaultSearchData();
 		for (String id : expectedCommentAttachments.keySet()) {
@@ -255,7 +255,7 @@ public class JiraRpcSessionTest {
 	/**
 	 * Test comments.
 	 */
-	@Test
+	//@Test
 	public void testLoadAttachment() throws Exception {
 		Issue issue = session.getIssue("CSV-23");
 		assertNotNull("Cannot load issue: CSV-23", issue);

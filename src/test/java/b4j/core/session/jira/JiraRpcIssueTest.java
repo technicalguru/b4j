@@ -54,7 +54,7 @@ public class JiraRpcIssueTest {
 	private static int dataIndex = 0;
 	private static Logger log = LoggerFactory.getLogger(JiraRpcIssueTest.class);
 
-	@BeforeClass
+	//@BeforeClass
 	public static void setup() throws Exception {
 		URL url = FileFinder.find(JiraRpcIssueTest.class, "local-test-jira-config.xml");
 		if (url == null) url = FileFinder.find(JiraRpcIssueTest.class, "test-jira-config.xml");
@@ -67,12 +67,12 @@ public class JiraRpcIssueTest {
 	}
 
 
-	@AfterClass
+	//@AfterClass
 	public static void cleanup() throws Exception {
 		session.close();
 	}
 
-	@Parameters
+	//@Parameters
 	public static Collection<Object[]> data() throws Exception {
 		Collection<Object[]> data = new ArrayList<Object[]>();
 		// For debugging only to shorten tests
@@ -102,7 +102,7 @@ public class JiraRpcIssueTest {
 	/**
 	 * Test single issue.
 	 */
-	@Test
+	//@Test
 	public void test() throws Exception {
 		// Search a simple bug
 		Issue issue = session.getIssue(id);
