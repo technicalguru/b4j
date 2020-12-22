@@ -133,4 +133,4 @@ if (session.open()) {
 }
 ```
 
-You should check out the various [Issue API methods](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/core/Issue.html) to understand how to retrieve various information from a specific issue.
+You should check out the various [Issue API methods](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/core/Issue.html) to understand how to retrieve various information from a specific issue.
