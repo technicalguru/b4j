@@ -45,7 +45,7 @@ import rs.baselib.io.FileFinder;
  * @author ralph
  *
  */
-@RunWith(Parameterized.class)
+//@RunWith(Parameterized.class)
 public class JiraRpcIssueTest {
 
 	private static JiraRpcSession session;
