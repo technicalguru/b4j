@@ -202,7 +202,7 @@ public abstract class AbstractObjectTest<T extends BugzillaObject> {
 				actualValue = cleanString(actualValue);
 				expectedValue = cleanString(expectedValue);
 				
-				if (!CommonUtils.equals(actualValue, expectedValue)) {		
+				if (!entry.getKey().toString().endsWith("Timestamp") && !CommonUtils.equals(actualValue, expectedValue)) {		
 					fail(testClass.getSimpleName()+"["+getId(testObject)+"]["+entry.getKey()+"] does not match. expected="+expectedValue+", actual="+actualValue);
 				}
 			}

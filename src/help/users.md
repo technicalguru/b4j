@@ -50,9 +50,9 @@ The location configuration requires two aspects: the type of communication that 
 
 The type of communication is selected through the Session class that you configure:
 
-* [BugzillaHttpSession](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/core/session/BugzillaHttpSession.html) will use plain HTTP(S) protocol to talk to your Bugzilla instance
-* [BugzillaRpcSession](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/core/session/BugzillaRpcSession.html) will use XML-RPC/JSON protocol – via HTTP(S) – to talk to your Bugzilla instance
-* [JiraRpcSession](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/core/session/JiraRpcSession.html) uses XML-RPC cmmunication – via HTTP(S) – to access your Jira instance (No proxy support yet)
+* [BugzillaHttpSession](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/core/session/BugzillaHttpSession.html) will use plain HTTP(S) protocol to talk to your Bugzilla instance
+* [BugzillaRpcSession](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/core/session/BugzillaRpcSession.html) will use XML-RPC/JSON protocol – via HTTP(S) – to talk to your Bugzilla instance
+* [JiraRpcSession](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/core/session/JiraRpcSession.html) uses XML-RPC cmmunication – via HTTP(S) – to access your Jira instance (No proxy support yet)
 
 The Session is configured by the `<bugzilla-session>` tag:
 
@@ -66,7 +66,7 @@ The Session is configured by the `<bugzilla-session>` tag:
 </bugzilla-report>
 ```
 
-The various Session classes can be found in package [b4j.core.session](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/core/session/package-summary.html).
+The various Session classes can be found in package [b4j.core.session](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/core/session/package-summary.html).
 
 The network location of your system is part of the session configuration:
 
@@ -87,12 +87,12 @@ Detailed information about which tags are required within your `<bugzilla-sessio
 
 Most Bugzilla and Jira instances are protected and can be accessed with valid user credentials only. B4J provides a flexible but still secure way to provide this authentication information. The session classes require an `<AuthorizationCallback>` for that purpose. Various implementations of such a callback exist and, of course, you can write your own callback class if the default ones do not fit your needs.
 
-* [DefaultAuthorizationCallback](https://download.ralph-schuster.eu/eu.ralph-schuster.libs/STABLE/baselib/apidocs/rs/baselib/security/DefaultAuthorizationCallback.html) provides the information directly in your configuration file.
-* [PropertiesFileAuthorizationCallback](https://download.ralph-schuster.eu/eu.ralph-schuster.libs/STABLE/baselib/apidocs/rs/baselib/security/PropertiesFileAuthorizationCallback.html) reads the credentials from a Java properties file. ([Example](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/conf/properties-authorization-example.properties))
-* [TextFileAuthorizationCallback](https://download.ralph-schuster.eu/eu.ralph-schuster.libs/STABLE/baselib/apidocs/rs/baselib/security/TextFileAuthorizationCallback.html) reads the credentials from a plain text file. ([Example](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/conf/text-authorization-example.txt))
-* [XmlFileAuthorizationCallback](https://download.ralph-schuster.eu/eu.ralph-schuster.libs/STABLE/baselib/apidocs/rs/baselib/security/XmlFileAuthorizationCallback.html) reads the credentials from a XML file. ([Example](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/conf/xml-authorization-example.xml))
-* [CommandLineAuthorizationCallback](https://download.ralph-schuster.eu/eu.ralph-schuster.libs/STABLE/baselib/apidocs/rs/baselib/security/CommandLineFileAuthorizationCallback.html) prompts you on command line to provide the credentials.
-* [GuiAuthorizationCallback](https://download.ralph-schuster.eu/eu.ralph-schuster.libs/STABLE/baselib/apidocs/rs/baselib/security/GuiAuthorizationCallback.html) opens a dialog on your desktop and prompts you for the credentials.
+* [DefaultAuthorizationCallback](https://www.javadoc.io/doc/eu.ralph-schuster/baselib/latest/rs/baselib/security/DefaultAuthorizationCallback.html) provides the information directly in your configuration file.
+* [PropertiesFileAuthorizationCallback](https://www.javadoc.io/doc/eu.ralph-schuster/baselib/latest/rs/baselib/security/PropertiesFileAuthorizationCallback.html) reads the credentials from a Java properties file. ([Example](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/conf/properties-authorization-example.properties))
+* [TextFileAuthorizationCallback](https://www.javadoc.io/doc/eu.ralph-schuster/baselib/latest/rs/baselib/security/TextFileAuthorizationCallback.html) reads the credentials from a plain text file. ([Example](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/conf/text-authorization-example.txt))
+* [XmlFileAuthorizationCallback](https://www.javadoc.io/doc/eu.ralph-schuster/baselib/latest/rs/baselib/security/XmlFileAuthorizationCallback.html) reads the credentials from a XML file. ([Example](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/conf/xml-authorization-example.xml))
+* [CommandLineAuthorizationCallback](https://www.javadoc.io/doc/eu.ralph-schuster/baselib/latest/rs/baselib/security/CommandLineFileAuthorizationCallback.html) prompts you on command line to provide the credentials.
+* [GuiAuthorizationCallback](https://www.javadoc.io/doc/eu.ralph-schuster/baselib/latest/rs/baselib/security/GuiAuthorizationCallback.html) opens a dialog on your desktop and prompts you for the credentials.
 
 And this is how you define the type of authorization:
 
@@ -104,7 +104,7 @@ And this is how you define the type of authorization:
 </bugzilla-session>
 ```
 
-Again, detailed information about the specific way of configuring your authorization callback class can be found in the [Javadoc](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/core/session/package-summary.html).
+Again, detailed information about the specific way of configuring your authorization callback class can be found in the [Javadoc](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/core/session/package-summary.html).
 
 ### Selection of Bugs for your Report
 
@@ -150,7 +150,7 @@ The fourth section is the configuration of your reports. You can define multiple
 </bugzilla-report>
 ```
 
-The report class must implement the [BugzillaReportGenerator](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/report/BugzillaReportGenerator.html) interface.
+The report class must implement the [BugzillaReportGenerator](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/report/BugzillaReportGenerator.html) interface.
 
 ## Other Configuration
 ### BugzillaBug implementation class
@@ -178,9 +178,9 @@ The report class must implement the [BugzillaReportGenerator](https://download.r
 
 The B4J Project comes with three ready-to-use reports which will be explained in the following sections:
 
-* The [ChangeLogReport](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/report/ChangeLogReport.html( creates a Change Log file that you can attach to your product for delivery – see [example output](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/examples/test-ChangeLog1.txt).
-* The [DetailedBugReport](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/report/DetailedBugReport.html) creates a file listing all bugs according to your template – see [example output](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/examples/test-DetailedBugReport.txt).
-* The [ManagementTrackingReport](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/report/ManagementTrackingReport.html) creates a CSV file with important statistics of your team performance – see [example output](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/examples/test-ManagementTrackingReport.txt).
+* The [ChangeLogReport](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/report/ChangeLogReport.html( creates a Change Log file that you can attach to your product for delivery – see [example output](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/examples/test-ChangeLog1.txt).
+* The [DetailedBugReport](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/report/DetailedBugReport.html) creates a file listing all bugs according to your template – see [example output](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/examples/test-DetailedBugReport.txt).
+* The [ManagementTrackingReport](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/report/ManagementTrackingReport.html) creates a CSV file with important statistics of your team performance – see [example output](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/site/examples/test-ManagementTrackingReport.txt).
 
 An example of how to configure all reports can be found in the [test-reports.xml](https://github.com/technicalguru/b4j/blob/b4j-3.0.0/src/test/resources/test-reports.xml) file
 
@@ -234,8 +234,8 @@ A Release Provider is required as Bugzilla does not manage fix versions by defau
 
 Additional `ReleaseProvider` implementations exist:
 
-* [TextFileReleaseProvider](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/report/TextFileReleaseProvider.html) reads the definition from a text file
-* [XmlFileReleaseProvider](https://download.ralph-schuster.eu/eu.ralph-schuster.b4j/3.0.0/apidocs/b4j/report/XmlFileReleaseProvider.html) reads the definition from a XML file
+* [TextFileReleaseProvider](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/report/TextFileReleaseProvider.html) reads the definition from a text file
+* [XmlFileReleaseProvider](https://www.javadoc.io/doc/eu.ralph-schuster/b4j/latest/b4j/report/XmlFileReleaseProvider.html) reads the definition from a XML file
 
 Details of both implementations and how to configure them can be taken from their Javadoc.
 
