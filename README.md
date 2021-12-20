@@ -1,5 +1,9 @@
 # Bugzilla for Java (B4J)
 
+## Disclaimer
+
+**THIS LIBRARY HAS BEEN ABANDONED. SEE [HERE](https://www.ralph-schuster.eu/2020/04/24/what-is-the-current-status-of-bugzilla/)**
+
 ## Overview
 
 This is Bugzilla for Java (B4J) – a Java based tool for accessing Bugzilla instances. B4J offers you to write your own reports based on those bug records that you want to incorporate.
@@ -19,12 +23,15 @@ More documentation is available here:
 ## License
 _Bugzilla for Java_ is licensed under [GNU LGPL 3.0](LICENSE.md).
 
-## Usage
+## Maven Coordinates
+
+This is the last and final release.
+
 ```
 <dependency>
   <groupId>eu.ralph-schuster</groupId>
   <artifactId>b4j</artifactId>
-  <version>3.0.1</version>
+  <version>3.0.2</version>
 </dependency>
 ```
 
