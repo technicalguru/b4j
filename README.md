@@ -1,3 +1,5 @@
+<span style="color:#990000;"> **This project has been abandoned due to Jira and Bugzilla development and operating strategies** </span>
+
 # Bugzilla for Java (B4J)
 
 ## Overview
